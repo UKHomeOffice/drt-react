@@ -1,0 +1,9 @@
+{
+  "name": "drt-react",
+  "version": "1.0.0",
+  "description": "React components for DRT applications",
+  "main": "index.js",
+  "repository": "git@github.com:UKHomeOffice/drt-react.git",
+  "author": "<Jackson Hyde>",
+  "license": "MIT"
+}
