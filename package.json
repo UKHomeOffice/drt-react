@@ -2,8 +2,25 @@
   "name": "drt-react",
   "version": "1.0.0",
   "description": "React components for DRT applications",
-  "main": "index.js",
+  "main": "dist/drt-react.js",
+  "module": "dist/index.d.ts",
   "repository": "git@github.com:UKHomeOffice/drt-react.git",
   "author": "<Jackson Hyde>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@mui/icons-material": "5.11.16",
+    "@mui/lab": "5.0.0-alpha.119",
+    "@mui/material": "5.11",
+    "react": "18.2",
+    "react-dom": "18.2",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.4.2",
+    "webpack": "^5.90.3"
+  },
+  "scripts": {
+    "build": "webpack"
+  },
+  "devDependencies": {
+    "webpack-cli": "^5.1.4"
+  }
 }

@@ -1,0 +1,1 @@
+import {TestComponent, ITestComponent} from "./TestComponent/TestComponent";
