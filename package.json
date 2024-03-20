@@ -1,6 +1,6 @@
 {
   "name": "drt-react",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "React components for DRT applications",
   "main": "dist/drt-react.js",
   "module": "dist/index.d.ts",
@@ -13,6 +13,7 @@
     "@mui/material": "5.11",
     "react": "18.2",
     "react-dom": "18.2",
+    "shx": "^0.3.4",
     "ts-loader": "^9.5.1",
     "typescript": "^5.4.2",
     "webpack": "^5.90.3"
