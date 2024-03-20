@@ -17,7 +17,7 @@
   "scripts": {
     "clean": "shx rm -rf dist",
     "build": "npx run clean && webpack",
-    "prepare": "npx run clean && webpack"
+    "prepare": "shx rm -rf dist && webpack"
   },
   "devDependencies": {
     "typescript": "^5.4.2",
