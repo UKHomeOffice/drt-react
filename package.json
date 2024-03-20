@@ -9,7 +9,7 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack",
-    "preinstall": "npm i -g webpack webpack-cli shx ts-loader",
+    "preinstall": "npm i -g webpack webpack-cli shx ts-loader --force",
     "prepare": "shx rm -rf dist && webpack"
   },
   "dependencies": {
