@@ -9,7 +9,7 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack",
-    "postinstall": "shx rm -rf dist && webpack"
+    "prepare": "shx rm -rf dist && webpack"
   },
   "devDependencies": {
     "@mui/icons-material": "5.11.16",
