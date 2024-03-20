@@ -7,21 +7,23 @@
   "repository": "git@github.com:UKHomeOffice/drt-react.git",
   "author": "<Jackson Hyde>",
   "license": "MIT",
-  "scripts": {
-    "build": "webpack",
-    "preinstall": "npm i -g webpack webpack-cli shx ts-loader --force",
-    "prepare": "shx rm -rf dist && webpack"
-  },
   "dependencies": {
     "@mui/icons-material": "5.11.16",
     "@mui/lab": "5.0.0-alpha.119",
     "@mui/material": "5.11",
     "react": "18.2",
-    "react-dom": "18.2",
-    "shx": "^0.3.4",
-    "ts-loader": "^9.5.1",
+    "react-dom": "18.2"
+  },
+  "scripts": {
+    "clean": "shx rm -rf dist",
+    "build": "npx run clean && webpack",
+    "prepare": "npx run clean && webpack"
+  },
+  "devDependencies": {
     "typescript": "^5.4.2",
     "webpack": "^5.90.3",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^5.1.4",
+    "shx": "^0.3.4",
+    "ts-loader": "^9.5.1",
   }
 }
