@@ -1,6 +1,4 @@
 # drt-react
-React components for the Border Force DRT app
-# drt-react
 React components for Border Force DRT applications
 
 # Dependency Versioning
