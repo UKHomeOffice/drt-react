@@ -2,7 +2,7 @@
 
 React components for Border Force DRT applications. Built using this [boilerplate](https://github.com/MidoAhmed/rollup-react-library-starter).
 
-# Dependency Versioning
+## Dependency Versioning
 This component library is a dependency of the Scala.js implementation in the [drt-v2](https://github.com/UKHomeOffice/drt-v2) application and as such strict version matching is required. The following dependencies have been locked at specific versions, following the definitions in the [drt-v2 project settings](https://github.com/UKHomeOffice/drt-v2/blob/master/project/Settings.scala)
 
 | Dependency | Version  |
@@ -27,7 +27,7 @@ This component library is a dependency of the Scala.js implementation in the [dr
 - Eslint
 - Deploy Storybook to GitHub Pages
 
-### Development:
+## Development:
 
 - Storybook:
     - Storybook gives you an easy way to see and use your components while working on them in your library project, without having to build an unnecessary testing page just to display them.
@@ -45,7 +45,7 @@ Now, anytime you make a change to your library or the stories, the storybook wil
         npm run dev # runs rollup with watch flag
         ```
 
-### Scripts:
+## Scripts:
 - `npm run build` : builds the library to `dist`
 - `npm run dev`  : builds the library, then keeps rebuilding it whenever the source files change.
 - `npm test` : tests the library and show the coverage.
