@@ -1,6 +1,6 @@
 import React from "react";
 import "./Input.scss";
-import { Input, InputProps } from "antd";
+import { Input, InputProps } from "@mui/material";
 
 export interface InputTextProps extends InputProps {
     /**

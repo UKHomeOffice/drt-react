@@ -1,16 +1,13 @@
 {
-  "name": "@MidoAhmed/rollup-react-library-starter",
+  "name": "@drt/drt-react-components",
   "version": "0.1.0",
-  "description": "Template and quick-starter to create modern React libraries using Rollup.",
+  "description": "React components for DRT applications",
   "main": "dist/cjs/bundle.js",
   "module": "dist/esm/bundle.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/MidoAhmed"
-  },
   "scripts": {
     "build": "rimraf dist && rollup -c",
     "dev": "rollup -c -w",
@@ -19,13 +16,10 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "predeploy-storybook": "npm run build-storybook",
-    "deploy-storybook": "gh-pages -d storybook-static"
+    "deploy-storybook": "gh-pages -d storybook-static",
+    "prepare": "npm run build"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MidoAhmed/rollup-react-library-starter.git"
-  },
-  "author": "MidoAhmed",
+  "author": "DRT",
   "license": "MIT",
   "keywords": [
     "react-template",
@@ -34,14 +28,12 @@
     "react",
     "template"
   ],
-  "bugs": {
-    "url": "https://github.com/MidoAhmed/rollup-react-library-starter/issues"
-  },
-  "homepage": "https://MidoAhmed.github.io/rollup-react-library-starter",
   "peerDependencies": {
-    "antd": "^5.4.0",
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "@mui/icons-material": "5.11.16",
+    "@mui/lab": "5.0.0-alpha.119",
+    "@mui/material": "5.11"
   },
   "devDependencies": {
     "@babel/core": "^7.21.4",
