@@ -1,6 +1,6 @@
 {
   "name": "@drt/drt-react-components",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "React components for DRT applications",
   "main": "dist/cjs/bundle.js",
   "module": "dist/esm/bundle.js",
@@ -21,20 +21,6 @@
   },
   "author": "DRT",
   "license": "MIT",
-  "keywords": [
-    "react-template",
-    "react-library",
-    "typescript",
-    "react",
-    "template"
-  ],
-  "peerDependencies": {
-    "@mui/icons-material": "5.11.16",
-    "@mui/lab": "5.0.0-alpha.119",
-    "@mui/material": "5.11",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
-  },
   "devDependencies": {
     "@babel/core": "^7.21.4",
     "@babel/preset-env": "^7.21.4",
@@ -78,6 +64,11 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
+    "@mui/icons-material": "5.11.16",
+    "@mui/lab": "5.0.0-alpha.119",
+    "@mui/material": "5.11",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5"
   }
