@@ -13,16 +13,21 @@ import pkg from "./package.json" assert { type: 'json' };
 export default [
 	{
 		input: 'src/index.ts',
+		cache: false,
 		output: [
 			{
 				file: pkg.main,
 				format: 'cjs',
 				sourcemap: true,
+				exports: 'named',
+				noConflict: true
 			},
 			{
 				file: pkg.module,
 				format: "esm",
 				sourcemap: true,
+				exports: 'named',
+				noConflict: true
 			},
 			/* {
 				file: 'dist/bundle.min.js',
@@ -42,7 +47,13 @@ export default [
 	},
 	{
 		input: "dist/esm/types/index.d.ts",
-		output: [{ file: "dist/index.d.ts", format: "esm" }],
+		output: [{ 
+			file: "dist/index.d.ts", 
+			format: "esm",
+			exports: 'named',
+			noConflict: true 
+		}],
+		cache: false,
 		plugins: [dts()],
 		external: [/\.(css|less|scss)$/],
 	},
