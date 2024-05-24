@@ -51,7 +51,7 @@ export default [
 			file: "dist/index.d.ts", 
 			format: "esm",
 			exports: 'named',
-			noConflict: true 
+			noConflict: true
 		}],
 		cache: false,
 		plugins: [dts()],
