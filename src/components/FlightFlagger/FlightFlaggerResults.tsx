@@ -41,14 +41,14 @@ export const FlightFlaggerResults = ({flights, showHighlightOnly}: IFlightFlagge
     flights = flights.filter(flight => flight.highlights)
   }
   return isMobile ? 
-    <Box sx={{backgroundColor: '#E6E9F1', p: 2}}>
+    <Box data-testid="flight-flagger-mobile-results" sx={{backgroundColor: '#E6E9F1', p: 2}}>
       {resultCount}
       { flights.map((flight: FlightArrival, index: number) => {
         return <FlightCard key={index} flight={flight} />
       })}
     </Box>
     :
-    <Box sx={{mt:2}}>
+    <Box data-testid="flight-flagger-desktop-results" sx={{mt:2}}>
       {resultCount}
       <FlightFlaggerTable flights={flights} />
     </Box>

@@ -37,12 +37,12 @@ const PaxAlert = styled(Box)<BoxProps>(({ theme }) => ({
 }));
 
 export interface IFlightCard {
-  flight: FlightArrival
+  flight: FlightArrival,
 }
 export const FlightCard = ({ flight }: IFlightCard) => {
   const [pcpPaxAlertType, pcpPaxAlertText] =  getConfidenceAlert(flight.expPcpPax.confidence)
   const [paxAlertType, paxAlertText] =  getConfidenceAlert(flight.paxCounts.confidence)
-  const highlights = flight.highlights?.map((highlight, index) => <><FlightHighlight key={index} text={highlight} /><br/></>)
+  const highlights = flight.highlights?.map((highlight, index) => <div key={index}><FlightHighlight text={highlight} /><br/></div>)
 
   return <Card sx={{mb: 2, borderWidth: '2px'}} square>
     <Box sx={{backgroundColor: '#f3f5f9', p:1}}>

@@ -196,12 +196,14 @@ export const FlightFlaggerFilters = ({nationalities, ageGroups, submitCallback, 
           </Grid>
           <Grid item xs={12} sx={{mb: 2}}>
             <Autocomplete
+                data-testid="nationalities-autocomplete"
                 multiple
                 id="nationalities"
                 options={nationalitiesOptions}
                 getOptionLabel={(option) => option.title}
                 defaultValue={[]}
                 filterSelectedOptions
+                isOptionEqualToValue={(option, value) => option.title === value.title}
                 onChange={(event, newValue) => {
                     setSelectedNationalities(newValue);
                 }}
@@ -216,12 +218,14 @@ export const FlightFlaggerFilters = ({nationalities, ageGroups, submitCallback, 
           </Grid>
           <Grid item xs={12}>
             <Autocomplete
+                data-testid="age-autocomplete"
                 multiple
                 id="ageGroups"
                 options={ageOptions}
                 getOptionLabel={(option) => option.title}
                 defaultValue={[]}
                 filterSelectedOptions
+                isOptionEqualToValue={(option, value) => option.value === value.value}
                 onChange={(event, newValue) => {
                   setSelectedAgeGroups(newValue);
                 }}
@@ -238,13 +242,13 @@ export const FlightFlaggerFilters = ({nationalities, ageGroups, submitCallback, 
             <FormGroup>
               <FormControlLabel
                 control={
-                  <Checkbox checked={searchFlags.showTransitPaxNumber} onChange={handleCheckboxChange} name="showTransitPaxNumber" />
+                  <Checkbox data-testid="show-transit-pax-check" checked={searchFlags.showTransitPaxNumber} onChange={handleCheckboxChange} name="showTransitPaxNumber" />
                 }
                 label="Show transit pax number"
               />
               <FormControlLabel
                 control={
-                  <Checkbox checked={searchFlags.showNumberOfVisaNationals} onChange={handleCheckboxChange} name="showNumberOfVisaNationals" />
+                  <Checkbox data-testid="show-visa-nationals-check" checked={searchFlags.showNumberOfVisaNationals} onChange={handleCheckboxChange} name="showNumberOfVisaNationals" />
                 }
                 label="Show number of visa nationals"
               />
@@ -252,6 +256,7 @@ export const FlightFlaggerFilters = ({nationalities, ageGroups, submitCallback, 
                 <FormControlLabel
                   control={
                     <Checkbox 
+                      data-testid="require-all-selected-check"
                       disabled={!isTouched()}
                       checked={searchFlags.requireAllSelected} 
                       onChange={handleCheckboxChange} 
@@ -264,7 +269,7 @@ export const FlightFlaggerFilters = ({nationalities, ageGroups, submitCallback, 
           </Grid>
           <Grid item xs={12}>
             <Button variant='outlined' onClick={() => setShowFilters(false)} sx={{mr: 2}}>Close</Button>
-            <Button variant='contained' onClick={handleSubmit}>Apply Highlights</Button>
+            <Button data-testid="flight-flagger-filter-submit" variant='contained' onClick={handleSubmit}>Apply Highlights</Button>
           </Grid>
         </Paper>
         </Collapse>
