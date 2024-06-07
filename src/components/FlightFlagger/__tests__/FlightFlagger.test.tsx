@@ -1,8 +1,12 @@
 import React from "react";
 import { render } from "../../TestProviderRenderer";
-import { screen, fireEvent } from "@testing-library/react";
+import { screen } from "@testing-library/dom";
+import { fireEvent } from "@testing-library/react";
 import FlightFlagger from "../FlightFlagger";
 import ExampleFlights from "../ExampleFlights";
+import { waitFor } from "@testing-library/react";
+import '@testing-library/jest-dom'
+
 
 const nationalities = ['GBR','FRA','SPA'];
 const ageGroups = ['0-9','10-24','24+'];
@@ -53,5 +57,31 @@ describe("Flight Flagger", () => {
 
     tableRows = await screen.getByTestId('flight-flagger-results-table').querySelectorAll('tbody tr');
     expect(tableRows).toHaveLength(ExampleFlights.length)
+  })
+
+  test("hides and shows the search filters", async () => {
+    render(<FlightFlagger 
+      flights={ExampleFlights} 
+      nationalities={nationalities} 
+      ageGroups={ageGroups} 
+      isLoading={false} 
+      submitCallback={()=>{}} />);
+
+    let filters = await screen.queryByTestId('flight-flagger-filters')
+    await waitFor(() => {
+      expect(filters).toHaveStyle(`height: 0px`)
+    });
+
+    await fireEvent.click(screen.getByTestId('show-filters'));
+    filters = await screen.queryByTestId('flight-flagger-filters')
+    await waitFor(() => {
+      expect(filters).toHaveStyle(`height: auto`)
+    });
+
+    fireEvent.click(screen.getByTestId('show-filters'));
+    filters = await screen.queryByTestId('flight-flagger-filters')
+    await waitFor(() => {
+      expect(filters).toHaveStyle(`height: 0px`)
+    });
   })
 });

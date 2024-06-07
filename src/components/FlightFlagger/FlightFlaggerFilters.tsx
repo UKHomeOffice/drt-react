@@ -150,6 +150,7 @@ export const FlightFlaggerFilters = ({nationalities, ageGroups, submitCallback, 
         }}>
         <InputLabel sx={{mb:1}}><strong>Highlight flights</strong></InputLabel>
         <Button 
+          data-testid="show-filters"
           color={"primary"}
           onClick={() => toggleFilters()}
           variant={ isTouched() ? "contained" : "outlined"} 
@@ -188,7 +189,7 @@ export const FlightFlaggerFilters = ({nationalities, ageGroups, submitCallback, 
     </Grid>
     <Grid container sx={{backgroundColor: '#F3F5F9', width: '100%', ml:0}} spacing={2}>
       <Grid item xs={12} sx={{px:2, pb:2}}>
-        <Collapse in={showFilters}>
+        <Collapse in={showFilters} data-testid="flight-flagger-filters">
         <Paper elevation={0} sx={{backgroundColor: '#fff', p:2, mt: 2}}>
           <Grid item xs={12}>
             <Typography sx={{mb:1}}><strong>Select pax info to reveal</strong></Typography>
