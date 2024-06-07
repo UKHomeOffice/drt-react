@@ -38,10 +38,7 @@ export const FlightFlaggerResults = ({flights, showHighlightOnly}: IFlightFlagge
     {highlightCount > 0 && <strong>{` (${highlightCount} highlighted)`}</strong>}
   </Typography>
   if (showHighlightOnly) {
-    console.log('filtering!')
     flights = flights.filter(flight => flight.highlights)
-  } else {
-    console.log('not filtering!')
   }
   return isMobile ? 
     <Box sx={{backgroundColor: '#E6E9F1', p: 2}}>

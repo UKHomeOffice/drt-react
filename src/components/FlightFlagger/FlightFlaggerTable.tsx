@@ -30,7 +30,7 @@ export interface IFlightFlaggerTable {
 export const FlightFlaggerTable = ({flights, ...others}: IFlightFlaggerTable) => {
   const hasHighlightedFlights = flights.some(flight => flight.highlights)
 
-  return <div style={{display:'grid'}}><Table size="small" {...others}>
+  return <div style={{display:'grid'}}><Table data-testid="flight-flagger-results-table" size="small" {...others}>
     <StyledTableHeader>
       <TableRow>
         <StyledTableHeaderCell>Flight</StyledTableHeaderCell>

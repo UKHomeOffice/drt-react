@@ -2,8 +2,6 @@ import React, {useState} from "react";
 import { Grid, Typography, FormGroup, FormLabel, RadioGroup, Radio, FormControl, Collapse, InputLabel, OutlinedInput,InputAdornment, FormControlLabel, Autocomplete, Checkbox, TextField, Button, Paper, IconButton, Chip } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import { ArrowRight } from "@mui/icons-material";
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { Theme } from "@mui/material";
 type AutocompleteOption = {
   title: string
 }
@@ -32,7 +30,6 @@ export interface IFlightFlaggerFilters {
 }
 
 export const FlightFlaggerFilters = ({nationalities, ageGroups, submitCallback, toggleHighlightDisplay}: IFlightFlaggerFilters) => {
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
   const nationalitiesOptions = nationalities.map((nationality) => { return { title: nationality }});
   const ageOptions = ageGroups.map((ageGroup) => { return { title: ageGroup }});
@@ -183,8 +180,8 @@ export const FlightFlaggerFilters = ({nationalities, ageGroups, submitCallback, 
             onChange={toggleHighlightDisplay}
             defaultValue="false"
           >
-            <FormControlLabel value="false" defaultChecked={true} control={<Radio />} label="All flights" />
-            <FormControlLabel value="true" control={<Radio />} label="Highlighted flights only" />
+            <FormControlLabel value="false" data-testid="show-all-flights"  defaultChecked={true} control={<Radio />} label="All flights" />
+            <FormControlLabel value="true" data-testid="show-highlighted-only" control={<Radio />} label="Highlighted flights only" />
           </RadioGroup>
         </FormControl>
       </Grid>
