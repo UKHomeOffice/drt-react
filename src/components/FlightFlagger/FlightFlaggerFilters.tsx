@@ -225,7 +225,7 @@ export const FlightFlaggerFilters = ({nationalities, ageGroups, submitCallback, 
                 getOptionLabel={(option) => option.title}
                 defaultValue={[]}
                 filterSelectedOptions
-                isOptionEqualToValue={(option, value) => option.value === value.value}
+                isOptionEqualToValue={(option, value) => option.title === value.title}
                 onChange={(event, newValue) => {
                   setSelectedAgeGroups(newValue);
                 }}
