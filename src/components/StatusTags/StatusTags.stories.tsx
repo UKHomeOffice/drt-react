@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import React from "react";
-import { StatusTag } from "./StatusTags";
+import { StatusTag } from "./";
 import { ThemeProvider, createTheme } from "@mui/material";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export

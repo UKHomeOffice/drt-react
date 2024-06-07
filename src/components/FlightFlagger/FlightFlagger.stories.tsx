@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import React from "react";
-import { default as FlightFlaggerComponent } from "./FlightFlagger";
+import { default as FlightFlaggerComponent } from "./";
 import { SearchFilterPayload } from "./FlightFlaggerFilters";
 import ExampleFlights from "./ExampleFlights";
 
