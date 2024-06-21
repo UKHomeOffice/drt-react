@@ -41,8 +41,8 @@ runs:
     - name: 'Build'
       shell: bash
       run: |
-        echo "::group::Build"
         corepack enable
+        echo "::group::Build"
         ${{ inputs.install_yarn }}
         ${{ inputs.install_command }}
         ${{ inputs.build_command }}
