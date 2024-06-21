@@ -25,4 +25,4 @@ runs:
       run: yarn install --immutable --immutable-cache --check-cache
     - name: 'Test'
       shell: bash
-      run: yarn test
+      run: yarn test-ci

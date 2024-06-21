@@ -4,8 +4,8 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { StatusTag } from "../StatusTags";
 import { styled } from '@mui/material/styles';
 import { getConfidenceAlert } from "./FlightFlaggerTable";
-import { FlightHighlight } from "./FlightFlaggerResults";
 import { FlightArrival } from "./FlightArrival";
+import { FlightHighlightChip } from "./FlightFlaggerHighlightChip";
 
 const PaxGrid = styled(Box)<BoxProps>(({ theme }) => ({
   alignItems: 'stretch',
@@ -42,7 +42,7 @@ export interface IFlightCard {
 export const FlightCard = ({ flight }: IFlightCard) => {
   const [pcpPaxAlertType, pcpPaxAlertText] =  getConfidenceAlert(flight.expPcpPax.confidence)
   const [paxAlertType, paxAlertText] =  getConfidenceAlert(flight.paxCounts.confidence)
-  const highlights = flight.highlights?.map((highlight, index) => <div key={index}><FlightHighlight text={highlight} /><br/></div>)
+  const highlights = flight.highlights?.map((highlight, index) => <div key={index}><FlightHighlightChip text={highlight} /><br/></div>)
 
   return <Card sx={{mb: 2, borderWidth: '2px'}} square>
     <Box sx={{backgroundColor: '#f3f5f9', p:1}}>

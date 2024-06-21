@@ -7,5 +7,5 @@ export type {IFlightFlaggerFilters} from './FlightFlaggerFilters';
 export {FlightFlaggerResults} from './FlightFlaggerResults';
 export type {IFlightFlaggerResults} from './FlightFlaggerResults';
 
-export {FlightHighlight} from './FlightFlaggerResults';
-export type {IFlightHighlight} from './FlightFlaggerResults';
+export {FlightHighlightChip} from './FlightFlaggerHighlightChip'
+export type {IFlightHighlightChip} from './FlightFlaggerHighlightChip';

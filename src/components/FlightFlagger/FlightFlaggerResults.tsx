@@ -3,27 +3,7 @@ import { Box, Typography, Theme, Chip  } from "@mui/material";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { FlightCard } from "./FlightFlaggerCard";
 import { FlightFlaggerTable } from "./FlightFlaggerTable";
-import TungstenIcon from '@mui/icons-material/Tungsten';
 import { FlightArrival } from "./FlightArrival";
-
-export interface IFlightHighlight {
-  text: string
-}
-
-export const FlightHighlight = ({text}: IFlightHighlight) => {
-  return <Chip
-          label={ text }
-          icon={<TungstenIcon/>}
-          sx={{
-            backgroundColor: '#C2D9FF',
-            fontWeight: 'bold',
-            color: '#111224',
-            margin: '2px 2px 2px 0px',
-            borderRadius: 0,
-          }} />
-
-}
-
 
 export interface IFlightFlaggerResults {
   flights: FlightArrival[],
