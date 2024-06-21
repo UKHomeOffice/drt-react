@@ -10,7 +10,7 @@ const meta: Meta<typeof FlightHighlightChipComponent> = {
 export default meta;
 type Story = StoryObj<typeof FlightHighlightChipComponent>;
 
-export const HighlightChip: Story = {
+export const FlightHighlightChip: Story = {
   args: {
     text: 'Highlighted info',
   },
