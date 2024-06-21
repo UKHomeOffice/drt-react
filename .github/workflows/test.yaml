@@ -1,8 +1,6 @@
 on:
-  push:
-    branches:
-      - "main" # change to the branch you wish to deploy from
-      - "storybook-publishing-fix"
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 permissions:
   contents: read
@@ -10,10 +8,10 @@ permissions:
   id-token: write
 
 jobs:
-  deploy:
+  test:
     runs-on: ubuntu-latest
     steps:
     - id: checkout-actions
       uses : "actions/checkout@v4"
     - id: build-publish
-      uses: ./.github/actions/publish
+      uses: ./.github/actions/test
