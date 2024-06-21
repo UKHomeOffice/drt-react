@@ -2,12 +2,8 @@ name: 'Deploy Storybook to GitHub Pages'
 description: 'Build and deploy storybook code to GitHub pages'
 branding:
   icon: upload-cloud
-  color: red
+  color: green
 inputs:
-  checkout:
-    description: 'Specifies if this action should checkout the code'
-    required: true
-    default: 'true'
   path:
     description: 'Specifies the path of the static assets after building'
     required: false
@@ -35,9 +31,6 @@ outputs:
 runs:
   using: 'composite'
   steps:
-    - name: Checkout if required
-      uses: actions/checkout@v4
-
     - name: 'Build'
       shell: bash
       run: |
