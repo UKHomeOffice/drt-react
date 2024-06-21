@@ -23,7 +23,7 @@ describe("Flight Flagger", () => {
             submitCallback={(payload: SearchFilterPayload)=> console.log(payload)} />);
 
     const tableRows = await screen.getByTestId('flight-flagger-results-table').querySelectorAll('tbody tr');
-    expect(tableRows).toHaveLength(10)
+    expect(tableRows).toHaveLength(ExampleFlights.length)
   })
 
   test("hides and shows non-highlighted flights correctly", async () => {
