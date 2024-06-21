@@ -6,7 +6,7 @@ branding:
 inputs:
   checkout:
     description: 'Specifies if this action should checkout the code'
-    required: false
+    required: true
     default: 'true'
   path:
     description: 'Specifies the path of the static assets after building'
@@ -33,17 +33,16 @@ outputs:
   
 
 runs:
-  using: 'ubuntu-latest'
+  using: 'composite'
   steps:
     - name: Checkout if required
-      if: ${{ inputs.checkout == 'true' }}
       uses: actions/checkout@v4
 
     - name: 'Build'
       shell: bash
       run: |
-        echo "::group::Build"
         corepack enable
+        echo "::group::Build"
         ${{ inputs.install_yarn }}
         ${{ inputs.install_command }}
         ${{ inputs.build_command }}

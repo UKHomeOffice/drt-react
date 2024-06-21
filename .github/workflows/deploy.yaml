@@ -2,6 +2,7 @@ on:
   push:
     branches:
       - "main" # change to the branch you wish to deploy from
+      - "storybook-publishing-fix"
 
 permissions:
   contents: read
@@ -12,7 +13,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+    - id: checkout-actions
+      uses : "actions/checkout@v4"
     - id: build-publish
-      uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
-      with:
-        path: build # change to your build folder
+      uses: ./.github/actions/publish
