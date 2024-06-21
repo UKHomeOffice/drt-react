@@ -69,7 +69,7 @@ export const FlightFlaggerTable = ({flights, ...others}: IFlightFlaggerTable) =>
         <StyledTableHeaderCell align="center">Exp PCP Pax</StyledTableHeaderCell>
         <StyledTableHeaderCell align="center">
           e-Gate
-          <StyledTooltip title="Expeced total pax">
+          <StyledTooltip title="Expeced e-Gate pax">
             <IconButton>
               <InfoIcon />
             </IconButton>
@@ -77,7 +77,7 @@ export const FlightFlaggerTable = ({flights, ...others}: IFlightFlaggerTable) =>
         </StyledTableHeaderCell>
         <StyledTableHeaderCell align="center">
           EEA
-          <StyledTooltip title="Expeced total pax">
+          <StyledTooltip title="Expected EEA pax">
             <IconButton>
               <InfoIcon />
             </IconButton>
@@ -85,7 +85,7 @@ export const FlightFlaggerTable = ({flights, ...others}: IFlightFlaggerTable) =>
         </StyledTableHeaderCell>
         <StyledTableHeaderCell align="center">
           Non-EEA
-          <StyledTooltip title="Expeced total pax">
+          <StyledTooltip title="Expected Non-EEA pax">
             <IconButton>
               <InfoIcon />
             </IconButton>
