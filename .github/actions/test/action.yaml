@@ -15,10 +15,14 @@ runs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - name: Enable corepack
+      shell: bash
       run: corepack enable
     - name: Install yarn
+      shell: bash
       run: npm i -g yarn
     - name: Install dependencies
+      shell: bash
       run: yarn install --immutable --immutable-cache --check-cache
     - name: 'Test'
+      shell: bash
       run: yarn test
