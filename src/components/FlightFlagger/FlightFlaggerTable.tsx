@@ -1,7 +1,7 @@
 import React from "react";
 import { Table, TableCell, TableRow, Tooltip, TooltipProps, IconButton } from "@mui/material";
 import { StyledTableHeader, StyledTableHeaderCell, StyledTableBody, RelativeTableCell, CellStatusHighlight } from "../StyledTable";
-import { FlightHighlight } from "./FlightFlaggerResults";
+import { FlightHighlightChip } from "./FlightFlaggerHighlightChip";
 import { FlightArrival } from "./FlightArrival";
 import InfoIcon from '@mui/icons-material/Info';
 import { styled } from '@mui/material/styles';
@@ -101,10 +101,10 @@ export const FlightFlaggerTable = ({flights, ...others}: IFlightFlaggerTable) =>
 
           return <TableRow key={index}>
               <TableCell>
-                { flight.highlights ? <FlightHighlight text={flight.flight} /> : flight.flight }
+                { flight.highlights ? <FlightHighlightChip text={flight.flight} /> : flight.flight }
               </TableCell>
               { hasHighlightedFlights && <TableCell sx={{maxWidth: '200px'}}>{
-                flight.highlights?.map((highlight, index) => <FlightHighlight key={index} text={highlight} /> )
+                flight.highlights?.map((highlight, index) => <FlightHighlightChip key={index} text={highlight} /> )
               }</TableCell> }
               <TableCell align="center">{ flight.origin }</TableCell>
               <TableCell align="center">{ flight.country }</TableCell>
