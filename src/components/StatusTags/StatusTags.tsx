@@ -6,7 +6,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import ErrorIcon from '@mui/icons-material/Error';
 import ReportIcon from '@mui/icons-material/Report';
 
-const StyledAlert = styled(Alert)<AlertProps>(({ theme }) => ({
+const StyledAlert = styled(Alert)<AlertProps>(() => ({
   fontWeight: 'bold',
   color: '#fff',
   '& .MuiSvgIcon-root': {

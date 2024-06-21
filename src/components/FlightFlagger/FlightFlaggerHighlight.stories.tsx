@@ -1,27 +1,17 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
-import React from "react";
-import { FlightHighlight as FlightHighlightComponent } from "./FlightFlaggerResults";
-import { ThemeProvider, createTheme } from "@mui/material";
-import ExampleFlights from "./ExampleFlights";
+import type { Meta, StoryObj } from '@storybook/react';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
-export default {
+import { FlightHighlight as FlightHighlightComponent } from './FlightFlaggerResults';
+
+const meta: Meta<typeof FlightHighlightComponent> = {
   title: "DRT Components/Flight Flagger",
   component: FlightHighlightComponent,
-} as ComponentMeta<typeof FlightHighlightComponent>;
+};
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const defaultTheme = createTheme();
-const Template: ComponentStory<typeof FlightHighlightComponent> = (
-  args: FlightHighlightComponent,
-) => (
-  <ThemeProvider theme={defaultTheme}>
-    <FlightHighlightComponent {...args} />
-  </ThemeProvider>
-);
+export default meta;
+type Story = StoryObj<typeof FlightHighlightComponent>;
 
-export const FlightHighlight = Template.bind({});
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
-FlightHighlight.args = {
-  text: 'Flight highlight text',
+export const HighlightChip: Story = {
+  args: {
+    text: 'Highlighted info',
+  },
 };

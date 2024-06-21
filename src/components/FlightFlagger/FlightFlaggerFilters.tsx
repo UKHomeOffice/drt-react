@@ -58,7 +58,7 @@ export const FlightFlaggerFilters = ({nationalities, ageGroups, submitCallback, 
   }
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    let name: string = event.target.name 
+    const name: string = event.target.name 
     setSearchFlags({
       ...searchFlags,
       [name]: event.target.checked
@@ -66,7 +66,7 @@ export const FlightFlaggerFilters = ({nationalities, ageGroups, submitCallback, 
   }
 
   const handleTextInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    let name: string = event.target.name 
+    const name: string = event.target.name 
     setSearchFlags({
       ...searchFlags,
       [name]: event.target.value
@@ -85,7 +85,7 @@ export const FlightFlaggerFilters = ({nationalities, ageGroups, submitCallback, 
 
     
   const buildFilterString = () => {
-    let paxFlters = []
+    const paxFlters = []
     if (selectedNationalities.length) {
       paxFlters.push(`nationality: ${selectedNationalities.map(n => n.title).join(', ')}`)
     }

@@ -6,6 +6,7 @@ import FlightFlagger from "../FlightFlagger";
 import ExampleFlights from "../ExampleFlights";
 import { waitFor, within } from "@testing-library/react";
 import '@testing-library/jest-dom'
+import { SearchFilterPayload } from "../FlightFlaggerFilters";
 
 
 const nationalities = ['GBR','FRA','SPA'];
@@ -19,7 +20,7 @@ describe("Flight Flagger", () => {
             nationalities={nationalities} 
             ageGroups={ageGroups} 
             isLoading={false} 
-            submitCallback={()=>{}} />);
+            submitCallback={(payload: SearchFilterPayload)=> console.log(payload)} />);
 
     const tableRows = await screen.getByTestId('flight-flagger-results-table').querySelectorAll('tbody tr');
     expect(tableRows).toHaveLength(ExampleFlights.length)
@@ -31,7 +32,7 @@ describe("Flight Flagger", () => {
       nationalities={nationalities} 
       ageGroups={ageGroups} 
       isLoading={false} 
-      submitCallback={()=>{}} />);
+      submitCallback={(payload: SearchFilterPayload)=> console.log(payload)} />);
 
     fireEvent.click(screen.getByTestId('show-highlighted-only'));
 
@@ -51,7 +52,7 @@ describe("Flight Flagger", () => {
       nationalities={nationalities} 
       ageGroups={ageGroups} 
       isLoading={true} 
-      submitCallback={()=>{}} />);
+      submitCallback={(payload: SearchFilterPayload)=> console.log(payload)} />);
 
     const table = await screen.queryByTestId('flight-flagger-results-table')
     const loadingSpinner = await screen.queryByTestId('flight-flagger-loading-spinner')
@@ -65,7 +66,7 @@ describe("Flight Flagger", () => {
       nationalities={nationalities} 
       ageGroups={ageGroups} 
       isLoading={false} 
-      submitCallback={()=>{}} />);
+      submitCallback={(payload: SearchFilterPayload)=> console.log(payload) } />);
 
     let filters = await screen.queryByTestId('flight-flagger-filters')
     await waitFor(() => {
@@ -185,7 +186,7 @@ describe("Flight Flagger", () => {
       nationalities={nationalities} 
       ageGroups={ageGroups} 
       isLoading={false} 
-      submitCallback={()=>{}} />);
+      submitCallback={(payload: SearchFilterPayload)=> console.log(payload)} />);
 
     const desktopResults = await screen.queryByTestId('flight-flagger-desktop-results')
     const mobileResults = await screen.queryByTestId('flight-flagger-mobile-results')

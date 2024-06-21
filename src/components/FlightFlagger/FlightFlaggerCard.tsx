@@ -5,7 +5,7 @@ import { StatusTag } from "../StatusTags";
 import { styled } from '@mui/material/styles';
 import { getConfidenceAlert } from "./FlightFlaggerTable";
 import { FlightHighlight } from "./FlightFlaggerResults";
-import { FlightArrival } from "./FlightFlagger";
+import { FlightArrival } from "./FlightArrival";
 
 const PaxGrid = styled(Box)<BoxProps>(({ theme }) => ({
   alignItems: 'stretch',

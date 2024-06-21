@@ -4,7 +4,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { FlightCard } from "./FlightFlaggerCard";
 import { FlightFlaggerTable } from "./FlightFlaggerTable";
 import TungstenIcon from '@mui/icons-material/Tungsten';
-import { FlightArrival } from "./FlightFlagger";
+import { FlightArrival } from "./FlightArrival";
 
 export interface IFlightHighlight {
   text: string
