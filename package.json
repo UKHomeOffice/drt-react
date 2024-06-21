@@ -104,7 +104,9 @@
   },
   "overrides": {
     "@material-ui/core": {
-      "react": "$react"
+      "react": "$react",
+      "react-dom": "$react",
+      "@mui/material": "$@mui/material"
     }
   },
   "packageManager": "yarn@4.2.2"
