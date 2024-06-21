@@ -7,13 +7,18 @@ branding:
 runs:
   using: 'composite'
   steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Checkout if required
+      uses: actions/checkout@v4
+    - name: Setup Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: corepack enable
-    - run: npm i -g yarn
-    - run: yarn install --immutable --immutable-cache --check-cache
-    - run: yarn test
+    - name: Enable corepack
+      run: corepack enable
+    - name: Install yarn
+      run: npm i -g yarn
+    - name: Install dependencies
+      run: yarn install --immutable --immutable-cache --check-cache
+    - name: 'Test'
+      run: yarn test

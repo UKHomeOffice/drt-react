@@ -31,6 +31,8 @@ outputs:
 runs:
   using: 'composite'
   steps:
+    - name: Checkout if required
+      uses: actions/checkout@v4
     - name: 'Build'
       shell: bash
       run: |
