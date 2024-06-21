@@ -1,31 +1,9 @@
 import React, {useState} from "react";
 import { FlightFlaggerFilters } from "./FlightFlaggerFilters";
-import {FlightFlaggerResults} from "./FlightFlaggerResults";
+import { FlightFlaggerResults } from "./FlightFlaggerResults";
 import { SearchFilterPayload } from "./FlightFlaggerFilters";
 import {CircularProgress} from "@mui/material";
-
-
-export type FlightArrival = { 
-  highlights?: string[],
-  flight: string,
-  origin: string,
-  country: string,
-  gate: string | null,
-  status: string | null,
-  scheduled: string | null,
-  expected: string | null,
-  expPcp: string | null,
-  expPcpPax: {
-    confidence?: string
-    count?: number | null
-  },
-  paxCounts: {
-    confidence?: string
-    eGate?: number | null,
-    eea?: number | null,
-    nonEea?: number | null,
-  }
-}
+import { FlightArrival } from "./FlightArrival";
 
 
 export interface IFlightFlagger {

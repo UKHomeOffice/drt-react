@@ -2,20 +2,20 @@ import React from "react";
 import { TableHead, TableHeadProps, TableCell, TableCellProps, TableBody, TableBodyProps } from "@mui/material";
 import { styled } from '@mui/material/styles';
 
-export const StyledTableHeader = styled(TableHead)<TableHeadProps>(({ theme }) => ({
+export const StyledTableHeader = styled(TableHead)<TableHeadProps>(() => ({
   fontWeight: 'bold',
   backgroundColor: '#334F96',
   color: '#fff',
   tableLayout: 'fixed',
 }));
 
-export const StyledTableHeaderCell = styled(TableCell)<TableCellProps>(({ theme }) => ({
+export const StyledTableHeaderCell = styled(TableCell)<TableCellProps>(() => ({
   fontWeight: 'bold',
   color: '#fff',
   whiteSpace: 'nowrap',
 }));
 
-export const StyledTableBody = styled(TableBody)<TableBodyProps>(({ theme }) => ({
+export const StyledTableBody = styled(TableBody)<TableBodyProps>(() => ({
   '& tr:nth-of-type(even) ': {
     backgroundColor: '#efefef',
   },
@@ -24,11 +24,11 @@ export const StyledTableBody = styled(TableBody)<TableBodyProps>(({ theme }) => 
   }
 }));
 
-export const RelativeTableCell = styled(TableCell)<TableCellProps>(({ theme }) => ({
+export const RelativeTableCell = styled(TableCell)<TableCellProps>(() => ({
   position: 'relative'
 }));
 
-export const CellHighlight = styled('div')(({ theme }) => ({
+export const CellHighlight = styled('div')(() => ({
   position: 'absolute',
   left: 0,
   right: 0,

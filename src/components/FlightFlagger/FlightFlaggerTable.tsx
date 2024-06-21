@@ -2,7 +2,7 @@ import React from "react";
 import { Table, TableCell, TableRow, Tooltip, TooltipProps, IconButton } from "@mui/material";
 import { StyledTableHeader, StyledTableHeaderCell, StyledTableBody, RelativeTableCell, CellStatusHighlight } from "../StyledTable";
 import { FlightHighlight } from "./FlightFlaggerResults";
-import { FlightArrival } from "./FlightFlagger";
+import { FlightArrival } from "./FlightArrival";
 import InfoIcon from '@mui/icons-material/Info';
 import { styled } from '@mui/material/styles';
 
@@ -24,7 +24,7 @@ export const getConfidenceAlert = (confidence: string | undefined) => {
       return ['', '']
   }
 }
-const StyledTooltip = styled(Tooltip)<TooltipProps>(({ theme }) => ({
+const StyledTooltip = styled(Tooltip)<TooltipProps>(() => ({
   color: '#fff',
   '& > svg': {
     fontSize: '1em',
