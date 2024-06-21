@@ -1,8 +1,8 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import React from "react";
-import { FlightFlaggerResults as FlightFlaggerResultsComponent } from "./FlightFlaggerResults";
+import { FlightFlaggerResults as FlightFlaggerResultsComponent,IFlightFlaggerResults } from "./FlightFlaggerResults";
 import { ThemeProvider, createTheme } from "@mui/material";
-import ExampleFlights from "./ExampleFlights";s
+import ExampleFlights from "./ExampleFlights";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -13,7 +13,7 @@ export default {
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const defaultTheme = createTheme();
 const Template: ComponentStory<typeof FlightFlaggerResultsComponent> = (
-  args,
+  args :IFlightFlaggerResults,
 ) => (
   <ThemeProvider theme={defaultTheme}>
     <FlightFlaggerResultsComponent {...args} />
