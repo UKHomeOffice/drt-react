@@ -16,7 +16,7 @@
     "lint": "eslint src",
     "prebuild:storybook": "npm run test:generate-output",
     "storybook": "npm run test:generate-output && storybook dev -p 6006",
-    "build-storybook": "storybook build",
+    "build-storybook": "npm run test:generate-output && storybook build",
     "predeploy-storybook": "npm run build-storybook",
     "deploy-storybook": "gh-pages -d storybook-static",
     "prepare": "npm run build"
