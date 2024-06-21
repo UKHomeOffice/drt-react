@@ -6,7 +6,7 @@ branding:
 inputs:
   checkout:
     description: 'Specifies if this action should checkout the code'
-    required: false
+    required: true
     default: 'true'
   path:
     description: 'Specifies the path of the static assets after building'
