@@ -41,7 +41,7 @@
     "@storybook/addon-interactions": "^8.1.6",
     "@storybook/addon-jest": "^8.1.6",
     "@storybook/addon-links": "^8.1.6",
-    "@storybook/addon-themes": "^8.1.6",
+    "@storybook/addon-themes": "^8.1.10",
     "@storybook/addon-webpack5-compiler-babel": "^3.0.3",
     "@storybook/blocks": "^8.1.6",
     "@storybook/preset-scss": "^1.0.3",
@@ -99,16 +99,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "sass-loader": "^14.2.1",
-    "storybook-addon-material-ui": "^0.9.0-alpha.24",
     "style-loader": "^4.0.0"
-  },
-  "overrides": {
-    "@material-ui/core": {
-      "react": "$react",
-      "react-dom": "$react",
-      "@mui/material": "$@mui/material",
-      "@storybook/react": "$@storybook/react"
-    }
   },
   "packageManager": "yarn@4.2.2"
 }
