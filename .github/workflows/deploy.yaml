@@ -16,4 +16,4 @@ jobs:
     - id: build-publish
       uses: ./.github/actions/publish
       with:
-        path: build # change to your build folder
+        path: ./
