@@ -106,7 +106,8 @@
     "@material-ui/core": {
       "react": "$react",
       "react-dom": "$react",
-      "@mui/material": "$@mui/material"
+      "@mui/material": "$@mui/material",
+      "@storybook/react": "$@storybook/react"
     }
   },
   "packageManager": "yarn@4.2.2"
