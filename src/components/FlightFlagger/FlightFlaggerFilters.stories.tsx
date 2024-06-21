@@ -2,6 +2,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import React from "react";
 import {
   FlightFlaggerFilters as FlightFlaggerFiltersComponent,
+  IFlightFlaggerFilters,
   SearchFilterPayload,
 } from "./FlightFlaggerFilters";
 import { ThemeProvider, createTheme } from "@mui/material";
@@ -15,7 +16,7 @@ export default {
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const defaultTheme = createTheme();
 const Template: ComponentStory<typeof FlightFlaggerFiltersComponent> = (
-  args,
+  args: IFlightFlaggerFilters,
 ) => (
   <ThemeProvider theme={defaultTheme}>
     <FlightFlaggerFiltersComponent {...args} />
@@ -29,4 +30,6 @@ FlightFlaggerFilters.args = {
   ageGroups: ["0-9", "10-24", "25-39", "40-55", "55-69", "70+"],
   submitCallback: (searchFilters: SearchFilterPayload) =>
     console.log(searchFilters),
+  showAllCallback: (event: React.ChangeEvent<HTMLInputElement>) =>
+    console.log(event),
 };

@@ -19,17 +19,16 @@ export type SearchFilterPayload = {
   selectedAgeGroups: string[],
   selectedNationalities: string[],
   flightNumber: string,
-
 }
 
 export interface IFlightFlaggerFilters {
   nationalities: string[],
   ageGroups: string[],
   submitCallback: (payload:SearchFilterPayload) => void,
-  toggleHighlightDisplay: (event: React.ChangeEvent<HTMLInputElement>) => void,
+  showAllCallback: (event: React.ChangeEvent<HTMLInputElement>) => void,
 }
 
-export const FlightFlaggerFilters = ({nationalities, ageGroups, submitCallback, toggleHighlightDisplay}: IFlightFlaggerFilters) => {
+export const FlightFlaggerFilters = ({nationalities, ageGroups, submitCallback, showAllCallback}: IFlightFlaggerFilters) => {
 
   const nationalitiesOptions = nationalities.map((nationality) => { return { title: nationality }});
   const ageOptions = ageGroups.map((ageGroup) => { return { title: ageGroup }});
@@ -178,7 +177,7 @@ export const FlightFlaggerFilters = ({nationalities, ageGroups, submitCallback, 
             row
             aria-labelledby="display"
             name="row-radio-buttons-group"
-            onChange={toggleHighlightDisplay}
+            onChange={showAllCallback}
             defaultValue="false"
           >
             <FormControlLabel value="false" data-testid="show-all-flights"  defaultChecked={true} control={<Radio />} label="All flights" />

@@ -45,7 +45,11 @@ const FlightFlagger = ({nationalities, ageGroups, submitCallback, flights, isLoa
   }
 
   return <>
-    <FlightFlaggerFilters nationalities={nationalities} ageGroups={ageGroups} submitCallback={submitCallback} toggleHighlightDisplay={toggleHighlightDisplay} />
+    <FlightFlaggerFilters 
+      nationalities={nationalities} 
+      ageGroups={ageGroups} 
+      submitCallback={submitCallback} 
+      showAllCallback={toggleHighlightDisplay} />
     { isLoading? <div style={{display: 'flex', justifyContent: 'center', padding: '50px'}}><CircularProgress data-testid="flight-flagger-loading-spinner" /></div> : <FlightFlaggerResults flights={flights} showHighlightOnly={showHighlightOnly} />}
   </>
 }
