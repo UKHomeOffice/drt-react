@@ -6,7 +6,7 @@ import { FlightFlaggerTable } from "./FlightFlaggerTable";
 import TungstenIcon from '@mui/icons-material/Tungsten';
 import { FlightArrival } from "./FlightFlagger";
 
-interface IFlightHighlight {
+export interface IFlightHighlight {
   text: string
 }
 

@@ -1,8 +1,10 @@
 import React from "react";
-import { Table, TableCell, TableRow } from "@mui/material";
+import { Table, TableCell, TableRow, Tooltip, TooltipProps, IconButton } from "@mui/material";
 import { StyledTableHeader, StyledTableHeaderCell, StyledTableBody, RelativeTableCell, CellStatusHighlight } from "../StyledTable";
 import { FlightHighlight } from "./FlightFlaggerResults";
 import { FlightArrival } from "./FlightFlagger";
+import InfoIcon from '@mui/icons-material/Info';
+import { styled } from '@mui/material/styles';
 
 export interface IFlightCard {
   flight: FlightArrival
@@ -22,6 +24,14 @@ export const getConfidenceAlert = (confidence: string | undefined) => {
       return ['', '']
   }
 }
+const StyledTooltip = styled(Tooltip)<TooltipProps>(({ theme }) => ({
+  color: '#fff',
+  '& > svg': {
+    fontSize: '1em',
+    width: '0.9em',
+    height: '0.9em'
+    }
+}));
 
 export interface IFlightFlaggerTable {
   flights: FlightArrival[]
@@ -36,16 +46,51 @@ export const FlightFlaggerTable = ({flights, ...others}: IFlightFlaggerTable) =>
         <StyledTableHeaderCell>Flight</StyledTableHeaderCell>
         { hasHighlightedFlights && <StyledTableHeaderCell>Pax info</StyledTableHeaderCell> }
         <StyledTableHeaderCell align="center">Origin</StyledTableHeaderCell>
-        <StyledTableHeaderCell align="center">Country</StyledTableHeaderCell>
+        <StyledTableHeaderCell align="center">
+          Country
+          <StyledTooltip title="Country of origin">
+            <IconButton>
+              <InfoIcon />
+            </IconButton>
+          </StyledTooltip>
+        </StyledTableHeaderCell>
         <StyledTableHeaderCell align="center">Gate/Stand</StyledTableHeaderCell>
         <StyledTableHeaderCell align="center">Status</StyledTableHeaderCell>
         <StyledTableHeaderCell align="center">Scheduled</StyledTableHeaderCell>
-        <StyledTableHeaderCell align="center">Expected</StyledTableHeaderCell>
+        <StyledTableHeaderCell align="center">
+          Expected
+          <StyledTooltip title="Expected arrival">
+            <IconButton>
+              <InfoIcon />
+            </IconButton>
+          </StyledTooltip>
+        </StyledTableHeaderCell>
         <StyledTableHeaderCell align="center">Exp PCP</StyledTableHeaderCell>
         <StyledTableHeaderCell align="center">Exp PCP Pax</StyledTableHeaderCell>
-        <StyledTableHeaderCell align="center">e-Gate</StyledTableHeaderCell>
-        <StyledTableHeaderCell align="center">EEA</StyledTableHeaderCell>
-        <StyledTableHeaderCell align="center">Non-EEA</StyledTableHeaderCell>
+        <StyledTableHeaderCell align="center">
+          e-Gate
+          <StyledTooltip title="Expeced total pax">
+            <IconButton>
+              <InfoIcon />
+            </IconButton>
+          </StyledTooltip>
+        </StyledTableHeaderCell>
+        <StyledTableHeaderCell align="center">
+          EEA
+          <StyledTooltip title="Expeced total pax">
+            <IconButton>
+              <InfoIcon />
+            </IconButton>
+          </StyledTooltip>
+        </StyledTableHeaderCell>
+        <StyledTableHeaderCell align="center">
+          Non-EEA
+          <StyledTooltip title="Expeced total pax">
+            <IconButton>
+              <InfoIcon />
+            </IconButton>
+          </StyledTooltip>
+        </StyledTableHeaderCell>
       </TableRow>
     </StyledTableHeader>
     <StyledTableBody>
