@@ -13,5 +13,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+    - id: checkout-actions
+      uses : "actions/checkout@v4"
     - id: build-publish
       uses: ./.github/actions/publish
