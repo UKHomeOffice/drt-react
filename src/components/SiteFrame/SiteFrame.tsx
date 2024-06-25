@@ -1,47 +1,32 @@
-import React, {createRef, useEffect, useState} from "react";
-import { Box, CssBaseline, List, ListItemButton, ListItemIcon,ListItemText, Badge, Toolbar, IconButton, Drawer as MuiDrawer, Typography, Grid, useMediaQuery, Select, MenuItem, SelectProps, FormControl, CircularProgress, Divider, Backdrop, TextField, FormLabel, BoxProps, InputAdornment, Paper, InputBase, LinearProgress, IconButtonProps, BackdropProps } from "@mui/material";
+import React, {createRef, useEffect, useState, useContext} from "react";
+import { Box, CssBaseline,  Badge, Toolbar, IconButton, Drawer as MuiDrawer, Typography, Grid, useMediaQuery,  CircularProgress,  Backdrop, BoxProps,  Paper, LinearProgress, IconButtonProps, BackdropProps, List, ListItemButton, ListItemIcon } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import { ThemeProvider } from '@mui/material/styles';
 import MenuIcon from "@mui/icons-material/Menu";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import LocalAirportIcon from '@mui/icons-material/LocalAirport';
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import PeopleIcon from "@mui/icons-material/People";
-import BarChartIcon from "@mui/icons-material/BarChart";
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import LayersIcon from "@mui/icons-material/Layers";
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import PersonIcon from '@mui/icons-material/Person';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import SearchIcon from '@mui/icons-material/Search';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import HelpIcon from '@mui/icons-material/Help';
 import { Theme } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import { Crest } from "./Crest";
+import { getAirportByCode } from "../../aiports";
+import {PageNav} from "./Navigation";
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+
+import PortSelector from "../PortSelector";
+import PortPanel from "../PortSelector/PortPanel";
+import {createDRTTheme} from "../../drt-theme";
+import { Calculate } from "@mui/icons-material";
 
 export interface ISiteFrame {}
 
 
 const drawerWidth: number = 240;
-
-const AirportSelect = styled(Select)<SelectProps>(({ theme }) => ({
-  minWidth: '280px',
-  outline: 0,
-  marginRight: theme.spacing(1),
-  '& .MuiSelect-select': {
-    borderWidth: '0 !important',
-    display: 'flex',
-    paddingRight: '40px !important',
-    gap: '10px',
-    '& >*': {
-      display: 'flex',  
-      alignItems: 'center',
-      minWidth: 0,
-    }
-  }
-}));
-
+const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
 const Wrapper = styled(Box)<BoxProps>(({ theme }) => ({
   display: 'flex',
@@ -66,7 +51,7 @@ const PageContent = styled(Box)<BoxProps>(({ theme }) => ({
   display: 'flex',
   height: '100%',
   flexGrow: 1,
-  backgroundColor: theme.palette.grey[100],
+  backgroundColor: theme.palette.mode === 'light' ? theme.palette.grey[100] : 'transparent',
   alignItems: 'stretch',
 }));
 
@@ -77,9 +62,9 @@ interface AppBarProps extends MuiAppBarProps {
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })<AppBarProps>(({ theme, open }) => ({
-  backgroundColor: theme.palette.common.white,
-  borderBottom: `1px solid ${theme.palette.grey[300]}`,
-  zIndex: theme.zIndex.drawer - 1,
+  backgroundColor: theme.palette.mode === 'dark' ? 'transparent' : theme.palette.common.white,
+  borderBottom: `1px solid ${theme.palette.divider}`,
+  zIndex: theme.zIndex.drawer + 2,
   transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -95,8 +80,9 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const DrtBackdrop = styled(Backdrop)<BackdropProps>(({ theme }) => ({
-  backgroundColor: 'rgba(255,255,255,0.6)', 
-  backdropFilter: 'blur(1px)',
+  backgroundColor: 'rgba(0,0,0,0.1)', 
+  backdropFilter: 'blur(2px)',
+  zIndex: theme.zIndex.drawer + 1,
 }));
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -106,15 +92,12 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
       position: 'relative',
       whiteSpace: 'nowrap',
       width: drawerWidth,
-      overflow: 'hidden',
-      transition: theme.transitions.create('all', {
+      transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
       }),
-      boxSizing: 'border-box',
       ...(!open && {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('all', {
+        transition: theme.transitions.create('width', {
           easing: theme.transitions.easing.sharp,
           duration: theme.transitions.duration.leavingScreen,
         }),
@@ -133,6 +116,16 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const SiteFrame = ({}: ISiteFrame) => {
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
+  const [mode, setMode] = React.useState<'light' | 'dark'>('light');
+  const colorMode = React.useMemo(
+    () => ({
+      toggleColorMode: () => {
+        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+      },
+    }),
+    [],
+  );
+  const drtTheme = createDRTTheme(mode);
 
   const scrollRef = createRef<HTMLDivElement>()
   useEffect(() => {
@@ -148,7 +141,7 @@ const SiteFrame = ({}: ISiteFrame) => {
   };
 
 
-  const [port, setPort] = useState('LGW');
+  const [port, setPort] = useState('');
   const handleChangePort = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setPort(event.target.value);
     flashLoading()
@@ -163,200 +156,129 @@ const SiteFrame = ({}: ISiteFrame) => {
     }
   };
   const handleTop = () => {
-    scrollRef.current!.scrollTop = 0;
+    scrollRef.current!.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
     setPos(false);
   };
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const flashLoading = () => {
-    setLoading(!loading);
+    setLoading(true);
+    setTimeout(() =>{
+      setLoading(false);
+    }, 2000)
   };
 
+  const handlePortClick = (port: string) => {
+    setPort(port);
+    flashLoading()
+  }
 
-  return <Wrapper>
-    <CssBaseline />
-      <AppBar color="transparent" elevation={0} position={isMobile ? "absolute" : "sticky"}>
-        <Toolbar>
-          {isMobile && <IconButton
-            onClick={toggleDrawer}
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>}
-          <Crest />
-          <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
-            noWrap
-            sx={{ flexGrow: 1 }}>
-            Dynamic Response Tool
-          </Typography>
-          <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: '10px' }}>
-            {/* <Paper
-              variant="appbar"
-              sx={{ p: '2px 4px', mR: '10px', display: 'flex', alignItems: 'center', width: 400 }}
-            >
-              <IconButton sx={{ p: '10px' }} aria-label="menu" size="small">
-                <SearchIcon />
-              </IconButton>
-              <InputBase
-                size="small"
-                sx={{ ml: 1, flex: 1 }}
-                placeholder="Search DRT..."
-                inputProps={{ 'aria-label': 'search google maps', sx: {pb: 0} }}
-              />
-              <IconButton type="button" sx={{ p: '10px' }} aria-label="search" size="small">
-                <ArrowRightIcon />
-              </IconButton>
-            </Paper>
-            <Divider orientation="vertical" flexItem sx={{margin: '0 10px'}} /> */}
-            <FormLabel sx={{textAlign: 'right', textTransform: 'uppercase', fontSize: '0.8em', letterSpacing: '1px', display: 'flex', alignItems: 'center' }}>Select an <br/>airport/region:</FormLabel>
-            <FormControl size="small">
-              <AirportSelect value={port} onChange={handleChangePort}>
-                <MenuItem value={'LGW'}>
-                  <ListItemIcon><LocalAirportIcon fontSize="small" /></ListItemIcon>
-                  <ListItemText>London Gatwick </ListItemText>
-                  <Typography variant="body2" color="text.secondary">LGW</Typography>
-                </MenuItem>
-                <MenuItem value={'LHR'}>
-                  <ListItemIcon><LocalAirportIcon fontSize="small" /></ListItemIcon>
-                  <ListItemText>London Heathrow </ListItemText>
-                  <Typography variant="body2" color="text.secondary">LHR</Typography>
-                </MenuItem>
-              </AirportSelect>
-            </FormControl>
-            <Divider orientation="vertical" flexItem  />
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-                <HelpIcon />
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-haspopup="true"
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
-      <LinearProgress color="primary" sx={{width: '100%', height: loading ? '4px': '0px', position: 'absolute', top: { xs: '57px', sm: '65px'}, zIndex: 2000}} />
-      <Grid container sx={{alignItems: 'start', height: '100%', flexWrap: 'nowrap'}}>
-        <Grid item sx={{height: '100%'}}>
-          <Drawer variant="permanent" hideBackdrop={false} open={drawerOpen}>
-            <List component="nav">
-              <ListItemButton onClick={toggleDrawer}>
-                <ListItemIcon>
-                  {drawerOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                </ListItemIcon>
-              </ListItemButton>
-              <ListItemButton>
-                <ListItemIcon>
-                  <DashboardIcon />
-                </ListItemIcon>
-                <ListItemText primary="Dashboard" />
-              </ListItemButton>
-              <ListItemButton>
-                <ListItemIcon>
-                  <ShoppingCartIcon />
-                </ListItemIcon>
-                <ListItemText primary="Orders" />
-              </ListItemButton>
-              <ListItemButton>
-                <ListItemIcon>
-                  <PeopleIcon />
-                </ListItemIcon>
-                <ListItemText primary="Customers" />
-              </ListItemButton>
-              <ListItemButton>
-                <ListItemIcon>
-                  <BarChartIcon />
-                </ListItemIcon>
-                <ListItemText primary="Reports" />
-              </ListItemButton>
-              <ListItemButton>
-                <ListItemIcon>
-                  <LayersIcon />
-                </ListItemIcon>
-                <ListItemText primary="Integrations" />
-              </ListItemButton>
 
-              <Divider />
-            </List>
-          </Drawer>
-        </Grid>
-        <PageContent sx={{position: 'relative'}}>
-          <Box ref={scrollRef} sx={{ paddingX: 4, flexGrow: 1, overflowY:  loading ? 'hidden' : 'scroll', opacity: loading ? 0.4 : 1}}>
-            <Box sx={{mb: 4, mt: 3}}>
-              <Typography variant="h1" component="h1">London Gatwick</Typography>
+  return <ColorModeContext.Provider value={colorMode}>
+    <ThemeProvider theme={drtTheme}>
+      <Wrapper>
+        <CssBaseline />
+        <AppBar color="transparent" elevation={0} position={"sticky"}>
+          <Toolbar>
+            {isMobile && <IconButton
+              onClick={toggleDrawer}
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+            >
+              <MenuIcon />
+            </IconButton>}
+            <Box display="flex" mr={'auto'} ml={isMobile ? 'auto' : '0'}>
+              <Crest />
+              <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>DRT</Typography>
             </Box>
-            <Grid container spacing={4} sx={{pb: 12}}>
-              <Grid item xs={12} md={6} lg={4}>
-                <Paper><Box sx={{p:4, pb: 25}}></Box></Paper>
+            <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: '10px' }}>
+              <PortSelector handleChangePort={handleChangePort} port={port} />
+              <IconButton
+                size="large"
+                aria-label="show 17 new notifications"
+                color="inherit"
+              >
+                  <HelpIcon />
+              </IconButton>
+              <IconButton
+                size="large"
+                aria-label="show 17 new notifications"
+                color="inherit"
+              >
+                <Badge badgeContent={17} color="error">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+            </Box>
+            <Box ml={{xs: 0, md: '10px'}}>
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-haspopup="true"
+                color="inherit"
+              >
+                <PersonIcon />
+              </IconButton>
+            </Box>
+          </Toolbar>
+        </AppBar>
+        {/* MOBILE DRAWER */}
+        <MuiDrawer variant={"temporary"} anchor="left" open={drawerOpen} sx={{display: {xs: 'block', md:'none'},zIndex: (theme) => theme.zIndex.drawer + 3}}>
+          <PageNav drawerOpen={drawerOpen} toggleDrawer={toggleDrawer} selectedPort={port} themeToggle={colorMode.toggleColorMode}  />
+        </MuiDrawer>
+
+        {/* PROGRESS STRIP */}
+        <LinearProgress color="primary" sx={{width: '100%', height: loading ? '4px': '0px', position: 'absolute', top: { xs: '57px', sm: '65px'}, zIndex: 2000}} />
+        
+        <Grid container sx={{alignItems: 'start', height: '100%', flexWrap: 'nowrap'}}>
+          {/* DESKTOP DRAWER */}
+          <Grid item sx={{height: '100%', display: {xs: 'none', md: 'block'}}}>
+            <Drawer variant={"permanent"} hideBackdrop={false} open={drawerOpen}>
+              <PageNav drawerOpen={drawerOpen} toggleDrawer={toggleDrawer} selectedPort={port} themeToggle={colorMode.toggleColorMode} />
+            </Drawer>
+          </Grid>
+          {/* PAGE CONTENT */}
+          <PageContent sx={{position: 'relative'}}>
+            <Box ref={scrollRef} sx={{ paddingX: { xs: 2, md: 4}, flexGrow: 1, overflowY: 'scroll', opacity: loading ? 0.4 : 1}}>
+              <Box sx={{mb: 4, mt: 3}}>
+                <Typography variant="pageTitle" component="h1">{port != '' ? getAirportByCode(port) : "Select an airport or region"}</Typography>
+              </Box>
+              <Grid container spacing={4} sx={{pb: 12}}>
+                <Grid item xs={12}>
+                  <PortPanel handlePortClick={handlePortClick} selectedPort={port} />
+                </Grid>
+                <Grid item xs={12} md={6} lg={4}>
+                  <Paper>
+                    <Box sx={{p:4, pb: 25}}>
+                    </Box>
+                  </Paper>
+                </Grid>
+                <Grid item xs={12} md={6} lg={4}>
+                  <Paper><Box sx={{p:4, pb: 25}}></Box></Paper>
+                </Grid>
               </Grid>
-              <Grid item xs={12} md={6} lg={4}>
-                <Paper><Box sx={{p:4, pb: 25}}></Box></Paper>
-              </Grid>
-              <Grid item xs={12} md={6} lg={4}>
-                <Paper><Box sx={{p:4, pb: 25}}></Box></Paper>
-              </Grid>
-              <Grid item xs={12} md={6} lg={6}>
-                <Paper><Box sx={{p:4, pb: 20}}></Box></Paper>
-              </Grid>
-              <Grid item xs={12} md={6} lg={6}>
-                <Paper><Box sx={{p:4, pb: 20}}></Box></Paper>
-              </Grid>
-              <Grid item xs={12}>
-                <Paper><Box sx={{p:4, pb: 80}}></Box></Paper>
-              </Grid>
-              <Grid item xs={12} md={6} lg={6}>
-                <Paper><Box sx={{p:4, pb: 20}}></Box></Paper>
-              </Grid>
-              <Grid item xs={12} md={6} lg={6}>
-                <Paper><Box sx={{p:4, pb: 20}}></Box></Paper>
-              </Grid>
-              <Grid item xs={12}>
-                <Paper><Box sx={{p:4, pb: 80}}></Box></Paper>
-              </Grid>
-            </Grid>
-          </Box>
-          <ScrollToTopBtn
-            color="primary"
-            style={{
-              position: "fixed",
-              bottom: 20,
-              right: 30,
-              display: pos ? "block" : "none"
-            }}
-            onClick={handleTop}
-          >
-            <ArrowUpwardIcon/>
-          </ScrollToTopBtn>
-          <DrtBackdrop open={loading}>
-            <CircularProgress color="primary" />
-          </DrtBackdrop>
-        </PageContent>
-    </Grid>
-  </Wrapper >
+            </Box>
+
+            {/* SCROLL TO TOP  */}
+            <ScrollToTopBtn color="primary" style={{ position: "fixed", bottom: 20, right: 30, display: pos ? "block" : "none" }} onClick={handleTop} >
+              <ArrowUpwardIcon/>
+            </ScrollToTopBtn>
+
+            {/* LOADING BACKDROP */}
+            <DrtBackdrop open={loading}>
+              <CircularProgress color="primary" />
+            </DrtBackdrop>
+          </PageContent>
+        </Grid>
+      </Wrapper >
+    </ThemeProvider>
+  </ColorModeContext.Provider>
 }
 
 export default SiteFrame;

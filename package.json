@@ -50,6 +50,7 @@
     "@storybook/react": "^8.1.6",
     "@storybook/react-webpack5": "^8.1.6",
     "@storybook/test": "^8.1.6",
+    "@svgr/rollup": "^8.1.0",
     "@testing-library/jest-dom": "^6.4.5",
     "@testing-library/react": "^14.0.0",
     "@types/jest": "^29.5.12",
