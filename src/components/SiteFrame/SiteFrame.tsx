@@ -20,7 +20,7 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import PortSelector from "../PortSelector";
 import PortPanel from "../PortSelector/PortPanel";
 import {createDRTTheme} from "../../drt-theme";
-import { Calculate } from "@mui/icons-material";
+import UserMenu from "./UserMenu";
 
 export interface ISiteFrame {}
 
@@ -215,17 +215,7 @@ const SiteFrame = ({}: ISiteFrame) => {
                 </Badge>
               </IconButton>
             </Box>
-            <Box ml={{xs: 0, md: '10px'}}>
-              <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-                aria-haspopup="true"
-                color="inherit"
-              >
-                <PersonIcon />
-              </IconButton>
-            </Box>
+            <UserMenu />
           </Toolbar>
         </AppBar>
         {/* MOBILE DRAWER */}
@@ -254,12 +244,24 @@ const SiteFrame = ({}: ISiteFrame) => {
                   <PortPanel handlePortClick={handlePortClick} selectedPort={port} />
                 </Grid>
                 <Grid item xs={12} md={6} lg={4}>
-                  <Paper>
-                    <Box sx={{p:4, pb: 25}}>
-                    </Box>
+                  <Paper><Box sx={{p:4, pb: 25}}></Box>
                   </Paper>
                 </Grid>
                 <Grid item xs={12} md={6} lg={4}>
+                  <Paper><Box sx={{p:4, pb: 25}}></Box>
+                  </Paper>
+                </Grid>
+                <Grid item xs={12} md={6} lg={4}>
+                  <Paper><Box sx={{p:4, pb: 25}}></Box></Paper>
+                </Grid>
+                <Grid item xs={12}>
+                  <Paper><Box sx={{p:4, pb: 25}}></Box></Paper>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Paper><Box sx={{p:4, pb: 25}}></Box>
+                  </Paper>
+                </Grid>
+                <Grid item xs={12} md={6}>
                   <Paper><Box sx={{p:4, pb: 25}}></Box></Paper>
                 </Grid>
               </Grid>

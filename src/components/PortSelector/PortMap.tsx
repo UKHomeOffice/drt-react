@@ -99,7 +99,7 @@ const PortMap = ({handlePortClick, handlePortHover, hoveredPort, selectedPort}: 
   }
 
   const renderPort = (port: PortPin, index: number) => {
-    const color = isSelected(port.portCode, port.region) ? theme.palette.primary.dark : 
+    const color = isSelected(port.portCode, port.region) ? theme.palette.primary.light : 
         isHovered(port.portCode, port.region) ? theme.palette.primary.light : theme.palette.grey[500]
 
     return ( <g key={index}>

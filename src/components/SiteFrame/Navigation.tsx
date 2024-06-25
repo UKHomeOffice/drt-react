@@ -27,7 +27,7 @@ export const PageNav = ({toggleDrawer, drawerOpen, selectedPort, themeToggle}: I
 
   const isPortSelected = selectedPort !== ''
   return (
-  <List component="nav" sx={{padding: 0, height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column'}}>
+  <List component="nav" sx={{padding: 0, height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column', textTransform: 'capitalize'}}>
     <ListItemButton sx={{flexGrow: '0'}} onClick={toggleDrawer}>
       <ListItemIcon>
         {drawerOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
