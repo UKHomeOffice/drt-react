@@ -95,6 +95,7 @@
     "@mui/icons-material": "5.11.16",
     "@mui/lab": "5.0.0-alpha.119",
     "@mui/material": "5.11",
+    "@storybook/addon-a11y": "^8.1.10",
     "@storybook/icons": "^1.2.9",
     "css-loader": "^7.1.2",
     "install-peers": "^1.0.4",
