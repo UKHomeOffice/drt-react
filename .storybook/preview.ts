@@ -4,6 +4,8 @@ import { withTests } from '@storybook/addon-jest';
 import { withThemeFromJSXProvider } from '@storybook/addon-themes';
 import { ThemeProvider } from "@emotion/react";
 import { createTheme } from "@mui/material";
+import drtTheme from '../src/drt-theme'
+import { createDRTTheme } from "../src/drt-theme";
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -13,13 +15,13 @@ import '@fontsource/material-icons';
 
 import results from '../.jest-test-results.json';
 
-const theme = createTheme()
+import './preview-styles.css'
 
 const preview: Preview = {
   decorators: [
     withThemeFromJSXProvider<ReactRenderer>({
       themes: {
-        default: theme,
+        default: createDRTTheme('light'),
       },
       defaultTheme: 'default',
       Provider: ThemeProvider,
