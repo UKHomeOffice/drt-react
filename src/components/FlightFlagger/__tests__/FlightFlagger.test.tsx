@@ -112,7 +112,7 @@ describe("Flight Flagger", () => {
       expect(filters).toHaveStyle(`height: auto`)
     });
 
-    const flightNumber = screen.getByLabelText('Enter flight number')
+    const flightNumber = screen.getByLabelText('Enter flight details')
     fireEvent.change(flightNumber, {target: {value: 'BA1234'}})
 
     const nationalitiesAutocomplete = screen.getByTestId('nationalities-autocomplete');
@@ -165,7 +165,7 @@ describe("Flight Flagger", () => {
       expect(filters).toHaveStyle(`height: auto`)
     });
 
-    const flightNumber = screen.getByLabelText('Enter flight number')
+    const flightNumber = screen.getByLabelText('Enter flight details')
     fireEvent.change(flightNumber, {target: {value: 'BA1234'}})
     fireEvent.keyDown(flightNumber, { key: 'Enter' })
   
