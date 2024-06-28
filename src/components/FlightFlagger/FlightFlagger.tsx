@@ -22,10 +22,15 @@ const FlightFlagger = ({nationalities, ageGroups, submitCallback, flights, isLoa
     setShowHighlightOnly(event.target.value  === 'true')
   }
 
+  const onChangeInput = (searchTerm: string) => {
+    console.log(searchTerm);
+  }
+
   return <>
     <FlightFlaggerFilters 
       nationalities={nationalities} 
       ageGroups={ageGroups} 
+      onChangeInput={onChangeInput}
       submitCallback={submitCallback} 
       showAllCallback={toggleHighlightDisplay} />
     { isLoading? <div style={{display: 'flex', justifyContent: 'center', padding: '50px'}}><CircularProgress data-testid="flight-flagger-loading-spinner" /></div> : <FlightFlaggerResults flights={flights} showHighlightOnly={showHighlightOnly} />}
