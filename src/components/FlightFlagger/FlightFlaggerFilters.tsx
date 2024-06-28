@@ -26,9 +26,10 @@ export interface IFlightFlaggerFilters {
   ageGroups: string[],
   submitCallback: (payload:SearchFilterPayload) => void,
   showAllCallback: (event: React.ChangeEvent<HTMLInputElement>) => void,
+  onChangeInput: (searchTerm: string) => void,
 }
 
-export const FlightFlaggerFilters = ({nationalities, ageGroups, submitCallback, showAllCallback}: IFlightFlaggerFilters) => {
+export const FlightFlaggerFilters = ({nationalities, ageGroups, submitCallback, showAllCallback, onChangeInput}: IFlightFlaggerFilters) => {
 
   const nationalitiesOptions = nationalities.map((nationality) => { return { title: nationality }});
   const ageOptions = ageGroups.map((ageGroup) => { return { title: ageGroup }});
@@ -73,12 +74,7 @@ export const FlightFlaggerFilters = ({nationalities, ageGroups, submitCallback, 
       ...searchFlags,
       [name]: event.target.value
     })
-    submitCallback({
-      ...searchFlags,
-      selectedNationalities: nationalityPayload, 
-      selectedAgeGroups: ageGroupPayload,
-      flightNumber: event.target.value
-    });
+    onChangeInput(event.target.value)
   }
 
   const handleInputSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {

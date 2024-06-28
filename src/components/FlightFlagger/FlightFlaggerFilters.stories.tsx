@@ -16,9 +16,8 @@ export const FlightFlaggerFilters: Story = {
   args: {
     nationalities: ["FRA", "GBR", "USA", "CHL"],
     ageGroups: ["0-9", "10-24", "25-39", "40-55", "55-69", "70+"],
-    submitCallback: (searchFilters: SearchFilterPayload) =>
-      console.log(searchFilters),
-    showAllCallback: (event: React.ChangeEvent<HTMLInputElement>) =>
-      console.log(event),
+    submitCallback: (searchFilters: SearchFilterPayload) => console.log(searchFilters),
+    showAllCallback: (event: React.ChangeEvent<HTMLInputElement>) => console.log(event),
+    onChangeInput: (searchTerm: string) => console.log(searchTerm)
   }
 };
