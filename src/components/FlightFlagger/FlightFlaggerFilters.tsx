@@ -67,10 +67,18 @@ export const FlightFlaggerFilters = ({nationalities, ageGroups, submitCallback, 
 
   const handleTextInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name: string = event.target.name 
+    const ageGroupPayload: string[] = selectedAgeGroups.map((ageGroup: AutocompleteOption) => ageGroup.title)
+    const nationalityPayload: string[] = selectedNationalities.map((nationality: AutocompleteOption) => nationality.title)
     setSearchFlags({
       ...searchFlags,
       [name]: event.target.value
     })
+    submitCallback({
+      ...searchFlags,
+      selectedNationalities: nationalityPayload, 
+      selectedAgeGroups: ageGroupPayload,
+      flightNumber: event.target.value
+    });
   }
 
   const handleInputSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -117,8 +125,8 @@ export const FlightFlaggerFilters = ({nationalities, ageGroups, submitCallback, 
   return <>
     <Grid container sx={{backgroundColor: '#F3F5F9', width: '100%', ml:0, pt: 2}} flexWrap={{xs: 'wrap', md: 'nowrap'}} spacing={2}>
       <Grid item flexGrow={0}>
-        <InputLabel htmlFor="flight-number" sx={{mb:1}}><strong>Enter flight number</strong></InputLabel>
-        <FormControl variant="outlined">
+        <InputLabel htmlFor="flight-number" sx={{mb:1}}><strong>Enter flight details</strong></InputLabel>
+        <FormControl variant="outlined" sx={{minWidth: '365px'}}>
           <OutlinedInput
             sx={{backgroundColor: '#fff'}}
             size="small"
@@ -127,7 +135,7 @@ export const FlightFlaggerFilters = ({nationalities, ageGroups, submitCallback, 
             onChange={handleTextInputChange}
             onKeyDown={handleInputSubmit}
             value={searchFlags.flightNumber}
-            placeholder="Enter flight number"
+            placeholder="Enter flight number, origin or country"
             startAdornment={
               <InputAdornment position="start">
                 <SearchIcon/>
