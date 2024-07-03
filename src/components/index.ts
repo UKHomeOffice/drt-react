@@ -1,6 +1,7 @@
 export { default as FlightFlagger } from "./FlightFlagger";
-export { FlightFlaggerFilters } from "./FlightFlagger";
-export type { IFlightFlagger, IFlightFlaggerFilters } from "./FlightFlagger";
+
+export { FlightFlaggerFilters, FlightHighlightChip } from "./FlightFlagger";
+export type { IFlightFlagger, IFlightFlaggerFilters, IFlightHighlightChip } from "./FlightFlagger";
 
 export { StatusTag } from "./StatusTags";
 export type { IStatusTag } from "./StatusTags";
