@@ -19,7 +19,7 @@ export type SearchFilterPayload = {
   selectedAgeGroups: string[],
   selectedNationalities: string[],
   flightNumber: string,
-  requireAllSelected: false,
+  requireAllSelected: boolean,
 }
 
 export interface IFlightFlaggerFilters {
