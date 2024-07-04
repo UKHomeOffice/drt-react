@@ -57,6 +57,7 @@ export const FlightFlaggerFilters = ({nationalities, ageGroups, submitCallback, 
       selectedNationalities: nationalityPayload, 
       selectedAgeGroups: ageGroupPayload,
     });
+    setShowFilters(!showFilters)
   }
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
