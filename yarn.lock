@@ -1598,6 +1598,7 @@ __metadata:
     "@mui/lab": 5.0.0-alpha.119
     "@mui/material": 5.11
     "@rollup/plugin-commonjs": ^24.0.1
+    "@rollup/plugin-image": ^3.0.3
     "@rollup/plugin-node-resolve": ^15.0.2
     "@rollup/plugin-terser": ^0.4.0
     "@rollup/plugin-typescript": ^11.1.0
@@ -1615,6 +1616,7 @@ __metadata:
     "@storybook/react-webpack5": ^8.1.6
     "@storybook/test": ^8.1.6
     "@svgr/rollup": ^8.1.0
+    "@svgr/webpack": ^8.1.0
     "@testing-library/jest-dom": ^6.4.5
     "@testing-library/react": ^14.0.0
     "@types/jest": ^29.5.12
@@ -1630,6 +1632,7 @@ __metadata:
     install-peers: ^1.0.4
     jest: ^29.5.0
     jest-environment-jsdom: ^29.5.0
+    jest-svg-transformer: ^1.0.0
     postcss: ^8.4.38
     prop-types: ^15.8.1
     react: 18.2.0
@@ -2988,6 +2991,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rollup/plugin-image@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "@rollup/plugin-image@npm:3.0.3"
+  dependencies:
+    "@rollup/pluginutils": ^5.0.1
+    mini-svg-data-uri: ^1.4.4
+  peerDependencies:
+    rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+  peerDependenciesMeta:
+    rollup:
+      optional: true
+  checksum: 30363d50c3d43fc35add135ce1b9591a69f378d696829724ce229e7c78ed00bc646280c150bd4b872d9359aeee656fae7107876c802dd7374aa71e21cb0af371
+  languageName: node
+  linkType: hard
+
 "@rollup/plugin-node-resolve@npm:^15.0.2":
   version: 15.2.3
   resolution: "@rollup/plugin-node-resolve@npm:15.2.3"
@@ -4151,6 +4169,22 @@ __metadata:
     "@svgr/plugin-jsx": 8.1.0
     "@svgr/plugin-svgo": 8.1.0
   checksum: 728e2d5ac9765e83852743c209663b4b32ca4182e42bfcf13a75d2205b041b14ee34013344589cd79ba9b0ba35cc86436524ffd4362b60d636305ffb2a3b4eb1
+  languageName: node
+  linkType: hard
+
+"@svgr/webpack@npm:^8.1.0":
+  version: 8.1.0
+  resolution: "@svgr/webpack@npm:8.1.0"
+  dependencies:
+    "@babel/core": ^7.21.3
+    "@babel/plugin-transform-react-constant-elements": ^7.21.3
+    "@babel/preset-env": ^7.20.2
+    "@babel/preset-react": ^7.18.6
+    "@babel/preset-typescript": ^7.21.0
+    "@svgr/core": 8.1.0
+    "@svgr/plugin-jsx": 8.1.0
+    "@svgr/plugin-svgo": 8.1.0
+  checksum: c6eec5b0cf2fb2ecd3a7a362d272eda35330b17c76802a3481f499b5d07ff8f87b31d2571043bff399b051a1767b1e2e499dbf186104d1c06d76f9f1535fac01
   languageName: node
   linkType: hard
 
@@ -10128,6 +10162,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jest-svg-transformer@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "jest-svg-transformer@npm:1.0.0"
+  peerDependencies:
+    jest: ">22"
+    react: ">=16"
+  checksum: 773a9129bf628101eddd911bf54783736991f2007b10bf7f05f7566a225485b03ca6cb30fcd270bfac845d6c0075976f1def4fccdda113d0d3176cf67ee18ded
+  languageName: node
+  linkType: hard
+
 "jest-util@npm:^29.7.0":
   version: 29.7.0
   resolution: "jest-util@npm:29.7.0"
@@ -10864,6 +10908,15 @@ __metadata:
   version: 1.0.1
   resolution: "min-indent@npm:1.0.1"
   checksum: bfc6dd03c5eaf623a4963ebd94d087f6f4bbbfd8c41329a7f09706b0cb66969c4ddd336abeb587bc44bc6f08e13bf90f0b374f9d71f9f01e04adc2cd6f083ef1
+  languageName: node
+  linkType: hard
+
+"mini-svg-data-uri@npm:^1.4.4":
+  version: 1.4.4
+  resolution: "mini-svg-data-uri@npm:1.4.4"
+  bin:
+    mini-svg-data-uri: cli.js
+  checksum: 997f1fbd8d59a70f03761e18626d335197a3479cb9d1ff75678e4b64b864d32a0b8fc18115eabde035e5299b8b4a354a78e57dd6ac10f9d604162a6170898d09
   languageName: node
   linkType: hard
 

@@ -199,5 +199,6 @@ module.exports = {
   // watchman: true,
   moduleNameMapper: {
     ".(css|less|scss)$": "identity-obj-proxy",
+    "\\.svg": "<rootDir>/src/components/__mocks__/SvgMock.js",
   },
 };
