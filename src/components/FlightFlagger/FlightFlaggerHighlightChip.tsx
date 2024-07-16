@@ -21,8 +21,10 @@ export const FlightHighlightChip = ({text}: IFlightHighlightChip) => {
             color: '#111224',
             margin: '2px 2px 2px 0px',
             borderRadius: 0,
-            '> span': {
-              paddingLeft: '5px'
+            '> .MuiChip-label': {
+              paddingLeft: '5px',
+              overflow: 'visible',
+              textOverflow: 'inherit',
             }
           }} />
 
