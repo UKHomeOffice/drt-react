@@ -149,8 +149,7 @@ describe("Flight Flagger", () => {
     fireEvent.change(ageInput, { target: { value: 'G' } })
     fireEvent.keyDown(ageAutocomplete, { key: 'ArrowDown' })
     fireEvent.keyDown(ageAutocomplete, { key: 'Enter' })
-
-    // await fireEvent.click(screen.getByTestId('show-transit-pax-check'));
+    
     await fireEvent.click(screen.getByTestId('show-visa-nationals-check'));
     await fireEvent.click(screen.getByTestId('require-all-selected-check'));
 
@@ -237,7 +236,6 @@ describe("Flight Flagger", () => {
     fireEvent.keyDown(ageAutocomplete, { key: 'ArrowDown' })
     fireEvent.keyDown(ageAutocomplete, { key: 'Enter' })
 
-    // await fireEvent.click(screen.getByTestId('show-transit-pax-check'));
     await fireEvent.click(screen.getByTestId('show-visa-nationals-check'));
     await fireEvent.click(screen.getByTestId('require-all-selected-check'));
 

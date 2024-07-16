@@ -91,8 +91,6 @@ export const FlightFlaggerFilters = ({
 
   const handleTextInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name: string = event.target.name 
-    const ageGroupPayload: string[] = selectedAgeGroups.map((ageGroup: AutocompleteOption) => ageGroup.title)
-    const nationalityPayload: string[] = selectedNationalities.map((nationality: AutocompleteOption) => nationality.title)
     setSearchFlags({
       ...searchFlags,
       [name]: event.target.value
@@ -283,12 +281,6 @@ export const FlightFlaggerFilters = ({
             </Grid>
             <Grid item xs={12}>
               <FormGroup>
-                {/* <FormControlLabel
-                  control={
-                    <Checkbox data-testid="show-transit-pax-check" checked={searchFlags.showTransitPaxNumber} onChange={handleCheckboxChange} name="showTransitPaxNumber" />
-                  }
-                  label="Show transit pax number"
-                /> */}
                 <FormControlLabel
                   control={
                     <Checkbox data-testid="show-visa-nationals-check" checked={searchFlags.showNumberOfVisaNationals} onChange={handleCheckboxChange} name="showNumberOfVisaNationals" />
