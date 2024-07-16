@@ -8,7 +8,7 @@ export interface IFlightHighlightChip {
 }
 
 const HighlightIcon = () => {
-  return <CustomHighlightIcon width={24} style={{marginLeft: '4px'}} />
+  return <CustomHighlightIcon style={{marginLeft: '4px', width: '25px'}} />
 }
 
 export const FlightHighlightChip = ({text}: IFlightHighlightChip) => {
