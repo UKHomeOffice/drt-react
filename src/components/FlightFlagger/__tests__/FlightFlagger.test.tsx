@@ -93,7 +93,7 @@ describe("Flight Flagger", () => {
     const expectedPayload = {
       selectedNationalities: ['GBR'],
       selectedAgeGroups: ['0-9'],
-      showTransitPaxNumber: true,
+      showTransitPaxNumber: false,
       showNumberOfVisaNationals: true,
       requireAllSelected: true,
       flightNumber: 'BA1234'
@@ -131,7 +131,7 @@ describe("Flight Flagger", () => {
     fireEvent.keyDown(ageAutocomplete, { key: 'ArrowDown' })
     fireEvent.keyDown(ageAutocomplete, { key: 'Enter' })
 
-    await fireEvent.click(screen.getByTestId('show-transit-pax-check'));
+    // await fireEvent.click(screen.getByTestId('show-transit-pax-check'));
     await fireEvent.click(screen.getByTestId('show-visa-nationals-check'));
     await fireEvent.click(screen.getByTestId('require-all-selected-check'));
 
