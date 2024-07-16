@@ -43,7 +43,7 @@ export const createDRTTheme = (mode: PaletteMode) => {
   return createTheme({
     palette: {
       mode: mode,
-      primary: { main: '#732282'},
+      primary: { main: '#334F96'},
       secondary: { main: '#1d70b8'}
     },
     typography: {

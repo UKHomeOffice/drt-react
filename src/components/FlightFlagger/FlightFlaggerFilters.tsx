@@ -141,18 +141,22 @@ export const FlightFlaggerFilters = ({
     return total;
   }
 
-  const clearSelection = (selection: string) => {
-    console.log(selection)
-    switch (selection) {
-      case 'nationalities':
-        console.log('clearing nationalities')
-        setSelectedNationalities([])
-        break;
-      case 'ageGroups':
-        console.log('clearing age groups')
-        setSelectedAgeGroups([])
-        break;
+  const clearHighlights = () => {
+    const resetFilterPayload = {
+      ...searchFlags,
+      showTransitPaxNumber: false,
+      showNumberOfVisaNationals: false,
+      requireAllSelected: false,
     }
+    setSearchFlags(resetFilterPayload)
+    setSelectedNationalities([]);
+    setSelectedAgeGroups([]);
+
+    submitCallback({
+      ...resetFilterPayload,
+      selectedNationalities: [], 
+      selectedAgeGroups: [],
+    });
   }
 
   return <>
@@ -253,7 +257,6 @@ export const FlightFlaggerFilters = ({
                     />
                   )}
                 />
-                <Typography variant="caption" sx={{pt:1, display: 'block'}}><Link onClick={() => clearSelection('nationalities')}>Clear all nationalities</Link></Typography>
             </Grid>
             <Grid item xs={12} sm={6} >
               <Autocomplete
@@ -277,7 +280,6 @@ export const FlightFlaggerFilters = ({
                     />
                   )}
                 />
-                <Typography variant="caption" sx={{pt:1, display: 'block'}}><Link onClick={() => clearSelection('ageGroups')}>Clear all age Groups</Link></Typography>
             </Grid>
             <Grid item xs={12}>
               <FormGroup>
@@ -315,7 +317,10 @@ export const FlightFlaggerFilters = ({
           </Grid>
         </Paper>
         </Collapse>
-        { isTouched() && <Typography sx={{mt:2,pr: 2}}><strong>Pax info highlighted - </strong>{ buildFilterString() }</Typography>}
+        { isTouched() && <Typography sx={{mt:2,pr: 2}}>
+          <strong>Pax info highlighted - </strong>
+          { buildFilterString() } - <Link data-testid="flight-flagger-clear-filters" onClick={() => clearHighlights()}>Clear all highlights</Link>
+        </Typography> }
       </Grid>
   </Grid></>
 
