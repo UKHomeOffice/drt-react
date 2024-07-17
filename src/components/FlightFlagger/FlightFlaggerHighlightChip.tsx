@@ -25,6 +25,7 @@ export const FlightHighlightChip = ({text}: IFlightHighlightChip) => {
               paddingLeft: '5px',
               overflow: 'visible',
               textOverflow: 'inherit',
+              whiteSpace: 'normal',
             }
           }} />
 
