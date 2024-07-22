@@ -2,8 +2,8 @@ import React from "react";
 import {  ListItemIcon,ListItemText, Typography,  MenuItem, FormControl, Select, SelectProps, Box, FormLabel, Divider } from "@mui/material";
 import airports from "../../aiports";
 import { styled } from '@mui/material/styles';
-import LocalAirportIcon from '@mui/icons-material/LocalAirport';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
+import { SelectChangeEvent } from "@mui/material";
 
 const StyledSelect = styled(Select)<SelectProps>(({ theme }) => ({
   minWidth: '280px',
@@ -26,7 +26,7 @@ const StyledSelect = styled(Select)<SelectProps>(({ theme }) => ({
 
 
 export interface IPortSelector {
-  handleChangePort: (event: React.ChangeEvent<HTMLSelectElement>) => void,
+  handleChangePort: (event: SelectChangeEvent<unknown>) => void,
   port: string,
 }
 

@@ -18,10 +18,6 @@ type PortPin = {
   region: string;
 }
 
-type PortRefs = {
-  [key:string]: RefObject<TitledSVG>
-}
-
 
 const PortMap = ({handlePortClick, handlePortHover, hoveredPort, selectedPort}: IPortMap) => {
   const theme = useTheme();

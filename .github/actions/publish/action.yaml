@@ -9,18 +9,14 @@ inputs:
     required: false
     # TODO: where does storybook output by default?
     default: 'storybook-static'
-  install_yarn:
-    description: 'Install yarn.'
-    required: false
-    default: 'npm install -g yarn'
   install_command:
     description: 'Specifies the command to run the installation.'
     required: false
-    default: 'yarn install --immutable --immutable-cache --check-cache'
+    default: 'npm install'
   build_command:
     description: 'Specifies the command to run after npm ci for the build'
     required: false
-    default: 'yarn build-storybook'
+    default: 'npm run build-storybook'
 outputs:
   page_url:
     description: "The URL of the page"
