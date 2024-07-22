@@ -8,7 +8,7 @@ export interface IFlightHighlightChip {
 }
 
 const HighlightIcon = () => {
-  return <CustomHighlightIcon style={{marginLeft: '4px', width: '25px'}} />
+  return <CustomHighlightIcon style={{marginLeft: '4px', minWidth: '25px'}} />
 }
 
 export const FlightHighlightChip = ({text}: IFlightHighlightChip) => {
@@ -21,8 +21,12 @@ export const FlightHighlightChip = ({text}: IFlightHighlightChip) => {
             color: '#111224',
             margin: '2px 2px 2px 0px',
             borderRadius: 0,
+            minHeight: '32px',
+            height: 'auto',
             '> .MuiChip-label': {
               paddingLeft: '5px',
+              paddingTop: '2px',
+              paddingBottom: '2px',
               overflow: 'visible',
               textOverflow: 'inherit',
               whiteSpace: 'normal',
