@@ -34,13 +34,13 @@ export const PageNav = ({toggleDrawer, drawerOpen, selectedPort, themeToggle}: I
       </ListItemIcon>
     </ListItemButton>
     <Divider sx={{flexGrow: '0'}} /> 
-    <ListItemButton sx={{flexGrow: '0'}} flexGrow={0} disabled={!isPortSelected}>
+    <ListItemButton sx={{flexGrow: '0'}} disabled={!isPortSelected}>
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
       <ListItemText primary={`${selectedPort} Dashboard`} />
     </ListItemButton>
-    <ListItemButton sx={{flexGrow: '0'}} flexGrow={0} disabled={!isPortSelected}>
+    <ListItemButton sx={{flexGrow: '0'}} disabled={!isPortSelected}>
       <ListItemIcon>
         <CalendarMonthIcon />
       </ListItemIcon>

@@ -1,11 +1,8 @@
 import React, {createRef, useEffect, useState, useContext} from "react";
-import { Box, CssBaseline,  Badge, Toolbar, IconButton, Drawer as MuiDrawer, Typography, Grid, useMediaQuery,  CircularProgress,  Backdrop, BoxProps,  Paper, LinearProgress, IconButtonProps, BackdropProps, List, ListItemButton, ListItemIcon } from "@mui/material";
+import { Box, CssBaseline,  Badge, Toolbar, IconButton, Drawer as MuiDrawer, Typography, Grid, useMediaQuery,  CircularProgress,  Backdrop, BoxProps,  Paper, LinearProgress, IconButtonProps, BackdropProps, SelectChangeEvent } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import { ThemeProvider } from '@mui/material/styles';
 import MenuIcon from "@mui/icons-material/Menu";
-import DarkModeIcon from '@mui/icons-material/DarkMode';
-import LightModeIcon from '@mui/icons-material/LightMode';
-import PersonIcon from '@mui/icons-material/Person';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import HelpIcon from '@mui/icons-material/Help';
@@ -14,8 +11,6 @@ import { styled } from '@mui/material/styles';
 import { Crest } from "./Crest";
 import { getAirportByCode } from "../../aiports";
 import {PageNav} from "./Navigation";
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 import PortSelector from "../PortSelector";
 import PortPanel from "../PortSelector/PortPanel";
@@ -142,8 +137,8 @@ const SiteFrame = ({}: ISiteFrame) => {
 
 
   const [port, setPort] = useState('');
-  const handleChangePort = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setPort(event.target.value);
+  const handleChangePort = (event: SelectChangeEvent<unknown>) => {
+    setPort(event.target.value as string);
     flashLoading()
   };
 
