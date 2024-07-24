@@ -29,6 +29,7 @@ export interface IFlightFlaggerFilters {
   submitCallback: (payload:SearchFilterPayload) => void,
   showAllCallback: (event: React.ChangeEvent<HTMLInputElement>) => void,
   onChangeInput: (searchTerm: string) => void,
+  clearFiltersCallback: (payload:SearchFilterPayload) => void,
   initialState?: {
     showTransitPaxNumber: boolean,
     showNumberOfVisaNationals: boolean,
@@ -46,6 +47,7 @@ export const FlightFlaggerFilters = ({
   submitCallback, 
   showAllCallback, 
   onChangeInput,
+  clearFiltersCallback,
   initialState,
 }: IFlightFlaggerFilters) => {
 
@@ -150,7 +152,7 @@ export const FlightFlaggerFilters = ({
     setSelectedNationalities([]);
     setSelectedAgeGroups([]);
 
-    submitCallback({
+    clearFiltersCallback({
       ...resetFilterPayload,
       selectedNationalities: [], 
       selectedAgeGroups: [],
