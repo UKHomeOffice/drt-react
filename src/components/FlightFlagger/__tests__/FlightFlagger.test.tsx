@@ -1,269 +1,272 @@
 import React from "react";
-import { render } from "../../TestProviderRenderer";
-import { screen } from "@testing-library/dom";
-import { fireEvent } from "@testing-library/react";
+import {render} from "../../TestProviderRenderer";
+import {screen} from "@testing-library/dom";
+import {fireEvent} from "@testing-library/react";
 import FlightFlagger from "../FlightFlagger";
 import ExampleFlights from "../ExampleFlights";
-import { waitFor, within } from "@testing-library/react";
+import {waitFor, within} from "@testing-library/react";
 import '@testing-library/jest-dom'
-import { SearchFilterPayload } from "../FlightFlaggerFilters";
+import {SearchFilterPayload} from "../FlightFlaggerFilters";
 
-
-const nationalities = ['GBR','FRA','SPA'];
-const ageGroups = ['0-9','10-24','24+'];
+const nationalities = [
+    {name: 'Great Britain', code: 'GBR'},
+    {name: 'France', code: 'FRA'},
+    {name: 'Spain', code: 'SPA'}
+];
+const ageGroups = ['0-9', '10-24', '24+'];
 
 describe("Flight Flagger", () => {
-  test("displays all flight results", async () => {
-  
-    render(<FlightFlagger 
-            flights={ExampleFlights} 
-            nationalities={nationalities} 
-            ageGroups={ageGroups} 
-            isLoading={false} 
-            submitCallback={(payload: SearchFilterPayload)=> console.log(payload)} />);
+    test("displays all flight results", async () => {
 
-    const tableRows = await screen.getByTestId('flight-flagger-results-table').querySelectorAll('tbody tr');
-    expect(tableRows).toHaveLength(ExampleFlights.length)
-  })
+        render(<FlightFlagger
+            flights={ExampleFlights}
+            nationalities={nationalities}
+            ageGroups={ageGroups}
+            isLoading={false}
+            submitCallback={(payload: SearchFilterPayload) => console.log(payload)}/>);
 
-  test("hides and shows non-highlighted flights correctly", async () => {
-    render(<FlightFlagger 
-      flights={ExampleFlights} 
-      nationalities={nationalities} 
-      ageGroups={ageGroups} 
-      isLoading={false} 
-      submitCallback={(payload: SearchFilterPayload)=> console.log(payload)} />);
+        const tableRows = await screen.getByTestId('flight-flagger-results-table').querySelectorAll('tbody tr');
+        expect(tableRows).toHaveLength(ExampleFlights.length)
+    })
 
-    fireEvent.click(screen.getByTestId('show-highlighted-only'));
+    test("hides and shows non-highlighted flights correctly", async () => {
+        render(<FlightFlagger
+            flights={ExampleFlights}
+            nationalities={nationalities}
+            ageGroups={ageGroups}
+            isLoading={false}
+            submitCallback={(payload: SearchFilterPayload) => console.log(payload)}/>);
 
-    let tableRows = await screen.getByTestId('flight-flagger-results-table').querySelectorAll('tbody tr');
-    expect(tableRows).toHaveLength(1)
+        fireEvent.click(screen.getByTestId('show-highlighted-only'));
 
-    fireEvent.click(screen.getByTestId('show-all-flights'));
+        let tableRows = await screen.getByTestId('flight-flagger-results-table').querySelectorAll('tbody tr');
+        expect(tableRows).toHaveLength(1)
 
-    tableRows = await screen.getByTestId('flight-flagger-results-table').querySelectorAll('tbody tr');
-    expect(tableRows).toHaveLength(ExampleFlights.length)
-  })
+        fireEvent.click(screen.getByTestId('show-all-flights'));
 
-  test("accepts an initial state", async () => {
-    render(<FlightFlagger 
-      flights={ExampleFlights} 
-      nationalities={nationalities} 
-      ageGroups={ageGroups} 
-      isLoading={false} 
-      submitCallback={(payload: SearchFilterPayload)=> console.log(payload)} />);
+        tableRows = await screen.getByTestId('flight-flagger-results-table').querySelectorAll('tbody tr');
+        expect(tableRows).toHaveLength(ExampleFlights.length)
+    })
 
-    fireEvent.click(screen.getByTestId('show-highlighted-only'));
+    test("accepts an initial state", async () => {
+        render(<FlightFlagger
+            flights={ExampleFlights}
+            nationalities={nationalities}
+            ageGroups={ageGroups}
+            isLoading={false}
+            submitCallback={(payload: SearchFilterPayload) => console.log(payload)}/>);
 
-    let tableRows = await screen.getByTestId('flight-flagger-results-table').querySelectorAll('tbody tr');
-    expect(tableRows).toHaveLength(1)
+        fireEvent.click(screen.getByTestId('show-highlighted-only'));
 
-    fireEvent.click(screen.getByTestId('show-all-flights'));
+        let tableRows = await screen.getByTestId('flight-flagger-results-table').querySelectorAll('tbody tr');
+        expect(tableRows).toHaveLength(1)
 
-    tableRows = await screen.getByTestId('flight-flagger-results-table').querySelectorAll('tbody tr');
-    expect(tableRows).toHaveLength(ExampleFlights.length)
-  })
+        fireEvent.click(screen.getByTestId('show-all-flights'));
 
-  test("displays the circular spinner and hides results when loading prop is true", async () => {
-    
-    render(<FlightFlagger 
-      flights={ExampleFlights} 
-      nationalities={nationalities} 
-      ageGroups={ageGroups} 
-      isLoading={true} 
-      submitCallback={(payload: SearchFilterPayload)=> console.log(payload)} />);
+        tableRows = await screen.getByTestId('flight-flagger-results-table').querySelectorAll('tbody tr');
+        expect(tableRows).toHaveLength(ExampleFlights.length)
+    })
 
-    const table = await screen.queryByTestId('flight-flagger-results-table')
-    const loadingSpinner = await screen.queryByTestId('flight-flagger-loading-spinner')
-    expect(table).toBeNull()
-    expect(loadingSpinner).toBeTruthy()
-  })
+    test("displays the circular spinner and hides results when loading prop is true", async () => {
 
-  test("hides and shows the search filters", async () => {
-    render(<FlightFlagger 
-      flights={ExampleFlights} 
-      nationalities={nationalities} 
-      ageGroups={ageGroups} 
-      isLoading={false} 
-      submitCallback={(payload: SearchFilterPayload)=> console.log(payload) } />);
+        render(<FlightFlagger
+            flights={ExampleFlights}
+            nationalities={nationalities}
+            ageGroups={ageGroups}
+            isLoading={true}
+            submitCallback={(payload: SearchFilterPayload) => console.log(payload)}/>);
 
-    let filters = await screen.queryByTestId('flight-flagger-filters')
-    await waitFor(() => {
-      expect(filters).toHaveStyle(`height: 0px`)
-    });
+        const table = await screen.queryByTestId('flight-flagger-results-table')
+        const loadingSpinner = await screen.queryByTestId('flight-flagger-loading-spinner')
+        expect(table).toBeNull()
+        expect(loadingSpinner).toBeTruthy()
+    })
 
-    await fireEvent.click(screen.getByTestId('show-filters'));
-    filters = await screen.queryByTestId('flight-flagger-filters')
-    await waitFor(() => {
-      expect(filters).toHaveStyle(`height: auto`)
-    });
+    test("hides and shows the search filters", async () => {
+        render(<FlightFlagger
+            flights={ExampleFlights}
+            nationalities={nationalities}
+            ageGroups={ageGroups}
+            isLoading={false}
+            submitCallback={(payload: SearchFilterPayload) => console.log(payload)}/>);
 
-    fireEvent.click(screen.getByTestId('show-filters'));
-    filters = await screen.queryByTestId('flight-flagger-filters')
-    await waitFor(() => {
-      expect(filters).toHaveStyle(`height: 0px`)
-    });
-  })
+        let filters = await screen.queryByTestId('flight-flagger-filters')
+        await waitFor(() => {
+            expect(filters).toHaveStyle(`height: 0px`)
+        });
 
-  test("calls the submitCallback with the correct filters", async () => {
+        await fireEvent.click(screen.getByTestId('show-filters'));
+        filters = await screen.queryByTestId('flight-flagger-filters')
+        await waitFor(() => {
+            expect(filters).toHaveStyle(`height: auto`)
+        });
 
-    const callBack = jest.fn();
+        fireEvent.click(screen.getByTestId('show-filters'));
+        filters = await screen.queryByTestId('flight-flagger-filters')
+        await waitFor(() => {
+            expect(filters).toHaveStyle(`height: 0px`)
+        });
+    })
 
-    const expectedPayload = {
-      selectedNationalities: ['GBR'],
-      selectedAgeGroups: ['0-9'],
-      showTransitPaxNumber: false,
-      showNumberOfVisaNationals: true,
-      requireAllSelected: true,
-      flightNumber: 'BA1234'
-    }
+    test("calls the submitCallback with the correct filters", async () => {
 
-    render(<FlightFlagger 
-      flights={ExampleFlights} 
-      nationalities={nationalities} 
-      ageGroups={ageGroups} 
-      isLoading={false} 
-      submitCallback={callBack} />);
+        const callBack = jest.fn();
 
-    await fireEvent.click(screen.getByTestId('show-filters'));
-    const filters = await screen.queryByTestId('flight-flagger-filters')
-    await waitFor(() => {
-      expect(filters).toHaveStyle(`height: auto`)
-    });
+        const expectedPayload = {
+            selectedNationalities: ['GBR'],
+            selectedAgeGroups: ['0-9'],
+            showTransitPaxNumber: false,
+            showNumberOfVisaNationals: true,
+            requireAllSelected: true,
+            flightNumber: 'BA1234'
+        }
 
-    const flightNumber = screen.getByLabelText('Enter flight details')
-    fireEvent.change(flightNumber, {target: {value: 'BA1234'}})
+        render(<FlightFlagger
+            flights={ExampleFlights}
+            nationalities={nationalities}
+            ageGroups={ageGroups}
+            isLoading={false}
+            submitCallback={callBack}/>);
 
-    const nationalitiesAutocomplete = screen.getByTestId('nationalities-autocomplete');
-    const nationalitiesInput = within(nationalitiesAutocomplete).getByRole('combobox')
-    nationalitiesAutocomplete.focus()
+        await fireEvent.click(screen.getByTestId('show-filters'));
+        const filters = await screen.queryByTestId('flight-flagger-filters')
+        await waitFor(() => {
+            expect(filters).toHaveStyle(`height: auto`)
+        });
 
-    fireEvent.change(nationalitiesInput, { target: { value: 'G' } })
-    fireEvent.keyDown(nationalitiesAutocomplete, { key: 'ArrowDown' })
-    fireEvent.keyDown(nationalitiesAutocomplete, { key: 'Enter' })
+        const flightNumber = screen.getByLabelText('Enter flight details')
+        fireEvent.change(flightNumber, {target: {value: 'BA1234'}})
 
-    const ageAutocomplete = screen.getByTestId('age-autocomplete');
-    const ageInput = within(ageAutocomplete).getByRole('combobox')
-    ageAutocomplete.focus()
+        const nationalitiesAutocomplete = screen.getByTestId('nationalities-autocomplete');
+        const nationalitiesInput = within(nationalitiesAutocomplete).getByRole('combobox')
+        nationalitiesAutocomplete.focus()
 
-    fireEvent.change(ageInput, { target: { value: 'G' } })
-    fireEvent.keyDown(ageAutocomplete, { key: 'ArrowDown' })
-    fireEvent.keyDown(ageAutocomplete, { key: 'Enter' })
-    
-    await fireEvent.click(screen.getByTestId('show-visa-nationals-check'));
-    await fireEvent.click(screen.getByTestId('require-all-selected-check'));
+        fireEvent.change(nationalitiesInput, {target: {value: 'G'}})
+        fireEvent.keyDown(nationalitiesAutocomplete, {key: 'ArrowDown'})
+        fireEvent.keyDown(nationalitiesAutocomplete, {key: 'Enter'})
 
-    fireEvent.click(screen.getByTestId('flight-flagger-filter-submit'));
-    expect(callBack).toHaveBeenCalledWith(expectedPayload)
-  })
+        const ageAutocomplete = screen.getByTestId('age-autocomplete');
+        const ageInput = within(ageAutocomplete).getByRole('combobox')
+        ageAutocomplete.focus()
 
-  test("calls the submitCallback when the user hits enter on the flight number input", async () => {
+        fireEvent.change(ageInput, {target: {value: 'G'}})
+        fireEvent.keyDown(ageAutocomplete, {key: 'ArrowDown'})
+        fireEvent.keyDown(ageAutocomplete, {key: 'Enter'})
 
-    const callBack = jest.fn();
+        await fireEvent.click(screen.getByTestId('show-visa-nationals-check'));
+        await fireEvent.click(screen.getByTestId('require-all-selected-check'));
 
-    const expectedPayload = {
-      selectedNationalities: [],
-      selectedAgeGroups: [],
-      showTransitPaxNumber: false,
-      showNumberOfVisaNationals: false,
-      requireAllSelected: false,
-      flightNumber: 'BA1234'
-    }
+        fireEvent.click(screen.getByTestId('flight-flagger-filter-submit'));
+        expect(callBack).toHaveBeenCalledWith(expectedPayload)
+    })
 
-    render(<FlightFlagger 
-      flights={ExampleFlights} 
-      nationalities={nationalities} 
-      ageGroups={ageGroups} 
-      isLoading={false} 
-      submitCallback={callBack} />);
+    test("calls the submitCallback when the user hits enter on the flight number input", async () => {
 
-    await fireEvent.click(screen.getByTestId('show-filters'));
-    const filters = await screen.queryByTestId('flight-flagger-filters')
-    await waitFor(() => {
-      expect(filters).toHaveStyle(`height: auto`)
-    });
+        const callBack = jest.fn();
 
-    const flightNumber = screen.getByLabelText('Enter flight details')
-    fireEvent.change(flightNumber, {target: {value: 'BA1234'}})
-    fireEvent.keyDown(flightNumber, { key: 'Enter' })
-  
-    expect(callBack).toHaveBeenCalledWith(expectedPayload)
-  })
+        const expectedPayload = {
+            selectedNationalities: [],
+            selectedAgeGroups: [],
+            showTransitPaxNumber: false,
+            showNumberOfVisaNationals: false,
+            requireAllSelected: false,
+            flightNumber: 'BA1234'
+        }
 
-  test("calls the submitCallback when the user clears selected filters", async () => {
+        render(<FlightFlagger
+            flights={ExampleFlights}
+            nationalities={nationalities}
+            ageGroups={ageGroups}
+            isLoading={false}
+            submitCallback={callBack}/>);
 
-    const callBack = jest.fn();
+        await fireEvent.click(screen.getByTestId('show-filters'));
+        const filters = await screen.queryByTestId('flight-flagger-filters')
+        await waitFor(() => {
+            expect(filters).toHaveStyle(`height: auto`)
+        });
 
-    const expectedPayload = {
-      selectedNationalities: [],
-      selectedAgeGroups: [],
-      showTransitPaxNumber: false,
-      showNumberOfVisaNationals: false,
-      requireAllSelected: false,
-      flightNumber: 'BA1234'
-    }
+        const flightNumber = screen.getByLabelText('Enter flight details')
+        fireEvent.change(flightNumber, {target: {value: 'BA1234'}})
+        fireEvent.keyDown(flightNumber, {key: 'Enter'})
 
-    render(<FlightFlagger 
-      flights={ExampleFlights} 
-      nationalities={nationalities} 
-      ageGroups={ageGroups} 
-      isLoading={false} 
-      submitCallback={callBack} />);
+        expect(callBack).toHaveBeenCalledWith(expectedPayload)
+    })
 
-    await fireEvent.click(screen.getByTestId('show-filters'));
-    const filters = await screen.queryByTestId('flight-flagger-filters')
-    await waitFor(() => {
-      expect(filters).toHaveStyle(`height: auto`)
-    });
+    test("calls the submitCallback when the user clears selected filters", async () => {
 
-    const flightNumber = screen.getByLabelText('Enter flight details')
-    fireEvent.change(flightNumber, {target: {value: 'BA1234'}})
-    fireEvent.keyDown(flightNumber, { key: 'Enter' })
+        const callBack = jest.fn();
 
-    const nationalitiesAutocomplete = screen.getByTestId('nationalities-autocomplete');
-    const nationalitiesInput = within(nationalitiesAutocomplete).getByRole('combobox')
-    nationalitiesAutocomplete.focus()
+        const expectedPayload = {
+            selectedNationalities: [],
+            selectedAgeGroups: [],
+            showTransitPaxNumber: false,
+            showNumberOfVisaNationals: false,
+            requireAllSelected: false,
+            flightNumber: 'BA1234'
+        }
 
-    fireEvent.change(nationalitiesInput, { target: { value: 'G' } })
-    fireEvent.keyDown(nationalitiesAutocomplete, { key: 'ArrowDown' })
-    fireEvent.keyDown(nationalitiesAutocomplete, { key: 'Enter' })
+        render(<FlightFlagger
+            flights={ExampleFlights}
+            nationalities={nationalities}
+            ageGroups={ageGroups}
+            isLoading={false}
+            submitCallback={callBack}/>);
 
-    const ageAutocomplete = screen.getByTestId('age-autocomplete');
-    const ageInput = within(ageAutocomplete).getByRole('combobox')
-    ageAutocomplete.focus()
+        await fireEvent.click(screen.getByTestId('show-filters'));
+        const filters = await screen.queryByTestId('flight-flagger-filters')
+        await waitFor(() => {
+            expect(filters).toHaveStyle(`height: auto`)
+        });
 
-    fireEvent.change(ageInput, { target: { value: 'G' } })
-    fireEvent.keyDown(ageAutocomplete, { key: 'ArrowDown' })
-    fireEvent.keyDown(ageAutocomplete, { key: 'Enter' })
+        const flightNumber = screen.getByLabelText('Enter flight details')
+        fireEvent.change(flightNumber, {target: {value: 'BA1234'}})
+        fireEvent.keyDown(flightNumber, {key: 'Enter'})
 
-    await fireEvent.click(screen.getByTestId('show-visa-nationals-check'));
-    await fireEvent.click(screen.getByTestId('require-all-selected-check'));
+        const nationalitiesAutocomplete = screen.getByTestId('nationalities-autocomplete');
+        const nationalitiesInput = within(nationalitiesAutocomplete).getByRole('combobox')
+        nationalitiesAutocomplete.focus()
 
-    await fireEvent.click(screen.getByTestId('flight-flagger-clear-filters'));
-    
-    await fireEvent.click(screen.getByTestId('flight-flagger-filter-submit'));
-    expect(callBack).toHaveBeenCalledWith(expectedPayload)
-  })
+        fireEvent.change(nationalitiesInput, {target: {value: 'G'}})
+        fireEvent.keyDown(nationalitiesAutocomplete, {key: 'ArrowDown'})
+        fireEvent.keyDown(nationalitiesAutocomplete, {key: 'Enter'})
 
-  test("renders the mobile view on small devices", async () => {
-    window.matchMedia = jest.fn().mockImplementation(query => ({
-      matches: query !== '(max-width: 400px)',
-      media: '',
-      onchange: null,
-      addListener: jest.fn(),
-      removeListener: jest.fn()
-    }));
-    
-    render(<FlightFlagger 
-      flights={ExampleFlights} 
-      nationalities={nationalities} 
-      ageGroups={ageGroups} 
-      isLoading={false} 
-      submitCallback={(payload: SearchFilterPayload)=> console.log(payload)} />);
+        const ageAutocomplete = screen.getByTestId('age-autocomplete');
+        const ageInput = within(ageAutocomplete).getByRole('combobox')
+        ageAutocomplete.focus()
 
-    const desktopResults = await screen.queryByTestId('flight-flagger-desktop-results')
-    const mobileResults = await screen.queryByTestId('flight-flagger-mobile-results')
-    expect(desktopResults).toBeNull()
-    expect(mobileResults).toBeTruthy()
-  })
+        fireEvent.change(ageInput, {target: {value: 'G'}})
+        fireEvent.keyDown(ageAutocomplete, {key: 'ArrowDown'})
+        fireEvent.keyDown(ageAutocomplete, {key: 'Enter'})
+
+        await fireEvent.click(screen.getByTestId('show-visa-nationals-check'));
+        await fireEvent.click(screen.getByTestId('require-all-selected-check'));
+
+        await fireEvent.click(screen.getByTestId('flight-flagger-clear-filters'));
+
+        await fireEvent.click(screen.getByTestId('flight-flagger-filter-submit'));
+        expect(callBack).toHaveBeenCalledWith(expectedPayload)
+    })
+
+    test("renders the mobile view on small devices", async () => {
+        window.matchMedia = jest.fn().mockImplementation(query => ({
+            matches: query !== '(max-width: 400px)',
+            media: '',
+            onchange: null,
+            addListener: jest.fn(),
+            removeListener: jest.fn()
+        }));
+
+        render(<FlightFlagger
+            flights={ExampleFlights}
+            nationalities={nationalities}
+            ageGroups={ageGroups}
+            isLoading={false}
+            submitCallback={(payload: SearchFilterPayload) => console.log(payload)}/>);
+
+        const desktopResults = await screen.queryByTestId('flight-flagger-desktop-results')
+        const mobileResults = await screen.queryByTestId('flight-flagger-mobile-results')
+        expect(desktopResults).toBeNull()
+        expect(mobileResults).toBeTruthy()
+    })
 });

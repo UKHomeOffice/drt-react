@@ -14,6 +14,11 @@ type FormState = {
   flightNumber: string
 }
 
+export type Country = {
+    name: string,
+    code: string
+}
+
 export type SearchFilterPayload = {
   showTransitPaxNumber: boolean,
   showNumberOfVisaNationals: boolean,
@@ -24,7 +29,7 @@ export type SearchFilterPayload = {
 }
 
 export interface IFlightFlaggerFilters {
-  nationalities: string[],
+  nationalities: Country[],
   ageGroups: string[],
   submitCallback: (payload:SearchFilterPayload) => void,
   showAllCallback: (event: React.ChangeEvent<HTMLInputElement>) => void,
@@ -51,7 +56,7 @@ export const FlightFlaggerFilters = ({
   initialState,
 }: IFlightFlaggerFilters) => {
 
-  const nationalitiesOptions = nationalities.map((nationality) => { return { title: nationality }});
+  const nationalitiesOptions = nationalities.map((nationality) => { return { title: nationality.code }});
   const ageOptions = ageGroups.map((ageGroup) => { return { title: ageGroup }});
 
   const [searchFlags, setSearchFlags] = useState<FormState>({
