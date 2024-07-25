@@ -22,9 +22,7 @@ const FlightFlagger = ({nationalities, ageGroups, submitCallback, flights, isLoa
     setShowHighlightOnly(event.target.value  === 'true')
   }
 
-  const onChangeInput = (searchTerm: string) => {
-    console.log(searchTerm);
-  }
+  const onChangeInput = (searchTerm: string) => {}
 
   return <>
     <FlightFlaggerFilters 

@@ -12,7 +12,7 @@
     "test:generate-output": "jest --json --outputFile=.jest-test-results.json || true",
     "build": "rimraf dist && rollup -c",
     "dev": "rollup -c -w",
-    "test": "jest -ci",
+    "test": "DEBUG_PRINT_LIMIT=100000 jest -ci --verbose",
     "test-ci": "jest -ci",
     "lint": "eslint src",
     "prebuild:storybook": "npm run test:generate-output",
@@ -54,6 +54,7 @@
     "@svgr/rollup": "^8.1.0",
     "@testing-library/jest-dom": "^6.4.5",
     "@testing-library/react": "^14.0.0",
+    "@types/css-mediaquery": "^0.1.4",
     "@types/jest": "^29.5.12",
     "@types/react": "^18.0.33",
     "@typescript-eslint/eslint-plugin": "^5.57.1",
@@ -101,10 +102,9 @@
     "@storybook/icons": "^1.2.9",
     "@svgr/webpack": "^8.1.0",
     "css-loader": "^7.1.2",
+    "css-mediaquery": "^0.1.2",
     "install-peers": "^1.0.4",
     "postcss": "^8.4.38",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
     "sass-loader": "^14.2.1",
     "style-loader": "^4.0.0"
   }
