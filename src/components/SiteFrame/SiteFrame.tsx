@@ -1,5 +1,5 @@
 import React, {createRef, useEffect, useState, useContext} from "react";
-import { Box, CssBaseline,  Badge, Toolbar, IconButton, Drawer as MuiDrawer, Typography, Grid, useMediaQuery,  CircularProgress,  Backdrop, BoxProps,  Paper, LinearProgress, IconButtonProps, BackdropProps, SelectChangeEvent } from "@mui/material";
+import { Box, CssBaseline,  Button, IconButton, Drawer as MuiDrawer, Typography, Grid, useMediaQuery,  CircularProgress,  Backdrop, BoxProps, Menu, MenuItem, LinearProgress, IconButtonProps, BackdropProps, SelectChangeEvent, Link, ButtonProps } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import { ThemeProvider } from '@mui/material/styles';
 import MenuIcon from "@mui/icons-material/Menu";
@@ -11,6 +11,14 @@ import { styled } from '@mui/material/styles';
 import { Crest } from "./Crest";
 import { getAirportByCode } from "../../aiports";
 import {PageNav} from "./Navigation";
+
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import ArticleIcon from '@mui/icons-material/Article';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import LogoutIcon from '@mui/icons-material/Logout';
+import SettingsIcon from '@mui/icons-material/Settings';
+import EqualizerIcon from '@mui/icons-material/Equalizer';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 import PortSelector from "../PortSelector";
 import PortPanel from "../PortSelector/PortPanel";
@@ -48,6 +56,11 @@ const PageContent = styled(Box)<BoxProps>(({ theme }) => ({
   flexGrow: 1,
   backgroundColor: theme.palette.mode === 'light' ? theme.palette.grey[100] : 'transparent',
   alignItems: 'stretch',
+}));
+
+const NavButton = styled(Button)<ButtonProps>(({ theme }) => ({
+  color: '#000',
+  textTransform: 'none',
 }));
 
 interface AppBarProps extends MuiAppBarProps {
@@ -136,7 +149,7 @@ const SiteFrame = ({}: ISiteFrame) => {
   };
 
 
-  const [port, setPort] = useState('');
+  const [port, setPort] = useState('LGW');
   const handleChangePort = (event: SelectChangeEvent<unknown>) => {
     setPort(event.target.value as string);
     flashLoading()
@@ -171,96 +184,108 @@ const SiteFrame = ({}: ISiteFrame) => {
     flashLoading()
   }
 
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
 
   return <ColorModeContext.Provider value={colorMode}>
     <ThemeProvider theme={drtTheme}>
       <Wrapper>
         <CssBaseline />
         <AppBar color="transparent" elevation={0} position={"sticky"}>
-          <Toolbar>
-            {isMobile && <IconButton
-              onClick={toggleDrawer}
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-            >
-              <MenuIcon />
-            </IconButton>}
-            <Box display="flex" mr={'auto'} ml={isMobile ? 'auto' : '0'}>
-              <Crest />
-              <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>DRT</Typography>
-            </Box>
-            <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: '10px' }}>
-              <PortSelector handleChangePort={handleChangePort} port={port} />
-              <IconButton
-                size="large"
-                aria-label="show 17 new notifications"
-                color="inherit"
-              >
-                  <HelpIcon />
-              </IconButton>
-              <IconButton
-                size="large"
-                aria-label="show 17 new notifications"
-                color="inherit"
-              >
-                <Badge badgeContent={17} color="error">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
-            </Box>
-            <UserMenu />
-          </Toolbar>
+          <Grid container>
+            <Grid item xs={6}>
+              <Box display="flex" mr={'auto'} ml={isMobile ? 'auto' : '0'} sx={{padding: 2}}>
+                <Crest />
+                <Typography variant="logoTitle" color="inherit" noWrap sx={{ flexGrow: 0, fontSize: '1.3rem', mr: 2 }}>Border Force</Typography>
+                <Typography variant="logoStrap" color="inherit" noWrap sx={{ flexGrow: 1, lineHeight: '2rem' }}>Dynamic Response Tool</Typography>
+              </Box></Grid>
+            <Grid item xs={6} sx={{padding: 2}}>
+              <Box display="flex" ml={'auto'} mr={isMobile ? 'auto' : '0'}>
+                <Typography variant="body1" color="inherit" noWrap sx={{ flexGrow: 1, textAlign: 'right' }}><strong>Contact:</strong>&nbsp;<Link>drtpoiseteam@homeoffice.gov.uk</Link></Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={12} sx={{backgroundColor: '#f3f5f9', padding: 2}}>
+                {isMobile && <IconButton
+                  onClick={toggleDrawer}
+                  size="large"
+                  edge="start"
+                  color="inherit"
+                  aria-label="open drawer"
+                >
+                  <MenuIcon />
+                </IconButton>}
+                <Grid container spacing={3}>
+                  <Grid item flexGrow={0}>
+                    <PortSelector handleChangePort={handleChangePort} port={port} />
+                  </Grid>
+                  <Grid item flexGrow={0}>
+                    <NavButton variant="text" startIcon={<SettingsIcon />}>Port config</NavButton>
+                  </Grid>
+                  <Grid item flexGrow={0}>
+                  <NavButton variant="text" startIcon={<EqualizerIcon />}>Feed</NavButton>
+                  </Grid>
+                  <Grid item sx={{marginLeft: 'auto'}} flexGrow={0}>
+                    <NavButton
+                      variant="text" 
+                      startIcon={<ManageAccountsIcon />}
+                      endIcon={<ArrowDropDownIcon />}
+                      id="demo-positioned-button"
+                      aria-controls={open ? 'demo-positioned-menu' : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={open ? 'true' : undefined}
+                      onClick={handleClick}
+                    >
+                      Admin
+                    </NavButton>
+                    <Menu
+                      id="demo-positioned-menu"
+                      aria-labelledby="demo-positioned-button"
+                      anchorEl={anchorEl}
+                      open={open}
+                      onClose={handleClose}
+                      anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'left',
+                      }}
+                      transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'left',
+                      }}
+                    >
+                      <MenuItem onClick={handleClose}>Profile</MenuItem>
+                      <MenuItem onClick={handleClose}>My account</MenuItem>
+                      <MenuItem onClick={handleClose}>Logout</MenuItem>
+                    </Menu>
+                  </Grid>
+                  <Grid item flexGrow={0}>
+                    <NavButton variant="text" startIcon={<ArticleIcon />}>News</NavButton>
+                  </Grid>
+                  <Grid item flexGrow={0}>
+                    <NavButton variant="text" startIcon={<MenuBookIcon />}>Training</NavButton>
+                  </Grid>
+                  <Grid item flexGrow={0}>
+                    <NavButton variant="text" startIcon={<LogoutIcon />}>Logout</NavButton>
+                  </Grid>
+                </Grid>
+            </Grid>
+          </Grid>
         </AppBar>
         {/* MOBILE DRAWER */}
-        <MuiDrawer variant={"temporary"} anchor="left" open={drawerOpen} sx={{display: {xs: 'block', md:'none'},zIndex: (theme) => theme.zIndex.drawer + 3}}>
-          <PageNav drawerOpen={drawerOpen} toggleDrawer={toggleDrawer} selectedPort={port} themeToggle={colorMode.toggleColorMode}  />
-        </MuiDrawer>
 
         {/* PROGRESS STRIP */}
-        <LinearProgress color="primary" sx={{width: '100%', height: loading ? '4px': '0px', position: 'absolute', top: { xs: '57px', sm: '65px'}, zIndex: 2000}} />
+        <LinearProgress color="primary" sx={{width: '100%', height: loading ? '4px': '0px', position: 'absolute', top: { xs: '57px', sm: '129px'}, zIndex: 2000}} />
         
         <Grid container sx={{alignItems: 'start', height: '100%', flexWrap: 'nowrap'}}>
-          {/* DESKTOP DRAWER */}
-          <Grid item sx={{height: '100%', display: {xs: 'none', md: 'block'}}}>
-            <Drawer variant={"permanent"} hideBackdrop={false} open={drawerOpen}>
-              <PageNav drawerOpen={drawerOpen} toggleDrawer={toggleDrawer} selectedPort={port} themeToggle={colorMode.toggleColorMode} />
-            </Drawer>
-          </Grid>
           {/* PAGE CONTENT */}
-          <PageContent sx={{position: 'relative'}}>
-            <Box ref={scrollRef} sx={{ paddingX: { xs: 2, md: 4}, flexGrow: 1, overflowY: 'scroll', opacity: loading ? 0.4 : 1}}>
-              <Box sx={{mb: 4, mt: 3}}>
-                <Typography variant="pageTitle" component="h1">{port != '' ? getAirportByCode(port) : "Select an airport or region"}</Typography>
-              </Box>
-              <Grid container spacing={4} sx={{pb: 12}}>
-                <Grid item xs={12}>
-                  <PortPanel handlePortClick={handlePortClick} selectedPort={port} />
-                </Grid>
-                <Grid item xs={12} md={6} lg={4}>
-                  <Paper><Box sx={{p:4, pb: 25}}></Box>
-                  </Paper>
-                </Grid>
-                <Grid item xs={12} md={6} lg={4}>
-                  <Paper><Box sx={{p:4, pb: 25}}></Box>
-                  </Paper>
-                </Grid>
-                <Grid item xs={12} md={6} lg={4}>
-                  <Paper><Box sx={{p:4, pb: 25}}></Box></Paper>
-                </Grid>
-                <Grid item xs={12}>
-                  <Paper><Box sx={{p:4, pb: 25}}></Box></Paper>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <Paper><Box sx={{p:4, pb: 25}}></Box>
-                  </Paper>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <Paper><Box sx={{p:4, pb: 25}}></Box></Paper>
-                </Grid>
-              </Grid>
-            </Box>
+          <PageContent sx={{position: 'relative'}} ref={scrollRef} >
+            
 
             {/* SCROLL TO TOP  */}
             <ScrollToTopBtn color="primary" style={{ position: "fixed", bottom: 20, right: 30, display: pos ? "block" : "none" }} onClick={handleTop} >

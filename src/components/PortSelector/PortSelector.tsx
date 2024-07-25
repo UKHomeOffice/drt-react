@@ -1,26 +1,40 @@
 import React from "react";
 import {  ListItemIcon,ListItemText, Typography,  MenuItem, FormControl, Select, SelectProps, Box, FormLabel, Divider } from "@mui/material";
 import airports from "../../aiports";
-import { styled } from '@mui/material/styles';
+import { styled, Theme } from '@mui/material/styles';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 import { SelectChangeEvent } from "@mui/material";
+import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
 
 const StyledSelect = styled(Select)<SelectProps>(({ theme }) => ({
   minWidth: '280px',
   outline: 0,
   marginRight: theme.spacing(1),
+  ':after, :before': {
+    borderBottom: 'none !important'
+  },
   '& .MuiSelect-select': {
     borderWidth: '0 !important',
     display: 'flex',
-    paddingRight: '40px !important',
+    padding: ` 0 40px 0 0 !important`,
+    backgroundColor: 'transparent',
     '& >*': {
       display: 'flex',  
       alignItems: 'center',
       minWidth: 0,
     },
     '& .MuiListItemIcon-root': {
-      marginRight: theme.spacing(2)
+      marginRight: theme.spacing(2),
+      '& svg': {
+        fontSize: '1rem',
+        fill: '#000'
+      }
     }
+  },
+  '& .MuiListItemText-root *': {
+    fontWeight: 'bold !important',
+    fontSize: '0.875rem !important',
+    marginTop: '6px !important',
   }
 }));
 
@@ -34,27 +48,16 @@ const PortSelector = ({handleChangePort, port}: IPortSelector) => {
 
  return (
   <Box display={'flex'}>
-    <FormLabel sx={{
-      textAlign: 'right', 
-      textTransform: 'uppercase', 
-      fontSize: '0.8em', 
-      letterSpacing: '1px', 
-      display: 'flex', 
-      alignItems: 'center',
-      marginRight: '1em', 
-    }}> 
-      Select an <br/>airport/region:
-    </FormLabel>
     <FormControl size="small">     
-      <StyledSelect value={port} onChange={handleChangePort}>
+      <StyledSelect value={port} variant="standard" onChange={handleChangePort}>
         <MenuItem selected={port == airports.central.code} value={airports.central.code}>
           <ListItemIcon><TravelExploreIcon fontSize="small" /></ListItemIcon>
           <ListItemText><strong>{ airports.central.name }</strong></ListItemText>
         </MenuItem>
         { airports.central.ports.map((airport, index) => 
           <MenuItem key={index} value={airport.code}>
-            <Typography variant="portCode" color="text.secondary" sx={{mr:2}}>{airport.code}</Typography>
-            <ListItemText>{airport.name}</ListItemText>
+            <ListItemIcon><AirplanemodeActiveIcon fontSize="small" /></ListItemIcon>
+            <ListItemText>{airport.code} ({airport.name})</ListItemText>
           </MenuItem>
         )}
         <Divider />
@@ -64,8 +67,8 @@ const PortSelector = ({handleChangePort, port}: IPortSelector) => {
         </MenuItem>
         { airports.south.ports.map((airport, index) => 
           <MenuItem key={index} value={airport.code}>
-            <Typography variant="portCode" color="text.secondary" sx={{mr:2}}>{airport.code}</Typography>
-            <ListItemText>{airport.name}</ListItemText>
+            <ListItemIcon><AirplanemodeActiveIcon fontSize="small" /></ListItemIcon>
+            <ListItemText>{airport.code} ({airport.name})</ListItemText>
           </MenuItem>
         )}
         <Divider />
@@ -75,8 +78,8 @@ const PortSelector = ({handleChangePort, port}: IPortSelector) => {
         </MenuItem>
         { airports.north.ports.map((airport, index) => 
           <MenuItem key={index} value={airport.code}>
-            <Typography variant="portCode" color="text.secondary" sx={{mr:2}}>{airport.code}</Typography>
-            <ListItemText>{airport.name}</ListItemText>
+            <ListItemIcon><AirplanemodeActiveIcon fontSize="small" /></ListItemIcon>
+            <ListItemText>{airport.code} ({airport.name})</ListItemText>
           </MenuItem>
         )}
         <Divider />
@@ -86,8 +89,8 @@ const PortSelector = ({handleChangePort, port}: IPortSelector) => {
         </MenuItem>
         { airports.heathrow.ports.map((airport, index) => 
           <MenuItem key={index} value={airport.code}>
-            <Typography variant="portCode" color="text.secondary" sx={{mr:2}}>{airport.code}</Typography>
-            <ListItemText>{airport.name}</ListItemText>
+            <ListItemIcon><AirplanemodeActiveIcon fontSize="small" /></ListItemIcon>
+            <ListItemText>{airport.code} ({airport.name})</ListItemText>
           </MenuItem>
         )}
       </StyledSelect>
