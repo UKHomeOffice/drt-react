@@ -1,10 +1,11 @@
 import React, {useState} from "react";
-import { Grid, Typography, FormGroup, FormLabel, RadioGroup, Radio, FormControl, Collapse, InputLabel, OutlinedInput,InputAdornment, FormControlLabel, Autocomplete, Checkbox, TextField, Button, Paper, IconButton, Chip, Link } from "@mui/material";
+import { Grid, Typography, FormGroup, FormLabel, RadioGroup, Radio, FormControl, Collapse, InputLabel, OutlinedInput,InputAdornment, FormControlLabel, Autocomplete,AutocompleteProps, Checkbox, TextField, Button, Paper, IconButton, Chip, Link } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import { ArrowRight } from "@mui/icons-material";
 
 export type AutocompleteOption = {
   title: string,
+  code?: string,
 }
 
 type FormState = {
@@ -249,6 +250,7 @@ export const FlightFlaggerFilters = ({
                   id="nationalities"
                   options={nationalitiesOptions}
                   getOptionLabel={(option) => option.title}
+                  getOptionKey={(option) => option.title}
                   value={selectedNationalities}
                   defaultValue={[]}
                   filterSelectedOptions
