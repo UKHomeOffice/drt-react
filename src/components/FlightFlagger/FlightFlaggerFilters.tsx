@@ -4,7 +4,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { ArrowRight } from "@mui/icons-material";
 
 export type AutocompleteOption = {
-  title: string
+  title: string,
 }
 
 type FormState = {
@@ -56,7 +56,7 @@ export const FlightFlaggerFilters = ({
   initialState,
 }: IFlightFlaggerFilters) => {
 
-  const nationalitiesOptions = nationalities.map((nationality) => { return { title: nationality.code }});
+  const nationalitiesOptions = nationalities.map((nationality) => { return { title: `${nationality.name} (${nationality.code})`}});
   const ageOptions = ageGroups.map((ageGroup) => { return { title: ageGroup }});
 
   const [searchFlags, setSearchFlags] = useState<FormState>({
@@ -78,7 +78,9 @@ export const FlightFlaggerFilters = ({
     const nationalityPayload: string[] = selectedNationalities.map((nationality: AutocompleteOption) => nationality.title)
     submitCallback({
       ...searchFlags,
-      selectedNationalities: nationalityPayload, 
+      selectedNationalities: nationalityPayload.map(nationality => {
+        return /\(([^)]+)\)/.exec(nationality)![1].toString()
+      }), 
       selectedAgeGroups: ageGroupPayload,
     });
   }

@@ -149,7 +149,7 @@ describe("Flight Flagger", () => {
     const ageInput = within(ageAutocomplete).getByRole('combobox')
     ageAutocomplete.focus()
 
-    fireEvent.change(ageInput, {target: {value: 'G'}})
+    fireEvent.change(ageInput, {target: {value: '0'}})
     fireEvent.keyDown(ageAutocomplete, {key: 'ArrowDown'})
     fireEvent.keyDown(ageAutocomplete, {key: 'Enter'})
 
