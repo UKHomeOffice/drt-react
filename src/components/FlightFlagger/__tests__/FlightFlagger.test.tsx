@@ -113,7 +113,7 @@ describe("Flight Flagger", () => {
     const callBack = jest.fn();
 
     const expectedPayload = {
-      selectedNationalities: ['GBR'],
+      selectedNationalities: ["Great Britain (GBR)"],
       selectedAgeGroups: ['0-9'],
       showTransitPaxNumber: false,
       showNumberOfVisaNationals: true,
