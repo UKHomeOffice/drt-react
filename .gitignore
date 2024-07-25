@@ -5,3 +5,4 @@ coverage
 storybook-static
 .jest-test-results.json
 .yarn
+.idea
