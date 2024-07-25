@@ -5,3 +5,6 @@ export type { IFlightFlagger, IFlightFlaggerFilters, IFlightHighlightChip, Autoc
 
 export { StatusTag } from "./StatusTags";
 export type { IStatusTag } from "./StatusTags";
+
+export {default as Header} from './Header'
+export type { IHeader, MenuItem} from './Header';

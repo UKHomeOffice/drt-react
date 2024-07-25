@@ -1,7 +1,7 @@
 import React from "react";
 import { useTheme } from "@mui/material";
 
-export const Crest = ({}) => {
+export const Crest = () => {
   const theme = useTheme();
   const crestColor = theme.palette.mode == 'light' ? theme.palette.common.black : theme.palette.common.white;
 
