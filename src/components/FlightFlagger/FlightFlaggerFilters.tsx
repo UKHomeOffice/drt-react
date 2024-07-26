@@ -144,7 +144,7 @@ export const FlightFlaggerFilters = ({
   const buildFilterString = () => {
     const paxFlters = []
     if (selectedNationalities.length) {
-      paxFlters.push(`nationality: ${selectedNationalities.join(', ')}`)
+      paxFlters.push(`nationality: ${selectedNationalities.map(n => `${n.name} (${n.code})`).join(', ')}`)
     }
     if (selectedAgeGroups.length) {
       paxFlters.push(`age: ${selectedAgeGroups.map(n => n.title).join(', ')}`)
@@ -279,7 +279,7 @@ export const FlightFlaggerFilters = ({
                   data-testid="nationalities-autocomplete"
                   multiple
                   id="nationalities"
-                  options={nationalitiesOptions}
+                  options={nationalities}
                   getOptionLabel={(option) => `${option.name} (${option.code})`}
                   value={selectedNationalities}
                   defaultValue={[]}
