@@ -44,7 +44,7 @@ export type SearchFilterPayload = {
   showTransitPaxNumber: boolean,
   showNumberOfVisaNationals: boolean,
   selectedAgeGroups: string[],
-  selectedNationalities: string[],
+  selectedNationalities: Country[],
   flightNumber: string,
   requireAllSelected: boolean,
 }
@@ -61,7 +61,7 @@ export interface IFlightFlaggerFilters {
     showNumberOfVisaNationals: boolean,
     requireAllSelected: boolean,
     flightNumber: string,
-    selectedNationalities: AutocompleteOption[],
+    selectedNationalities: Country[],
     selectedAgeGroups: AutocompleteOption[],
     showFilters: boolean,
   }
@@ -78,7 +78,7 @@ export const FlightFlaggerFilters = ({
                                      }: IFlightFlaggerFilters) => {
 
   const nationalitiesOptions = nationalities.map((nationality) => {
-    return {title: `${nationality.name} (${nationality.code})`}
+    return nationality
   });
   const ageOptions = ageGroups.map((ageGroup) => {
     return {title: ageGroup}
@@ -90,7 +90,7 @@ export const FlightFlaggerFilters = ({
     requireAllSelected: initialState?.requireAllSelected || false,
     flightNumber: initialState?.flightNumber || '',
   });
-  const [selectedNationalities, setSelectedNationalities] = useState<AutocompleteOption[]>(initialState?.selectedNationalities || []);
+  const [selectedNationalities, setSelectedNationalities] = useState<Country[]>(initialState?.selectedNationalities || []);
   const [selectedAgeGroups, setSelectedAgeGroups] = useState<AutocompleteOption[]>(initialState?.selectedAgeGroups || []);
   const [showFilters, setShowFilters] = useState<boolean>(initialState?.showFilters || false);
 
@@ -100,7 +100,7 @@ export const FlightFlaggerFilters = ({
 
   const submit = () => {
     const ageGroupPayload: string[] = selectedAgeGroups.map((ageGroup: AutocompleteOption) => ageGroup.title)
-    const nationalityPayload: string[] = selectedNationalities.map((nationality: AutocompleteOption) => nationality.title)
+    const nationalityPayload: Country[] = selectedNationalities.map((nationality: Country) => nationality)
     submitCallback({
       ...searchFlags,
       selectedNationalities: nationalityPayload,
@@ -144,7 +144,7 @@ export const FlightFlaggerFilters = ({
   const buildFilterString = () => {
     const paxFlters = []
     if (selectedNationalities.length) {
-      paxFlters.push(`nationality: ${selectedNationalities.map(n => n.title).join(', ')}`)
+      paxFlters.push(`nationality: ${selectedNationalities.join(', ')}`)
     }
     if (selectedAgeGroups.length) {
       paxFlters.push(`age: ${selectedAgeGroups.map(n => n.title).join(', ')}`)
@@ -280,11 +280,11 @@ export const FlightFlaggerFilters = ({
                   multiple
                   id="nationalities"
                   options={nationalitiesOptions}
-                  getOptionLabel={(option) => option.title}
+                  getOptionLabel={(option) => `${option.name} (${option.code})`}
                   value={selectedNationalities}
                   defaultValue={[]}
                   filterSelectedOptions
-                  isOptionEqualToValue={(option, value) => option.title === value.title}
+                  isOptionEqualToValue={(option, value) => option.code === value.code}
                   onChange={(event, newValue) => {
                     setSelectedNationalities(newValue);
                   }}
