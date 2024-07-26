@@ -1,7 +1,28 @@
 import React, {useState} from "react";
-import { Grid, Typography, FormGroup, FormLabel, RadioGroup, Radio, FormControl, Collapse, InputLabel, OutlinedInput,InputAdornment, FormControlLabel, Autocomplete, Checkbox, TextField, Button, Paper, IconButton, Chip, Link } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  FormGroup,
+  FormLabel,
+  RadioGroup,
+  Radio,
+  FormControl,
+  Collapse,
+  InputLabel,
+  OutlinedInput,
+  InputAdornment,
+  FormControlLabel,
+  Autocomplete,
+  Checkbox,
+  TextField,
+  Button,
+  Paper,
+  IconButton,
+  Chip,
+  Link
+} from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
-import { ArrowRight } from "@mui/icons-material";
+import {ArrowRight} from "@mui/icons-material";
 
 export type AutocompleteOption = {
   title: string
@@ -15,15 +36,15 @@ type FormState = {
 }
 
 export type Country = {
-    name: string,
-    code: string
+  name: string,
+  code: string
 }
 
 export type SearchFilterPayload = {
   showTransitPaxNumber: boolean,
   showNumberOfVisaNationals: boolean,
   selectedAgeGroups: string[],
-  selectedNationalities: string[],
+  selectedNationalities: Country[],
   flightNumber: string,
   requireAllSelected: boolean,
 }
@@ -31,33 +52,37 @@ export type SearchFilterPayload = {
 export interface IFlightFlaggerFilters {
   nationalities: Country[],
   ageGroups: string[],
-  submitCallback: (payload:SearchFilterPayload) => void,
+  submitCallback: (payload: SearchFilterPayload) => void,
   showAllCallback: (event: React.ChangeEvent<HTMLInputElement>) => void,
   onChangeInput: (searchTerm: string) => void,
-  clearFiltersCallback: (payload:SearchFilterPayload) => void,
+  clearFiltersCallback: (payload: SearchFilterPayload) => void,
   initialState?: {
     showTransitPaxNumber: boolean,
     showNumberOfVisaNationals: boolean,
     requireAllSelected: boolean,
     flightNumber: string,
-    selectedNationalities: AutocompleteOption[],
+    selectedNationalities: Country[],
     selectedAgeGroups: AutocompleteOption[],
     showFilters: boolean,
   }
 }
 
 export const FlightFlaggerFilters = ({
-  nationalities, 
-  ageGroups, 
-  submitCallback, 
-  showAllCallback, 
-  onChangeInput,
-  clearFiltersCallback,
-  initialState,
-}: IFlightFlaggerFilters) => {
+                                       nationalities,
+                                       ageGroups,
+                                       submitCallback,
+                                       showAllCallback,
+                                       onChangeInput,
+                                       clearFiltersCallback,
+                                       initialState,
+                                     }: IFlightFlaggerFilters) => {
 
-  const nationalitiesOptions = nationalities.map((nationality) => { return { title: nationality.code }});
-  const ageOptions = ageGroups.map((ageGroup) => { return { title: ageGroup }});
+  const nationalitiesOptions = nationalities.map((nationality) => {
+    return nationality
+  });
+  const ageOptions = ageGroups.map((ageGroup) => {
+    return {title: ageGroup}
+  });
 
   const [searchFlags, setSearchFlags] = useState<FormState>({
     showTransitPaxNumber: initialState?.showTransitPaxNumber || false,
@@ -65,7 +90,7 @@ export const FlightFlaggerFilters = ({
     requireAllSelected: initialState?.requireAllSelected || false,
     flightNumber: initialState?.flightNumber || '',
   });
-  const [selectedNationalities, setSelectedNationalities] = useState<AutocompleteOption[]>(initialState?.selectedNationalities || []);
+  const [selectedNationalities, setSelectedNationalities] = useState<Country[]>(initialState?.selectedNationalities || []);
   const [selectedAgeGroups, setSelectedAgeGroups] = useState<AutocompleteOption[]>(initialState?.selectedAgeGroups || []);
   const [showFilters, setShowFilters] = useState<boolean>(initialState?.showFilters || false);
 
@@ -75,10 +100,10 @@ export const FlightFlaggerFilters = ({
 
   const submit = () => {
     const ageGroupPayload: string[] = selectedAgeGroups.map((ageGroup: AutocompleteOption) => ageGroup.title)
-    const nationalityPayload: string[] = selectedNationalities.map((nationality: AutocompleteOption) => nationality.title)
+    const nationalityPayload: Country[] = selectedNationalities.map((nationality: Country) => nationality)
     submitCallback({
       ...searchFlags,
-      selectedNationalities: nationalityPayload, 
+      selectedNationalities: nationalityPayload,
       selectedAgeGroups: ageGroupPayload,
     });
   }
@@ -89,7 +114,7 @@ export const FlightFlaggerFilters = ({
   }
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const name: string = event.target.name 
+    const name: string = event.target.name
     setSearchFlags({
       ...searchFlags,
       [name]: event.target.checked
@@ -97,7 +122,7 @@ export const FlightFlaggerFilters = ({
   }
 
   const handleTextInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const name: string = event.target.name 
+    const name: string = event.target.name
     setSearchFlags({
       ...searchFlags,
       [name]: event.target.value
@@ -106,7 +131,7 @@ export const FlightFlaggerFilters = ({
   }
 
   const handleInputSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if(event.key === 'Enter'){
+    if (event.key === 'Enter') {
       submit()
     }
   }
@@ -115,11 +140,11 @@ export const FlightFlaggerFilters = ({
     setShowFilters(!showFilters)
   }
 
-    
+
   const buildFilterString = () => {
     const paxFlters = []
     if (selectedNationalities.length) {
-      paxFlters.push(`nationality: ${selectedNationalities.map(n => n.title).join(', ')}`)
+      paxFlters.push(`nationality: ${selectedNationalities.map(n => `${n.name} (${n.code})`).join(', ')}`)
     }
     if (selectedAgeGroups.length) {
       paxFlters.push(`age: ${selectedAgeGroups.map(n => n.title).join(', ')}`)
@@ -140,9 +165,15 @@ export const FlightFlaggerFilters = ({
     let total = 0
     total += selectedNationalities.length
     total += selectedAgeGroups.length
-    if (searchFlags.showTransitPaxNumber) { total++ }
-    if (searchFlags.showNumberOfVisaNationals) { total++ }
-    if (searchFlags.requireAllSelected) { total++ }
+    if (searchFlags.showTransitPaxNumber) {
+      total++
+    }
+    if (searchFlags.showNumberOfVisaNationals) {
+      total++
+    }
+    if (searchFlags.requireAllSelected) {
+      total++
+    }
     return total;
   }
 
@@ -159,15 +190,16 @@ export const FlightFlaggerFilters = ({
 
     clearFiltersCallback({
       ...resetFilterPayload,
-      selectedNationalities: [], 
+      selectedNationalities: [],
       selectedAgeGroups: [],
     });
   }
 
   return <>
-    <Grid container sx={{backgroundColor: '#F3F5F9', width: '100%', ml:0, pt: 2}} flexWrap={{xs: 'wrap', md: 'nowrap'}} spacing={2}>
+    <Grid container sx={{backgroundColor: '#F3F5F9', width: '100%', ml: 0, pt: 2}} flexWrap={{xs: 'wrap', md: 'nowrap'}}
+          spacing={2}>
       <Grid item flexGrow={0}>
-        <InputLabel htmlFor="flight-number" sx={{mb:1}}><strong>Enter flight details</strong></InputLabel>
+        <InputLabel htmlFor="flight-number" sx={{mb: 1}}><strong>Enter flight details</strong></InputLabel>
         <FormControl variant="outlined" sx={{minWidth: '365px'}}>
           <OutlinedInput
             sx={{backgroundColor: '#fff'}}
@@ -187,38 +219,38 @@ export const FlightFlaggerFilters = ({
         </FormControl>
       </Grid>
       <Grid item flexGrow={0} sx={{
-          borderLeft: { xs:'none', md:'1px solid #ccc' },
-          ml: { xs:0, sm: 0, md:2}, 
-          px: { xs:0, md:4}
-        }}>
-        <InputLabel sx={{mb:1}}><strong>Highlight flights</strong></InputLabel>
-        <Button 
+        borderLeft: {xs: 'none', md: '1px solid #ccc'},
+        ml: {xs: 0, sm: 0, md: 2},
+        px: {xs: 0, md: 4}
+      }}>
+        <InputLabel sx={{mb: 1}}><strong>Highlight flights</strong></InputLabel>
+        <Button
           data-testid="show-filters"
           color={"secondary"}
           onClick={() => toggleFilters()}
           disableElevation
-          variant={"outlined"} 
+          variant={"outlined"}
           sx={{
-            textTransform: 'none', 
-            letterSpacing: 0, 
-            whiteSpace: 'nowrap', 
+            textTransform: 'none',
+            letterSpacing: 0,
+            whiteSpace: 'nowrap',
             height: '40px',
             backgroundColor: '#fff'
           }}
           startIcon={<SearchIcon/>}
-          endIcon={<Chip 
-                    color={isTouched() ? "primary" : "default"} 
-                    size="small" 
-                    label={`${getFilterCount()}`} 
-                    sx={{fontSize: '0.8125rem !important'}} /> 
+          endIcon={<Chip
+            color={isTouched() ? "primary" : "default"}
+            size="small"
+            label={`${getFilterCount()}`}
+            sx={{fontSize: '0.8125rem !important'}}/>
           }
           size="large">
-            Select pax info to reveal
-          </Button>
+          Select pax info to reveal
+        </Button>
       </Grid>
       <Grid item flexGrow={1}>
         <FormControl>
-          <FormLabel sx={{mb:1}} id="display"><strong>Show flights:</strong></FormLabel>
+          <FormLabel sx={{mb: 1}} id="display"><strong>Show flights:</strong></FormLabel>
           <RadioGroup
             row
             aria-labelledby="display"
@@ -226,33 +258,35 @@ export const FlightFlaggerFilters = ({
             onChange={showAllCallback}
             defaultValue="false"
           >
-            <FormControlLabel value="false" data-testid="show-all-flights"  defaultChecked={true} control={<Radio />} label="All flights" />
-            <FormControlLabel value="true" data-testid="show-highlighted-only" control={<Radio />} label="Highlighted flights only" />
+            <FormControlLabel value="false" data-testid="show-all-flights" defaultChecked={true} control={<Radio/>}
+                              label="All flights"/>
+            <FormControlLabel value="true" data-testid="show-highlighted-only" control={<Radio/>}
+                              label="Highlighted flights only"/>
           </RadioGroup>
         </FormControl>
       </Grid>
     </Grid>
-    <Grid container sx={{backgroundColor: '#F3F5F9', width: '100%', ml:0}} spacing={2}>
-      <Grid item xs={12} sx={{px:2, pb:2}}>
+    <Grid container sx={{backgroundColor: '#F3F5F9', width: '100%', ml: 0}} spacing={2}>
+      <Grid item xs={12} sx={{px: 2, pb: 2}}>
         <Collapse in={showFilters} data-testid="flight-flagger-filters">
-        <Paper elevation={0} sx={{backgroundColor: '#fff', p:2, mt: 2}}>
-          <Grid container columnSpacing={2}>
-            <Grid item xs={12}>
-              <Typography sx={{mb:1}}><strong>Select pax info to reveal</strong></Typography>
-            </Grid>
-            <Grid item xs={12} sm={6} sx={{mb: 2}}>
-              <Autocomplete
+          <Paper elevation={0} sx={{backgroundColor: '#fff', p: 2, mt: 2}}>
+            <Grid container columnSpacing={2}>
+              <Grid item xs={12}>
+                <Typography sx={{mb: 1}}><strong>Select pax info to reveal</strong></Typography>
+              </Grid>
+              <Grid item xs={12} sm={6} sx={{mb: 2}}>
+                <Autocomplete
                   data-testid="nationalities-autocomplete"
                   multiple
                   id="nationalities"
-                  options={nationalitiesOptions}
-                  getOptionLabel={(option) => option.title}
+                  options={nationalities}
+                  getOptionLabel={(option) => `${option.name} (${option.code})`}
                   value={selectedNationalities}
                   defaultValue={[]}
                   filterSelectedOptions
-                  isOptionEqualToValue={(option, value) => option.title === value.title}
+                  isOptionEqualToValue={(option, value) => option.code === value.code}
                   onChange={(event, newValue) => {
-                      setSelectedNationalities(newValue);
+                    setSelectedNationalities(newValue);
                   }}
                   renderInput={(params) => (
                     <TextField
@@ -262,9 +296,9 @@ export const FlightFlaggerFilters = ({
                     />
                   )}
                 />
-            </Grid>
-            <Grid item xs={12} sm={6} >
-              <Autocomplete
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Autocomplete
                   data-testid="age-autocomplete"
                   multiple
                   id="ageGroups"
@@ -285,42 +319,45 @@ export const FlightFlaggerFilters = ({
                     />
                   )}
                 />
-            </Grid>
-            <Grid item xs={12}>
-              <FormGroup>
-                <FormControlLabel
-                  control={
-                    <Checkbox data-testid="show-visa-nationals-check" checked={searchFlags.showNumberOfVisaNationals} onChange={handleCheckboxChange} name="showNumberOfVisaNationals" />
-                  }
-                  label="Show number of visa nationals"
-                />
-                <Paper elevation={0} sx={{py: 1, px:2, mt: 1, mb: 2}} variant="outlined">
+              </Grid>
+              <Grid item xs={12}>
+                <FormGroup>
                   <FormControlLabel
                     control={
-                      <Checkbox 
-                        data-testid="require-all-selected-check"
-                        disabled={!isTouched()}
-                        checked={searchFlags.requireAllSelected} 
-                        onChange={handleCheckboxChange} 
-                        name="requireAllSelected" />
+                      <Checkbox data-testid="show-visa-nationals-check" checked={searchFlags.showNumberOfVisaNationals}
+                                onChange={handleCheckboxChange} name="showNumberOfVisaNationals"/>
                     }
-                    label="Only highlight flights with all selected info"
+                    label="Show number of visa nationals"
                   />
-                </Paper>
-              </FormGroup>
+                  <Paper elevation={0} sx={{py: 1, px: 2, mt: 1, mb: 2}} variant="outlined">
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          data-testid="require-all-selected-check"
+                          disabled={!isTouched()}
+                          checked={searchFlags.requireAllSelected}
+                          onChange={handleCheckboxChange}
+                          name="requireAllSelected"/>
+                      }
+                      label="Only highlight flights with all selected info"
+                    />
+                  </Paper>
+                </FormGroup>
+              </Grid>
+              <Grid item xs={12}>
+                <Button variant='outlined' onClick={() => setShowFilters(false)} sx={{mr: 2}}>Close</Button>
+                <Button data-testid="flight-flagger-filter-submit" variant='contained' onClick={handleApply}>Apply
+                  Highlights</Button>
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <Button variant='outlined' onClick={() => setShowFilters(false)} sx={{mr: 2}}>Close</Button>
-              <Button data-testid="flight-flagger-filter-submit" variant='contained' onClick={handleApply}>Apply Highlights</Button>
-            </Grid>
-          </Grid>
-        </Paper>
+          </Paper>
         </Collapse>
-        { isTouched() && <Typography sx={{mt:2,pr: 2}}>
-          <strong>Pax info highlighted - </strong>
-          { buildFilterString() } - <Link data-testid="flight-flagger-clear-filters" onClick={() => clearHighlights()}>Clear all highlights</Link>
-        </Typography> }
+        {isTouched() && <Typography sx={{mt: 2, pr: 2}}>
+            <strong>Pax info highlighted - </strong>
+          {buildFilterString()} - <Link data-testid="flight-flagger-clear-filters" onClick={() => clearHighlights()}>Clear
+            all highlights</Link>
+        </Typography>}
       </Grid>
-  </Grid></>
+    </Grid></>
 
 }
