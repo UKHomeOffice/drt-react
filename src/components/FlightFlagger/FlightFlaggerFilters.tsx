@@ -23,6 +23,7 @@ import {
 } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import {ArrowRight} from "@mui/icons-material";
+import CustomHighlightIcon from "./icon-highlight-pax.svg";
 
 export type AutocompleteOption = {
   title: string
@@ -76,6 +77,10 @@ export const FlightFlaggerFilters = ({
                                        clearFiltersCallback,
                                        initialState,
                                      }: IFlightFlaggerFilters) => {
+
+  const HighlightIcon = () => {
+    return <CustomHighlightIcon style={{marginLeft: '4px', minWidth: '25px'}} />
+  }
 
   const nationalitiesOptions = nationalities.map((nationality) => {
     return nationality
@@ -237,7 +242,7 @@ export const FlightFlaggerFilters = ({
             height: '40px',
             backgroundColor: '#fff'
           }}
-          startIcon={<SearchIcon/>}
+          startIcon={<HighlightIcon/>}
           endIcon={<Chip
             color={isTouched() ? "primary" : "default"}
             size="small"
