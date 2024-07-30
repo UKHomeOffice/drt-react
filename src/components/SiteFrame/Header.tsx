@@ -1,15 +1,9 @@
 import React, {createRef, useEffect, useState, useContext} from "react";
 import { Box, CssBaseline,  Button, IconButton, Drawer as MuiDrawer, Typography, Grid, useMediaQuery,  CircularProgress,  Backdrop, BoxProps, Menu, MenuItem, LinearProgress, IconButtonProps, BackdropProps, SelectChangeEvent, Link, ButtonProps } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import { ThemeProvider } from '@mui/material/styles';
-import MenuIcon from "@mui/icons-material/Menu";
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import HelpIcon from '@mui/icons-material/Help';
 import { Theme } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import { Crest } from "./Crest";
-import { getAirportByCode } from "../../aiports";
 
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import ArticleIcon from '@mui/icons-material/Article';
@@ -20,42 +14,9 @@ import EqualizerIcon from '@mui/icons-material/Equalizer';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 import PortSelector from "../PortSelector";
-import PortPanel from "../PortSelector/PortPanel";
-import {createDRTTheme} from "../../drt-theme";
-import UserMenu from "./UserMenu";
-
-export interface ISiteFrame {}
-
 
 const drawerWidth: number = 240;
-const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
-const Wrapper = styled(Box)<BoxProps>(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  height: '100%',
-  alignItems: 'flex-start',
-  overflow: 'hidden',
-}));
-
-const ScrollToTopBtn = styled(IconButton)<IconButtonProps>(({ theme }) => ({
-  backgroundColor: theme.palette.primary.main,
-  color: theme.palette.common.white,
-  width: '40px',
-  height: '40px',
-  '&:hover': {
-    backgroundColor: theme.palette.primary.dark,
-    color: theme.palette.common.white,  
-  }
-}));
-
-const PageContent = styled(Box)<BoxProps>(({ theme }) => ({
-  display: 'flex',
-  height: '100%',
-  flexGrow: 1,
-  backgroundColor: theme.palette.mode === 'light' ? theme.palette.grey[100] : 'transparent',
-  alignItems: 'stretch',
-}));
 
 const NavButton = styled(Button)<ButtonProps>(({ theme }) => ({
   color: '#000',
@@ -87,9 +48,7 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 
-export const Header = ({}: ISiteFrame) => {
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
-
+export const Header = ({}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -103,7 +62,7 @@ export const Header = ({}: ISiteFrame) => {
     <AppBar color="transparent" elevation={0} position={"sticky"}>
       <Grid container>
         <Grid item xs={8}>
-          <Box display="flex" mr={'auto'} ml={isMobile ? 'auto' : '0'} sx={{
+          <Box display="flex" mr={'auto'} sx={{
             padding: 2,
             '& svg': {
               width: '35px'
@@ -115,12 +74,12 @@ export const Header = ({}: ISiteFrame) => {
           </Box>
         </Grid>
         <Grid item xs={4} sx={{padding: 2}} display={{xs: 'none', md: 'block'}}>
-          <Box display="flex" ml={'auto'} mr={isMobile ? 'auto' : '0'}>
+          <Box display="flex" ml={'auto'}>
             <Typography variant="body1" color="inherit" noWrap sx={{ flexGrow: 1, textAlign: 'right' }}><strong>Contact:</strong>&nbsp;<Link>drtpoiseteam@homeoffice.gov.uk</Link></Typography>
           </Box>
         </Grid>
         <Grid item xs={4} sx={{padding: 2}} display={{xs: 'block', md: 'none'}}>
-          <Box display="flex" ml={'auto'} mr={isMobile ? 'auto' : '0'}>
+          <Box display="flex" ml={'auto'}>
             <Button
               variant="outlined" 
               id="demo-positioned-button"
@@ -169,7 +128,7 @@ export const Header = ({}: ISiteFrame) => {
                   variant="text" 
                   startIcon={<ManageAccountsIcon />}
                   endIcon={<ArrowDropDownIcon />}
-                  id="demo-positioned-button"
+                  id="demo-positioned-button" 
                   onClick={handleClick}
                 >
                   Admin
