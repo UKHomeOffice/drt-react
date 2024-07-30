@@ -170,16 +170,12 @@ export const Header = ({}: ISiteFrame) => {
                   startIcon={<ManageAccountsIcon />}
                   endIcon={<ArrowDropDownIcon />}
                   id="demo-positioned-button"
-                  aria-controls={open ? 'demo-positioned-menu' : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? 'true' : undefined}
                   onClick={handleClick}
                 >
                   Admin
                 </NavButton>
                 <Menu
                   id="demo-positioned-menu"
-                  aria-labelledby="demo-positioned-button"
                   anchorEl={anchorEl}
                   open={open}
                   onClose={handleClose}
