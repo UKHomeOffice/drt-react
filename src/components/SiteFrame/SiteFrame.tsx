@@ -10,7 +10,7 @@ import { Theme } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import { Crest } from "./Crest";
 import { getAirportByCode } from "../../aiports";
-import {PageNav} from "./Navigation";
+import {Header} from "./Header";
 
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import ArticleIcon from '@mui/icons-material/Article';
@@ -198,85 +198,7 @@ const SiteFrame = ({}: ISiteFrame) => {
     <ThemeProvider theme={drtTheme}>
       <Wrapper>
         <CssBaseline />
-        <AppBar color="transparent" elevation={0} position={"sticky"}>
-          <Grid container>
-            <Grid item xs={6}>
-              <Box display="flex" mr={'auto'} ml={isMobile ? 'auto' : '0'} sx={{padding: 2}}>
-                <Crest />
-                <Typography variant="logoTitle" color="inherit" noWrap sx={{ flexGrow: 0, fontSize: '1.3rem', mr: 2 }}>Border Force</Typography>
-                <Typography variant="logoStrap" color="inherit" noWrap sx={{ flexGrow: 1, lineHeight: '2rem' }}>Dynamic Response Tool</Typography>
-              </Box></Grid>
-            <Grid item xs={6} sx={{padding: 2}}>
-              <Box display="flex" ml={'auto'} mr={isMobile ? 'auto' : '0'}>
-                <Typography variant="body1" color="inherit" noWrap sx={{ flexGrow: 1, textAlign: 'right' }}><strong>Contact:</strong>&nbsp;<Link>drtpoiseteam@homeoffice.gov.uk</Link></Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={12} sx={{backgroundColor: '#f3f5f9', padding: 2}}>
-                {isMobile && <IconButton
-                  onClick={toggleDrawer}
-                  size="large"
-                  edge="start"
-                  color="inherit"
-                  aria-label="open drawer"
-                >
-                  <MenuIcon />
-                </IconButton>}
-                <Grid container spacing={3}>
-                  <Grid item flexGrow={0}>
-                    <PortSelector handleChangePort={handleChangePort} port={port} />
-                  </Grid>
-                  <Grid item flexGrow={0}>
-                    <NavButton variant="text" startIcon={<SettingsIcon />}>Port config</NavButton>
-                  </Grid>
-                  <Grid item flexGrow={0}>
-                  <NavButton variant="text" startIcon={<EqualizerIcon />}>Feed</NavButton>
-                  </Grid>
-                  <Grid item sx={{marginLeft: 'auto'}} flexGrow={0}>
-                    <NavButton
-                      variant="text" 
-                      startIcon={<ManageAccountsIcon />}
-                      endIcon={<ArrowDropDownIcon />}
-                      id="demo-positioned-button"
-                      aria-controls={open ? 'demo-positioned-menu' : undefined}
-                      aria-haspopup="true"
-                      aria-expanded={open ? 'true' : undefined}
-                      onClick={handleClick}
-                    >
-                      Admin
-                    </NavButton>
-                    <Menu
-                      id="demo-positioned-menu"
-                      aria-labelledby="demo-positioned-button"
-                      anchorEl={anchorEl}
-                      open={open}
-                      onClose={handleClose}
-                      anchorOrigin={{
-                        vertical: 'top',
-                        horizontal: 'left',
-                      }}
-                      transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'left',
-                      }}
-                    >
-                      <MenuItem onClick={handleClose}>Profile</MenuItem>
-                      <MenuItem onClick={handleClose}>My account</MenuItem>
-                      <MenuItem onClick={handleClose}>Logout</MenuItem>
-                    </Menu>
-                  </Grid>
-                  <Grid item flexGrow={0}>
-                    <NavButton variant="text" startIcon={<ArticleIcon />}>News</NavButton>
-                  </Grid>
-                  <Grid item flexGrow={0}>
-                    <NavButton variant="text" startIcon={<MenuBookIcon />}>Training</NavButton>
-                  </Grid>
-                  <Grid item flexGrow={0}>
-                    <NavButton variant="text" startIcon={<LogoutIcon />}>Logout</NavButton>
-                  </Grid>
-                </Grid>
-            </Grid>
-          </Grid>
-        </AppBar>
+        <Header />
         {/* MOBILE DRAWER */}
 
         {/* PROGRESS STRIP */}

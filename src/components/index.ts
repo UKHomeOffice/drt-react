@@ -5,3 +5,5 @@ export type { IFlightFlagger, IFlightFlaggerFilters, IFlightHighlightChip, Autoc
 
 export { StatusTag } from "./StatusTags";
 export type { IStatusTag } from "./StatusTags";
+
+export { Header } from './SiteFrame/Header'
