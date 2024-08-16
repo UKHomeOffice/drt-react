@@ -16,31 +16,29 @@ const portSelectorProps = {
   handleChangePort: jest.fn(),
 }
 
-describe("Port Selector", () => {
-  test("it selects options based on the selectedOption prop", async () => {
+test("it selects options based on the selectedOption prop", async () => {
 
-    render(<PortSelector {...portSelectorProps}  />);
-    const selector = await screen.getByTestId('port-selector-trigger');
-    const trigger = within(selector).getByDisplayValue('/regional-dashboard');
-  
-    expect(trigger).toBeTruthy();
-  })
+  render(<PortSelector {...portSelectorProps}  />);
+  const selector = await screen.getByTestId('port-selector-trigger');
+  const trigger = within(selector).getByDisplayValue('/regional-dashboard');
 
-  test("it calls the handleChangePort function correctly", async () => {
+  expect(trigger).toBeTruthy();
+})
 
-    render(<PortSelector {...portSelectorProps}  />);
-    const selectCompoEl = await screen.getByTestId('port-selector-trigger');
-    const trigger = within(selectCompoEl).getByRole('button');
-    await fireEvent.mouseDown(trigger);
+test("it calls the handleChangePort function correctly", async () => {
 
-    const listbox = within(screen.getByRole('presentation')).getByRole(
-      'listbox'
-    );
-    const option = within(listbox).getByTestId('port-selector-/cwi')
+  render(<PortSelector {...portSelectorProps}  />);
+  const selectCompoEl = await screen.getByTestId('port-selector-trigger');
+  const trigger = within(selectCompoEl).getByRole('button');
+  await fireEvent.mouseDown(trigger);
 
-    await fireEvent.click(option);
-  
-    expect(portSelectorProps.handleChangePort).toHaveBeenCalledTimes(1);
-    expect(portSelectorProps.handleChangePort).toHaveBeenCalledWith('/cwi');
-  })
-});
+  const listbox = within(screen.getByRole('presentation')).getByRole(
+    'listbox'
+  );
+  const option = within(listbox).getByTestId('port-selector-/cwi')
+
+  await fireEvent.click(option);
+
+  expect(portSelectorProps.handleChangePort).toHaveBeenCalledTimes(1);
+  expect(portSelectorProps.handleChangePort).toHaveBeenCalledWith('/cwi');
+})
