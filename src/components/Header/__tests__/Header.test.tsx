@@ -91,7 +91,7 @@ test("it renders the port menu items", async () => {
   render(<Header {...testHeaderProps} />);
 
   const selectCompoEl = screen.getByTestId('port-selector-trigger');
-  const trigger = within(selectCompoEl).getByRole('button');
+  const trigger = selectCompoEl.getElementsByClassName('MuiSelect-select')[0]
   await fireEvent.mouseDown(trigger);
 
   expect(await screen.getByTestId('port-selector-/cwi')).toBeTruthy();
