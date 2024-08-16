@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { default as HeaderComponent } from ".";
 
 const meta: Meta<typeof HeaderComponent> = {
-  title: "DRT Components/WIP",
+  title: "DRT Components/Header",
   component: HeaderComponent,
 };
 
@@ -60,7 +60,8 @@ export const Header: Story = {
         icon: 'MenuBook',
       }
     ],
-    routingFunction: (string) => console.log(string)
+    routingFunction: (string) => console.log(string),
+    logoutLink: () => {},
   },
   parameters: {},
 };

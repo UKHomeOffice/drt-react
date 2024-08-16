@@ -53,7 +53,8 @@ const headerProps = {
       icon: 'MenuBook',
     }
   ],
-  routingFunction: jest.fn()
+  routingFunction: jest.fn(),
+  logoutLink: jest.fn(),
 }
 let testHeaderProps = {...headerProps}
 
@@ -112,6 +113,12 @@ describe("Header", () => {
     render(<Header {...testHeaderProps} />);
 
     expect(await screen.getByTestId('right-menu-/whats-new')).toBeTruthy();
+  })
+
+  test("it calls the logout function", async () => {
+    render(<Header {...testHeaderProps} />);
+    await fireEvent.click(screen.getByTestId('logout'));
+    expect(headerProps.logoutLink).toHaveBeenCalled();
   })
 
   describe("It calls the routing function", () => {

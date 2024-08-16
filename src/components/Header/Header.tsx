@@ -24,6 +24,7 @@ export interface IHeader {
   rightMenuItems?: MenuItem[],
   portMenuItems: MenuItem[],
   routingFunction: (route:string) => void,
+  logoutLink: () => void,
 }
 
 const linkStyles = {
@@ -31,7 +32,7 @@ const linkStyles = {
   color: '#000',
 }
 
-const Header = ({user, config, adminMenuItems, rightMenuItems, leftMenuItems, portMenuItems, routingFunction}: IHeader) => {
+const Header = ({user, config, adminMenuItems, rightMenuItems, leftMenuItems, portMenuItems, routingFunction, logoutLink}: IHeader) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -161,7 +162,7 @@ const Header = ({user, config, adminMenuItems, rightMenuItems, leftMenuItems, po
                 })
               }
               <Grid item flexGrow={0} display={{xs: 'none', md: 'block'}}>
-                <Button variant="text" startIcon={<LogoutIcon />} sx={linkStyles}>Logout</Button>
+                <Button data-testid="logout" onClick={() => logoutLink()} variant="text" startIcon={<LogoutIcon />} sx={linkStyles}>Logout</Button>
               </Grid>
             </Grid>
           </Grid>
