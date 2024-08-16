@@ -27,10 +27,10 @@ test("it selects options based on the selectedOption prop", async () => {
 
 test("it calls the handleChangePort function correctly", async () => {
 
-  render(<PortSelector {...portSelectorProps}  />);
+  const {container} = render(<PortSelector {...portSelectorProps}  />);
   const selectCompoEl = await screen.getByTestId('port-selector-trigger');
-  const trigger = within(selectCompoEl).getByRole('button');
-  await fireEvent.mouseDown(trigger);
+  const button = container.getElementsByClassName('MuiSelect-select')[0]
+  await fireEvent.mouseDown(button);
 
   const listbox = within(screen.getByRole('presentation')).getByRole(
     'listbox'
