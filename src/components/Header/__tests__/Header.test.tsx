@@ -8,7 +8,6 @@ import '@testing-library/jest-dom';
 
 
 const headerProps = {
-  config: {},
   user: {
     roles: [] as string[]
   },
