@@ -18,7 +18,6 @@ export interface IHeader {
   user: {
     roles: string[]
   },
-  config: any,
   adminMenuItems: MenuItem[],
   leftMenuItems?: MenuItem[],
   rightMenuItems?: MenuItem[],
