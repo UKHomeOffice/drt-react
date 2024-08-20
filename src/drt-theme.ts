@@ -15,12 +15,16 @@ declare module '@mui/material/styles' {
   interface TypographyVariants {
     portCode: React.CSSProperties;
     pageTitle: React.CSSProperties;
+    logoTitle: React.CSSProperties;
+    logoStrap: React.CSSProperties;
   }
 
   // allow configuration using `createTheme`
   interface TypographyVariantsOptions {
     portCode?: React.CSSProperties;
     pageTitle?: React.CSSProperties;
+    logoTitle?: React.CSSProperties;
+    logoStrap?: React.CSSProperties;
   }
 }
 
@@ -29,10 +33,13 @@ declare module '@mui/material/Paper' {
     appbar: true;
   }
 }
+
 declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
     portCode: true;
     pageTitle: true;
+    logoTitle: true;
+    logoStrap: true;
   }
 }
 
@@ -103,7 +110,15 @@ drtTheme = createTheme({
       [drtTheme.breakpoints.up("sm")]: {
         fontSize: 36
       }
+    },
+    logoTitle: {
+      fontSize: '1.6em'
+
+    },
+    logoStrap: {
+
     }
+
   },
   components: {
     MuiPaper: {
