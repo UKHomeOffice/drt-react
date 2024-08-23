@@ -15,9 +15,7 @@ export type MenuItem = {
 }
 
 export interface IHeader {
-  user: {
-    roles: string[]
-  },
+  userRoles: string[],
   adminMenuItems: MenuItem[],
   leftMenuItems?: MenuItem[],
   rightMenuItems?: MenuItem[],
@@ -31,7 +29,7 @@ const linkStyles = {
   color: '#000',
 }
 
-const Header = ({user, adminMenuItems, rightMenuItems, leftMenuItems, portMenuItems, routingFunction, logoutLink}: IHeader) => {
+const Header = ({userRoles, adminMenuItems, rightMenuItems, leftMenuItems, portMenuItems, routingFunction, logoutLink}: IHeader) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -42,7 +40,7 @@ const Header = ({user, adminMenuItems, rightMenuItems, leftMenuItems, portMenuIt
   };
 
   const adminMenuRoles = adminMenuItems.map(menuItem => menuItem.roles).flat(1);
-  const hasAdminMenuRoles = user.roles.filter(role => adminMenuRoles.includes(role)).length > 0;
+  const hasAdminMenuRoles = userRoles.filter(role => adminMenuRoles.includes(role)).length > 0;
 
   return (
     <AppBar sx={{backgroundColor: '#fff'}} elevation={0} position={"sticky"}>
@@ -93,7 +91,7 @@ const Header = ({user, adminMenuItems, rightMenuItems, leftMenuItems, portMenuIt
                 }}
               >
                 { adminMenuItems.map((item) => {
-                  const hasRole = item.roles && (item.roles.filter(role => user.roles.includes(role)).length > 0);
+                  const hasRole = item.roles && (item.roles.filter(role => userRoles.includes(role)).length > 0);
                   return hasRole && <MenuItem 
                     data-testid={`menu-${item.link}`} 
                     key={item.link} 
@@ -143,25 +141,29 @@ const Header = ({user, adminMenuItems, rightMenuItems, leftMenuItems, portMenuIt
                   Admin
                 </Button>
               </Grid> }
-              {
-                rightMenuItems && rightMenuItems.map((menuItem) => {
-  
-                  return (
-                    <Grid key={menuItem.link} item flexGrow={0} display={{xs: 'none', md: 'block'}}>
-                      <Button 
-                        onClick={() => routingFunction(menuItem.link)}
-                        data-testid={`right-menu-${menuItem.link}`} 
-                        variant="text" 
-                        startIcon={<DynamicIcon iconName={menuItem.icon as IconNames} />} 
-                        sx={linkStyles}>
-                          {menuItem.label}
-                        </Button>
-                    </Grid>
-                  )
-                })
-              }
-              <Grid item flexGrow={0} display={{xs: 'none', md: 'block'}}>
-                <Button data-testid="logout" onClick={() => logoutLink()} variant="text" startIcon={<LogoutIcon />} sx={linkStyles}>Logout</Button>
+              <Grid item>
+                <Grid container>
+                  {
+                    rightMenuItems && rightMenuItems.map((menuItem) => {
+      
+                      return (
+                        <Grid key={menuItem.link} item flexGrow={1} display={{xs: 'none', md: 'block'}}>
+                          <Button 
+                            onClick={() => routingFunction(menuItem.link)}
+                            data-testid={`right-menu-${menuItem.link}`} 
+                            variant="text" 
+                            startIcon={<DynamicIcon iconName={menuItem.icon as IconNames} />} 
+                            sx={linkStyles}>
+                              {menuItem.label}
+                            </Button>
+                        </Grid>
+                      )
+                    })
+                  }
+                  <Grid item flexGrow={1} display={{xs: 'none', md: 'block'}} sx={{textAlign: 'right'}}>
+                    <Button data-testid="logout" onClick={() => logoutLink()} variant="text" startIcon={<LogoutIcon />} sx={linkStyles}>Logout</Button>
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>

@@ -8,9 +8,7 @@ import '@testing-library/jest-dom';
 
 
 const headerProps = {
-  user: {
-    roles: [] as string[]
-  },
+  userRoles: [] as string[],
   portMenuItems: [
     { label: 'National Dashboard', link: '/regional-dashboard' },
     { label: 'CWL (Cardiff)', link: '/cwi' }
@@ -60,7 +58,7 @@ let testHeaderProps = {...headerProps}
 describe("When the user has admin roles", () => {
 
   beforeEach(() => {
-    headerProps.user.roles = ['health-checks:edit'];
+    headerProps.userRoles = ['health-checks:edit'];
   });
 
   test("it renders the admin menu options if the role is available", async () => {
