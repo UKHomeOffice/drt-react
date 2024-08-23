@@ -3,7 +3,6 @@ import { render } from "../../TestProviderRenderer";
 import { screen } from "@testing-library/dom";
 import { fireEvent } from "@testing-library/react";
 import Header from "../Header";
-import { within } from "@testing-library/react";
 import '@testing-library/jest-dom';
 
 
@@ -57,11 +56,9 @@ let testHeaderProps = {...headerProps}
 
 describe("When the user has admin roles", () => {
 
-  beforeEach(() => {
-    headerProps.userRoles = ['health-checks:edit'];
-  });
-
   test("it renders the admin menu options if the role is available", async () => {
+
+    testHeaderProps.userRoles=['health-checks:edit']
 
     render(<Header {...testHeaderProps} />);
     await fireEvent.click(screen.getByTestId('desktop-admin-menu-trigger'));
@@ -71,15 +68,14 @@ describe("When the user has admin roles", () => {
     expect(await screen.getByTestId('menu-/health-check-pauses')).toBeTruthy();
   })
 
-  test("it does not render admin menu options if the role is missing", async () => {
+  test("it does not render admin menu if the role is missing", async () => {
+
+    testHeaderProps.userRoles=['random-permission']
 
     render(<Header {...testHeaderProps} />);
-    await fireEvent.click(screen.getByTestId('desktop-admin-menu-trigger'));
   
-    const feedbackOption = await screen.queryByTestId('menu-/user-feedback')
-    const accessRequestsOption = await screen.queryByTestId('menu-/access-requests')
-    expect(feedbackOption).toBeNull();
-    expect(accessRequestsOption).toBeNull();
+    const menuTrigger = screen.queryByTestId('desktop-admin-menu-trigger')
+    expect(menuTrigger).toBeNull();
   })
 }) 
 
