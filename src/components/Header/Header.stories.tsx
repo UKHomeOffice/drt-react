@@ -12,13 +12,11 @@ type Story = StoryObj<typeof HeaderComponent>;
 
 export const Header: Story = {
   args: {
-    user: {
-      roles: [
+    userRoles: [
         'manage-users',
         'download-manager',
         'health-checks:edit',
-      ]
-    },
+    ],
     portMenuItems: [
       { label: 'National Dashboard', link: '/regional-dashboard' },
       { label: 'CWL (Cardiff)', link: '/cwi' }
