@@ -8,3 +8,6 @@ export type { IStatusTag } from "./StatusTags";
 
 export {default as Header} from './Header'
 export type { IHeader, MenuItem} from './Header';
+
+export { MinStaffWarning } from './Staff'
+export type {IMinStaffWarning} from './Staff'
