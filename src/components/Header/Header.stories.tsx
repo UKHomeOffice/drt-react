@@ -18,7 +18,7 @@ export const Header: Story = {
         'health-checks:edit',
     ],
     portMenuItems: [
-      { label: 'National Dashboard', link: '/regional-dashboard' },
+      { label: 'National Dashboard', link: '/national-pressure' },
       { label: 'CWL (Cardiff)', link: '/cwi' }
     ],
     adminMenuItems: [
@@ -58,6 +58,7 @@ export const Header: Story = {
         icon: 'MenuBook',
       }
     ],
+    initialSelectedPortMenuItem: '/national-pressure',
     routingFunction: (string) => console.log(string),
     logoutLink: () => {},
   },
