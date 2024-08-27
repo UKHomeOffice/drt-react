@@ -20,6 +20,7 @@ export interface IHeader {
   leftMenuItems?: MenuItem[],
   rightMenuItems?: MenuItem[],
   portMenuItems: MenuItem[],
+  initialSelectedPortMenuItem: string,
   routingFunction: (route:string) => void,
   logoutLink: () => void,
 }
@@ -29,8 +30,9 @@ const linkStyles = {
   color: '#000',
 }
 
-const Header = ({userRoles, adminMenuItems, rightMenuItems, leftMenuItems, portMenuItems, routingFunction, logoutLink}: IHeader) => {
+const Header = ({userRoles, adminMenuItems, rightMenuItems, leftMenuItems, portMenuItems, initialSelectedPortMenuItem, routingFunction, logoutLink}: IHeader) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [selectedPortOption, setSelectedPortOption] = React.useState<string>(initialSelectedPortMenuItem);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -55,7 +57,7 @@ const Header = ({userRoles, adminMenuItems, rightMenuItems, leftMenuItems, portM
                 width: '35px'
                 }
               }}>
-              <Crest data-testid="crest" />
+              <Link href="https://drt.homeoffice.gov.uk/"><Crest data-testid="crest" /></Link>
               <Typography color="inherit" noWrap sx={{ flexGrow: 0, fontSize: '1.3rem', mr: 2, color: '#000' }}>Border Force</Typography>
               <Typography color="inherit" noWrap sx={{ flexGrow: 0, lineHeight: '2rem', fontSize: '1rem', color: '#000' }} display={{xs: 'none', md: 'block'}}>Dynamic Response Tool</Typography>
             </Box>
