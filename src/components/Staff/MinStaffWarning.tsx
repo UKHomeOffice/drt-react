@@ -11,7 +11,7 @@ export interface IMinStaffWarning {
 
 export const MinStaffWarning = ({message1, message2, minStaff, handleClick}: IMinStaffWarning) => {
   return <Alert sx={{color: '#873200', border: '1px solid #873200'}} severity="warning">
-    <Box><strong>{message1} {minStaff}</strong></Box>
+    <Box sx={{fontWeight: 'bold'}}>{message1} {minStaff}</Box>
     <Box sx={{paddingTop: '10px'}}>{message2}</Box>
     <Box sx={{paddingTop: '10px'}}>
       <Button

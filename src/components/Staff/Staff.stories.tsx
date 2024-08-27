@@ -1,11 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { MinStaffWarning as MinStaffWarningComponent } from "./MinStaffWarning";
 
-export const meta: Meta<typeof MinStaffWarningComponent> = {
+const meta: Meta<typeof MinStaffWarningComponent> = {
   title: "DRT Components/MinStaffWarningComponent",
   component: MinStaffWarningComponent,
 };
 
+export default meta;
 type Story = StoryObj<typeof MinStaffWarningComponent>;
 
 export const MinStaffWarning: Story = {
