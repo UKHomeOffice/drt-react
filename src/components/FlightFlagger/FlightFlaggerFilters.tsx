@@ -253,7 +253,7 @@ export const FlightFlaggerFilters = ({
           Select pax info to reveal
         </Button>
       </Grid>
-      <Grid item flexGrow={1}>
+      {isTouched() && <Grid item flexGrow={1}>
         <FormControl>
           <FormLabel sx={{mb: 1}} id="display"><strong>Show flights:</strong></FormLabel>
           <RadioGroup
@@ -269,7 +269,7 @@ export const FlightFlaggerFilters = ({
                               label="Highlighted flights only"/>
           </RadioGroup>
         </FormControl>
-      </Grid>
+      </Grid>}
     </Grid>
     <Grid container sx={{backgroundColor: '#F3F5F9', width: '100%', ml: 0}} spacing={2}>
       <Grid item xs={12} sx={{px: 2, pb: 2}}>
