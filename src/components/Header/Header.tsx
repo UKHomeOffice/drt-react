@@ -112,7 +112,7 @@ const Header = ({userRoles, adminMenuItems, rightMenuItems, leftMenuItems, portM
           <Grid item xs={12} sx={{backgroundColor: '#f3f5f9', padding: 2, flexWrap: 'nowrap'}}>
             <Grid container spacing={3}>
               <Grid item flexGrow={{xs: 1, md: 0}}>
-                <PortSelector options={portMenuItems} handleChangePort={routingFunction} selectedOption={'/cwi'} />
+                <PortSelector options={portMenuItems} handleChangePort={routingFunction} selectedOption={selectedPortOption} />
               </Grid>
               {
                 leftMenuItems && leftMenuItems.map((menuItem) => {
