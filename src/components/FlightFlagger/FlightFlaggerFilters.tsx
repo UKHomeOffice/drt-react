@@ -1,39 +1,36 @@
 import React, {useState} from "react";
 import {
-  Grid,
-  Typography,
+  Autocomplete,
+  Button,
+  Checkbox,
+  Chip,
+  Collapse,
+  FormControl,
+  FormControlLabel,
   FormGroup,
   FormLabel,
-  RadioGroup,
-  Radio,
-  FormControl,
-  Collapse,
-  InputLabel,
-  OutlinedInput,
+  Grid,
   InputAdornment,
-  FormControlLabel,
-  Autocomplete,
-  Checkbox,
-  TextField,
-  Button,
+  InputLabel,
+  Link,
+  OutlinedInput,
   Paper,
-  IconButton,
-  Chip,
-  Link
+  Radio,
+  RadioGroup,
+  TextField,
+  Typography
 } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
-import {ArrowRight} from "@mui/icons-material";
 import CustomHighlightIcon from "./icon-highlight-pax.svg";
-
-export type AutocompleteOption = {
-  title: string
-}
 
 type FormState = {
   showTransitPaxNumber: boolean,
   showNumberOfVisaNationals: boolean,
   requireAllSelected: boolean,
-  flightNumber: string
+  flightNumber: string,
+  selectedNationalities: Country[],
+  selectedAgeGroups: string[],
+  showFilters: boolean,
 }
 
 export type Country = {
@@ -44,10 +41,10 @@ export type Country = {
 export type SearchFilterPayload = {
   showTransitPaxNumber: boolean,
   showNumberOfVisaNationals: boolean,
-  selectedAgeGroups: string[],
-  selectedNationalities: Country[],
-  flightNumber: string,
   requireAllSelected: boolean,
+  flightNumber: string,
+  selectedNationalities: Country[],
+  selectedAgeGroups: string[],
 }
 
 export interface IFlightFlaggerFilters {
@@ -57,15 +54,7 @@ export interface IFlightFlaggerFilters {
   showAllCallback: (event: React.ChangeEvent<HTMLInputElement>) => void,
   onChangeInput: (searchTerm: string) => void,
   clearFiltersCallback: (payload: SearchFilterPayload) => void,
-  initialState?: {
-    showTransitPaxNumber: boolean,
-    showNumberOfVisaNationals: boolean,
-    requireAllSelected: boolean,
-    flightNumber: string,
-    selectedNationalities: Country[],
-    selectedAgeGroups: AutocompleteOption[],
-    showFilters: boolean,
-  }
+  initialState?: FormState
 }
 
 export const FlightFlaggerFilters = ({
@@ -82,9 +71,6 @@ export const FlightFlaggerFilters = ({
     return <CustomHighlightIcon style={{marginLeft: '4px', minWidth: '25px'}} />
   }
 
-  const nationalitiesOptions = nationalities.map((nationality) => {
-    return nationality
-  });
   const ageOptions = ageGroups.map((ageGroup) => {
     return {title: ageGroup}
   });
@@ -94,28 +80,32 @@ export const FlightFlaggerFilters = ({
     showNumberOfVisaNationals: initialState?.showNumberOfVisaNationals || false,
     requireAllSelected: initialState?.requireAllSelected || false,
     flightNumber: initialState?.flightNumber || '',
+    selectedNationalities: initialState?.selectedNationalities || [],
+    selectedAgeGroups: initialState?.selectedAgeGroups || [],
+    showFilters: initialState?.showFilters || false,
   });
-  const [selectedNationalities, setSelectedNationalities] = useState<Country[]>(initialState?.selectedNationalities || []);
-  const [selectedAgeGroups, setSelectedAgeGroups] = useState<AutocompleteOption[]>(initialState?.selectedAgeGroups || []);
-  const [showFilters, setShowFilters] = useState<boolean>(initialState?.showFilters || false);
 
   const isTouched = () => {
-    return (selectedNationalities.length !== 0) || (selectedAgeGroups.length !== 0) || searchFlags.showTransitPaxNumber || searchFlags.showNumberOfVisaNationals
+    return (searchFlags.selectedNationalities.length !== 0) || (searchFlags.selectedAgeGroups.length !== 0) || searchFlags.showTransitPaxNumber || searchFlags.showNumberOfVisaNationals
   }
 
   const submit = () => {
-    const ageGroupPayload: string[] = selectedAgeGroups.map((ageGroup: AutocompleteOption) => ageGroup.title)
-    const nationalityPayload: Country[] = selectedNationalities.map((nationality: Country) => nationality)
-    submitCallback({
-      ...searchFlags,
+    const nationalityPayload: Country[] = searchFlags.selectedNationalities.map((nationality: Country) => nationality)
+    const ageGroupPayload: string[] = searchFlags.selectedAgeGroups
+    const payload = {
+      showTransitPaxNumber: searchFlags.showTransitPaxNumber,
+      showNumberOfVisaNationals: searchFlags.showNumberOfVisaNationals,
+      requireAllSelected: searchFlags.requireAllSelected,
+      flightNumber: searchFlags.flightNumber,
       selectedNationalities: nationalityPayload,
       selectedAgeGroups: ageGroupPayload,
-    });
+    }
+    submitCallback(payload);
   }
 
   const handleApply = () => {
     submit()
-    setShowFilters(false)
+    setSearchFlags({...searchFlags, showFilters: false})
   }
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -142,17 +132,16 @@ export const FlightFlaggerFilters = ({
   }
 
   const toggleFilters = () => {
-    setShowFilters(!showFilters)
+    setSearchFlags({...searchFlags, showFilters: !searchFlags.showFilters})
   }
-
 
   const buildFilterString = () => {
     const paxFlters = []
-    if (selectedNationalities.length) {
-      paxFlters.push(`nationality: ${selectedNationalities.map(n => `${n.name} (${n.code})`).join(', ')}`)
+    if (searchFlags.selectedNationalities.length) {
+      paxFlters.push(`nationality: ${searchFlags.selectedNationalities.map(n => `${n.name} (${n.code})`).join(', ')}`)
     }
-    if (selectedAgeGroups.length) {
-      paxFlters.push(`age: ${selectedAgeGroups.map(n => n.title).join(', ')}`)
+    if (searchFlags.selectedAgeGroups.length) {
+      paxFlters.push(`age: ${searchFlags.selectedAgeGroups.join(', ')}`)
     }
     if (searchFlags.showTransitPaxNumber) {
       paxFlters.push('show transit pax')
@@ -168,8 +157,8 @@ export const FlightFlaggerFilters = ({
 
   const getFilterCount = () => {
     let total = 0
-    total += selectedNationalities.length
-    total += selectedAgeGroups.length
+    total += searchFlags.selectedNationalities.length
+    total += searchFlags.selectedAgeGroups.length
     if (searchFlags.showTransitPaxNumber) {
       total++
     }
@@ -183,21 +172,20 @@ export const FlightFlaggerFilters = ({
   }
 
   const clearHighlights = () => {
-    const resetFilterPayload = {
-      ...searchFlags,
+    const emptyFormState = {
       showTransitPaxNumber: false,
       showNumberOfVisaNationals: false,
       requireAllSelected: false,
-    }
-    setSearchFlags(resetFilterPayload)
-    setSelectedNationalities([]);
-    setSelectedAgeGroups([]);
-
-    clearFiltersCallback({
-      ...resetFilterPayload,
+      flightNumber: searchFlags.flightNumber,
       selectedNationalities: [],
       selectedAgeGroups: [],
-    });
+    }
+
+    setSearchFlags(p => {
+      return {...emptyFormState, showFilters: false}
+    })
+
+    clearFiltersCallback(emptyFormState);
   }
 
   return <>
@@ -273,7 +261,7 @@ export const FlightFlaggerFilters = ({
     </Grid>
     <Grid container sx={{backgroundColor: '#F3F5F9', width: '100%', ml: 0}} spacing={2}>
       <Grid item xs={12} sx={{px: 2, pb: 2}}>
-        <Collapse in={showFilters} data-testid="flight-flagger-filters">
+        <Collapse in={searchFlags.showFilters} data-testid="flight-flagger-filters">
           <Paper elevation={0} sx={{backgroundColor: '#fff', p: 2, mt: 2}}>
             <Grid container columnSpacing={2}>
               <Grid item xs={12}>
@@ -286,12 +274,12 @@ export const FlightFlaggerFilters = ({
                   id="nationalities"
                   options={nationalities}
                   getOptionLabel={(option) => `${option.name} (${option.code})`}
-                  value={selectedNationalities}
+                  value={searchFlags.selectedNationalities}
                   defaultValue={[]}
                   filterSelectedOptions
                   isOptionEqualToValue={(option, value) => option.code === value.code}
-                  onChange={(event, newValue) => {
-                    setSelectedNationalities(newValue);
+                  onChange={(event, newValue: Country[]) => {
+                    setSearchFlags({...searchFlags, selectedNationalities: newValue});
                   }}
                   renderInput={(params) => (
                     <TextField
@@ -308,13 +296,12 @@ export const FlightFlaggerFilters = ({
                   multiple
                   id="ageGroups"
                   options={ageOptions}
-                  getOptionLabel={(option) => option.title}
-                  value={selectedAgeGroups}
+                  value={searchFlags.selectedAgeGroups}
                   defaultValue={[]}
                   filterSelectedOptions
                   isOptionEqualToValue={(option, value) => option.title === value.title}
-                  onChange={(event, newValue) => {
-                    setSelectedAgeGroups(newValue);
+                  onChange={(event, newValue: string[]) => {
+                    setSearchFlags({...searchFlags, selectedAgeGroups: newValue});
                   }}
                   renderInput={(params) => (
                     <TextField
@@ -350,7 +337,9 @@ export const FlightFlaggerFilters = ({
                 </FormGroup>
               </Grid>
               <Grid item xs={12}>
-                <Button variant='outlined' onClick={() => setShowFilters(false)} sx={{mr: 2}}>Close</Button>
+                <Button variant='outlined' onClick={() => setSearchFlags({...searchFlags, showFilters: false})} sx={{mr: 2}}>
+                  Close
+                </Button>
                 <Button data-testid="flight-flagger-filter-submit" variant='contained' onClick={handleApply}>Apply
                   Highlights</Button>
               </Grid>
