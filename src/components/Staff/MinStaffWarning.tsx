@@ -19,7 +19,7 @@ export const MinStaffWarning = ({message1, message2, minStaff, handleClick}: IMi
         variant="outlined"
         id="add-min-staff"
         onClick={handleClick}
-        sx={{marginLeft: 'auto', backgroundColor: '#334F96', color: '#fff', textTransform: 'none'}}
+        sx={{marginLeft: 'auto', backgroundColor: '#334F96', color: '#fff', textTransform: 'none','&:hover': {backgroundColor: '#334F96'}}}
       >+ Add minimum staff</Button>
     </Box>
   </Alert>
