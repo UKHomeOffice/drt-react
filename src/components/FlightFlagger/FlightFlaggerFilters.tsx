@@ -57,6 +57,18 @@ export interface IFlightFlaggerFilters {
   initialState?: FormState
 }
 
+function getInitialState(initialState?: FormState) {
+  return {
+    showTransitPaxNumber: initialState?.showTransitPaxNumber || false,
+    showNumberOfVisaNationals: initialState?.showNumberOfVisaNationals || false,
+    requireAllSelected: initialState?.requireAllSelected || false,
+    flightNumber: initialState?.flightNumber || '',
+    selectedNationalities: initialState?.selectedNationalities || [],
+    selectedAgeGroups: initialState?.selectedAgeGroups || [],
+    showFilters: initialState?.showFilters || false,
+  };
+}
+
 export const FlightFlaggerFilters = ({
                                        nationalities,
                                        ageGroups,
@@ -68,25 +80,36 @@ export const FlightFlaggerFilters = ({
                                      }: IFlightFlaggerFilters) => {
 
   const HighlightIcon = () => {
-    return <CustomHighlightIcon style={{marginLeft: '4px', minWidth: '25px'}} />
+    return <CustomHighlightIcon style={{marginLeft: '4px', minWidth: '25px'}}/>
   }
 
   const ageOptions = ageGroups.map((ageGroup) => {
     return {title: ageGroup}
   });
 
-  const [searchFlags, setSearchFlags] = useState<FormState>({
-    showTransitPaxNumber: initialState?.showTransitPaxNumber || false,
-    showNumberOfVisaNationals: initialState?.showNumberOfVisaNationals || false,
-    requireAllSelected: initialState?.requireAllSelected || false,
-    flightNumber: initialState?.flightNumber || '',
-    selectedNationalities: initialState?.selectedNationalities || [],
-    selectedAgeGroups: initialState?.selectedAgeGroups || [],
-    showFilters: initialState?.showFilters || false,
-  });
+  const [searchFlags, setSearchFlags] = useState<FormState>(getInitialState(initialState));
+
+  const [appliedSearchFlags, setAppliedSearchFlags] = useState<FormState>(searchFlags)
 
   const isTouched = () => {
-    return (searchFlags.selectedNationalities.length !== 0) || (searchFlags.selectedAgeGroups.length !== 0) || searchFlags.showTransitPaxNumber || searchFlags.showNumberOfVisaNationals
+    return searchFlags.selectedNationalities.length !== searchFlags.selectedNationalities.length ||
+      searchFlags.selectedAgeGroups.length !== searchFlags.selectedAgeGroups.length ||
+      searchFlags.showTransitPaxNumber ||
+      searchFlags.showNumberOfVisaNationals
+  }
+
+  const someCriteriaSelected = () => {
+    return searchFlags.selectedNationalities.length > 0 ||
+      searchFlags.selectedAgeGroups.length > 0 ||
+      searchFlags.showTransitPaxNumber ||
+      searchFlags.showNumberOfVisaNationals
+  }
+
+  const isActive = () => {
+    return appliedSearchFlags.selectedNationalities.length > 0 ||
+      appliedSearchFlags.selectedAgeGroups.length > 0 ||
+      appliedSearchFlags.showTransitPaxNumber ||
+      appliedSearchFlags.showNumberOfVisaNationals
   }
 
   const submit = () => {
@@ -106,6 +129,7 @@ export const FlightFlaggerFilters = ({
   const handleApply = () => {
     submit()
     setSearchFlags({...searchFlags, showFilters: false})
+    setAppliedSearchFlags(searchFlags)
   }
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -189,7 +213,7 @@ export const FlightFlaggerFilters = ({
   }
 
   return <>
-    <Grid container sx={{backgroundColor: '#F3F5F9', width: '100%', ml: 0, pt: 2}} flexWrap={{xs: 'wrap', md: 'nowrap'}}
+    <Grid container sx={{backgroundColor: '#F3F5F9', width: '100%', ml: 0, pt: 2, flexWrap: {xs: 'wrap', md: 'nowrap'}}}
           spacing={2}>
       <Grid item flexGrow={0}>
         <InputLabel htmlFor="flight-number" sx={{mb: 1}}><strong>Enter flight details</strong></InputLabel>
@@ -219,10 +243,10 @@ export const FlightFlaggerFilters = ({
         <InputLabel sx={{mb: 1}}><strong>Highlight flights</strong></InputLabel>
         <Button
           data-testid="show-filters"
-          color={"secondary"}
+          color="secondary"
           onClick={() => toggleFilters()}
           disableElevation
-          variant={"outlined"}
+          variant="outlined"
           sx={{
             textTransform: 'none',
             letterSpacing: 0,
@@ -232,7 +256,7 @@ export const FlightFlaggerFilters = ({
           }}
           startIcon={<HighlightIcon/>}
           endIcon={<Chip
-            color={isTouched() ? "primary" : "default"}
+            color={isActive() ? "primary" : "default"}
             size="small"
             label={`${getFilterCount()}`}
             sx={{fontSize: '0.8125rem !important'}}/>
@@ -241,22 +265,23 @@ export const FlightFlaggerFilters = ({
           Select pax info to reveal
         </Button>
       </Grid>
-      {isTouched() && <Grid item flexGrow={1}>
-        <FormControl>
-          <FormLabel sx={{mb: 1}} id="display"><strong>Show flights:</strong></FormLabel>
-          <RadioGroup
-            row
-            aria-labelledby="display"
-            name="row-radio-buttons-group"
-            onChange={showAllCallback}
-            defaultValue="false"
-          >
-            <FormControlLabel value="false" data-testid="show-all-flights" defaultChecked={true} control={<Radio/>}
-                              label="All flights"/>
-            <FormControlLabel value="true" data-testid="show-highlighted-only" control={<Radio/>}
-                              label="Highlighted flights only"/>
-          </RadioGroup>
-        </FormControl>
+      {isActive() && <Grid item flexGrow={1}>
+          <FormControl>
+              <FormLabel sx={{mb: 1}} id="display"><strong>Show flights:</strong></FormLabel>
+              <RadioGroup
+                  row
+                  aria-labelledby="display"
+                  name="row-radio-buttons-group"
+                  onChange={showAllCallback}
+                  defaultValue="false"
+              >
+                  <FormControlLabel value="false" data-testid="show-all-flights" defaultChecked={true}
+                                    control={<Radio/>}
+                                    label="All flights"/>
+                  <FormControlLabel value="true" data-testid="show-highlighted-only" control={<Radio/>}
+                                    label="Highlighted flights only"/>
+              </RadioGroup>
+          </FormControl>
       </Grid>}
     </Grid>
     <Grid container sx={{backgroundColor: '#F3F5F9', width: '100%', ml: 0}} spacing={2}>
@@ -326,7 +351,7 @@ export const FlightFlaggerFilters = ({
                       control={
                         <Checkbox
                           data-testid="require-all-selected-check"
-                          disabled={!isTouched()}
+                          disabled={!someCriteriaSelected()}
                           checked={searchFlags.requireAllSelected}
                           onChange={handleCheckboxChange}
                           name="requireAllSelected"/>
@@ -337,19 +362,25 @@ export const FlightFlaggerFilters = ({
                 </FormGroup>
               </Grid>
               <Grid item xs={12}>
-                <Button variant='outlined' onClick={() => setSearchFlags({...searchFlags, showFilters: false})} sx={{mr: 2}}>
+                <Button variant='outlined' onClick={() =>
+                  setSearchFlags({...getInitialState(initialState), showFilters: false})
+                } sx={{mr: 2}}>
                   Close
                 </Button>
-                <Button data-testid="flight-flagger-filter-submit" variant='contained' onClick={handleApply}>Apply
-                  Highlights</Button>
+                <Button data-testid="flight-flagger-filter-submit" variant='contained' onClick={handleApply}
+                        disabled={!isTouched()}>
+                  Apply Highlights
+                </Button>
               </Grid>
             </Grid>
           </Paper>
         </Collapse>
-        {isTouched() && <Typography sx={{mt: 2, pr: 2}}>
+        {isActive() && <Typography sx={{mt: 2, pr: 2}}>
             <strong>Pax info highlighted - </strong>
-          {buildFilterString()} - <Link data-testid="flight-flagger-clear-filters" onClick={() => clearHighlights()}>Clear
-            all highlights</Link>
+          {buildFilterString()} -
+            <Link data-testid="flight-flagger-clear-filters" onClick={() => clearHighlights()}>
+                Clear all highlights
+            </Link>
         </Typography>}
       </Grid>
     </Grid></>
