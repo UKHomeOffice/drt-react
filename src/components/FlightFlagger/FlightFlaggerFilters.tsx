@@ -119,56 +119,45 @@ export const FlightFlaggerFilters = ({
   }
 
   const filterIsActive = () => {
-    return appliedSearchFlags.selectedNationalities.length > 0 ||
+    const isActive = appliedSearchFlags.selectedNationalities.length > 0 ||
       appliedSearchFlags.selectedAgeGroups.length > 0 ||
       appliedSearchFlags.showTransitPaxNumber ||
       appliedSearchFlags.showNumberOfVisaNationals
+
+    return isActive
   }
 
-  const submit = (formState: FormState) => {
-    const nationalityPayload: Country[] = formSearchFlags.selectedNationalities.map((nationality: Country) => nationality)
-    // const ageGroupPayload: string[] = formSearchFlags.selectedAgeGroups
-    // const payload = {
-    //   showTransitPaxNumber: formSearchFlags.showTransitPaxNumber,
-    //   showNumberOfVisaNationals: formSearchFlags.showNumberOfVisaNationals,
-    //   requireAllSelected: formSearchFlags.requireAllSelected,
-    //   flightNumber: formSearchFlags.flightNumber,
-    //   selectedNationalities: nationalityPayload,
-    //   selectedAgeGroups: ageGroupPayload,
-    // }
-    const payload = {...formState, selectedNationalities: nationalityPayload}
-    submitCallback(payload)
-  }
+  console.log(`filterIsActive: ${filterIsActive()}`)
+  console.log(`formIsTouched: ${formIsTouched()}`)
+  console.log(`someCriteriaSelected: ${someCriteriaSelected()}`)
 
   const handleApply = () => {
     const formToSubmit = {...formSearchFlags, showFilters: false}
 
     setFormSearchFlags(formToSubmit)
     setAppliedSearchFlags(formToSubmit)
-    
-    submit(formToSubmit)
+
+    submitCallback(formToSubmit)
   }
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const name: string = event.target.name
     setFormSearchFlags({
       ...formSearchFlags,
-      [name]: event.target.checked
+      [event.target.name]: event.target.checked
     })
   }
 
   const handleTextInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const name: string = event.target.name
     setFormSearchFlags({
       ...formSearchFlags,
-      [name]: event.target.value
+      [event.target.name]: event.target.value
     })
     onChangeInput(event.target.value)
   }
 
   const handleInputSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      submit()
+      submitCallback(formSearchFlags)
     }
   }
 
@@ -176,21 +165,21 @@ export const FlightFlaggerFilters = ({
     setFormSearchFlags({...formSearchFlags, showFilters: !formSearchFlags.showFilters})
   }
 
-  const buildFilterString = () => {
+  const buildFilterString = (flags: FormState) => {
     const paxFlters = []
-    if (formSearchFlags.selectedNationalities.length) {
-      paxFlters.push(`nationality: ${formSearchFlags.selectedNationalities.map(n => `${n.name} (${n.code})`).join(', ')}`)
+    if (flags.selectedNationalities.length) {
+      paxFlters.push(`nationality: ${flags.selectedNationalities.map(n => `${n.name} (${n.code})`).join(', ')}`)
     }
-    if (formSearchFlags.selectedAgeGroups.length) {
-      paxFlters.push(`age: ${formSearchFlags.selectedAgeGroups.join(', ')}`)
+    if (flags.selectedAgeGroups.length) {
+      paxFlters.push(`age: ${flags.selectedAgeGroups.join(', ')}`)
     }
-    if (formSearchFlags.showTransitPaxNumber) {
+    if (flags.showTransitPaxNumber) {
       paxFlters.push('show transit pax')
     }
-    if (formSearchFlags.showNumberOfVisaNationals) {
+    if (flags.showNumberOfVisaNationals) {
       paxFlters.push('show number of visa nationals')
     }
-    if (formSearchFlags.requireAllSelected) {
+    if (flags.requireAllSelected) {
       paxFlters.push('only highlight flights with all selected info')
     }
     return `${paxFlters.join(', ')}`
@@ -386,7 +375,7 @@ export const FlightFlaggerFilters = ({
         </Collapse>
         {filterIsActive() && <Typography sx={{mt: 2, pr: 2}}>
             <strong>Pax info highlighted - </strong>
-          {buildFilterString()} -
+          {buildFilterString(appliedSearchFlags)} -
             <Link data-testid="flight-flagger-clear-filters" onClick={() => clearHighlights()}>
                 Clear all highlights
             </Link>
