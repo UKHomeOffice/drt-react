@@ -22,5 +22,7 @@ export const MinStaffForm: Story = {
       }
       return true;
     },
-  }
+    continueCallback: () => {
+      console.log("Continue")
+  }}
 };
