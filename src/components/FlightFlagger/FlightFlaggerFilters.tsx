@@ -99,6 +99,11 @@ export const FlightFlaggerFilters = ({
   const [currentFormState, setCurrentFormState] = useState<FormState>(initialFormState)
   const [appliedSearchFlags, setAppliedSearchFlags] = useState<FormState>(initialFormState)
 
+  console.log(`props nats: ${JSON.stringify(nationalities)}`)
+  console.log(`initial nats: ${JSON.stringify(initialFormState.selectedNationalities)}`)
+  console.log(`current nats: ${JSON.stringify(currentFormState.selectedNationalities)}`)
+  console.log(`applied nats: ${JSON.stringify(appliedSearchFlags.selectedNationalities)}`)
+
   const formIsTouched = (initialForm, currentForm) => {
     return currentForm.selectedNationalities.length !== initialForm.selectedNationalities.length ||
       currentForm.selectedAgeGroups.length !== initialForm.selectedAgeGroups.length ||
