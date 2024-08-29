@@ -114,14 +114,15 @@ export const FlightFlaggerFilters = ({
       form.showNumberOfVisaNationals
   }
 
-  const handleApply = () => {
-    const formToSubmit = {...currentFormState, showFilters: false}
+  const handleApply = (form: FormState) =>
+    () => {
+      const formToSubmit = {...form, showFilters: false}
 
-    setCurrentFormState(formToSubmit)
-    setAppliedSearchFlags(formToSubmit)
+      submitCallback(formToSubmit)
 
-    submitCallback(formToSubmit)
-  }
+      setCurrentFormState(formToSubmit)
+      setAppliedSearchFlags(formToSubmit)
+    }
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentFormState({
@@ -168,17 +169,17 @@ export const FlightFlaggerFilters = ({
     return `${paxFlters.join(', ')}`
   }
 
-  const getFilterCount = () => {
+  const getFilterCount = (form: FormState) => {
     let total = 0
-    total += currentFormState.selectedNationalities.length
-    total += currentFormState.selectedAgeGroups.length
-    if (currentFormState.showTransitPaxNumber) {
+    total += form.selectedNationalities.length
+    total += form.selectedAgeGroups.length
+    if (form.showTransitPaxNumber) {
       total++
     }
-    if (currentFormState.showNumberOfVisaNationals) {
+    if (form.showNumberOfVisaNationals) {
       total++
     }
-    if (currentFormState.requireAllSelected) {
+    if (form.requireAllSelected) {
       total++
     }
     return total
@@ -239,7 +240,7 @@ export const FlightFlaggerFilters = ({
           endIcon={<Chip
             color={someCriteriaSelected(appliedSearchFlags) ? "primary" : "default"}
             size="small"
-            label={`${getFilterCount()}`}
+            label={`${getFilterCount(appliedSearchFlags)}`}
             sx={{fontSize: '0.8125rem !important'}}/>
           }
           size="large">
@@ -322,7 +323,8 @@ export const FlightFlaggerFilters = ({
                 <FormGroup>
                   <FormControlLabel
                     control={
-                      <Checkbox data-testid="show-visa-nationals-check" checked={currentFormState.showNumberOfVisaNationals}
+                      <Checkbox data-testid="show-visa-nationals-check"
+                                checked={currentFormState.showNumberOfVisaNationals}
                                 onChange={handleCheckboxChange} name="showNumberOfVisaNationals"/>
                     }
                     label="Show number of visa nationals"
@@ -348,7 +350,8 @@ export const FlightFlaggerFilters = ({
                         sx={{mr: 2}}>
                   Close
                 </Button>
-                <Button data-testid="flight-flagger-filter-submit" variant='contained' onClick={handleApply}
+                <Button data-testid="flight-flagger-filter-submit" variant='contained'
+                        onClick={handleApply(currentFormState)}
                         disabled={!formIsTouched(appliedSearchFlags, currentFormState)}>
                   Apply Highlights
                 </Button>
@@ -361,8 +364,8 @@ export const FlightFlaggerFilters = ({
           {buildFilterString(appliedSearchFlags)} - <Link
             data-testid="flight-flagger-clear-filters"
             onClick={() => clearHighlights()}>
-                Clear all highlights
-            </Link>
+            Clear all highlights
+        </Link>
         </Typography>}
       </Grid>
     </Grid></>
