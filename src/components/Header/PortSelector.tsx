@@ -15,8 +15,9 @@ const StyledSelect = styled(Select)<SelectProps>(({ theme }) => ({
   '& .MuiSelect-select': {
     borderWidth: '0 !important',
     display: 'flex',
-    padding: ` 0 40px 0 0 !important`,
+    padding: `5px 40px 5px 5px !important`,
     backgroundColor: 'transparent',
+    height: '1.25em !important',
     '& >*': {
       display: 'flex',  
       alignItems: 'center',
@@ -56,7 +57,8 @@ const PortSelector = ({handleChangePort, options, selectedOption}: IPortSelector
     <FormControl size="small">     
       <StyledSelect 
         data-testid={`port-selector-trigger`}
-        value={selected} 
+        value={selected}
+        label="Select a port..."
         variant="standard" 
         onChange={onChange}>
         {options?.map((option) => {

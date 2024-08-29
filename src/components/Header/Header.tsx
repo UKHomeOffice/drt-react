@@ -44,8 +44,6 @@ const Header = ({userRoles, adminMenuItems, rightMenuItems, leftMenuItems, portM
   const adminMenuRoles = adminMenuItems.map(menuItem => menuItem.roles).flat(1);
   const hasAdminMenuRoles = userRoles.filter(role => adminMenuRoles.includes(role)).length > 0;
 
-  console.log(userRoles, hasAdminMenuRoles);
-
   return (
     <AppBar sx={{backgroundColor: '#fff'}} elevation={0} position={"sticky"}>
       <Box>
