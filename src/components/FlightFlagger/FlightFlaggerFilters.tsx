@@ -352,7 +352,7 @@ export const FlightFlaggerFilters = ({
                 <Button variant='outlined'
                         onClick={() => setCurrentFormState({...appliedSearchFlags, showFilters: false})}
                         sx={{mr: 2}}>
-                  Close
+                  Cancel
                 </Button>
                 <Button data-testid="flight-flagger-filter-submit" variant='contained'
                         onClick={handleApply(currentFormState)}
