@@ -285,7 +285,7 @@ export const FlightFlaggerFilters = ({
                   multiple
                   id="nationalities"
                   options={nationalities}
-                  getOptionLabel={(option) => `${option.name} (${option.code})`}
+                  getOptionLabel={option => `${option.name} (${option.code})`}
                   value={currentFormState.selectedNationalities}
                   defaultValue={[]}
                   filterSelectedOptions
@@ -311,7 +311,6 @@ export const FlightFlaggerFilters = ({
                   value={currentFormState.selectedAgeGroups}
                   defaultValue={[]}
                   filterSelectedOptions
-                  isOptionEqualToValue={(option, value) => option.title === value.title}
                   onChange={(event, newValue: string[]) => {
                     setCurrentFormState({...currentFormState, selectedAgeGroups: newValue})
                   }}
