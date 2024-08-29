@@ -55,18 +55,21 @@ const PortSelector = ({handleChangePort, options, selectedOption}: IPortSelector
  
   return (
     <FormControl size="small">     
-      <StyledSelect 
+      <StyledSelect
+        displayEmpty
         data-testid={`port-selector-trigger`}
         value={selected}
         label="Select a port..."
         variant="standard" 
         onChange={onChange}>
+          <MenuItem value={""}>
+            <ListItemText><em>Select an airport...</em></ListItemText>
+          </MenuItem> 
         {options?.map((option) => {
           return (
             <MenuItem 
               key={`port-selector-${option.link}`} 
               data-testid={`port-selector-${option.link}`} 
-              selected={selected == option.link} 
               value={option.link}>
               <ListItemText><strong>{ option.label }</strong></ListItemText>
             </MenuItem>  

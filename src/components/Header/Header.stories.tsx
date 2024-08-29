@@ -58,7 +58,7 @@ export const Header: Story = {
         icon: 'MenuBook',
       }
     ],
-    initialSelectedPortMenuItem: '/national-pressure',
+    initialSelectedPortMenuItem: '',
     routingFunction: (string) => console.log(string),
     logoutLink: () => {},
   },
