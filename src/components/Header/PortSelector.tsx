@@ -62,7 +62,7 @@ const PortSelector = ({handleChangePort, options, selectedOption}: IPortSelector
         label="Select a port..."
         variant="standard" 
         onChange={onChange}>
-          <MenuItem value={""}>
+          <MenuItem value={""} disabled>
             <ListItemText><em>Select an airport...</em></ListItemText>
           </MenuItem> 
         {options?.map((option) => {
