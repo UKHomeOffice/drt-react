@@ -20,7 +20,8 @@ test("displays all flight results", async () => {
     nationalities={nationalities}
     ageGroups={ageGroups}
     isLoading={false}
-    submitCallback={() => {}}/>);
+    submitCallback={() => {
+    }}/>);
 
   const tableRows = await screen.getByTestId('flight-flagger-results-table').querySelectorAll('tbody tr');
   expect(tableRows).toHaveLength(ExampleFlights.length)
@@ -32,7 +33,8 @@ test("hides and shows non-highlighted flights correctly", async () => {
     nationalities={nationalities}
     ageGroups={ageGroups}
     isLoading={false}
-    submitCallback={() => {}}
+    submitCallback={() => {
+    }}
     maybeInitialFilterFormState={{
       showTransitPaxNumber: false,
       showNumberOfVisaNationals: true,
@@ -62,7 +64,8 @@ test("displays the circular spinner and hides results when loading prop is true"
     nationalities={nationalities}
     ageGroups={ageGroups}
     isLoading={true}
-    submitCallback={() => {}}/>);
+    submitCallback={() => {
+    }}/>);
 
   const table = await screen.queryByTestId('flight-flagger-results-table')
   const loadingSpinner = await screen.queryByTestId('flight-flagger-loading-spinner')
@@ -84,7 +87,8 @@ test("renders the mobile view on small devices", async () => {
     nationalities={nationalities}
     ageGroups={ageGroups}
     isLoading={false}
-    submitCallback={() => {}}/>);
+    submitCallback={() => {
+    }}/>);
 
   const desktopResults = await screen.queryByTestId('flight-flagger-desktop-results')
   const mobileResults = await screen.queryByTestId('flight-flagger-mobile-results')

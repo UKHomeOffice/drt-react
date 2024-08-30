@@ -232,22 +232,22 @@ export const FlightFlaggerFilters = ({
         </Button>
       </Grid>
       {someCriteriaSelected(appliedSearchFlags) && <Grid item flexGrow={1}>
-          <FormControl>
-              <FormLabel sx={{mb: 1}} id="display"><strong>Show flights:</strong></FormLabel>
-              <RadioGroup
-                  row
-                  aria-labelledby="display"
-                  name="row-radio-buttons-group"
-                  onChange={showAllCallback}
-                  defaultValue="false"
-              >
-                  <FormControlLabel value="false" data-testid="show-all-flights" defaultChecked={true}
-                                    control={<Radio/>}
-                                    label="All flights"/>
-                  <FormControlLabel value="true" data-testid="show-highlighted-only" control={<Radio/>}
-                                    label="Highlighted flights only"/>
-              </RadioGroup>
-          </FormControl>
+        <FormControl>
+          <FormLabel sx={{mb: 1}} id="display"><strong>Show flights:</strong></FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="display"
+            name="row-radio-buttons-group"
+            onChange={showAllCallback}
+            defaultValue="false"
+          >
+            <FormControlLabel value="false" data-testid="show-all-flights" defaultChecked={true}
+                              control={<Radio/>}
+                              label="All flights"/>
+            <FormControlLabel value="true" data-testid="show-highlighted-only" control={<Radio/>}
+                              label="Highlighted flights only"/>
+          </RadioGroup>
+        </FormControl>
       </Grid>}
     </Grid>
     <Grid container sx={{backgroundColor: '#F3F5F9', width: '100%', ml: 0}} spacing={2}>
@@ -347,11 +347,11 @@ export const FlightFlaggerFilters = ({
           </Paper>
         </Collapse>
         {someCriteriaSelected(appliedSearchFlags) && <Typography sx={{mt: 2, pr: 2}}>
-            <strong>Pax info highlighted - </strong>
+          <strong>Pax info highlighted - </strong>
           {buildFilterString(appliedSearchFlags)} - <Link
-            data-testid="flight-flagger-clear-filters"
-            onClick={() => clearHighlights()}>
-            Clear all highlights
+          data-testid="flight-flagger-clear-filters"
+          onClick={() => clearHighlights()}>
+          Clear all highlights
         </Link>
         </Typography>}
       </Grid>
