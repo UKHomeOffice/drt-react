@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {Alert, Box, Button, OutlinedInput} from "@mui/material";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 export interface IMinStaffForm {
   port: string
@@ -41,7 +42,7 @@ export const MinStaffForm = ({port, terminal, minStaffNumber, handleSubmit, cont
   {
     if (updated) {
       return <Box sx={{marginTop: '10px', backgroundColor: '#eeeff0'}}>
-        <Alert sx={{paddingTop: '10px'}} severity="info">You updated the minimum staff number</Alert>
+        <Alert sx={{color:'#FFFFFF', backgroundColor:'#2E7D32'}} severity="success" icon={<CheckCircleIcon style={{ color: '#FFFFFF' }}/>}>You updated the minimum staff number</Alert>
           <Button sx={{marginTop: '10px', marginLeft: '50px', marginBottom: '10px',  backgroundColor: '#334F96', color: '#fff', textTransform: 'none',
           '&:hover': {backgroundColor: '#334F96'}, }} onClick={continueCallback}>
           Continue
