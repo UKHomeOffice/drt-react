@@ -1,5 +1,5 @@
 import React from "react";
-import {Box, Button, AppBar, Typography, Grid, Menu, MenuItem, Link} from "@mui/material";
+import {AppBar, Box, Button, Grid, Link, Menu, MenuItem, Typography} from "@mui/material";
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -20,6 +20,7 @@ export interface IHeader {
   leftMenuItems?: MenuItem[],
   rightMenuItems?: MenuItem[],
   portMenuItems: MenuItem[],
+  initialSelectedPortMenuItem: string,
   routingFunction: (route: string) => void,
   logoutLink: () => void,
 }
@@ -35,10 +36,12 @@ const Header = ({
                   rightMenuItems,
                   leftMenuItems,
                   portMenuItems,
+                  initialSelectedPortMenuItem,
                   routingFunction,
                   logoutLink
                 }: IHeader) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [selectedPortOption, setSelectedPortOption] = React.useState<string>(initialSelectedPortMenuItem);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -61,7 +64,7 @@ const Header = ({
                 width: '35px'
               }
             }}>
-              <Crest data-testid="crest"/>
+              <Link href="https://drt.homeoffice.gov.uk/"><Crest data-testid="crest"/></Link>
               <Typography color="inherit" noWrap sx={{flexGrow: 0, fontSize: '1.3rem', mr: 2, color: '#000'}}>Border
                 Force</Typography>
               <Typography color="inherit" noWrap sx={{flexGrow: 0, lineHeight: '2rem', fontSize: '1rem', color: '#000'}}
@@ -121,7 +124,8 @@ const Header = ({
           <Grid item xs={12} sx={{backgroundColor: '#f3f5f9', padding: 2, flexWrap: 'nowrap'}}>
             <Grid container spacing={3}>
               <Grid item flexGrow={{xs: 1, md: 0}}>
-                <PortSelector options={portMenuItems} handleChangePort={routingFunction} selectedOption={'/cwi'}/>
+                <PortSelector options={portMenuItems} handleChangePort={routingFunction}
+                              selectedOption={selectedPortOption}/>
               </Grid>
               {
                 leftMenuItems && leftMenuItems.map((menuItem) => {
@@ -183,7 +187,6 @@ const Header = ({
             </Grid>
           </Grid>
         </Grid>
-
       </Box>
     </AppBar>
   )

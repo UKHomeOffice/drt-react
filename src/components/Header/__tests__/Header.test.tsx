@@ -9,7 +9,7 @@ import '@testing-library/jest-dom';
 const headerProps = {
   userRoles: [] as string[],
   portMenuItems: [
-    { label: 'National Dashboard', link: '/regional-dashboard' },
+    { label: 'National Dashboard', link: '/national-pressure' },
     { label: 'CWL (Cardiff)', link: '/cwi' }
   ],
   adminMenuItems: [
@@ -49,6 +49,7 @@ const headerProps = {
       icon: 'MenuBook',
     }
   ],
+  initialSelectedPortMenuItem: '/national-pressure',
   routingFunction: jest.fn(),
   logoutLink: jest.fn(),
 }
@@ -88,7 +89,7 @@ test("it renders the port menu items", async () => {
   await fireEvent.mouseDown(trigger);
 
   expect(await screen.getByTestId('port-selector-/cwi')).toBeTruthy();
-  expect(await screen.getByTestId('port-selector-/regional-dashboard')).toBeTruthy();
+  expect(await screen.getByTestId('port-selector-/national-pressure')).toBeTruthy();
   expect(await screen.queryByTestId('port-selector-/lhr')).toBeNull();
 })
 
