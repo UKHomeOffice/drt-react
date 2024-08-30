@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Country, FlightFlaggerFilters} from "./FlightFlaggerFilters";
+import {Country, FlightFlaggerFilters, FormState} from "./FlightFlaggerFilters";
 import { FlightFlaggerResults } from "./FlightFlaggerResults";
 import { SearchFilterPayload } from "./FlightFlaggerFilters";
 import {CircularProgress} from "@mui/material";
@@ -11,10 +11,11 @@ export interface IFlightFlagger {
   ageGroups: string[],
   submitCallback: (payload:SearchFilterPayload) => void,
   flights: FlightArrival[],
-  isLoading: boolean
+  isLoading: boolean,
+  maybeInitialFilterFormState?: FormState
 }
 
-const FlightFlagger = ({nationalities, ageGroups, submitCallback, flights, isLoading}: IFlightFlagger) => {
+const FlightFlagger = ({nationalities, ageGroups, submitCallback, flights, isLoading, maybeInitialFilterFormState}: IFlightFlagger) => {
 
   const [showHighlightOnly, setShowHighlightOnly] = useState<boolean>(false);
 
@@ -25,13 +26,15 @@ const FlightFlagger = ({nationalities, ageGroups, submitCallback, flights, isLoa
   const onChangeInput = (searchTerm: string) => {}
 
   return <>
-    <FlightFlaggerFilters 
-      nationalities={nationalities} 
-      ageGroups={ageGroups} 
+    <FlightFlaggerFilters
+      nationalities={nationalities}
+      ageGroups={ageGroups}
       onChangeInput={onChangeInput}
-      submitCallback={submitCallback} 
-      clearFiltersCallback={()=>{}}
-      showAllCallback={toggleHighlightDisplay} />
+      submitCallback={submitCallback}
+      clearFiltersCallback={()=> {}}
+      showAllCallback={toggleHighlightDisplay}
+      maybeInitialState={maybeInitialFilterFormState}
+    />
     { isLoading? <div style={{display: 'flex', justifyContent: 'center', padding: '50px'}}><CircularProgress data-testid="flight-flagger-loading-spinner" /></div> : <FlightFlaggerResults flights={flights} showHighlightOnly={showHighlightOnly} />}
   </>
 }

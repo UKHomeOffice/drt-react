@@ -23,7 +23,7 @@ import {
 import SearchIcon from '@mui/icons-material/Search'
 import CustomHighlightIcon from "./icon-highlight-pax.svg"
 
-type FormState = {
+export type FormState = {
   showTransitPaxNumber: boolean,
   showNumberOfVisaNationals: boolean,
   requireAllSelected: boolean,
@@ -98,11 +98,6 @@ export const FlightFlaggerFilters = ({
   const initialFormState = getInitialState(maybeInitialState)
   const [currentFormState, setCurrentFormState] = useState<FormState>(initialFormState)
   const [appliedSearchFlags, setAppliedSearchFlags] = useState<FormState>(initialFormState)
-
-  console.log(`props nats: ${JSON.stringify(maybeInitialState?.selectedNationalities)}`)
-  console.log(`initial nats: ${JSON.stringify(initialFormState.selectedNationalities)}`)
-  console.log(`current nats: ${JSON.stringify(currentFormState.selectedNationalities)}`)
-  console.log(`applied nats: ${JSON.stringify(appliedSearchFlags.selectedNationalities)}`)
 
   const formIsTouched = (initialForm, currentForm) => {
     return currentForm.selectedNationalities.length !== initialForm.selectedNationalities.length ||
@@ -329,7 +324,9 @@ export const FlightFlaggerFilters = ({
                     control={
                       <Checkbox data-testid="show-visa-nationals-check"
                                 checked={currentFormState.showNumberOfVisaNationals}
-                                onChange={handleCheckboxChange} name="showNumberOfVisaNationals"/>
+                                onChange={handleCheckboxChange}
+                                inputProps={{'aria-label': 'show visa nationals'}}
+                                name="showNumberOfVisaNationals"/>
                     }
                     label="Show number of visa nationals"
                   />
@@ -349,12 +346,14 @@ export const FlightFlaggerFilters = ({
                 </FormGroup>
               </Grid>
               <Grid item xs={12}>
-                <Button variant='outlined'
+                <Button data-testid="flight-flagger-filter-cancel"
+                        variant='outlined'
                         onClick={() => setCurrentFormState({...appliedSearchFlags, showFilters: false})}
                         sx={{mr: 2}}>
                   Cancel
                 </Button>
-                <Button data-testid="flight-flagger-filter-submit" variant='contained'
+                <Button data-testid="flight-flagger-filter-submit"
+                        variant='contained'
                         onClick={handleApply(currentFormState)}
                         disabled={!formIsTouched(appliedSearchFlags, currentFormState)}>
                   Apply Highlights
