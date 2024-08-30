@@ -150,39 +150,23 @@ export const FlightFlaggerFilters = ({
   }
 
   const buildFilterString = (flags: FormState) => {
-    const paxFlters = []
-    if (flags.selectedNationalities.length) {
-      paxFlters.push(`nationality: ${flags.selectedNationalities.map(n => `${n.name} (${n.code})`).join(', ')}`)
-    }
-    if (flags.selectedAgeGroups.length) {
-      paxFlters.push(`age: ${flags.selectedAgeGroups.join(', ')}`)
-    }
-    if (flags.showTransitPaxNumber) {
-      paxFlters.push('show transit pax')
-    }
-    if (flags.showNumberOfVisaNationals) {
-      paxFlters.push('show number of visa nationals')
-    }
-    if (flags.requireAllSelected) {
-      paxFlters.push('only highlight flights with all selected info')
-    }
-    return `${paxFlters.join(', ')}`
+    return [
+      flags.selectedNationalities.length ? `nationality: ${flags.selectedNationalities.map(n => `${n.name} (${n.code})`).join(', ')}` : null,
+      flags.selectedAgeGroups.length ? `age: ${flags.selectedAgeGroups.join(', ')}` : null,
+      flags.showTransitPaxNumber ? 'show transit pax' : null,
+      flags.showNumberOfVisaNationals ? 'show number of visa nationals' : null,
+      flags.requireAllSelected ? 'only highlight flights with all selected info' : null
+    ]
+      .filter(v => v !== null)
+      .join(', ')
   }
 
   const getFilterCount = (form: FormState) => {
-    let total = 0
-    total += form.selectedNationalities.length
-    total += form.selectedAgeGroups.length
-    if (form.showTransitPaxNumber) {
-      total++
-    }
-    if (form.showNumberOfVisaNationals) {
-      total++
-    }
-    if (form.requireAllSelected) {
-      total++
-    }
-    return total
+    return form.selectedNationalities.length +
+      form.selectedAgeGroups.length +
+      (form.showTransitPaxNumber ? 1 : 0) +
+      (form.showNumberOfVisaNationals ? 1 : 0) +
+      (form.requireAllSelected ? 1 : 0)
   }
 
   const clearHighlights = () => {
