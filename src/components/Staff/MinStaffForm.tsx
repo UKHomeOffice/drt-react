@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Alert, Box, Button, OutlinedInput, Typography} from "@mui/material";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import {AddCircle} from "@mui/icons-material";
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 
 export interface IMinStaffForm {
   port: string
@@ -66,7 +66,7 @@ export const MinStaffForm = ({port, terminal, minStaffNumber, handleSubmit, cont
         <Button data-testid={`min-staff-form-submit`} sx={{
           marginTop: '10px', backgroundColor: '#334F96', color: '#fff', textTransform: 'none',
           '&:hover': {backgroundColor: '#334F96'}
-        }} startIcon={<AddCircle/>} onClick={e => handleFormSubmit(e, staffNumber)}>
+        }} startIcon={<AddCircleOutlineOutlinedIcon/>} onClick={e => handleFormSubmit(e, staffNumber)}>
           Continue
         </Button>
       </Box>
