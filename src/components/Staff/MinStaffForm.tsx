@@ -1,7 +1,6 @@
 import React, {useState} from "react";
-import {Alert, Box, Button, OutlinedInput, Typography} from "@mui/material";
+import {Alert, Box, Button, TextField, Typography} from "@mui/material";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 
 export interface IMinStaffForm {
   port: string
@@ -31,7 +30,7 @@ export const MinStaffForm = ({port, terminal, minStaffNumber, handleSubmit, cont
     setStaffNumber(null);
     const value = event.target.value;
 
-    if (!isNaN(Number(value)) && value.trim() !== "") {
+    if ((!isNaN(Number(value)) && value.trim() !== "") && Number(value)!=0) {
       setStaffNumber(Number(value));
       setStaffNumberFormatError(false);
     } else {
@@ -51,22 +50,22 @@ export const MinStaffForm = ({port, terminal, minStaffNumber, handleSubmit, cont
     } else
       return <Box data-testid={`min-staff-form`} sx={{paddingTop: '10px', paddingLeft: '10px'}}>
         {staffNumberFormatError && (
-          <Alert data-testid={`min-staff-number-error`} severity="error">Please enter a valid whole number, eg 10</Alert>
+          <Alert data-testid={`min-staff-number-error`} sx={{fontWeight: 'bold'}} severity="error">Please enter a valid whole number, eg 10</Alert>
         )}
         {submitError && (
-          <Alert data-testid={`min-staff-submit-error`} severity="error">An error occurred while submitting the form. Please try again or contact us if the problem persists</Alert>
+          <Alert data-testid={`min-staff-submit-error`} sx={{fontWeight: 'bold'}} severity="error">An error occurred while submitting the form. Please try again or contact us if the problem persists</Alert>
         )}
         <Box sx={{paddingTop: '10px'}}>{port} : {terminal}</Box>
         <Typography variant ="h2" component="h2">Updating minimum staff number at PCP</Typography>
         <Box sx={{paddingTop: '10px'}}>This number will be applied to all future dates. It will overwrite all staff numbers that are currently zero with your new specified number</Box>
         <Box sx={{paddingTop: '10px'}}>Staff numbers from any previous dates will not change.</Box>
         <Box sx={{paddingTop: '10px'}}>
-          <OutlinedInput data-testid={`min-staff-number-input`} placeholder="minimum number staff*" onChange={handleInputChange}/>
+          <TextField label="minimum number staff*" variant="outlined" sx={{ width: '25ch' }} data-testid={`min-staff-number-input`} onChange={handleInputChange}/>
         </Box>
         <Button data-testid={`min-staff-form-submit`} sx={{
           marginTop: '10px', backgroundColor: '#334F96', color: '#fff', textTransform: 'none',
           '&:hover': {backgroundColor: '#334F96'}
-        }} startIcon={<AddCircleOutlineOutlinedIcon/>} onClick={e => handleFormSubmit(e, staffNumber)}>
+        }} onClick={e => handleFormSubmit(e, staffNumber)}>
           Continue
         </Button>
       </Box>
