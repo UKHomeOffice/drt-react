@@ -21,6 +21,7 @@ export interface IHeader {
   rightMenuItems?: MenuItem[],
   portMenuItems: MenuItem[],
   initialSelectedPortMenuItem: string,
+  maxWidth: string,
   routingFunction: (route: string) => void,
   logoutLink: () => void,
 }
@@ -37,6 +38,7 @@ const Header = ({
                   leftMenuItems,
                   portMenuItems,
                   initialSelectedPortMenuItem,
+                  maxWidth,
                   routingFunction,
                   logoutLink
                 }: IHeader) => {
@@ -56,7 +58,7 @@ const Header = ({
   return (
     <AppBar sx={{backgroundColor: '#fff'}} elevation={0} position={"sticky"}>
       <Box>
-        <Grid container sx={{maxWidth: '1200px', margin: '0 auto'}}>
+        <Grid container sx={{maxWidth, margin: '0 auto'}} maxWidth={'none'}>
           <Grid item xs={8}>
             <Box display="flex" mr={'auto'} sx={{
               padding: 2,
@@ -120,7 +122,7 @@ const Header = ({
         </Grid>
       </Box>
       <Box sx={{backgroundColor: '#f3f5f9', flexWrap: 'nowrap'}}>
-        <Grid container sx={{maxWidth: '1200px', margin: '0 auto'}}>
+        <Grid container sx={{maxWidth, margin: '0 auto'}}>
           <Grid item xs={12} sx={{backgroundColor: '#f3f5f9', padding: 2, flexWrap: 'nowrap'}}>
             <Grid container spacing={3}>
               <Grid item flexGrow={{xs: 1, md: 0}}>
@@ -159,7 +161,7 @@ const Header = ({
                     Admin
                   </Button>
                 </Grid>}
-              <Grid item>
+              <Grid item display={{xs: 'none', md: 'block'}}>
                 <Grid container>
                   {
                     rightMenuItems && rightMenuItems.map((menuItem) => {
