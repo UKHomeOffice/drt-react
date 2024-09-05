@@ -35,6 +35,9 @@ const StyledSelect = styled(Select)<SelectProps>(({ theme }) => ({
     fontWeight: 'bold !important',
     fontSize: '0.875rem !important',
     marginTop: '6px !important',
+  },
+  '& .MuiTypography-root': {
+    marginTop: 0,
   }
 }));
 
@@ -54,7 +57,7 @@ const PortSelector = ({handleChangePort, options, selectedOption}: IPortSelector
   }
  
   return (
-    <FormControl size="small">     
+    <FormControl sx={{width: '100%'}}>     
       <StyledSelect
         displayEmpty
         data-testid={`port-selector-trigger`}
