@@ -14,15 +14,11 @@ export const MinStaffForm: Story = {
   args: {
     port: "Birmingham (BHX)",
     terminal: "Terminal 1",
+    message: "This number will be applied to all future dates. It will overwrite all staff numbers " +
+      "that are currently zero with your new specified number",
     minStaffNumber: null,
     handleSubmit: (minStaff: number) => {
       console.log(minStaff)
-      if (minStaff === null || minStaff === undefined) {
-        return false;
-      }
-      return true;
-    },
-    continueCallback: () => {
-      console.log("Continue")
-  }}
+    }
+  }
 };
