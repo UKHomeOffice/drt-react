@@ -12,6 +12,9 @@ type Story = StoryObj<typeof MinStaffSuccessComponent>;
 export const MinStaffSuccess: Story = {
   args: {
     minStaffNumber: 1,
-    message: "You updated the minimum staff number"
+    message: "You updated the minimum staff number",
+    closeHandler: () => {
+      console.log("Close handler")
+    }
   }
 };
