@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Alert, Box, Button, TextField, Typography} from "@mui/material";
+import {Alert, Box, Button, Link, TextField, Typography} from "@mui/material";
 
 export interface IMinStaffForm {
   port: string
@@ -7,9 +7,10 @@ export interface IMinStaffForm {
   message: string
   minStaffNumber: number | null
   handleSubmit: (minStaff: number | null) => void
+  cancelHandler: () => void
 }
 
-export const MinStaffForm = ({port, terminal, message, minStaffNumber, handleSubmit}: IMinStaffForm) => {
+export const MinStaffForm = ({port, terminal, message, minStaffNumber, handleSubmit, cancelHandler}: IMinStaffForm) => {
   const [staffNumber, setStaffNumber] = useState<number | null>(minStaffNumber);
   const [staffNumberFormatError, setStaffNumberFormatError] = useState(false);
   const [submitError, setSubmitError] = useState(false);
@@ -52,11 +53,13 @@ export const MinStaffForm = ({port, terminal, message, minStaffNumber, handleSub
       <TextField label="Enter minimum number of staff*" variant="outlined" sx={{width: '35ch'}}
                  data-testid={`min-staff-number-input`} onChange={handleInputChange}/>
     </Box>
-    <Button data-testid={`min-staff-form-submit`} sx={{
+    <Box sx={{display: 'flex', alignItems: 'center'}}><Button data-testid={`min-staff-form-submit`} sx={{
       marginTop: '10px', backgroundColor: '#334F96', color: '#fff', textTransform: 'none',
       '&:hover': {backgroundColor: '#334F96'}
     }} onClick={e => handleFormSubmit(e, staffNumber)}>
       Continue
     </Button>
+      <Link sx={{paddingLeft: '30px', paddingTop: '10px', cursor: 'pointer'}} onClick={cancelHandler}>Cancel</Link>
+    </Box>
   </Box>
 }

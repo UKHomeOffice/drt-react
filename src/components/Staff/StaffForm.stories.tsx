@@ -19,6 +19,9 @@ export const MinStaffForm: Story = {
     minStaffNumber: null,
     handleSubmit: (minStaff: number) => {
       console.log(minStaff)
+    },
+    cancelHandler : () => {
+      console.log("Cancel clicked")
     }
   }
 };
