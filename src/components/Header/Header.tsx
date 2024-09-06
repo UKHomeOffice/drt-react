@@ -109,11 +109,11 @@ const Header = ({
                         flexGrow: 0, 
                         color: '#404252',
                         fontSize: {
-                          xs: '0.6rem',
+                          xs: '0.7rem',
                           sm: '1rem',
                         }, 
                         lineHeight: {
-                          xs: '0.8rem',
+                          xs: '1rem',
                           sm: '2.1rem',
                         },
                       }}>
