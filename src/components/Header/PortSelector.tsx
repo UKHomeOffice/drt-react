@@ -31,7 +31,7 @@ const StyledSelect = styled(Select)<SelectProps>(({ theme }) => ({
       }
     }
   },
-  '& .MuiListItemText-root *': {
+  '& .MuiListItemText-root': {
     fontWeight: 'bold !important',
     fontSize: '0.875rem !important',
     marginTop: '6px !important',
@@ -66,7 +66,7 @@ const PortSelector = ({handleChangePort, options, selectedOption}: IPortSelector
         variant="standard" 
         onChange={onChange}>
           <MenuItem value={""} disabled>
-            <ListItemText><em>Select an airport...</em></ListItemText>
+            <ListItemText><em>Select a location...</em></ListItemText>
           </MenuItem> 
         {options?.map((option) => {
           return (
