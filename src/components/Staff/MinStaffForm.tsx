@@ -31,7 +31,7 @@ export const MinStaffForm = ({port, terminal, message, minStaffNumber, handleSub
 
     if (!isNaN(Number(value)) && value.trim() !== "") {
       if (Number.isInteger(Number(value))) {
-        if (Number(value) != 0) {
+        if (Number(value) > 0) {
           setStaffNumber(Number(value));
           setStaffNumberFormatError(false);
         } else {
@@ -60,11 +60,10 @@ export const MinStaffForm = ({port, terminal, message, minStaffNumber, handleSub
         submitting the form. Please try again or contact us if the problem persists</Alert>
     )}
     <Box sx={{paddingTop: '10px'}}>{port} {terminal}</Box>
-    <Typography variant="h2" component="h2">Updating minimum staff PCP staff number</Typography>
+    <Typography variant="h2" component="h2">Update minimum PCP staff number</Typography>
     <Box sx={{paddingTop: '10px'}}>{message}</Box>
-    <Box sx={{paddingTop: '10px'}}>Staff numbers from any previous dates will not change.</Box>
     <Box sx={{paddingTop: '10px'}}>
-      <TextField label="Enter minimum number of staff*" variant="outlined" sx={{width: '35ch'}}
+      <TextField label="Enter minimum PCP staff number" variant="outlined" sx={{width: '35ch'}}
                  data-testid={`min-staff-number-input`} onChange={handleInputChange}/>
       {staffNumberFormatError && (
         <Alert data-testid={`min-staff-number-error`} sx={{fontWeight: 'bold', fontSize: '12px'}}
