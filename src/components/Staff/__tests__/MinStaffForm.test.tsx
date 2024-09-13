@@ -1,5 +1,5 @@
-import { render, fireEvent, waitFor } from "@testing-library/react";
-import { MinStaffForm } from "../MinStaffForm";
+import {render, fireEvent, waitFor} from "@testing-library/react";
+import {MinStaffForm} from "../MinStaffForm";
 import React from "react";
 
 describe("MinStaffForm", () => {
@@ -15,15 +15,15 @@ describe("MinStaffForm", () => {
   };
 
   it("renders min staff form correctly", () => {
-    const { getByTestId } = render(<MinStaffForm {...props} />);
+    const {getByTestId} = render(<MinStaffForm {...props} />);
     expect(getByTestId('min-staff-form')).toBeInTheDocument();
   });
 
   it("handles min staff number submission with valid input", async () => {
-    const { getByPlaceholderText, getByTestId } = render(<MinStaffForm {...props} />);
-    const input = getByPlaceholderText("minimum number staff*");
+    const {getByTestId} = render(<MinStaffForm {...props} />);
+    const input = getByTestId("min-staff-number-input");
 
-    fireEvent.change(input, { target: { value: '20' } });
+    fireEvent.change(input, {target: {value: '20'}});
     fireEvent.click(getByTestId('min-staff-form-submit'));
 
     await waitFor(() => {
@@ -32,10 +32,10 @@ describe("MinStaffForm", () => {
   });
 
   it("shows error when min staff number is not a valid number", async () => {
-    const { getByPlaceholderText, getByTestId } = render(<MinStaffForm {...props} />);
-    const input = getByPlaceholderText("minimum number staff*");
+    const {getByTestId} = render(<MinStaffForm {...props} />);
+    const input = getByTestId("min-staff-number-input");
 
-    fireEvent.change(input, { target: { value: 'invalid' } });
+    fireEvent.change(input, {target: {value: 'invalid'}});
     fireEvent.click(getByTestId('min-staff-form-submit'));
 
     await waitFor(() => {
@@ -44,12 +44,14 @@ describe("MinStaffForm", () => {
   });
 
   it("shows error when min staff form submission fails", async () => {
-    handleSubmitMock.mockImplementationOnce(() => { throw new Error(); });
+    handleSubmitMock.mockImplementationOnce(() => {
+      throw new Error();
+    });
 
-    const { getByPlaceholderText, getByTestId } = render(<MinStaffForm {...props} />);
-    const input = getByPlaceholderText("minimum number staff*");
+    const {getByTestId} = render(<MinStaffForm {...props} />);
+    const input = getByTestId("min-staff-number-input");
 
-    fireEvent.change(input, { target: { value: '20' } });
+    fireEvent.change(input, {target: {value: '20'}});
     fireEvent.click(getByTestId('min-staff-form-submit'));
 
     await waitFor(() => {
