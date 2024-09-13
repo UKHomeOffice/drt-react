@@ -59,7 +59,7 @@ export const MinStaffForm = ({port, terminal, message, minStaffNumber, handleSub
       <Alert data-testid={`min-staff-submit-error`} sx={{fontWeight: 'bold'}} severity="error">An error occurred while
         submitting the form. Please try again or contact us if the problem persists</Alert>
     )}
-    <Box sx={{paddingTop: '10px'}}>{port} : {terminal}</Box>
+    <Box sx={{paddingTop: '10px'}}>{port} {terminal}</Box>
     <Typography variant="h2" component="h2">Updating minimum staff number at PCP</Typography>
     <Box sx={{paddingTop: '10px'}}>{message}</Box>
     <Box sx={{paddingTop: '10px'}}>Staff numbers from any previous dates will not change.</Box>
