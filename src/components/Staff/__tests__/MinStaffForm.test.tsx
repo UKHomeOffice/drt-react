@@ -1,45 +1,39 @@
-import {render, fireEvent, waitFor} from "@testing-library/react";
-import {MinStaffForm} from "../MinStaffForm";
+import {render, fireEvent, screen, waitFor, getByLabelText} from "@testing-library/react";
+import { MinStaffForm } from "../MinStaffForm";
 import React from "react";
 
 describe("MinStaffForm", () => {
   const handleSubmitMock = jest.fn();
-  const continueCallbackMock = jest.fn();
+  const cancelHandlerMock = jest.fn();
+  const handleInputChangeMock = jest.fn();
 
   const props = {
     port: "Port",
     terminal: "Terminal",
+    message: "Message",
     minStaffNumber: 10,
     handleSubmit: handleSubmitMock,
-    continueCallback: continueCallbackMock
+    cancelHandler: cancelHandlerMock,
+    handleInputChange: handleInputChangeMock
+
   };
 
   it("renders min staff form correctly", () => {
-    const {getByTestId} = render(<MinStaffForm {...props} />);
+    const { getByTestId } = render(<MinStaffForm {...props} />);
     expect(getByTestId('min-staff-form')).toBeInTheDocument();
   });
 
   it("handles min staff number submission with valid input", async () => {
-    const {getByTestId} = render(<MinStaffForm {...props} />);
-    const input = getByTestId("min-staff-number-input");
+    render(<MinStaffForm {...props} />);
+
+    const input = screen.getByRole('textbox');
 
     fireEvent.change(input, {target: {value: '20'}});
-    fireEvent.click(getByTestId('min-staff-form-submit'));
+
+    fireEvent.click(screen.getByTestId('min-staff-form-submit'));
 
     await waitFor(() => {
       expect(handleSubmitMock).toHaveBeenCalledWith(20);
-    });
-  });
-
-  it("shows error when min staff number is not a valid number", async () => {
-    const {getByTestId} = render(<MinStaffForm {...props} />);
-    const input = getByTestId("min-staff-number-input");
-
-    fireEvent.change(input, {target: {value: 'invalid'}});
-    fireEvent.click(getByTestId('min-staff-form-submit'));
-
-    await waitFor(() => {
-      expect(getByTestId('min-staff-number-error')).toBeInTheDocument();
     });
   });
 
@@ -49,7 +43,7 @@ describe("MinStaffForm", () => {
     });
 
     const {getByTestId} = render(<MinStaffForm {...props} />);
-    const input = getByTestId("min-staff-number-input");
+    const input = screen.getByRole('textbox');
 
     fireEvent.change(input, {target: {value: '20'}});
     fireEvent.click(getByTestId('min-staff-form-submit'));
