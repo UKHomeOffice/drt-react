@@ -15,42 +15,24 @@ export type IShiftStaffForm = {
   endAt: Moment | null,
   frequency: string | null,
   actualStaff: number | null,
-  minimumRosteredStaff: number,
+  minimumRosteredStaff: number | null,
   email: string
 }
 
 export interface ShiftStaffFormData {
-  port: string,
-  terminal: string,
-  shiftName: string,
-  startAt: Moment,
-  periodInMinutes: number,
-  endAt: Moment | null,
-  frequency: string | null,
-  actualStaff: number | null,
-  minimumRosteredStaff: number,
-  email: string,
-  handleSubmit: (port: string,
-                 terminal: string,
-                 shiftName: string,
-                 startAt: moment.Moment,
-                 periodInMinutes: number,
-                 endAt: moment.Moment | null,
-                 frequency: string | null,
-                 actualStaff: number | null,
-                 minimumRosteredStaff: number,
-                 email: string) => void,
+  ssf: IShiftStaffForm,
+  handleSubmit: (ssf: IShiftStaffForm) => void,
   cancelHandler: () => void
 }
 
-export const ShiftStaffForm = ({port, terminal, shiftName, startAt, periodInMinutes, endAt, frequency, actualStaff, minimumRosteredStaff, email, handleSubmit, cancelHandler}:ShiftStaffFormData) => {
-  const [newShiftName, setNewShiftName] = useState<string>(shiftName);
-  const [selectedDate, setSelectedDate] = useState<Moment>(startAt);
-  const [endDate, setEndDate] = useState<Moment | null>(endAt);
+export const ShiftStaffForm = ({ssf, handleSubmit, cancelHandler}: ShiftStaffFormData) => {
+  const [newShiftName, setNewShiftName] = useState<string>(ssf.shiftName);
+  const [selectedDate, setSelectedDate] = useState<Moment>(ssf.startAt);
+  const [endDate, setEndDate] = useState<Moment | null>(ssf.endAt);
   const [startTime, setStartTime] = useState<Moment | null>(null);
   const [endTime, setEndTime] = useState<Moment | null>(null);
-  const [selectedFrequency, setSelectedFrequency] = useState<string | null>(frequency ? frequency : 'daily');
-  const [staffNumber, setStaffNumber] = useState<number>(actualStaff ? actualStaff : 0);
+  const [selectedFrequency, setSelectedFrequency] = useState<string | null>(ssf.frequency ? ssf.frequency : 'daily');
+  const [staffNumber, setStaffNumber] = useState<number>(ssf.actualStaff ? ssf.actualStaff : 0);
   const [showEndDatePicker, setShowEndDatePicker] = useState(false);
 
   const handleEndDateLinkClick = (event) => {
@@ -89,20 +71,23 @@ export const ShiftStaffForm = ({port, terminal, shiftName, startAt, periodInMinu
 
   const handleSubmitForm = (event: React.ChangeEvent<{ value: unknown }>) => {
     const diffInMinutes = (endTime.valueOf() - startTime.valueOf()) / 60000;
-    console.log("endTime.valueOf",endTime.valueOf())
-    console.log("startTime.valueOf",startTime.valueOf())
-    console.log("selectedDate",selectedDate.valueOf())
-    console.log("difference",startTime.valueOf()-selectedDate.valueOf())
-    handleSubmit(port = port,
-      terminal=  terminal,
-      shiftName= newShiftName,
-      startAt = selectedDate,
-      periodInMinutes = diffInMinutes,
-      endAt = endDate,
-      frequency = selectedFrequency,
-      actualStaff =  staffNumber,
-      minimumRosteredStaff =minimumRosteredStaff,
-      email = email)
+    console.log("endTime.valueOf", endTime.valueOf())
+    console.log("startTime.valueOf", startTime.valueOf())
+    console.log("selectedDate", selectedDate.valueOf())
+    console.log("difference", startTime.valueOf() - selectedDate.valueOf())
+    const ssform: IShiftStaffForm = {
+      port: ssf.port,
+      terminal: ssf.terminal,
+      shiftName: newShiftName,
+      startAt: selectedDate,
+      periodInMinutes: diffInMinutes,
+      endAt: endDate,
+      frequency: selectedFrequency,
+      actualStaff: staffNumber,
+      minimumRosteredStaff: ssf.minimumRosteredStaff,
+      email: ssf.email
+    };
+    handleSubmit(ssform);
   }
 
 
