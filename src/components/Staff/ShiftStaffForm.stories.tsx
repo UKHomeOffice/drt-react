@@ -34,7 +34,19 @@ export const ShiftStaffForm = {
                    actualStaff: number | null,
                    minimumRosteredStaff: number,
                    email: string) => {
-      console.log('Submit clicked', port, terminal, shiftName, startAt, periodInMinutes, endAt, frequency, actualStaff, minimumRosteredStaff, email);
+        const json = {
+        'port': port,
+        'terminal': terminal,
+        'shiftName': shiftName,
+        'startAt': startAt.valueOf(),
+        'periodInMinutes': periodInMinutes,
+        'endAt': endAt?.valueOf(),
+        'frequency': frequency,
+        'actualStaff': actualStaff,
+        'minimumRosteredStaff': minimumRosteredStaff,
+        'email': email
+      }
+      console.log('Submit clicked',json);
     },
     cancelHandler: () => {
       console.log('Cancel clicked');

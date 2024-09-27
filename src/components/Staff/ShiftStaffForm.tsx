@@ -88,7 +88,21 @@ export const ShiftStaffForm = ({port, terminal, shiftName, startAt, periodInMinu
   };
 
   const handleSubmitForm = (event: React.ChangeEvent<{ value: unknown }>) => {
-    handleSubmit(port, terminal, newShiftName, selectedDate, periodInMinutes, endTime, selectedFrequency, staffNumber, minimumRosteredStaff, email)
+    const diffInMinutes = (endTime.valueOf() - startTime.valueOf()) / 60000;
+    console.log("endTime.valueOf",endTime.valueOf())
+    console.log("startTime.valueOf",startTime.valueOf())
+    console.log("selectedDate",selectedDate.valueOf())
+    console.log("difference",startTime.valueOf()-selectedDate.valueOf())
+    handleSubmit(port = port,
+      terminal=  terminal,
+      shiftName= newShiftName,
+      startAt = selectedDate,
+      periodInMinutes = diffInMinutes,
+      endAt = endDate,
+      frequency = selectedFrequency,
+      actualStaff =  staffNumber,
+      minimumRosteredStaff =minimumRosteredStaff,
+      email = email)
   }
 
 
