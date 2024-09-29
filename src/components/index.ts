@@ -11,3 +11,6 @@ export type {IHeader, MenuItem} from './Header';
 
 export {MinStaffSuccess, MinStaffWarning, MinStaffForm} from './Staff'
 export type {IMinStaffSuccess, IMinStaffWarning, IMinStaffForm} from './Staff'
+
+export type {IShiftStaffForm, ShiftStaffFormData} from './Staff'
+export {ShiftStaffForm} from './Staff'

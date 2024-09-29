@@ -4,4 +4,5 @@ export {MinStaffSuccess} from './MinStaffSuccess'
 export type {IMinStaffSuccess} from './MinStaffSuccess'
 export type {IMinStaffWarning} from './MinStaffWarning'
 export type {IMinStaffForm} from './MinStaffForm'
-
+export type {IShiftStaffForm, ShiftStaffFormData} from './ShiftStaffForm'
+export {ShiftStaffForm} from './ShiftStaffForm'
