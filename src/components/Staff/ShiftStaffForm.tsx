@@ -20,19 +20,19 @@ export type IShiftStaffForm = {
 }
 
 export interface ShiftStaffFormData {
-  ssf: IShiftStaffForm,
+  ssf: IShiftStaffForm | null,
   handleSubmit: (ssf: IShiftStaffForm) => void,
   cancelHandler: () => void
 }
 
 export const ShiftStaffForm = ({ssf, handleSubmit, cancelHandler}: ShiftStaffFormData) => {
-  const [newShiftName, setNewShiftName] = useState<string>(ssf.shiftName);
-  const [selectedDate, setSelectedDate] = useState<Moment>(ssf.startAt);
-  const [endDate, setEndDate] = useState<Moment | null>(ssf.endAt);
+  const [newShiftName, setNewShiftName] = useState<string>(ssf?.shiftName);
+  const [selectedDate, setSelectedDate] = useState<Moment>(ssf?.startAt);
+  const [endDate, setEndDate] = useState<Moment | null>(ssf?.endAt);
   const [startTime, setStartTime] = useState<Moment | null>(null);
   const [endTime, setEndTime] = useState<Moment | null>(null);
-  const [selectedFrequency, setSelectedFrequency] = useState<string | null>(ssf.frequency ? ssf.frequency : 'daily');
-  const [staffNumber, setStaffNumber] = useState<number>(ssf.actualStaff ? ssf.actualStaff : 0);
+  const [selectedFrequency, setSelectedFrequency] = useState<string | null>(ssf?.frequency ? ssf?.frequency : 'daily');
+  const [staffNumber, setStaffNumber] = useState<number>(ssf?.actualStaff ? ssf?.actualStaff : 0);
   const [showEndDatePicker, setShowEndDatePicker] = useState(false);
 
   const handleEndDateLinkClick = (event) => {
