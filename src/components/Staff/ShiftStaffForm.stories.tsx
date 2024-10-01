@@ -30,28 +30,6 @@ export const ShiftStaffForm = {
   args: {
     ssf: ssform,
     handleSubmit: (ssf: IShiftStaffForm) => {
-      // port: string,
-      //  terminal: string,
-      //  shiftName: string,
-      //  startAt: Moment,
-      //  periodInMinutes: number,
-      //  endAt: Moment | null,
-      //  frequency: string | null,
-      //  actualStaff: number | null,
-      //  minimumRosteredStaff: number,
-      //  email: string) => {
-      //   const json = {
-      //   'port': port,
-      //   'terminal': terminal,
-      //   'shiftName': shiftName,
-      //   'startAt': startAt.valueOf(),
-      //   'periodInMinutes': periodInMinutes,
-      //   'endAt': endAt?.valueOf(),
-      //   'frequency': frequency,
-      //   'actualStaff': actualStaff,
-      //   'minimumRosteredStaff': minimumRosteredStaff,
-      //   'email': email
-      // }
       console.log('Submit clicked', ssf);
     },
     cancelHandler: () => {

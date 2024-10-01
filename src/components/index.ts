@@ -14,3 +14,6 @@ export type {IMinStaffSuccess, IMinStaffWarning, IMinStaffForm} from './Staff'
 
 export type {IShiftStaffForm, ShiftStaffFormData} from './Staff'
 export {ShiftStaffForm} from './Staff'
+
+export type {IEditShiftStaff, IEditShiftStaffForm} from './Staff'
+export {EditShiftStaffForm} from './Staff'
