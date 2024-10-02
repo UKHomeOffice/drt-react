@@ -1,10 +1,11 @@
 import React, {useState} from "react";
-import {Box, Button, Link, TextField, Typography, Select, MenuItem} from "@mui/material";
+import {Box, Button, Link, TextField, Typography, Select, MenuItem, IconButton} from "@mui/material";
 import {Moment} from "moment";
 import {TimePicker} from '@mui/x-date-pickers/TimePicker';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
+import CloseIcon from "@mui/icons-material/Close";
 
 export type IEditShiftStaff = {
   dayAt: Moment,
@@ -67,7 +68,16 @@ export const EditShiftStaffForm = ({essf, handleSubmit, cancelHandler}: IEditShi
                 border: '1px solid black',
                 width: '350px'
               }}>
-    <Typography variant="h2" component="h2">Update staff</Typography>
+    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+      <Typography variant="h2" component="h2">Edit staff</Typography>
+      <IconButton
+      aria-label="close"
+      color="inherit"
+      size="small"
+      onClick={cancelHandler}>
+        <CloseIcon fontSize="inherit"/>
+      </IconButton>
+    </Box>
     <Box sx={{paddingTop: '10px'}}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker sx={{backgroundColor: '#FFFFFF'}} label="Date" value={selectedDate} onChange={handleDateChange}
@@ -94,8 +104,16 @@ export const EditShiftStaffForm = ({essf, handleSubmit, cancelHandler}: IEditShi
                  onChange={handleStaffNumberChange} type="number"/>
     </Box>
     <Box sx={{paddingTop: '10px'}}>
-      <Button sx={{paddingLeft: '10px'}} onClick={handleSubmitForm}>Update staff</Button>
-      <Button sx={{paddingLeft: '20px'}} onClick={cancelHandler}>Cancel</Button>
+      <Button  sx={{
+        textTransform: 'none',
+        paddingLeft: '10px',
+        color: 'white',
+        backgroundColor: 'primary.main',
+        '&:hover': {
+          backgroundColor: 'primary.dark',
+        }
+      }}  onClick={handleSubmitForm}>Save staff updates</Button>
+      {/*<Button sx={{paddingLeft: '20px'}} onClick={cancelHandler}>Cancel</Button>*/}
     </Box>
   </Box>
 

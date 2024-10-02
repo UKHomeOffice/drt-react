@@ -3,13 +3,13 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
 
-export interface IMinStaffSuccess {
-  minStaffNumber: number | null,
+export interface IStaffSuccess {
+  staffNumber: number | null,
   message: string,
   closeHandler: () => void
 }
 
-export const MinStaffSuccess = ({minStaffNumber, message, closeHandler}: IMinStaffSuccess) => {
+export const StaffSuccess = ({staffNumber, message, closeHandler}: IStaffSuccess) => {
   return <Box data-testid={`min-staff-form-success`} sx={{marginTop: '10px', backgroundColor: '#eeeff0'}}>
     <Alert sx={{color: '#FFFFFF', backgroundColor: '#2E7D32'}} severity="success"
            action={
@@ -22,6 +22,6 @@ export const MinStaffSuccess = ({minStaffNumber, message, closeHandler}: IMinSta
                <CloseIcon fontSize="inherit"/>
              </IconButton>
            }
-           icon={<CheckCircleIcon style={{color: '#FFFFFF'}}/>}>{message} {minStaffNumber}</Alert>
+           icon={<CheckCircleIcon style={{color: '#FFFFFF'}}/>}>{message} {staffNumber}</Alert>
   </Box>
 }
