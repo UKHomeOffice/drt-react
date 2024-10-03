@@ -15,15 +15,18 @@ type Story = StoryObj<typeof EditShiftStaffFormComponent>;
 
 const essform: IEditShiftStaff = {
   actualStaff: 1,
-  dayAt: moment(),
-  startTime: moment(),
-  endTime: moment().add(1, 'hour'),
+  startDayAt: moment(),
+  startTimeAt: moment(),
+  endTimeAt: moment().add(1, 'hour'),
+  endDayAt: moment().add(1, 'day')
 }
+
+
 
 export const EditShiftStaffForm = {
   args: {
-    essf: essform,
-    handleSubmit: (essf: IEditShiftStaff) => {
+    ess: essform,
+     handleSubmit: (essf: IEditShiftStaff) => {
       console.log('Submit clicked', essf);
     },
     cancelHandler: () => {

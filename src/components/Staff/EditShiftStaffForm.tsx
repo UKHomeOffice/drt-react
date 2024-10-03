@@ -8,26 +8,37 @@ import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import CloseIcon from "@mui/icons-material/Close";
 
 export type IEditShiftStaff = {
-  dayAt: Moment,
-  startTime: Moment | null,
-  endTime: Moment | null,
+  startDayAt: Moment,
+  startTimeAt: Moment | null,
+  endTimeAt: Moment | null,
+  endDayAt: Moment | null,
   actualStaff: number | null
 }
 
+
 export interface IEditShiftStaffForm {
-  essf: IEditShiftStaff | null,
+  essf: IEditShiftStaff,
   handleSubmit: (ssf: IEditShiftStaff) => void,
   cancelHandler: () => void
 }
 
-export const EditShiftStaffForm = ({essf, handleSubmit, cancelHandler}: IEditShiftStaffForm) => {
-  const [selectedDate, setSelectedDate] = useState<Moment>(essf?.dayAt);
-  const [startTime, setStartTime] = useState<Moment | null>(null);
-  const [endTime, setEndTime] = useState<Moment | null>(null);
-  const [staffNumber, setStaffNumber] = useState<number>(essf?.actualStaff ? essf?.actualStaff : 0);
+export const EditShiftStaffForm = ({ essf,
+                                     handleSubmit,
+                                     cancelHandler
+                                   }: IEditShiftStaffForm) => {
+  const [startDate, setStartDate] = useState<Moment>(essf.startDayAt? essf.startDayAt : moment());
+  const [startTime, setStartTime] = useState<Moment | null>(essf.startTimeAt? essf.startTimeAt : moment());
+  const [endTime, setEndTime] = useState<Moment | null>(essf.endTimeAt? essf.endTimeAt : moment().add(1, 'hour'));
+  const [endDate, setEndDate] = useState<Moment | null>(essf.endDayAt? essf.endDayAt : moment().add(1, 'day'));
+  const [staffNumber, setStaffNumber] = useState<number>(essf.actualStaff? essf.actualStaff : 0);
 
-  const handleDateChange = (date: Moment | null) => {
-    setSelectedDate(date);
+  const handleStartDateChange = (date: Moment) => {
+    setStartDate(date);
+    setEndDate(date);
+  };
+
+  const handleEndDateChange = (date: Moment | null) => {
+    setEndDate(date);
   };
 
   const handleStartTimeChange = (date: Moment | null) => {
@@ -46,13 +57,14 @@ export const EditShiftStaffForm = ({essf, handleSubmit, cancelHandler}: IEditShi
     const diffInMinutes = (endTime.valueOf() - startTime.valueOf()) / 60000;
     console.log("endTime.valueOf", endTime.valueOf())
     console.log("startTime.valueOf", startTime.valueOf())
-    console.log("selectedDate", selectedDate.valueOf())
-    console.log("difference", startTime.valueOf() - selectedDate.valueOf())
+    console.log("selectedDate", startDate.valueOf())
+    console.log("difference", startTime.valueOf() - startDate.valueOf())
     console.log("staffNumber", staffNumber)
     const ess: IEditShiftStaff = {
-      dayAt: selectedDate,
-      startTime: startTime,
-      endTime: endTime,
+      startDayAt: startDate,
+      startTimeAt: startTime,
+      endTimeAt: endTime,
+      endDayAt: endDate,
       actualStaff: staffNumber
     };
     handleSubmit(ess);
@@ -64,39 +76,44 @@ export const EditShiftStaffForm = ({essf, handleSubmit, cancelHandler}: IEditShi
                 paddingTop: '10px',
                 paddingLeft: '20px',
                 paddingBottom: '10px',
-                backgroundColor: '#B4B5BE',
+                // backgroundColor: '#B4B5BE',
                 border: '1px solid black',
-                width: '350px'
+                width: '370px'
               }}>
-    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+    <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
       <Typography variant="h2" component="h2">Edit staff</Typography>
       <IconButton
-      aria-label="close"
-      color="inherit"
-      size="small"
-      onClick={cancelHandler}>
+        aria-label="close"
+        color="inherit"
+        size="small"
+        onClick={cancelHandler}>
         <CloseIcon fontSize="inherit"/>
       </IconButton>
     </Box>
     <Box sx={{paddingTop: '10px'}}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DatePicker sx={{backgroundColor: '#FFFFFF'}} label="Date" value={selectedDate} onChange={handleDateChange}
+        <DatePicker sx={{backgroundColor: '#FFFFFF'}} label="Start Date" value={startDate}
+                    onChange={handleStartDateChange}
+                    renderInput={(params) => <TextField {...params} />}/>
+      </LocalizationProvider>
+    </Box>
+    <Box sx={{paddingTop: '10px', display: 'flex', justifyContent: 'flex-start'}}>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <TimePicker sx={{backgroundColor: '#FFFFFF', width: '150px'}} label="Start Time"
+                    value={startTime} onChange={handleStartTimeChange}
+                    renderInput={(params) => <TextField {...params} />}/>
+      </LocalizationProvider>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <TimePicker sx={{paddingLeft: '10px', backgroundColor: '#FFFFFF', width: '150px'}} label="End Time"
+                    value={endTime} onChange={handleEndTimeChange}
                     renderInput={(params) => <TextField {...params} />}/>
       </LocalizationProvider>
     </Box>
     <Box sx={{paddingTop: '10px'}}>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <TimePicker sx={{backgroundColor: '#FFFFFF'}} label="Start Time"
-                      value={startTime} onChange={handleStartTimeChange}
-                      renderInput={(params) => <TextField {...params} />}/>
-        </LocalizationProvider>
-      </Box>
-    <Box sx={{paddingTop: '10px'}}>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <TimePicker sx={{backgroundColor: '#FFFFFF'}} label="End Time"
-                      value={endTime} onChange={handleEndTimeChange}
-                      renderInput={(params) => <TextField {...params} />}/>
-        </LocalizationProvider>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DatePicker sx={{backgroundColor: '#FFFFFF'}} label="End Date" value={endDate} onChange={handleEndDateChange}
+                    renderInput={(params) => <TextField {...params} />}/>
+      </LocalizationProvider>
     </Box>
     <Box sx={{paddingTop: '10px'}}>
       <TextField sx={{backgroundColor: '#FFFFFF'}} label="Staff Number"
@@ -104,7 +121,7 @@ export const EditShiftStaffForm = ({essf, handleSubmit, cancelHandler}: IEditShi
                  onChange={handleStaffNumberChange} type="number"/>
     </Box>
     <Box sx={{paddingTop: '10px'}}>
-      <Button  sx={{
+      <Button sx={{
         textTransform: 'none',
         paddingLeft: '10px',
         color: 'white',
@@ -112,8 +129,7 @@ export const EditShiftStaffForm = ({essf, handleSubmit, cancelHandler}: IEditShi
         '&:hover': {
           backgroundColor: 'primary.dark',
         }
-      }}  onClick={handleSubmitForm}>Save staff updates</Button>
-      {/*<Button sx={{paddingLeft: '20px'}} onClick={cancelHandler}>Cancel</Button>*/}
+      }} onClick={handleSubmitForm}>Save staff updates</Button>
     </Box>
   </Box>
 
