@@ -15,27 +15,27 @@ export type IEditShiftStaff = {
   actualStaff: number | null
 }
 
-
 export interface IEditShiftStaffForm {
   essf: IEditShiftStaff,
   handleSubmit: (ssf: IEditShiftStaff) => void,
   cancelHandler: () => void
 }
 
-export const EditShiftStaffForm = ({ essf,
+export const EditShiftStaffForm = ({
+                                     essf,
                                      handleSubmit,
                                      cancelHandler
                                    }: IEditShiftStaffForm) => {
-  // const [startDate, setStartDate] = useState<Moment>(essf.startDayAt? essf.startDayAt : moment());
-  // const [startTime, setStartTime] = useState<Moment | null>(essf.startTimeAt? essf.startTimeAt : moment());
-  // const [endTime, setEndTime] = useState<Moment | null>(essf.endTimeAt? essf.endTimeAt : moment().add(1, 'hour'));
-  // const [endDate, setEndDate] = useState<Moment | null>(essf.endDayAt? essf.endDayAt : moment().add(1, 'day'));
-  // const [staffNumber, setStaffNumber] = useState<number>(essf.actualStaff? essf.actualStaff : 0);
-  const [startDate, setStartDate] = useState<Moment>(essf?.startDayAt);
-  const [startTime, setStartTime] = useState<Moment | null>(essf?.startTimeAt);
-  const [endTime, setEndTime] = useState<Moment | null>(null);
-  const [endDate, setEndDate] = useState<Moment | null>(null);
-  const [staffNumber, setStaffNumber] = useState<number>(0);
+  const [startDate, setStartDate] = useState<Moment>(essf.startDayAt ? essf.startDayAt : moment());
+  const [startTime, setStartTime] = useState<Moment | null>(essf.startTimeAt ? essf.startTimeAt : moment());
+  const [endTime, setEndTime] = useState<Moment | null>(essf.endTimeAt ? essf.endTimeAt : moment().add(1, 'hour'));
+  const [endDate, setEndDate] = useState<Moment | null>(essf.endDayAt ? essf.endDayAt : moment().add(1, 'day'));
+  const [staffNumber, setStaffNumber] = useState<number>(essf.actualStaff ? essf.actualStaff : 0);
+  // const [startDate, setStartDate] = useState<Moment>(essf?.startDayAt);
+  // const [startTime, setStartTime] = useState<Moment | null>(essf?.startTimeAt);
+  // const [endTime, setEndTime] = useState<Moment | null>(null);
+  // const [endDate, setEndDate] = useState<Moment | null>(null);
+  // const [staffNumber, setStaffNumber] = useState<number>(0);
   const handleStartDateChange = (date: Moment) => {
     setStartDate(date);
     setEndDate(date);

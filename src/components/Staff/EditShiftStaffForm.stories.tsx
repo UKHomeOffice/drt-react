@@ -25,7 +25,7 @@ const essform: IEditShiftStaff = {
 
 export const EditShiftStaffForm = {
   args: {
-    ess: essform,
+    essf: essform,
      handleSubmit: (essf: IEditShiftStaff) => {
       console.log('Submit clicked', essf);
     },
