@@ -37,21 +37,21 @@ export const EditShiftStaffForm = ({
   // const [endTime, setEndTime] = useState<Moment | null>(null);
   // const [endDate, setEndDate] = useState<Moment | null>(null);
   // const [staffNumber, setStaffNumber] = useState<number>(0);
-  const handleStartDateChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setStartDate(event.target.value as Moment);
-    setEndDate(event.target.value as Moment);
+  const handleStartDateChange = (date: Moment | null) => {
+    setStartDate(date);
+    setEndDate(date);
   };
 
-  const handleEndDateChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setEndDate(event.target.value as Moment);
+  const handleEndDateChange = (date: Moment | null) => {
+    setEndDate(date);
   };
 
-  const handleStartTimeChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setStartTime(event.target.value as Moment);
+  const handleStartTimeChange = (date: Moment | null) => {
+    setStartTime(date);
   };
 
-  const handleEndTimeChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setEndTime(event.target.value as Moment);
+  const handleEndTimeChange = (date: Moment | null) => {
+    setEndTime(date);
   };
 
   const handleStaffNumberChange = (event: React.ChangeEvent<{ value: unknown }>) => {
