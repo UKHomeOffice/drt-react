@@ -1,18 +1,19 @@
 import React, {useState} from "react";
 import {Box, Button, Link, TextField, Typography, Select, MenuItem, IconButton} from "@mui/material";
-import {Moment} from "moment";
+import moment,{Moment} from "moment";
 import {TimePicker} from '@mui/x-date-pickers/TimePicker';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
-import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
+// import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import CloseIcon from "@mui/icons-material/Close";
+import {AdapterMoment} from "@mui/x-date-pickers/AdapterMoment";
 
 export type IEditShiftStaff = {
   startDayAt: Moment,
-  startTimeAt: Moment | null,
-  endTimeAt: Moment | null,
-  endDayAt: Moment | null,
-  actualStaff: number | null
+  startTimeAt: Moment ,
+  endTimeAt: Moment,
+  endDayAt: Moment,
+  actualStaff: number
 }
 
 export interface IEditShiftStaffForm {
@@ -26,31 +27,31 @@ export const EditShiftStaffForm = ({
                                      handleSubmit,
                                      cancelHandler
                                    }: IEditShiftStaffForm) => {
-  const [startDate, setStartDate] = useState<Moment>(essf.startDayAt ? essf.startDayAt : moment());
-  const [startTime, setStartTime] = useState<Moment | null>(essf.startTimeAt ? essf.startTimeAt : moment());
-  const [endTime, setEndTime] = useState<Moment | null>(essf.endTimeAt ? essf.endTimeAt : moment().add(1, 'hour'));
-  const [endDate, setEndDate] = useState<Moment | null>(essf.endDayAt ? essf.endDayAt : moment().add(1, 'day'));
-  const [staffNumber, setStaffNumber] = useState<number>(essf.actualStaff ? essf.actualStaff : 0);
+  const [startDate, setStartDate] = useState<Moment>(essf.startDayAt);
+  const [startTime, setStartTime] = useState<Moment>(essf.startTimeAt);
+  const [endTime, setEndTime] = useState<Moment>(essf.endTimeAt);
+  const [endDate, setEndDate] = useState<Moment>(essf.endDayAt);
+  const [staffNumber, setStaffNumber] = useState<number>(essf.actualStaff);
   // const [startDate, setStartDate] = useState<Moment>(essf?.startDayAt);
   // const [startTime, setStartTime] = useState<Moment | null>(essf?.startTimeAt);
   // const [endTime, setEndTime] = useState<Moment | null>(null);
   // const [endDate, setEndDate] = useState<Moment | null>(null);
   // const [staffNumber, setStaffNumber] = useState<number>(0);
-  const handleStartDateChange = (date: Moment) => {
-    setStartDate(date);
-    setEndDate(date);
+  const handleStartDateChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setStartDate(event.target.value as Moment);
+    setEndDate(event.target.value as Moment);
   };
 
-  const handleEndDateChange = (date: Moment | null) => {
-    setEndDate(date);
+  const handleEndDateChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setEndDate(event.target.value as Moment);
   };
 
-  const handleStartTimeChange = (date: Moment | null) => {
-    setStartTime(date);
+  const handleStartTimeChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setStartTime(event.target.value as Moment);
   };
 
-  const handleEndTimeChange = (date: Moment | null) => {
-    setEndTime(date);
+  const handleEndTimeChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setEndTime(event.target.value as Moment);
   };
 
   const handleStaffNumberChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -95,26 +96,26 @@ export const EditShiftStaffForm = ({
       </IconButton>
     </Box>
     <Box sx={{paddingTop: '10px'}}>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <LocalizationProvider dateAdapter={AdapterMoment}>
         <DatePicker sx={{backgroundColor: '#FFFFFF'}} label="Start Date" value={startDate}
                     onChange={handleStartDateChange}
                     renderInput={(params) => <TextField {...params} />}/>
       </LocalizationProvider>
     </Box>
     <Box sx={{paddingTop: '10px', display: 'flex', justifyContent: 'flex-start'}}>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <LocalizationProvider dateAdapter={AdapterMoment}>
         <TimePicker sx={{backgroundColor: '#FFFFFF', width: '150px'}} label="Start Time"
                     value={startTime} onChange={handleStartTimeChange}
                     renderInput={(params) => <TextField {...params} />}/>
       </LocalizationProvider>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <LocalizationProvider dateAdapter={AdapterMoment}>
         <TimePicker sx={{paddingLeft: '10px', backgroundColor: '#FFFFFF', width: '150px'}} label="End Time"
                     value={endTime} onChange={handleEndTimeChange}
                     renderInput={(params) => <TextField {...params} />}/>
       </LocalizationProvider>
     </Box>
     <Box sx={{paddingTop: '10px'}}>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <LocalizationProvider dateAdapter={AdapterMoment}>
         <DatePicker sx={{backgroundColor: '#FFFFFF'}} label="End Date" value={endDate} onChange={handleEndDateChange}
                     renderInput={(params) => <TextField {...params} />}/>
       </LocalizationProvider>
