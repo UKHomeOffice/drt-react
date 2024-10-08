@@ -32,11 +32,6 @@ export const EditShiftStaffForm = ({
   const [endTime, setEndTime] = useState<Moment>(essf.endTimeAt);
   const [endDate, setEndDate] = useState<Moment>(essf.endDayAt);
   const [staffNumber, setStaffNumber] = useState<number>(essf.actualStaff);
-  // const [startDate, setStartDate] = useState<Moment>(essf?.startDayAt);
-  // const [startTime, setStartTime] = useState<Moment | null>(essf?.startTimeAt);
-  // const [endTime, setEndTime] = useState<Moment | null>(null);
-  // const [endDate, setEndDate] = useState<Moment | null>(null);
-  // const [staffNumber, setStaffNumber] = useState<number>(0);
   const handleStartDateChange = (date: Moment | null) => {
     setStartDate(date);
     setEndDate(date);
@@ -83,7 +78,7 @@ export const EditShiftStaffForm = ({
                 paddingBottom: '10px',
                 // backgroundColor: '#B4B5BE',
                 border: '1px solid black',
-                width: '370px'
+                width: '400px'
               }}>
     <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
       <Typography variant="h2" component="h2">Edit staff</Typography>
