@@ -94,6 +94,7 @@ export const EditShiftStaffForm = ({
       <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={'en-gb'}>
         <DatePicker sx={{backgroundColor: '#FFFFFF'}} label="Start Date" value={startDate}
                     onChange={handleStartDateChange}
+                    inputFormat="DD-MM-YYYY"
                     renderInput={(params) => <TextField {...params} />}/>
       </LocalizationProvider>
     </Box>
@@ -112,6 +113,7 @@ export const EditShiftStaffForm = ({
     <Box sx={{paddingTop: '10px'}}>
       <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={'en-gb'}>
         <DatePicker sx={{backgroundColor: '#FFFFFF'}} label="End Date" value={endDate} onChange={handleEndDateChange}
+                    inputFormat="DD-MM-YYYY"
                     renderInput={(params) => <TextField {...params} />}/>
       </LocalizationProvider>
     </Box>
