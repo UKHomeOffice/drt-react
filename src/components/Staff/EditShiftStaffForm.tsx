@@ -91,26 +91,26 @@ export const EditShiftStaffForm = ({
       </IconButton>
     </Box>
     <Box sx={{paddingTop: '10px'}}>
-      <LocalizationProvider dateAdapter={AdapterMoment}>
+      <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={'en-gb'}>
         <DatePicker sx={{backgroundColor: '#FFFFFF'}} label="Start Date" value={startDate}
                     onChange={handleStartDateChange}
                     renderInput={(params) => <TextField {...params} />}/>
       </LocalizationProvider>
     </Box>
     <Box sx={{paddingTop: '10px', display: 'flex', justifyContent: 'flex-start'}}>
-      <LocalizationProvider dateAdapter={AdapterMoment}>
+      <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={'en-gb'}>
         <TimePicker sx={{backgroundColor: '#FFFFFF', width: '150px'}} label="Start Time"
                     value={startTime} onChange={handleStartTimeChange}
                     renderInput={(params) => <TextField {...params} />}/>
       </LocalizationProvider>
-      <LocalizationProvider dateAdapter={AdapterMoment}>
+      <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={'en-gb'}>
         <TimePicker sx={{paddingLeft: '10px', backgroundColor: '#FFFFFF', width: '150px'}} label="End Time"
                     value={endTime} onChange={handleEndTimeChange}
                     renderInput={(params) => <TextField {...params} />}/>
       </LocalizationProvider>
     </Box>
     <Box sx={{paddingTop: '10px'}}>
-      <LocalizationProvider dateAdapter={AdapterMoment}>
+      <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={'en-gb'}>
         <DatePicker sx={{backgroundColor: '#FFFFFF'}} label="End Date" value={endDate} onChange={handleEndDateChange}
                     renderInput={(params) => <TextField {...params} />}/>
       </LocalizationProvider>
@@ -130,6 +130,24 @@ export const EditShiftStaffForm = ({
           backgroundColor: 'primary.dark',
         }
       }} onClick={handleSubmitForm}>Save staff updates</Button>
+    </Box>
+    <Box sx={{paddingTop: '20px'}}>
+      <Typography variant="h6">Summary of Selections:</Typography>
+      <Typography>
+        <span style={{ fontWeight: 'bold' }}>Start Date: </span>{startDate.format('DD-MM-YYYY')}
+      </Typography>
+      <Box sx={{display:'flex',justifyContent:'flex-start'}}>
+        <Typography>
+          <span style={{ fontWeight: 'bold' }}>Start Time: </span>{startTime.format('HH:mm')}
+        </Typography>
+        <Typography sx={{paddingLeft:'20px'}}>
+          <span style={{ fontWeight: 'bold' }}>End Time: </span>{endTime.format('HH:mm')}
+        </Typography>
+      </Box>
+      <Typography>
+        <span style={{ fontWeight: 'bold' }}>End Date: </span>{endDate.format('DD-MM-YYYY')}
+      </Typography>
+      <Typography><span style={{ fontWeight: 'bold' }}>Staff Number: </span>{staffNumber}</Typography>
     </Box>
   </Box>
 
