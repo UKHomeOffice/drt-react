@@ -70,9 +70,12 @@ const Header = ({
                 width: '35px'
               }
             }}>
-              <Link href="https://drt.homeoffice.gov.uk/" style={{
-                display: 'flex',
-                textDecoration: 'none',
+              <Link 
+                title="Border Force - Dynamic Response Tool"
+                href="https://drt.homeoffice.gov.uk/" 
+                style={{
+                  display: 'flex',
+                  textDecoration: 'none'
               }}>
                 <Crest data-testid="crest"/>
                 <Grid container sx={{

@@ -32,12 +32,12 @@ const StyledSelect = styled(Select)<SelectProps>(({ theme }) => ({
     }
   },
   '& .MuiListItemText-root': {
-    fontWeight: 'bold !important',
     fontSize: '0.875rem !important',
     marginTop: '6px !important',
   },
   '& .MuiTypography-root': {
     marginTop: 0,
+    fontWeight: 'bold !important',
   }
 }));
 
@@ -66,7 +66,7 @@ const PortSelector = ({handleChangePort, options, selectedOption}: IPortSelector
         variant="standard" 
         onChange={onChange}>
           <MenuItem value={""} disabled>
-            <ListItemText><em>Select a location...</em></ListItemText>
+            <ListItemText>Select a location...</ListItemText>
           </MenuItem> 
         {options?.map((option) => {
           return (
