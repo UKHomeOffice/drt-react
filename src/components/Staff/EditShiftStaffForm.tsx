@@ -94,26 +94,29 @@ export const EditShiftStaffForm = ({
       <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={'en-gb'}>
         <DatePicker sx={{backgroundColor: '#FFFFFF'}} label="Start Date" value={startDate}
                     onChange={handleStartDateChange}
-                    inputFormat="DD-MM-YYYY"
+                    format="DD-MM-YYYY"
                     renderInput={(params) => <TextField {...params} />}/>
       </LocalizationProvider>
     </Box>
     <Box sx={{paddingTop: '10px', display: 'flex', justifyContent: 'flex-start'}}>
       <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={'en-gb'}>
         <TimePicker sx={{backgroundColor: '#FFFFFF', width: '150px'}} label="Start Time"
-                    value={startTime} onChange={handleStartTimeChange}
+                    value={startTime}
+                    ampm={false}
+                    onChange={handleStartTimeChange}
                     renderInput={(params) => <TextField {...params} />}/>
       </LocalizationProvider>
       <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={'en-gb'}>
         <TimePicker sx={{paddingLeft: '10px', backgroundColor: '#FFFFFF', width: '150px'}} label="End Time"
                     value={endTime} onChange={handleEndTimeChange}
+                    ampm={false}
                     renderInput={(params) => <TextField {...params} />}/>
       </LocalizationProvider>
     </Box>
     <Box sx={{paddingTop: '10px'}}>
       <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={'en-gb'}>
         <DatePicker sx={{backgroundColor: '#FFFFFF'}} label="End Date" value={endDate} onChange={handleEndDateChange}
-                    inputFormat="DD-MM-YYYY"
+                    format="DD-MM-YYYY"
                     renderInput={(params) => <TextField {...params} />}/>
       </LocalizationProvider>
     </Box>
