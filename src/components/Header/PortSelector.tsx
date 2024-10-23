@@ -5,7 +5,7 @@ import { SelectChangeEvent } from "@mui/material";
 import { MenuItem as MenuItemType } from "./Header";
 
 const StyledSelect = styled(Select)<SelectProps>(({ theme }) => ({
-  minWidth: '280px',
+  minWidth: '205px',
   width: '100%',
   outline: 0,
   marginRight: theme.spacing(1),
