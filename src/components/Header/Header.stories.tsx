@@ -15,7 +15,8 @@ const HeaderArgs = {
   ],
   portMenuItems: [
     { label: 'National Dashboard', link: '/national-pressure' },
-    { label: 'CWL (Cardiff)', link: '/cwi' }
+    { label: 'CWL (Cardiff)', link: '/cwi' },
+    { label: 'LBA (Leeds Bradford)', link: '/lba'}
   ],
   adminMenuItems: [
     { label: 'Home', link: '/', roles: []},
