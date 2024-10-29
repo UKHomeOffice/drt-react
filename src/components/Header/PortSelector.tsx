@@ -6,6 +6,7 @@ import { MenuItem as MenuItemType } from "./Header";
 
 const StyledSelect = styled(Select)<SelectProps>(({ theme }) => ({
   minWidth: '205px',
+  height: '40px',
   width: '100%',
   outline: 0,
   marginRight: theme.spacing(1),
@@ -38,6 +39,7 @@ const StyledSelect = styled(Select)<SelectProps>(({ theme }) => ({
   '& .MuiTypography-root': {
     marginTop: 0,
     fontWeight: 'bold !important',
+    fontSize: '16px',
   }
 }));
 
