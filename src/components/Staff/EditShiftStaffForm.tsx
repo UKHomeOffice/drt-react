@@ -47,21 +47,21 @@ export const EditShiftStaffForm = ({
     };
 
     const handleStartTimeChange = (date: Moment | null) => {
+        setStartTime(date);
         if (date && endTime && date.isAfter(endTime)) {
             setError("Start time must be less than or equal to end time.");
             return;
         }
         setError(null);
-        setStartTime(date);
     };
 
     const handleEndTimeChange = (date: Moment | null) => {
+        setEndTime(date);
         if (date && startTime && date.isBefore(startTime)) {
             setError("End time must be greater than or equal to start time.");
             return;
         }
         setError(null);
-        setEndTime(date);
     };
 
     const handleStaffNumberChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -151,9 +151,11 @@ export const EditShiftStaffForm = ({
         </Box>
         <Box sx={{paddingTop: '10px', paddingBottom: '10px'}}>
             <Typography variant="h3" component="h3">Staff</Typography>
-            <TextField sx={{backgroundColor: '#FFFFFF', width: '100%'}} label="Staff Number"
-                       value={staffNumber}
-                       onChange={handleStaffNumberChange} type="number"/>
+            <Box sx={{paddingTop: '10px'}}>
+                <TextField sx={{backgroundColor: '#FFFFFF', width: '100%'}} label="Staff Number"
+                           value={staffNumber}
+                           onChange={handleStaffNumberChange} type="number"/>
+            </Box>
         </Box>
         {error && <Typography color="error" sx={{paddingTop: '10px'}}>{error}</Typography>}
         <Box sx={{paddingTop: '10px', paddingLeft: '10px', paddingRight: '20px', backgroundColor: '#E6E9F1'}}>
@@ -163,21 +165,23 @@ export const EditShiftStaffForm = ({
                     <CalendarTodayIcon sx={{marginRight: '5px'}}/>
                     <span style={{fontWeight: 'bold'}}>{endDate.diff(startDate, 'days')} days</span>
                 </Box>
-                <Typography sx={{paddingLeft:'30px'}}>{startDate.format('DD MMM YYYY')} to {endDate.format('DD MMM YYYY')}</Typography>
+                <Typography
+                    sx={{paddingLeft: '30px'}}>{startDate.format('DD MMM YYYY')} to {endDate.format('DD MMM YYYY')}</Typography>
             </Box>
             <Box sx={{paddingTop: '10px'}}>
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <AccessTimeIcon sx={{ marginRight: '5px' }} />
-                <span style={{fontWeight: 'bold'}}>{hours} hours {minutes !== 0 && ` and ${minutes} minutes`}</span>
+                <Box sx={{display: 'flex', alignItems: 'center'}}>
+                    <AccessTimeIcon sx={{marginRight: '5px'}}/>
+                    <span style={{fontWeight: 'bold'}}>{hours} hours {minutes !== 0 && ` and ${minutes} minutes`}</span>
                 </Box>
-                <Typography sx={{paddingLeft:'30px'}}>{startTime.format('HH:mm')} to {endTime.format('HH:mm')} </Typography>
+                <Typography
+                    sx={{paddingLeft: '30px'}}>{startTime.format('HH:mm')} to {endTime.format('HH:mm')} </Typography>
             </Box>
             <Box sx={{paddingTop: '10px'}}>
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <PeopleIcon sx={{ marginRight: '5px' }} />
-                <span style={{fontWeight: 'bold'}}>Staff</span>
+                <Box sx={{display: 'flex', alignItems: 'center'}}>
+                    <PeopleIcon sx={{marginRight: '5px'}}/>
+                    <span style={{fontWeight: 'bold'}}>Staff</span>
                 </Box>
-                <Typography sx={{paddingLeft:'30px'}}>{staffNumber}</Typography>
+                <Typography sx={{paddingLeft: '30px'}}>{staffNumber}</Typography>
             </Box>
         </Box>
         <Box sx={{paddingTop: '10px'}}>
