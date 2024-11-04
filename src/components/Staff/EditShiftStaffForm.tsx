@@ -165,7 +165,7 @@ export const EditShiftStaffForm = ({
                     <span style={{fontWeight: 'bold'}}>{endDate.diff(startDate, 'days') + 1} days</span>
                 </Box>
                 <Typography
-                    sx={{paddingLeft: '30px'}}>{startDate.format('DD MMM YYYY')} to {endDate.format('DD MMM YYYY')}</Typography>
+                    sx={{paddingLeft: '32px'}}>{startDate.format('DD MMM YYYY')} to {endDate.format('DD MMM YYYY')}</Typography>
             </Box>
             <Box sx={{paddingTop: '10px'}}>
                 <Box sx={{display: 'flex', alignItems: 'center'}}>
@@ -173,14 +173,14 @@ export const EditShiftStaffForm = ({
                     <span style={{fontWeight: 'bold'}}>{hours} hours {minutes !== 0 && ` and ${minutes} minutes`}</span>
                 </Box>
                 <Typography
-                    sx={{paddingLeft: '30px'}}>{startTime.format('HH:mm')} to {endTime.format('HH:mm')} </Typography>
+                    sx={{paddingLeft: '32px'}}>{startTime.format('HH:mm')} to {endTime.format('HH:mm')} </Typography>
             </Box>
             <Box sx={{paddingTop: '10px'}}>
                 <Box sx={{display: 'flex', alignItems: 'center'}}>
                     <PeopleIcon sx={{marginRight: '5px'}}/>
                     <span style={{fontWeight: 'bold'}}>Staff</span>
                 </Box>
-                <Typography sx={{paddingLeft: '30px'}}>{staffNumber}</Typography>
+                <Typography sx={{paddingLeft: '32px'}}>{staffNumber}</Typography>
             </Box>
         </Box>
         <Box sx={{paddingTop: '10px'}}>
