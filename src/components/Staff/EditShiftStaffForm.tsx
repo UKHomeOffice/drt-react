@@ -94,7 +94,6 @@ export const EditShiftStaffForm = ({
                     paddingLeft: '20px',
                     paddingBottom: '10px',
                     paddingRight: '20px',
-                    border: '1px solid black',
                     width: '400px'
                 }}>
         <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
@@ -163,7 +162,7 @@ export const EditShiftStaffForm = ({
             <Box sx={{paddingTop: '10px'}}>
                 <Box sx={{display: 'flex', alignItems: 'center'}}>
                     <CalendarTodayIcon sx={{marginRight: '5px'}}/>
-                    <span style={{fontWeight: 'bold'}}>{endDate.diff(startDate, 'days')} days</span>
+                    <span style={{fontWeight: 'bold'}}>{endDate.diff(startDate, 'days') + 1} days</span>
                 </Box>
                 <Typography
                     sx={{paddingLeft: '30px'}}>{startDate.format('DD MMM YYYY')} to {endDate.format('DD MMM YYYY')}</Typography>
