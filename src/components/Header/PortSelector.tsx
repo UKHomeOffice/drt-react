@@ -5,7 +5,8 @@ import { SelectChangeEvent } from "@mui/material";
 import { MenuItem as MenuItemType } from "./Header";
 
 const StyledSelect = styled(Select)<SelectProps>(({ theme }) => ({
-  minWidth: '280px',
+  minWidth: '205px',
+  height: '40px',
   width: '100%',
   outline: 0,
   marginRight: theme.spacing(1),
@@ -32,12 +33,13 @@ const StyledSelect = styled(Select)<SelectProps>(({ theme }) => ({
     }
   },
   '& .MuiListItemText-root': {
-    fontWeight: 'bold !important',
     fontSize: '0.875rem !important',
     marginTop: '6px !important',
   },
   '& .MuiTypography-root': {
     marginTop: 0,
+    fontWeight: 'bold !important',
+    fontSize: '16px',
   }
 }));
 
@@ -66,7 +68,7 @@ const PortSelector = ({handleChangePort, options, selectedOption}: IPortSelector
         variant="standard" 
         onChange={onChange}>
           <MenuItem value={""} disabled>
-            <ListItemText><em>Select a location...</em></ListItemText>
+            <ListItemText>Select a location...</ListItemText>
           </MenuItem> 
         {options?.map((option) => {
           return (

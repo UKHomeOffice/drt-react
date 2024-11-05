@@ -3,9 +3,7 @@ import { fn } from '@storybook/test';
 import { withTests } from '@storybook/addon-jest';
 import { withThemeFromJSXProvider } from '@storybook/addon-themes';
 import { ThemeProvider } from "@emotion/react";
-import { createTheme } from "@mui/material";
-import drtTheme from '../src/drt-theme'
-import { createDRTTheme } from "../src/drt-theme";
+import drtTheme from '../src/drt-theme';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -21,7 +19,7 @@ const preview: Preview = {
   decorators: [
     withThemeFromJSXProvider<ReactRenderer>({
       themes: {
-        default: createDRTTheme('light'),
+        default: drtTheme,
       },
       defaultTheme: 'default',
       Provider: ThemeProvider,

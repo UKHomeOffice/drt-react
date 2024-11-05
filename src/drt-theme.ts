@@ -1,6 +1,5 @@
 
 import { createTheme } from "@mui/material";
-import { PaletteMode } from "@mui/material";
 
 declare module '@mui/material/styles' {
   interface PaperVariants {
@@ -43,59 +42,56 @@ declare module "@mui/material/Typography" {
   }
 }
 
-
-export const createDRTTheme = (mode: PaletteMode) => {
-  const isDarkMode = mode == 'dark';
-  
-  return createTheme({
-    palette: {
-      mode: mode,
-      primary: { main: '#334F96'},
-      secondary: { main: '#1d70b8'}
-    },
-    typography: {
-      h1: {
-        fontSize: 36
-      },
-      portCode: {
-        fontSize: '0.7em',
-        letterSpacing: 1.2,
-        minWidth: '30px',
-        textAlign: 'center',
-        display: 'inline-block'
-      },
-      pageTitle: {
-        fontSize: 18,
-        fontWeight: 'lighter',
-        [drtTheme.breakpoints.up("sm")]: {
-          fontSize: 36
-        }
-      }
-    },
-    components: {
-      MuiPaper: {
-        variants: [
-          {
-            props: { variant: 'appbar'},
-            style: {
-              backgroundColor: drtTheme.palette.grey[100]
-            }
-          }
-        ]
-      }
-    }
-  })
-}
-
-let drtTheme = createTheme();
-drtTheme = createTheme({
+let defaultValues = createTheme();
+let drtTheme = createTheme({
   palette: {
-    primary: { main: '#732282'},
-    secondary: { main: '#1d70b8'}
+    primary: { main: '#005ea5'},
+    secondary: { main: '#233E82'}
   },
   typography: {
     h1: {
-      fontSize: 36
+      fontSize: '38px',
+      fontWeight: 'bold',
+      color: '#233E82'
+    },
+    h2: {
+      fontSize: '32px',
+      fontWeight: 'bold',
+    },
+    h3: {
+      fontSize: "28px",
+      fontWeight: "bold",
+    },
+    h4: {
+      fontSize: "24px",
+      fontWeight: "bold",
+    },
+    h5: {
+      fontSize: "18px",
+      fontWeight: "bold",
+    },
+    h6: {
+      fontSize: "16px",
+      fontWeight: "bold",
+    },
+    subtitle1: {
+      fontSize: "19px",
+      fontWeight: "bold",
+    },
+    subtitle2: {
+      fontSize: "16px",
+      fontWeight: "bold",
+    },
+    body1: {
+      fontSize: "14px",
+    },
+    body2: {
+      fontSize: "12px",
+    },
+    button: {
+      fontSize: '18px',
+      fontWeight: "bold",
+      textTransform: 'none',
     },
     portCode: {
       fontSize: '0.7em',
@@ -107,7 +103,7 @@ drtTheme = createTheme({
     pageTitle: {
       fontSize: 18,
       fontWeight: 'lighter',
-      [drtTheme.breakpoints.up("sm")]: {
+      [defaultValues.breakpoints.up("sm")]: {
         fontSize: 36
       }
     },
@@ -115,10 +111,6 @@ drtTheme = createTheme({
       fontSize: '1.6em'
 
     },
-    logoStrap: {
-
-    }
-
   },
   components: {
     MuiPaper: {
@@ -126,10 +118,49 @@ drtTheme = createTheme({
         {
           props: { variant: 'appbar'},
           style: {
-            backgroundColor: drtTheme.palette.grey[100]
+            backgroundColor: defaultValues.palette.grey[100]
           }
         }
       ]
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+          fontSize: '16px',
+          padding: '6px 12px',
+        },
+        outlined: {
+          backgroundColor: '#fff'
+        }
+      },
+    },
+    MuiAccordion: {
+      styleOverrides: {
+        root: {
+          margin: '0 !important'
+        }
+      }
+    },
+    MuiAccordionSummary: {
+      styleOverrides: {
+        root: {
+          minHeight: 'unset !important',
+        },
+        content: {
+          margin: '12px 0 0 !important'
+        }
+      }
+    },
+    MuiRadio:{
+      styleOverrides:{
+        root: {
+          color: '#000',
+          "&.Mui-checked": {
+            color: '#000',
+          }
+        }
+      }
     }
   }
 })
