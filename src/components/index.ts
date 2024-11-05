@@ -13,4 +13,4 @@ export type {IStaffUpdateSuccess} from './Staff'
 export {StaffUpdateSuccess} from './Staff'
 
 export type {IUpdateStaffForTimeRangeData, IUpdateStaffForTimeRangeForm} from './Staff'
-export {IUpdateStaffForTimeRangeForm} from './Staff'
+export {UpdateStaffForTimeRangeForm} from './Staff'
