@@ -20,13 +20,11 @@ const ustdForm: IUpdateStaffForTimeRangeData = {
   endDayAt: moment().add(1, 'day')
 }
 
-
-
 export const UpdateStaffForTimeRangeForm = {
   args: {
     ustd: ustdForm,
     interval: 15,
-     handleSubmit: (essf: IUpdateStaffForTimeRangeData) => {
+    handleSubmit: (essf: IUpdateStaffForTimeRangeData) => {
       console.log('Submit clicked', essf);
     },
     cancelHandler: () => {
