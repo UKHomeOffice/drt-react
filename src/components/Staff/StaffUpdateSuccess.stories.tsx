@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { StaffSuccess as StaffSuccessComponent } from "./StaffSuccess";
+import { StaffUpdateSuccess as StaffUpdateSuccessComponent } from "./StaffUpdateSuccess";
 
-const meta: Meta<typeof StaffSuccessComponent> = {
+const meta: Meta<typeof StaffUpdateSuccessComponent> = {
   title: "DRT Components/StaffSuccessComponent",
-  component: StaffSuccessComponent,
+  component: StaffUpdateSuccessComponent,
 };
 
 export default meta;
-type Story = StoryObj<typeof StaffSuccessComponent>;
+type Story = StoryObj<typeof StaffUpdateSuccessComponent>;
 
 export const StaffSuccess: Story = {
   args: {

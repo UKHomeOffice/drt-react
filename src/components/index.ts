@@ -9,11 +9,8 @@ export type {IStatusTag} from "./StatusTags";
 export {default as Header} from './Header'
 export type {IHeader, MenuItem} from './Header';
 
-export {StaffSuccess, MinStaffWarning, MinStaffForm} from './Staff'
-export type {IStaffSuccess, IMinStaffWarning, IMinStaffForm} from './Staff'
+export type {IStaffUpdateSuccess} from './Staff'
+export {StaffUpdateSuccess} from './Staff'
 
-export type {IShiftStaffForm, ShiftStaffFormData} from './Staff'
-export {ShiftStaffForm} from './Staff'
-
-export type {IEditShiftStaff, IEditShiftStaffForm} from './Staff'
-export {EditShiftStaffForm} from './Staff'
+export type {IUpdateStaffForTimeRangeData, IUpdateStaffForTimeRangeForm} from './Staff'
+export {IUpdateStaffForTimeRangeForm} from './Staff'

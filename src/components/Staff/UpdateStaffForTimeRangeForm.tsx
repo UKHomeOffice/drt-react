@@ -10,7 +10,7 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import PeopleIcon from '@mui/icons-material/People';
 
-export type IEditShiftStaff = {
+export type IUpdateStaffForTimeRangeData = {
     startDayAt: Moment,
     startTimeAt: Moment,
     endTimeAt: Moment,
@@ -18,24 +18,24 @@ export type IEditShiftStaff = {
     actualStaff: number
 }
 
-export interface IEditShiftStaffForm {
-    essf: IEditShiftStaff,
+export interface IUpdateStaffForTimeRangeForm {
+    ustd: IUpdateStaffForTimeRangeData,
     interval: number,
-    handleSubmit: (ssf: IEditShiftStaff) => void,
+    handleSubmit: (ssf: IUpdateStaffForTimeRangeData) => void,
     cancelHandler: () => void
 }
 
-export const EditShiftStaffForm = ({
-                                       essf,
-                                       interval,
-                                       handleSubmit,
-                                       cancelHandler
-                                   }: IEditShiftStaffForm) => {
-    const [startDate, setStartDate] = useState<Moment>(essf.startDayAt);
-    const [startTime, setStartTime] = useState<Moment>(essf.startTimeAt.startOf('day'));
-    const [endTime, setEndTime] = useState<Moment>(essf.endTimeAt.startOf('day'));
-    const [endDate, setEndDate] = useState<Moment>(essf.endDayAt);
-    const [staffNumber, setStaffNumber] = useState<number>(essf.actualStaff);
+export const UpdateStaffForTimeRangeForm = ({
+                                                ustd,
+                                                interval,
+                                                handleSubmit,
+                                                cancelHandler
+                                            }: IUpdateStaffForTimeRangeForm) => {
+    const [startDate, setStartDate] = useState<Moment>(ustd.startDayAt);
+    const [startTime, setStartTime] = useState<Moment>(ustd.startTimeAt.startOf('day'));
+    const [endTime, setEndTime] = useState<Moment>(ustd.endTimeAt.startOf('day'));
+    const [endDate, setEndDate] = useState<Moment>(ustd.endDayAt);
+    const [staffNumber, setStaffNumber] = useState<number>(ustd.actualStaff);
     const [error, setError] = useState<string | null>(null);
     const handleStartDateChange = (date: Moment | null) => {
         setStartDate(date);
@@ -75,7 +75,7 @@ export const EditShiftStaffForm = ({
         console.log("selectedDate", startDate.valueOf())
         console.log("diffInMinutes", diffInMinutes)
         console.log("staffNumber", staffNumber)
-        const ess: IEditShiftStaff = {
+        const ess: IUpdateStaffForTimeRangeData = {
             startDayAt: startDate,
             startTimeAt: startTime,
             endTimeAt: endTime,
@@ -157,12 +157,19 @@ export const EditShiftStaffForm = ({
             </Box>
         </Box>
         {error && <Typography color="error" sx={{paddingTop: '10px'}}>{error}</Typography>}
-        <Box sx={{paddingTop: '10px', paddingLeft: '10px', paddingRight: '20px', backgroundColor: '#E6E9F1'}}>
+        <Box sx={{
+            paddingTop: '10px',
+            paddingBottom: '10px',
+            paddingLeft: '10px',
+            paddingRight: '20px',
+            backgroundColor: '#E6E9F1'
+        }}>
             <Typography variant="h6">Summary of Selections:</Typography>
             <Box sx={{paddingTop: '10px'}}>
                 <Box sx={{display: 'flex', alignItems: 'center'}}>
                     <CalendarTodayIcon sx={{marginRight: '5px'}}/>
-                    <span style={{fontWeight: 'bold'}}>{startDate.format(startDate.year() === endDate.year() ? 'DD MMM' : 'DD MMM YY')} to {endDate.format('DD MMM YYYY')}</span>
+                    <span
+                        style={{fontWeight: 'bold'}}>{startDate.format(startDate.year() === endDate.year() ? 'DD MMM' : 'DD MMM YY')} to {endDate.format('DD MMM YYYY')}</span>
                 </Box>
                 <Typography
                     sx={{paddingLeft: '32px'}}>{endDate.diff(startDate, 'days') + 1} days</Typography>
