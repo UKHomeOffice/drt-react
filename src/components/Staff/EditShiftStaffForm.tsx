@@ -162,25 +162,24 @@ export const EditShiftStaffForm = ({
             <Box sx={{paddingTop: '10px'}}>
                 <Box sx={{display: 'flex', alignItems: 'center'}}>
                     <CalendarTodayIcon sx={{marginRight: '5px'}}/>
-                    <span style={{fontWeight: 'bold'}}>{endDate.diff(startDate, 'days') + 1} days</span>
+                    <span style={{fontWeight: 'bold'}}>{startDate.format(startDate.year() === endDate.year() ? 'DD MMM' : 'DD MMM YY')} to {endDate.format('DD MMM YYYY')}</span>
                 </Box>
                 <Typography
-                    sx={{paddingLeft: '32px'}}>{startDate.format('DD MMM YYYY')} to {endDate.format('DD MMM YYYY')}</Typography>
+                    sx={{paddingLeft: '32px'}}>{endDate.diff(startDate, 'days') + 1} days</Typography>
             </Box>
             <Box sx={{paddingTop: '10px'}}>
                 <Box sx={{display: 'flex', alignItems: 'center'}}>
                     <AccessTimeIcon sx={{marginRight: '5px'}}/>
-                    <span style={{fontWeight: 'bold'}}>{hours} hours {minutes !== 0 && ` and ${minutes} minutes`}</span>
+                    <span style={{fontWeight: 'bold'}}>{startTime.format('HH:mm')} to {endTime.format('HH:mm')}</span>
                 </Box>
                 <Typography
-                    sx={{paddingLeft: '32px'}}>{startTime.format('HH:mm')} to {endTime.format('HH:mm')} </Typography>
+                    sx={{paddingLeft: '32px'}}>{hours} hours {minutes !== 0 && ` and ${minutes} minutes`}</Typography>
             </Box>
             <Box sx={{paddingTop: '10px'}}>
                 <Box sx={{display: 'flex', alignItems: 'center'}}>
                     <PeopleIcon sx={{marginRight: '5px'}}/>
-                    <span style={{fontWeight: 'bold'}}>Staff</span>
+                    <span style={{fontWeight: 'bold'}}>{staffNumber} Staff</span>
                 </Box>
-                <Typography sx={{paddingLeft: '32px'}}>{staffNumber}</Typography>
             </Box>
         </Box>
         <Box sx={{paddingTop: '10px'}}>
