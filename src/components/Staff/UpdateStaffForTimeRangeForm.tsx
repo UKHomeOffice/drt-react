@@ -112,7 +112,9 @@ export const UpdateStaffForTimeRangeForm = ({
         <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={'en-gb'}>
           <DatePicker sx={{backgroundColor: '#FFFFFF', width: '100%'}} label="Start Date" value={startDate}
                       onChange={handleStartDateChange}
-                      format="DD MMMM YYYY"/>
+                      format="DD MMMM YYYY"
+                      slots={{ textField: (params) => <TextField {...params} /> }}
+          />
         </LocalizationProvider>
       </Box>
       <Box sx={{paddingTop: '10px'}}>
@@ -122,6 +124,7 @@ export const UpdateStaffForTimeRangeForm = ({
                       value={endDate}
                       onChange={handleEndDateChange}
                       format="DD MMMM YYYY"
+                      slots={{ textField: (params) => <TextField {...params} /> }}
           />
         </LocalizationProvider>
       </Box>
