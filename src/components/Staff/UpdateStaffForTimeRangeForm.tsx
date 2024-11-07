@@ -57,11 +57,11 @@ export const UpdateStaffForTimeRangeForm = ({
   };
 
   const handleEndTimeChange = (hour: number, minute: number) => {
-    let newEndTime = moment(endTime).set({hour, minute});
+    let newEndTime: Moment;
     if (startTime.hour() === 0 && startTime.minutes() === 0 && hour === 0 && minute === 0) {
       newEndTime = moment(startTime).add(1, 'day').startOf('day');
     } else {
-      newEndTime = moment(endTime).set({hour, minute});
+      newEndTime = moment(startTime).set({hour, minute});
     }
     setEndTime(newEndTime);
     if (newEndTime.isBefore(startTime)) {
