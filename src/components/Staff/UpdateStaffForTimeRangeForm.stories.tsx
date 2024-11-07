@@ -23,7 +23,7 @@ const ustdForm: IUpdateStaffForTimeRangeData = {
 export const UpdateStaffForTimeRangeForm = {
   args: {
     ustd: ustdForm,
-    interval: 15,
+    interval: 60,
     handleSubmit: (essf: IUpdateStaffForTimeRangeData) => {
       console.log('Submit clicked', essf);
     },

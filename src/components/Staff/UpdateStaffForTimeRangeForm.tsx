@@ -1,14 +1,13 @@
-import React, {useState} from "react";
-import {Box, Button, IconButton, TextField, TextFieldProps, Typography} from "@mui/material";
-import moment, {Moment} from "moment";
-import {TimePicker} from '@mui/x-date-pickers/TimePicker';
-import {DatePicker} from '@mui/x-date-pickers/DatePicker';
-import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
+import React, { useState } from "react";
+import { Box, Button, IconButton, MenuItem, Select, TextField, Typography } from "@mui/material";
+import moment, { Moment } from "moment";
 import CloseIcon from "@mui/icons-material/Close";
-import {AdapterMoment} from "@mui/x-date-pickers/AdapterMoment";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import PeopleIcon from '@mui/icons-material/People';
+import {AdapterMoment} from "@mui/x-date-pickers/AdapterMoment";
+import {DatePicker} from '@mui/x-date-pickers/DatePicker';
+import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 
 export type IUpdateStaffForTimeRangeData = {
   startDayAt: Moment,
@@ -37,6 +36,7 @@ export const UpdateStaffForTimeRangeForm = ({
   const [endDate, setEndDate] = useState<Moment>(ustd.endDayAt);
   const [staffNumber, setStaffNumber] = useState<number>(ustd.actualStaff);
   const [error, setError] = useState<string | null>(null);
+
   const handleStartDateChange = (date: Moment | null) => {
     setStartDate(date?.startOf('day') || moment());
     setEndDate(date?.startOf('day') || moment());
@@ -46,18 +46,20 @@ export const UpdateStaffForTimeRangeForm = ({
     setEndDate(date?.startOf('day') || moment());
   };
 
-  const handleStartTimeChange = (date: Moment | null) => {
-    setStartTime(date?.startOf('minute') || moment());
-    if (date && endTime && date.isAfter(endTime)) {
+  const handleStartTimeChange = (hour: number, minute: number) => {
+    const newStartTime = moment(startTime).set({ hour, minute });
+    setStartTime(newStartTime);
+    if (newStartTime.isAfter(endTime)) {
       setError("Start time must be less than or equal to end time.");
       return;
     }
     setError(null);
   };
 
-  const handleEndTimeChange = (date: Moment | null) => {
-    setEndTime(date?.startOf('minute') || moment());
-    if (date && startTime && date.isBefore(startTime)) {
+  const handleEndTimeChange = (hour: number, minute: number) => {
+    const newEndTime = moment(endTime).set({ hour, minute });
+    setEndTime(newEndTime);
+    if (newEndTime.isBefore(startTime)) {
       setError("End time must be greater than or equal to start time.");
       return;
     }
@@ -68,13 +70,7 @@ export const UpdateStaffForTimeRangeForm = ({
     setStaffNumber(event.target.value as number);
   };
 
-  const handleSubmitForm = (event: React.ChangeEvent<{ value: unknown }>) => {
-    const diffInMinutes = (endTime.valueOf() - startTime.valueOf()) / 60000;
-    console.log("endTime.valueOf", endTime.valueOf())
-    console.log("startTime.valueOf", startTime.valueOf())
-    console.log("selectedDate", startDate.valueOf())
-    console.log("diffInMinutes", diffInMinutes)
-    console.log("staffNumber", staffNumber)
+  const handleSubmitForm = () => {
     const ess: IUpdateStaffForTimeRangeData = {
       startDayAt: startDate,
       startTimeAt: startTime,
@@ -83,127 +79,143 @@ export const UpdateStaffForTimeRangeForm = ({
       actualStaff: staffNumber
     };
     handleSubmit(ess);
-  }
-  const duration = moment.duration(endTime.diff(startTime));
-  const hours = Math.floor(duration.asHours());
-  const minutes = duration.minutes();
+  };
 
-  return <Box data-testid={`shift-staff-form`}
-              sx={{
-                paddingTop: '10px',
-                paddingLeft: '20px',
-                paddingBottom: '10px',
-                paddingRight: '20px',
-                width: '400px'
-              }}>
-    <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
-      <Typography variant="h2" component="h2" fontWeight={"bold"}>Edit staff</Typography>
-      <IconButton
-        aria-label="close"
-        color="inherit"
-        size="small"
-        onClick={cancelHandler}>
-        <CloseIcon fontSize="inherit"/>
-      </IconButton>
-    </Box>
-    <Box sx={{paddingTop: '10px'}}>
-      <Typography variant="h3" component="h3">Date</Typography>
-      <Box sx={{paddingTop: '10px'}}>
-        <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={'en-gb'}>
-          <DatePicker sx={{backgroundColor: '#FFFFFF', width: '100%'}} label="Start Date" value={startDate}
-                      onChange={handleStartDateChange}
-                      format="DD MMMM YYYY"
-                      slots={{ textField: (params) => <TextField {...params} /> }}
-          />
-        </LocalizationProvider>
-      </Box>
-      <Box sx={{paddingTop: '10px'}}>
-        <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={'en-gb'}>
-          <DatePicker sx={{backgroundColor: '#FFFFFF', width: '100%'}}
-                      label="End Date"
-                      value={endDate}
-                      onChange={handleEndDateChange}
-                      format="DD MMMM YYYY"
-                      slots={{ textField: (params) => <TextField {...params} /> }}
-          />
-        </LocalizationProvider>
-      </Box>
-    </Box>
-    <Box sx={{paddingTop: '10px'}}>
-      <Typography variant="h3" component="h3">Time</Typography>
-      <Box sx={{paddingTop: '10px', display: 'flex', justifyContent: 'flex-start'}}>
-        <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={'en-gb'}>
-          <TimePicker sx={{backgroundColor: '#FFFFFF', width: '50%'}} label="Start Time"
-                      value={startTime}
-                      ampm={false}
-                      onChange={handleStartTimeChange}
-                      minutesStep={interval}
-                      views={['hours', 'minutes']}
-          />
-        </LocalizationProvider>
-        <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={'en-gb'}>
-          <TimePicker sx={{paddingLeft: '10px', backgroundColor: '#FFFFFF', width: '50%'}} label="End Time"
-                      value={endTime}
-                      onChange={handleEndTimeChange}
-                      minutesStep={interval}
-                      ampm={false}
-                      views={['hours', 'minutes']}/>
-        </LocalizationProvider>
-      </Box>
-    </Box>
-    <Box sx={{paddingTop: '10px', paddingBottom: '10px'}}>
-      <Typography variant="h3" component="h3">Staff</Typography>
-      <Box sx={{paddingTop: '10px'}}>
-        <TextField sx={{backgroundColor: '#FFFFFF', width: '100%'}} label="Staff Number"
-                   value={staffNumber}
-                   onChange={handleStaffNumberChange} type="number"/>
-      </Box>
-    </Box>
-    {error && <Typography color="error" sx={{paddingTop: '10px'}}>{error}</Typography>}
-    <Box sx={{
-      paddingTop: '10px',
-      paddingBottom: '10px',
-      paddingLeft: '10px',
-      paddingRight: '20px',
-      backgroundColor: '#E6E9F1'
-    }}>
-      <Typography variant="h6">Summary of Selections:</Typography>
-      <Box sx={{paddingTop: '10px'}}>
-        <Box sx={{display: 'flex', alignItems: 'center'}}>
-          <CalendarTodayIcon sx={{marginRight: '5px'}}/>
-          <span
-            style={{fontWeight: 'bold'}}>{startDate.format(startDate.year() === endDate.year() ? 'DD MMM' : 'DD MMM YY')} to {endDate.format('DD MMM YYYY')}</span>
-        </Box>
-        <Typography
-          sx={{paddingLeft: '32px'}}>{endDate.diff(startDate, 'days') + 1} days</Typography>
-      </Box>
-      <Box sx={{paddingTop: '10px'}}>
-        <Box sx={{display: 'flex', alignItems: 'center'}}>
-          <AccessTimeIcon sx={{marginRight: '5px'}}/>
-          <span style={{fontWeight: 'bold'}}>{startTime.format('HH:mm')} to {endTime.format('HH:mm')}</span>
-        </Box>
-        <Typography
-          sx={{paddingLeft: '32px'}}>{hours} hours {minutes !== 0 && ` and ${minutes} minutes`}</Typography>
-      </Box>
-      <Box sx={{paddingTop: '10px'}}>
-        <Box sx={{display: 'flex', alignItems: 'center'}}>
-          <PeopleIcon sx={{marginRight: '5px'}}/>
-          <span style={{fontWeight: 'bold'}}>{staffNumber} Staff</span>
-        </Box>
-      </Box>
-    </Box>
-    <Box sx={{paddingTop: '10px'}}>
-      <Button sx={{
-        textTransform: 'none',
-        paddingLeft: '10px',
-        color: 'white',
-        width: '100%',
-        backgroundColor: 'primary.main',
-        '&:hover': {
-          backgroundColor: 'primary.dark',
-        }
-      }} disabled={!!error} onClick={handleSubmitForm}>Save staff updates</Button>
-    </Box>
-  </Box>
+  const hours = Array.from({ length: 24 }, (_, i) => i);
+  const minutes = interval === 60 ? [0,59] : interval === 30 ? [0,29] : interval === 15 ? [0,14,29,44,59] : Array.from({ length: 60 }, (_, i) => i);
 
-}
+  return (
+    <Box data-testid={`shift-staff-form`} sx={{ padding: '10px 20px', width: '400px' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Typography variant="h2" component="h2" fontWeight={"bold"}>Edit staff</Typography>
+        <IconButton aria-label="close" color="inherit" size="small" onClick={cancelHandler}>
+          <CloseIcon fontSize="inherit" />
+        </IconButton>
+      </Box>
+      <Box sx={{ paddingTop: '10px' }}>
+        <Typography variant="h3" component="h3">Date</Typography>
+        <Box sx={{ paddingTop: '10px' }}>
+          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={'en-gb'}>
+            <DatePicker sx={{backgroundColor: '#FFFFFF', width: '100%'}} label="Start Date" value={startDate}
+                        onChange={handleStartDateChange}
+                        format="DD MMMM YYYY"
+                        slots={{ textField: (params) => <TextField {...params} /> }}
+            />
+          </LocalizationProvider>
+        </Box>
+        <Box sx={{ paddingTop: '10px' }}>
+          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={'en-gb'}>
+            <DatePicker sx={{backgroundColor: '#FFFFFF', width: '100%'}}
+                        label="End Date"
+                        value={endDate}
+                        onChange={handleEndDateChange}
+                        format="DD MMMM YYYY"
+                        slots={{ textField: (params) => <TextField {...params} /> }}
+            />
+          </LocalizationProvider>
+        </Box>
+      </Box>
+      <Box sx={{ paddingTop: '10px' }}>
+        <Typography variant="h3" component="h3">Time</Typography>
+        <Box sx={{ paddingTop: '10px', display: 'flex', justifyContent: 'flex-start' }}>
+          <Box sx={{ width: '50%', paddingRight: '10px' }}>
+            <Typography variant="h6">Start Time</Typography>
+            <Select variant="outlined"
+              value={startTime.hour()}
+              onChange={(e) => handleStartTimeChange(Number(e.target.value), startTime.minute())}
+              fullWidth
+            >
+              {hours.map(hour => (
+                <MenuItem key={hour} value={hour}>{hour.toString().padStart(2, '0')}</MenuItem>
+              ))}
+            </Select>
+            <Select variant="outlined"
+              value={startTime.minute()}
+              onChange={(e) => handleStartTimeChange(startTime.hour(), Number(e.target.value))}
+              fullWidth
+            >
+              {minutes.map(minute => (
+                <MenuItem key={minute} value={minute}>{minute.toString().padStart(2, '0')}</MenuItem>
+              ))}
+            </Select>
+          </Box>
+          <Box sx={{ width: '50%', paddingLeft: '10px' }}>
+            <Typography variant="h6">End Time</Typography>
+            <Select variant="outlined"
+              value={endTime.hour()}
+              onChange={(e) => handleEndTimeChange(Number(e.target.value), endTime.minute())}
+              fullWidth
+            >
+              {hours.map(hour => (
+                <MenuItem key={hour} value={hour}>{hour.toString().padStart(2, '0')}</MenuItem>
+              ))}
+            </Select>
+            <Select variant="outlined"
+              value={endTime.minute()}
+              onChange={(e) => handleEndTimeChange(endTime.hour(), Number(e.target.value))}
+              fullWidth
+            >
+              {minutes.map(minute => (
+                <MenuItem key={minute} value={minute}>{minute.toString().padStart(2, '0')}</MenuItem>
+              ))}
+            </Select>
+          </Box>
+        </Box>
+      </Box>
+      <Box sx={{ paddingTop: '10px', paddingBottom: '10px' }}>
+        <Typography variant="h3" component="h3">Staff</Typography>
+        <Box sx={{ paddingTop: '10px' }}>
+          <TextField
+            label="Staff Number"
+            value={staffNumber}
+            onChange={handleStaffNumberChange}
+            type="number"
+            fullWidth
+          />
+        </Box>
+      </Box>
+      {error && <Typography color="error" sx={{ paddingTop: '10px' }}>{error}</Typography>}
+      <Box sx={{ paddingTop: '10px', paddingBottom: '10px', paddingLeft: '10px', paddingRight: '20px', backgroundColor: '#E6E9F1' }}>
+        <Typography variant="h6">Summary of Selections:</Typography>
+        <Box sx={{ paddingTop: '10px' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <CalendarTodayIcon sx={{ marginRight: '5px' }} />
+            <span style={{ fontWeight: 'bold' }}>{startDate.format(startDate.year() === endDate.year() ? 'DD MMM' : 'DD MMM YY')} to {endDate.format('DD MMM YYYY')}</span>
+          </Box>
+          <Typography sx={{ paddingLeft: '32px' }}>{endDate.diff(startDate, 'days') + 1} days</Typography>
+        </Box>
+        <Box sx={{ paddingTop: '10px' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <AccessTimeIcon sx={{ marginRight: '5px' }} />
+            <span style={{ fontWeight: 'bold' }}>{startTime.format('HH:mm')} to {endTime.format('HH:mm')}</span>
+          </Box>
+          <Typography sx={{ paddingLeft: '32px' }}>{Math.floor(moment.duration(endTime.diff(startTime)).asHours())} hours {moment.duration(endTime.diff(startTime)).minutes()} minutes</Typography>
+        </Box>
+        <Box sx={{ paddingTop: '10px' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <PeopleIcon sx={{ marginRight: '5px' }} />
+            <span style={{ fontWeight: 'bold' }}>{staffNumber} Staff</span>
+          </Box>
+        </Box>
+      </Box>
+      <Box sx={{ paddingTop: '10px' }}>
+        <Button
+          sx={{
+            textTransform: 'none',
+            paddingLeft: '10px',
+            color: 'white',
+            width: '100%',
+            backgroundColor: 'primary.main',
+            '&:hover': {
+              backgroundColor: 'primary.dark',
+            }
+          }}
+          disabled={!!error}
+          onClick={handleSubmitForm}
+        >
+          Save staff updates
+        </Button>
+      </Box>
+    </Box>
+  );
+};
