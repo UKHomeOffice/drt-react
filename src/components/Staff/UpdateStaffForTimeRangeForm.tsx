@@ -131,6 +131,7 @@ export const UpdateStaffForTimeRangeForm = ({
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={'en-gb'}>
             <DatePicker sx={{backgroundColor: '#FFFFFF', width: '100%'}} label="Start Date" value={startDate}
                         onChange={handleStartDateChange}
+                        timezone={'Europe/London'}
                         format="DD MMMM YYYY"
             />
           </LocalizationProvider>
@@ -141,6 +142,7 @@ export const UpdateStaffForTimeRangeForm = ({
                         label="End Date"
                         value={endDate}
                         onChange={handleEndDateChange}
+                        timezone={'Europe/London'}
                         format="DD MMMM YYYY"
             />
           </LocalizationProvider>
