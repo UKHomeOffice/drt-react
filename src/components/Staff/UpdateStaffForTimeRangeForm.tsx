@@ -76,7 +76,7 @@ export const UpdateStaffForTimeRangeForm = ({
   };
 
   const handleSubmitForm = () => {
-    const adjustedEndTime = moment(endTime).subtract(1, 'minute');
+    const adjustedEndTime = endTime.subtract(1, 'minute');
 
     const ess: IUpdateStaffForTimeRangeData = {
       startDayAt: startDate,
