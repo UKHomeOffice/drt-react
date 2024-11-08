@@ -49,7 +49,7 @@ export const UpdateStaffForTimeRangeForm = ({
   const handleStartTimeChange = (hour: number, minute: number) => {
     const newStartTime = moment(startTime).set({hour, minute});
     setStartTime(newStartTime);
-    if (newStartTime.isAfter(endTime)) {
+    if (newStartTime.isSameOrAfter(endTime)) {
       setError("Start time must be less than or equal to end time.");
       return;
     }
@@ -64,7 +64,7 @@ export const UpdateStaffForTimeRangeForm = ({
       newEndTime = moment(startTime).set({hour, minute});
     }
     setEndTime(newEndTime);
-    if (newEndTime.isBefore(startTime)) {
+    if (newEndTime.isSameOrBefore(startTime)) {
       setError("End time must be greater than or equal to start time.");
       return;
     }
@@ -86,9 +86,9 @@ export const UpdateStaffForTimeRangeForm = ({
     handleSubmit(ess);
   };
 
-  function timesBy15Minutes(startHour: number): string[] {
+  function timesBy15Minutes(): string[] {
     const times: string[] = [];
-    for (let hour = startHour; hour < 24; hour++) {
+    for (let hour = 0; hour < 24; hour++) {
       for (let minute = 0; minute <= 45; minute += interval) {
         times.push(`${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`);
       }
@@ -96,11 +96,11 @@ export const UpdateStaffForTimeRangeForm = ({
     return times;
   }
 
-  const timeOptions = timesBy15Minutes(0)
+  const timeOptions = timesBy15Minutes()
 
-  function timesBy15MinutesWithEnd(startHour: number): string[] {
+  function timesBy15MinutesWithEnd(): string[] {
     const times: string[] = [];
-    for (let hour = startHour; hour < 24; hour++) {
+    for (let hour = 0; hour < 24; hour++) {
       for (let minute = 0; minute <= 45; minute += interval) {
         const time = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`
         if (time !== '00:00') {
@@ -113,7 +113,7 @@ export const UpdateStaffForTimeRangeForm = ({
   }
 
 
-  const endTimeOptions = timesBy15MinutesWithEnd(startTime.hour())
+  const endTimeOptions = timesBy15MinutesWithEnd()
 
   return (
     <Box data-testid={`shift-staff-form`} sx={{padding: '10px 20px', width: '400px'}}>
