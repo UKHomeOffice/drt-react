@@ -9,6 +9,12 @@ import {AdapterMoment} from "@mui/x-date-pickers/AdapterMoment";
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 
+moment.updateLocale('en-gb', {
+  week: {
+    dow: 1, // Set the first day of the week to Monday
+  },
+});
+
 export type IUpdateStaffForTimeRangeData = {
   startDayAt: Moment,
   startTimeAt: Moment,
