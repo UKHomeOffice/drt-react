@@ -30,6 +30,26 @@ export interface IUpdateStaffForTimeRangeForm {
   cancelHandler: () => void
 }
 
+export const addMinuteIfReduced = (hour: number, minute: number): { hour: number, minute: number } => {
+  if (minute === 59) {
+    return { hour: (hour + 1) % 24, minute: 0 };
+  }
+
+  if (minute === 14) {
+    return { hour, minute: 15 };
+  }
+
+  if (minute === 29) {
+    return { hour, minute: 30 };
+  }
+
+  if (minute === 44) {
+    return { hour, minute: 45 };
+  }
+
+  return { hour, minute };
+};
+
 export const UpdateStaffForTimeRangeForm = ({
                                               ustd,
                                               interval,
@@ -62,12 +82,14 @@ export const UpdateStaffForTimeRangeForm = ({
     setError(null);
   };
 
+
   const handleEndTimeChange = (hour: number, minute: number) => {
+    const { hour: roundedHour, minute: roundedMinute } = addMinuteIfReduced(hour, minute);
     let newEndTime: Moment;
-    if (startTime.hour() === 0 && startTime.minutes() === 0 && hour === 0 && minute === 0) {
+    if (startTime.hour() === 0 && startTime.minute() === 0 && roundedHour === 0 && roundedMinute === 0) {
       newEndTime = moment(startTime).add(1, 'day').startOf('day');
     } else {
-      newEndTime = moment(startTime).set({hour, minute});
+      newEndTime = moment(startTime).set({ hour: roundedHour, minute: roundedMinute });
     }
     setEndTime(newEndTime);
     if (newEndTime.isSameOrBefore(startTime)) {
