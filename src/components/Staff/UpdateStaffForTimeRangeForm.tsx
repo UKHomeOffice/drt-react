@@ -132,7 +132,6 @@ export const UpdateStaffForTimeRangeForm = ({
             <DatePicker sx={{backgroundColor: '#FFFFFF', width: '100%'}} label="Start Date" value={startDate}
                         onChange={handleStartDateChange}
                         format="DD MMMM YYYY"
-                        slots={{textField: (params) => <TextField {...params} />}}
             />
           </LocalizationProvider>
         </Box>
@@ -143,7 +142,6 @@ export const UpdateStaffForTimeRangeForm = ({
                         value={endDate}
                         onChange={handleEndDateChange}
                         format="DD MMMM YYYY"
-                        slots={{textField: (params) => <TextField {...params} />}}
             />
           </LocalizationProvider>
         </Box>
