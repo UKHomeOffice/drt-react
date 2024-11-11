@@ -140,7 +140,7 @@ export const UpdateStaffForTimeRangeForm = ({
             <DatePicker data-testid="start-date-picker" sx={{backgroundColor: '#FFFFFF', width: '100%'}} label="Start Date" value={startDate}
                         onChange={handleStartDateChange}
                         format="DD MMMM YYYY"
-                        slots={{textField: (params) => <TextField {...params}/>}}
+                        slots={{textField: (params) => <TextField {...params} data-testid="start-date-picker-text"/>}}
             />
           </LocalizationProvider>
         </Box>
@@ -151,7 +151,7 @@ export const UpdateStaffForTimeRangeForm = ({
                         value={endDate}
                         onChange={handleEndDateChange}
                         format="DD MMMM YYYY"
-                        slots={{textField: (params) => <TextField {...params}/>}}
+                        slots={{textField: (params) => <TextField {...params} data-testid="end-date-picker-text"/>}}
             />
           </LocalizationProvider>
         </Box>
