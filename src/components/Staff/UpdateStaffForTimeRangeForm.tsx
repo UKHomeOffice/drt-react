@@ -140,7 +140,7 @@ export const UpdateStaffForTimeRangeForm = ({
             <DatePicker sx={{backgroundColor: '#FFFFFF', width: '100%'}} label="Start Date" value={startDate}
                         onChange={handleStartDateChange}
                         format="DD MMMM YYYY"
-                        slots={{textField: (params) => <TextField {...params} />}}
+                        slots={{textField: (params) => <TextField {...params} data-testid="start-date-picker"/>}}
             />
           </LocalizationProvider>
         </Box>
@@ -151,7 +151,7 @@ export const UpdateStaffForTimeRangeForm = ({
                         value={endDate}
                         onChange={handleEndDateChange}
                         format="DD MMMM YYYY"
-                        slots={{textField: (params) => <TextField {...params} />}}
+                        slots={{textField: (params) => <TextField {...params} data-testid="end-date-picker"/>}}
             />
           </LocalizationProvider>
         </Box>
@@ -170,6 +170,7 @@ export const UpdateStaffForTimeRangeForm = ({
                   handleStartTimeChange(hour, minute);
                 }}
                 fullWidth
+                data-testid="start-time-select"
               >
                 {timeOptions.map(time => (
                   <MenuItem key={time} value={time}>{time}</MenuItem>
@@ -187,6 +188,7 @@ export const UpdateStaffForTimeRangeForm = ({
                 handleEndTimeChange(hour, minute);
               }}
               fullWidth
+              data-testid="end-time-select"
             >
               {endTimeOptions.map(time => (
                 <MenuItem key={time} value={time}>{time}</MenuItem>
@@ -204,6 +206,7 @@ export const UpdateStaffForTimeRangeForm = ({
             onChange={handleStaffNumberChange}
             type="number"
             fullWidth
+            data-testid="staff-number-input"
           />
         </Box>
       </Box>
@@ -253,6 +256,7 @@ export const UpdateStaffForTimeRangeForm = ({
           }}
           disabled={!!error}
           onClick={handleSubmitForm}
+          data-testid="save-staff-button"
         >
           Save staff updates
         </Button>
