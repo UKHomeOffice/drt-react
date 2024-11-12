@@ -126,7 +126,7 @@ export const UpdateStaffForTimeRangeForm = ({
   const endTimeOptions = timesBy15MinutesWithEnd()
 
   return (
-    <Box data-testid={`shift-staff-form`} sx={{padding: '10px 20px', width: '400px'}}>
+    <Box data-cy={`shift-staff-form`} sx={{padding: '10px 20px', width: '400px'}}>
       <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
         <Typography variant="h2" component="h2" fontWeight={"bold"}>Edit staff</Typography>
         <IconButton aria-label="close" color="inherit" size="small" onClick={cancelHandler}>
@@ -137,21 +137,21 @@ export const UpdateStaffForTimeRangeForm = ({
         <Typography variant="h3" component="h3">Date</Typography>
         <Box sx={{paddingTop: '10px'}}>
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={'en-gb'}>
-            <DatePicker data-testid="start-date-picker" sx={{backgroundColor: '#FFFFFF', width: '100%'}} label="Start Date" value={startDate}
+            <DatePicker data-cy="start-date-picker" sx={{backgroundColor: '#FFFFFF', width: '100%'}} label="Start Date" value={startDate}
                         onChange={handleStartDateChange}
                         format="DD MMMM YYYY"
-                        slots={{textField: (params) => <TextField {...params} data-testid="start-date-picker-text"/>}}
+                        slots={{textField: (params) => <TextField {...params} data-cy="start-date-picker-text"/>}}
             />
           </LocalizationProvider>
         </Box>
         <Box sx={{paddingTop: '10px'}}>
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={'en-gb'}>
-            <DatePicker data-testid="end-date-picker" sx={{backgroundColor: '#FFFFFF', width: '100%'}}
+            <DatePicker data-cy="end-date-picker" sx={{backgroundColor: '#FFFFFF', width: '100%'}}
                         label="End Date"
                         value={endDate}
                         onChange={handleEndDateChange}
                         format="DD MMMM YYYY"
-                        slots={{textField: (params) => <TextField {...params} data-testid="end-date-picker-text"/>}}
+                        slots={{textField: (params) => <TextField {...params} data-cy="end-date-picker-text"/>}}
             />
           </LocalizationProvider>
         </Box>
@@ -170,10 +170,10 @@ export const UpdateStaffForTimeRangeForm = ({
                   handleStartTimeChange(hour, minute);
                 }}
                 fullWidth
-                data-testid="start-time-select"
+                data-cy="start-time-select"
               >
                 {timeOptions.map(time => (
-                  <MenuItem key={time} value={time}>{time}</MenuItem>
+                  <MenuItem key={time} value={time} data-cy={`select-start-time-option-${time.replace(':', '-')}`}>{time} </MenuItem>
                 ))}
               </Select>
             </Box>
@@ -188,10 +188,10 @@ export const UpdateStaffForTimeRangeForm = ({
                 handleEndTimeChange(hour, minute);
               }}
               fullWidth
-              data-testid="end-time-select"
+              data-cy="end-time-select"
             >
               {endTimeOptions.map(time => (
-                <MenuItem key={time} value={time}>{time}</MenuItem>
+                <MenuItem key={time} value={time} data-cy={`select-end-time-option-${time.replace(':', '-')}`}>{time}</MenuItem>
               ))}
             </Select>
           </Box>
@@ -206,7 +206,7 @@ export const UpdateStaffForTimeRangeForm = ({
             onChange={handleStaffNumberChange}
             type="number"
             fullWidth
-            data-testid="staff-number-input"
+            data-cy="staff-number-input"
           />
         </Box>
       </Box>
@@ -256,7 +256,7 @@ export const UpdateStaffForTimeRangeForm = ({
           }}
           disabled={!!error}
           onClick={handleSubmitForm}
-          data-testid="save-staff-button"
+          data-cy="save-staff-button"
         >
           Save staff updates
         </Button>
