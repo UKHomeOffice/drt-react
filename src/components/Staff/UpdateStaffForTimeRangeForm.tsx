@@ -170,6 +170,7 @@ export const UpdateStaffForTimeRangeForm = ({
                   handleStartTimeChange(hour, minute);
                 }}
                 fullWidth
+                inputProps={{ role: 'start-time-select' }}
                 data-cy="start-time-select"
               >
                 {timeOptions.map(time => (
@@ -188,6 +189,7 @@ export const UpdateStaffForTimeRangeForm = ({
                 handleEndTimeChange(hour, minute);
               }}
               fullWidth
+              inputProps={{ role: 'end-time-select' }}
               data-cy="end-time-select"
             >
               {endTimeOptions.map(time => (
