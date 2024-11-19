@@ -5,14 +5,14 @@ import {
 } from "./FlightFlaggerFilters";
 
 const meta: Meta<typeof FlightFlaggerFiltersComponent> = {
-  title: "DRT Components/Flight Flagger",
+  title: "DRT Components/Features/Flight Flagger/Filters",
   component: FlightFlaggerFiltersComponent,
 };
 
 export default meta;
 type Story = StoryObj<typeof FlightFlaggerFiltersComponent>;
 
-export const FlightFlaggerFilters: Story = {
+export const Filters: Story = {
   args: {
     nationalities: [
       {name: 'Great Britain', code: 'GBR'},

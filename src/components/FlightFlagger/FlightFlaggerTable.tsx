@@ -5,6 +5,7 @@ import { FlightHighlightChip } from "./FlightFlaggerHighlightChip";
 import { FlightArrival } from "./FlightArrival";
 import InfoIcon from '@mui/icons-material/Info';
 import { styled } from '@mui/material/styles';
+import InfoTooltip from "../ui/InfoTooltip";
 
 export interface IFlightCard {
   flight: FlightArrival
@@ -48,22 +49,14 @@ export const FlightFlaggerTable = ({flights, ...others}: IFlightFlaggerTable) =>
         <StyledTableHeaderCell align="center">Origin</StyledTableHeaderCell>
         <StyledTableHeaderCell align="center">
           Country
-          <StyledTooltip title="Country of origin">
-            <IconButton>
-              <InfoIcon />
-            </IconButton>
-          </StyledTooltip>
+          <InfoTooltip text="Country of origin" />
         </StyledTableHeaderCell>
         <StyledTableHeaderCell align="center">Gate/Stand</StyledTableHeaderCell>
         <StyledTableHeaderCell align="center">Status</StyledTableHeaderCell>
         <StyledTableHeaderCell align="center">Scheduled</StyledTableHeaderCell>
         <StyledTableHeaderCell align="center">
           Expected
-          <StyledTooltip title="Expected arrival">
-            <IconButton>
-              <InfoIcon />
-            </IconButton>
-          </StyledTooltip>
+          <InfoTooltip text="Expected arrival" />
         </StyledTableHeaderCell>
         <StyledTableHeaderCell align="center">Exp PCP</StyledTableHeaderCell>
         <StyledTableHeaderCell align="center">Exp PCP Pax</StyledTableHeaderCell>

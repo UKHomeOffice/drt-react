@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { default as HeaderComponent } from ".";
 
 const meta: Meta<typeof HeaderComponent> = {
-  title: "DRT Components/Header",
+  title: "DRT Components/UI/Header",
   component: HeaderComponent,
 };
 
