@@ -5,7 +5,7 @@ import { FlightHighlightChip } from "./FlightFlaggerHighlightChip";
 import { FlightArrival } from "./FlightArrival";
 import InfoIcon from '@mui/icons-material/Info';
 import { styled } from '@mui/material/styles';
-import InfoTooltip from "../ui/InfoTooltip";
+import {InfoTooltip} from "../ui/InfoTooltip/InfoTooltip";
 
 export interface IFlightCard {
   flight: FlightArrival

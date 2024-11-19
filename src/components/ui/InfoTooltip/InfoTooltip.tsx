@@ -13,8 +13,12 @@ const StyledTooltip = styled(Tooltip)<TooltipProps>(({theme}) => ({
   }
 }));
 
+export interface IInfoTooltip {
+  text: string
+}
 
-const InfoTooltip = ({ text } : {text: string}) => {
+
+export const InfoTooltip = ({ text } : IInfoTooltip) => {
   return (
     <StyledTooltip title={text}>
       <IconButton color="primary">
@@ -23,5 +27,3 @@ const InfoTooltip = ({ text } : {text: string}) => {
     </StyledTooltip>
   )
 }
-
-export default InfoTooltip;
