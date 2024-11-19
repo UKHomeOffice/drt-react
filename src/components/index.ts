@@ -14,3 +14,6 @@ export {StaffUpdateSuccess} from './Staff'
 
 export type {IUpdateStaffForTimeRangeData, IUpdateStaffForTimeRangeForm} from './Staff'
 export {UpdateStaffForTimeRangeForm} from './Staff'
+
+export type {IAccessibilityStatementProps} from './Accessibility'
+export {AccessibilityStatement} from './Accessibility'

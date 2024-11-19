@@ -1,10 +1,10 @@
 import React from 'react';
 import {Box, Button, IconButton, Link, ListItem, ListItemIcon, Typography} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import {List, ListItemButton, ListItemText} from '@mui/material';
+import {List, ListItemText} from '@mui/material';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
-interface IAccessibilityStatementProps {
+export interface IAccessibilityStatementProps {
   teamEmail: string;
   emailUsToReportAProblem: () => void;
   onClose: () => void;
