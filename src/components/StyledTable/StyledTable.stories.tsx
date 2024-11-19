@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Table as MuiTable, TableHead, TableCell, TableBody, TableRow } from "@mui/material";
-import TableTooltip from '../ui/InfoTooltip';
+import {InfoTooltip} from '../ui/InfoTooltip';
 
 import type {Meta, StoryObj} from '@storybook/react';
 
@@ -39,7 +39,7 @@ export const Table: Story = {
               <TableCell>Dessert (100g serving)</TableCell>
               <TableCell align="right">
                 Calories
-                <TableTooltip text="A unit of energy, often used to express the nutritional value of foods" />
+                <InfoTooltip text="A unit of energy, often used to express the nutritional value of foods" />
               </TableCell>
               <TableCell align="right">Fat&nbsp;(g)</TableCell>
               <TableCell align="right">Carbs&nbsp;(g)</TableCell>
