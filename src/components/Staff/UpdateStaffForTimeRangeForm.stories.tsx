@@ -4,7 +4,7 @@ import type {IUpdateStaffForTimeRangeData} from './UpdateStaffForTimeRangeForm'
 import {UpdateStaffForTimeRangeForm as UpdateStaffForTimeRangeFormComponent} from './UpdateStaffForTimeRangeForm'
 
 const meta: Meta<typeof UpdateStaffForTimeRangeFormComponent> = {
-  title: "DRT Components/UpdateStaffForTimeRangeFormComponent",
+  title: "DRT Components/Features/Staff/UpdateStaffForTimeRangeFormComponent",
   component: UpdateStaffForTimeRangeFormComponent,
 }
 
