@@ -17,3 +17,6 @@ export {UpdateStaffForTimeRangeForm} from './Staff'
 
 export type {IAccessibilityStatementProps} from './Accessibility'
 export {AccessibilityStatement} from './Accessibility'
+
+export type {BottomBarProps} from './Footer'
+export {BottomBar} from './Footer'
