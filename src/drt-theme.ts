@@ -43,7 +43,7 @@ declare module "@mui/material/Typography" {
   }
 }
 
-let defaultValues = createTheme({
+const defaultValues = createTheme({
   palette: {
     primary: { 
       main: '#005ea5',
@@ -72,7 +72,7 @@ let defaultValues = createTheme({
   }
 });
 
-let drtTheme = createTheme({
+const drtTheme = createTheme({
   palette: {
     primary: defaultValues.palette.primary,
     secondary: defaultValues.palette.secondary,

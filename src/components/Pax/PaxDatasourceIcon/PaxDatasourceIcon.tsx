@@ -10,7 +10,7 @@ export interface IPaxDatasource {
 
 export const PaxDatasource = ({status}: IPaxDatasource) => {
   
-  let content = getPaxContent(status);
+  const content = getPaxContent(status);
 
   return (
     <Tooltip title={`${status}: ${content.statusText}`} sx={{cursor: 'pointer'}}>

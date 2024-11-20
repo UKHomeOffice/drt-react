@@ -8,7 +8,7 @@ export interface IPaxHighlight {
 
 export const PaxHighlight = ({status}: IPaxHighlight) => {
   
-  let content = getPaxContent(status);
+  const content = getPaxContent(status);
 
   return (
     <Highlight color={content.paxColor} text={status} tooltipText={content.statusText} />

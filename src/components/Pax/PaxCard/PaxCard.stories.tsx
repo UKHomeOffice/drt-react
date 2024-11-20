@@ -13,12 +13,18 @@ const meta: Meta<typeof PaxCardComponent> = {
 export default meta;
 type Story = StoryObj<typeof PaxCardComponent>;
 
-var startTime1 = new Date();
-var startTime2 = new Date();
-var startTime3 = new Date();
-var endTime1 = new Date();
-var endTime2 = new Date();
-var endTime3 = new Date();
+const startTime1 = new Date();
+const startTime2 = new Date();
+const startTime3 = new Date();
+const endTime1 = new Date();
+const endTime2 = new Date();
+const endTime3 = new Date();
+
+const queues = [
+  { queueName: 'EEA', queueCount: 77 },
+  { queueName: 'Non-EEA', queueCount: 128 },
+  { queueName: 'EEA', queueCount: 213 }
+]
 
 
 startTime1.setHours(11, 26);
@@ -32,9 +38,7 @@ endTime3.setHours(11, 36);
 
 export const PaxCardSingle:Story = {
   args: {
-    EEA: 77,
-    nonEEA: 128,
-    eGates: 213,
+    queues: queues,
     timeRange: PaxTimeRange.Next5Mins,
     startTime: startTime1,
     endTime: endTime1
@@ -53,25 +57,19 @@ export const PaxCardGroup: Story = {
           backgroundColor: theme.palette.secondary.light || theme.palette.grey[200]
         })}>
           <PaxCardComponent 
-            EEA={77} 
-            nonEEA={128} 
-            eGates={213} 
+            queues={queues}
             timeRange={PaxTimeRange.Next5Mins}
             startTime={startTime1}
             endTime={endTime1}
           />
           <PaxCardComponent 
-            EEA={45} 
-            nonEEA={456} 
-            eGates={987} 
+            queues={queues}
             timeRange={PaxTimeRange.Next5to10Mins} 
             startTime={startTime2}
             endTime={endTime2}
           />
           <PaxCardComponent 
-            EEA={431} 
-            nonEEA={12} 
-            eGates={5} 
+            queues={queues}
             timeRange={PaxTimeRange.Next10to15Mins}
             startTime={startTime3}
             endTime={endTime3}

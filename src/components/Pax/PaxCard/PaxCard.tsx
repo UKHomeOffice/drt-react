@@ -9,10 +9,13 @@ export enum PaxTimeRange {
   Next10to15Mins = 'Next 10 to 15 Mins',
 }
 
+export type PortQueue = {
+  queueName: string,
+  queueCount: number
+}
+
 export interface IPaxCard {
-  EEA: number,
-  nonEEA: number,
-  eGates: number,
+  queues: PortQueue[],
   timeRange: PaxTimeRange,
   startTime: Date,
   endTime: Date,
@@ -42,7 +45,9 @@ const formatTime = (datetime:Date) => {
   return `${datetime.getHours()}:${datetime.getMinutes()}`
 }
 
-export const PaxCard = ({EEA = 0, nonEEA = 0, eGates = 0, timeRange, startTime, endTime}: IPaxCard) => {
+export const PaxCard = ({queues, timeRange, startTime, endTime}: IPaxCard) => {
+
+  
   return (
     <StyledPaxCard elevation={0}>
       <Typography variant='h5'>{timeRange}</Typography>
@@ -54,22 +59,20 @@ export const PaxCard = ({EEA = 0, nonEEA = 0, eGates = 0, timeRange, startTime, 
           <TableHead>
             <TableRow>
               <TableCell>Estimated pax:</TableCell>
-              <TableCell align='right'>{ EEA + nonEEA + eGates}</TableCell>
+              <TableCell align='right'>{ queues.reduce((sum, q) => sum + q.queueCount, 0)}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
-              <TableCell>EEA:</TableCell>
-              <TableCell align='right'>{ EEA }</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Non-EEA:</TableCell>
-              <TableCell align='right'>{ nonEEA }</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>e-gates:</TableCell>
-              <TableCell align='right'>{ eGates }</TableCell>
-            </TableRow>
+            {
+              queues.map((queue) => {
+                return (
+                  <TableRow key={queue.queueName}>
+                    <TableCell>{`${queue.queueName}:`}</TableCell>
+                    <TableCell align='right'>{ queue.queueCount }</TableCell>
+                  </TableRow>
+                )
+              })
+            }
           </TableBody>
         </Table>
       </Paper>

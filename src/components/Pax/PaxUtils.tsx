@@ -10,10 +10,10 @@ export enum DatasourceStatus {
   PortForecast = "Port forecast",
   DRTForecast = "DRT forecast",
   PortLiveData = "Port live data",
-  CarrierData = "Carrier Data",
-  TerminalAverageData = "TerminalAverageData",
-  PastCarrierData = "PastCarrierData",
-  VerifiedCarrierData = "VerifiedCarrierData",
+  CarrierData = "Carrier data",
+  TerminalAverageData = "Terminal average data",
+  PastCarrierData = "Past carrier data",
+  VerifiedCarrierData = "Verified carrier data",
 }
 
 export type PaxStatusContent = {
@@ -25,7 +25,7 @@ export type PaxStatusContent = {
 
 export const getPaxContent = (status: DatasourceStatus) : PaxStatusContent =>  {
 
-  let content: PaxStatusContent = {
+  const content: PaxStatusContent = {
     paxColor: '',
     statusLabel: '',
     statusText: '',
