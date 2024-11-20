@@ -1,2 +1,2 @@
 export { PaxCard } from "./PaxCard";
-export type { IPaxCard, PaxTimeRange } from "./PaxCard";
+export type { IPaxCard, PaxTimeRange, PortQueue } from "./PaxCard";
