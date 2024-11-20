@@ -1,5 +1,5 @@
 import React from "react";
-import { Chip  } from "@mui/material";
+import { Box, Chip  } from "@mui/material";
 import TungstenIcon from '@mui/icons-material/Tungsten';
 import CustomHighlightIcon from './icon-highlight-pax.svg'
 
@@ -8,7 +8,7 @@ export interface IFlightHighlightChip {
 }
 
 const HighlightIcon = () => {
-  return <CustomHighlightIcon style={{marginLeft: '4px', minWidth: '25px'}} />
+  return <Box sx={{marginLeft: '4px', minWidth: '25px'}} ><CustomHighlightIcon/></Box>
 }
 
 export const FlightHighlightChip = ({text}: IFlightHighlightChip) => {

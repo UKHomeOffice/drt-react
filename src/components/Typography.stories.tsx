@@ -4,7 +4,7 @@ import { Typography as MuiTypography } from "@mui/material";
 import type {Meta, StoryObj} from '@storybook/react';
 
 const meta: Meta<typeof MuiTypography> = {
-    title: "DRT Components/MUI Components",
+    title: "DRT Components/MUI Components/Typography",
     component: MuiTypography,
 };
 

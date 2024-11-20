@@ -4,7 +4,7 @@ import ExampleFlights from "./ExampleFlights";
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof FlightFlaggerResultsComponent> = {
-  title: "DRT Components/Flight Flagger",
+  title: "DRT Components/Features/Flight Flagger/Flight Flagger Results",
   component: FlightFlaggerResultsComponent,
 };
 

@@ -6,7 +6,7 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {default as FlightFlaggerComponent} from "./";
 
 const meta: Meta<typeof FlightFlaggerComponent> = {
-    title: "DRT Components/Flight Flagger",
+    title: "DRT Components/Features/Flight Flagger",
     component: FlightFlaggerComponent,
 };
 

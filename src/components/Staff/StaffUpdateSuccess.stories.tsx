@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { StaffUpdateSuccess as StaffUpdateSuccessComponent } from "./StaffUpdateSuccess";
 
 const meta: Meta<typeof StaffUpdateSuccessComponent> = {
-  title: "DRT Components/StaffSuccessComponent",
+  title: "DRT Components/Features/Staff/StaffSuccess",
   component: StaffUpdateSuccessComponent,
 };
 

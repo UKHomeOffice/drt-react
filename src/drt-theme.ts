@@ -1,5 +1,6 @@
 
-import { createTheme } from "@mui/material";
+import { createTheme, darken, lighten } from "@mui/material";
+import React from "react";
 
 declare module '@mui/material/styles' {
   interface PaperVariants {
@@ -42,13 +43,46 @@ declare module "@mui/material/Typography" {
   }
 }
 
-let defaultValues = createTheme();
-let drtTheme = createTheme({
+const defaultValues = createTheme({
   palette: {
-    primary: { main: '#005ea5'},
-    secondary: { main: '#233E82'}
+    primary: { 
+      main: '#005ea5',
+      light: lighten('#005ea5', 0.8)
+    },
+    secondary: { 
+      main: '#233E82',
+      light: '#E6E9F1'
+    },
+    error: { 
+      main: '#99001E',
+      light: '#FFEBEE',
+    },
+    success: { 
+      main: '#547A00',
+      light: '#F0F6DB'
+    },
+    warning: { 
+      main: '#C94900',
+      light: '#FFF2E1',
+    },
+    info: { 
+      main: '#404252',
+      light: lighten('#404252', 0.8)
+    },
+  }
+});
+
+const drtTheme = createTheme({
+  palette: {
+    primary: defaultValues.palette.primary,
+    secondary: defaultValues.palette.secondary,
+    error: defaultValues.palette.error,
+    success: defaultValues.palette.success,
+    warning: defaultValues.palette.warning,
+    info: defaultValues.palette.info,
   },
   typography: {
+    fontFamily: '"Roboto","Helvetica","Arial",sans-serif',
     h1: {
       fontSize: '38px',
       fontWeight: 'bold',
@@ -83,7 +117,7 @@ let drtTheme = createTheme({
       fontWeight: "bold",
     },
     body1: {
-      fontSize: "14px",
+      fontSize: "16px",
     },
     body2: {
       fontSize: "12px",
@@ -109,7 +143,6 @@ let drtTheme = createTheme({
     },
     logoTitle: {
       fontSize: '1.6em'
-
     },
   },
   components: {
@@ -123,6 +156,13 @@ let drtTheme = createTheme({
         }
       ]
     },
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          backgroundColor: defaultValues.palette.common.white
+        }
+      }
+    },
     MuiButton: {
       styleOverrides: {
         root: {
@@ -134,6 +174,33 @@ let drtTheme = createTheme({
           backgroundColor: '#fff'
         }
       },
+    },
+    MuiToggleButtonGroup: {
+      styleOverrides: {
+        root: {
+          width: '100%'
+        }
+      }
+    },
+    MuiToggleButton: {
+      styleOverrides: {
+        root: {
+          flexGrow: 1,
+          '&.MuiToggleButton-primary': {
+            backgroundColor: defaultValues.palette.primary.main,
+            color: defaultValues.palette.common.white,
+            '&:hover': {
+              backgroundColor: lighten(defaultValues.palette.primary.main, 0.1),
+              color: defaultValues.palette.common.white,
+            },
+            '&.Mui-selected': {
+              backgroundColor: defaultValues.palette.primary.dark,
+              color: defaultValues.palette.common.white,
+              cursor: 'default'
+            }
+          }
+        }
+      }
     },
     MuiAccordion: {
       styleOverrides: {
@@ -159,6 +226,31 @@ let drtTheme = createTheme({
           "&.Mui-checked": {
             color: '#000',
           }
+        }
+      }
+    },
+    MuiTableCell:{
+      styleOverrides: {
+        root: {
+          fontSize: '16px',
+          padding: 8,
+        },
+        head: {
+          backgroundColor: defaultValues.palette.info.main,
+          color: defaultValues.palette.common.white,
+          padding: 6,
+        }
+      }
+    },
+    MuiTableRow: {
+      styleOverrides: {
+        root: {
+          '&:nth-of-type(odd)': {
+            backgroundColor: defaultValues.palette.common.white,
+          },
+          '&:nth-of-type(even)': {
+            backgroundColor: defaultValues.palette.grey[100],
+          },
         }
       }
     }
