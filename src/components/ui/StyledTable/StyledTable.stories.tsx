@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Table as MuiTable, TableHead, TableCell, TableBody, TableRow } from "@mui/material";
-import {InfoTooltip} from '../ui/InfoTooltip';
+import {InfoTooltip} from '../InfoTooltip';
 
 import type {Meta, StoryObj} from '@storybook/react';
 
 const meta: Meta<typeof MuiTable> = {
-    title: "DRT Components/MUI Components",
-    component: MuiTable,
+  title: "DRT Components/MUI Components",
+  component: MuiTable,
 };
 
 export default meta;
@@ -32,36 +32,36 @@ const rows = [
 
 
 export const Table: Story = {
-    render: (storyContext) => {
-        return <MuiTable>
-          <TableHead>
-            <TableRow>
-              <TableCell>Dessert (100g serving)</TableCell>
-              <TableCell align="right">
-                Calories
-                <InfoTooltip text="A unit of energy, often used to express the nutritional value of foods" />
-              </TableCell>
-              <TableCell align="right">Fat&nbsp;(g)</TableCell>
-              <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-              <TableCell align="right">Protein&nbsp;(g)</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.name}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </MuiTable>
-    }
+  render: (storyContext) => {
+    return <MuiTable>
+      <TableHead>
+        <TableRow>
+          <TableCell>Dessert (100g serving)</TableCell>
+          <TableCell align="right">
+            Calories
+            <InfoTooltip text="A unit of energy, often used to express the nutritional value of foods" />
+          </TableCell>
+          <TableCell align="right">Fat&nbsp;(g)</TableCell>
+          <TableCell align="right">Carbs&nbsp;(g)</TableCell>
+          <TableCell align="right">Protein&nbsp;(g)</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {rows.map((row) => (
+          <TableRow
+            key={row.name}
+            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+          >
+            <TableCell component="th" scope="row">
+              {row.name}
+            </TableCell>
+            <TableCell align="right">{row.calories}</TableCell>
+            <TableCell align="right">{row.fat}</TableCell>
+            <TableCell align="right">{row.carbs}</TableCell>
+            <TableCell align="right">{row.protein}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </MuiTable>
+  }
 };

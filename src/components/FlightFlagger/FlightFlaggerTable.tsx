@@ -1,6 +1,6 @@
 import React from "react";
 import { Table, TableCell, TableRow, Tooltip, TooltipProps, IconButton } from "@mui/material";
-import { StyledTableHeader, StyledTableHeaderCell, StyledTableBody, RelativeTableCell, CellStatusHighlight } from "../StyledTable";
+import { StyledTableHeader, StyledTableHeaderCell, StyledTableBody, RelativeTableCell, CellStatusHighlight } from "../ui/StyledTable";
 import { FlightHighlightChip } from "./FlightFlaggerHighlightChip";
 import { FlightArrival } from "./FlightArrival";
 import InfoIcon from '@mui/icons-material/Info';
