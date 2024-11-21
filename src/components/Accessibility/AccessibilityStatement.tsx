@@ -12,7 +12,7 @@ export const AccessibilityStatement = ({
                                          emailUsToReportAProblem
                                        }: IAccessibilityStatementProps) => {
   return (
-    <Box sx={{maxWidth: '60%', fontSize: '16px'}}>
+    <Box sx={{maxWidth: '70%', fontSize: '16px'}}>
       <Box sx={{
         display: 'flex',
         justifyContent: 'space-between',
@@ -21,6 +21,7 @@ export const AccessibilityStatement = ({
         <Typography variant="h1">Accessibility statement for Dynamic Response Tool (DRT)</Typography>
       </Box>
       <Box sx={{paddingTop: '10px', paddingLeft: '10px'}}>
+        <Typography variant="h2" sx={{paddingBottom: '10px'}}>In this page:</Typography>
         <List sx={{border: '1px solid #B4B5BE'}}>
           <ListItem component={Link} href="#introduction" sx={{textDecoration: 'underline'}}>
             <ListItemIcon sx={{minWidth: '20px'}}>
