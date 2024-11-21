@@ -1,39 +1,27 @@
 import React from 'react';
-import {Box, Button, IconButton, Link, ListItem, ListItemIcon, Typography} from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import {List, ListItemText} from '@mui/material';
+import {Box, Button, Link, List, ListItem, ListItemIcon, ListItemText, Typography} from '@mui/material';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
 export interface IAccessibilityStatementProps {
   teamEmail: string;
   emailUsToReportAProblem: () => void;
-  onClose: () => void;
 }
 
 export const AccessibilityStatement = ({
                                          teamEmail,
-                                         emailUsToReportAProblem,
-                                         onClose
+                                         emailUsToReportAProblem
                                        }: IAccessibilityStatementProps) => {
   return (
-    <Box>
+    <Box sx={{maxWidth: '60%', fontSize: '16px'}}>
       <Box sx={{
         display: 'flex',
         justifyContent: 'space-between',
-        position: 'sticky',
-        zIndex: 1000,
-        top: 0,
-        background: 'white',
         padding: '10px',
-        borderBottom: '1px solid #ddd'
       }}>
         <Typography variant="h1">Accessibility statement for Dynamic Response Tool (DRT)</Typography>
-        <IconButton onClick={onClose} style={{color: 'black'}}>
-          <CloseIcon/>
-        </IconButton>
       </Box>
       <Box sx={{paddingTop: '10px', paddingLeft: '10px'}}>
-        <List>
+        <List sx={{border: '1px solid #B4B5BE'}}>
           <ListItem component={Link} href="#introduction" sx={{textDecoration: 'underline'}}>
             <ListItemIcon sx={{minWidth: '20px'}}>
               <FiberManualRecordIcon fontSize="inherit" sx={{fontSize: '10px'}}/>
@@ -141,8 +129,10 @@ export const AccessibilityStatement = ({
         <Box sx={{paddingTop: '10px', paddingLeft: '10px'}}>
           <Typography variant="h2" id="feedback">Feedback and contact information</Typography>
           <Typography sx={{paddingTop: '10px'}}>The Dynamic Response Tool (DRT) team, which works within Technology
-            Delivery Centre, is responsible for the accessibility of this service. We’re always looking to improve the accessibility of this website. If you
-            find any problems not listed on this page or think we’re not meeting other accessibility requirements, contact us:</Typography>
+            Delivery Centre, is responsible for the accessibility of this service. We’re always looking to improve the
+            accessibility of this website. If you
+            find any problems not listed on this page or think we’re not meeting other accessibility requirements,
+            contact us:</Typography>
           <Button color="primary" variant="contained" size="large" style={{textTransform: 'none', fontSize: '16px'}}
                   href={`mailto:${teamEmail}`} target="_blank"
                   onClick={emailUsToReportAProblem}>Email us to report a problem
@@ -150,20 +140,32 @@ export const AccessibilityStatement = ({
         </Box>
         <Box sx={{paddingTop: '10px', paddingLeft: '10px'}}>
           <Typography variant="h2" id="enforcement">Enforcement procedure</Typography>
-          <Typography sx={{paddingTop: '10px'}}>The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’).
-            If you’re not happy with how we respond to your complaint, contact the <a href="https://www.equalityadvisoryservice.com/" target="_blank" rel="noopener noreferrer">Equality Advisory and Support Service (EASS)</a>.
+          <Typography sx={{paddingTop: '10px'}}>The Equality and Human Rights Commission (EHRC) is responsible for
+            enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018
+            (the ‘accessibility regulations’).
+            If you’re not happy with how we respond to your complaint, contact the <a
+              href="https://www.equalityadvisoryservice.com/" target="_blank" rel="noopener noreferrer">Equality
+              Advisory and Support Service (EASS)</a>.
           </Typography>
         </Box>
         <Box sx={{paddingTop: '10px', paddingLeft: '10px'}}>
-          <Typography variant="h2" id="technical-info">Technical information about this website’s accessibility</Typography>
-          <Typography sx={{paddingTop: '10px'}}>Border Force is committed to making its websites accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.</Typography>
+          <Typography variant="h2" id="technical-info">Technical information about this website’s
+            accessibility</Typography>
+          <Typography sx={{paddingTop: '10px'}}>Border Force is committed to making its websites accessible, in
+            accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility
+            Regulations 2018.</Typography>
           <Box sx={{paddingTop: '10px', paddingLeft: '10px'}}>
             <Typography variant="h3" id="compliance-status">Compliance status</Typography>
-            <Typography sx={{paddingTop: '10px'}}>The website has been tested against the Web Content Accessibility Guidelines (WCAG) 2.1 AA standard.</Typography>
-            <Typography sx={{paddingTop: '10px'}}>This website is partially compliant with the Web Content Accessibility Guidelines (WCAG) 2.1 AA standard <a href="https://www.w3.org/TR/WCAG21/" target="_blank" rel="noopener noreferrer">(https://www.w3.org/TR/WCAG21/)</a>. The non-compliances are listed below.</Typography>
+            <Typography sx={{paddingTop: '10px'}}>The website has been tested against the Web Content Accessibility
+              Guidelines (WCAG) 2.1 AA standard.</Typography>
+            <Typography sx={{paddingTop: '10px'}}>This website is partially compliant with the Web Content Accessibility
+              Guidelines (WCAG) 2.1 AA standard <a href="https://www.w3.org/TR/WCAG21/" target="_blank"
+                                                   rel="noopener noreferrer">(https://www.w3.org/TR/WCAG21/)</a>. The
+              non-compliances are listed below.</Typography>
           </Box>
           <Box sx={{paddingTop: '10px', paddingLeft: '10px'}}>
-            <Typography variant="h3" id="non-compliant-content">Non-compliant content within the accessibility regulations</Typography>
+            <Typography variant="h3" id="non-compliant-content">Non-compliant content within the accessibility
+              regulations</Typography>
             <List>
               <ListItem>
                 <ListItemIcon sx={{minWidth: '20px'}}>
@@ -247,7 +249,8 @@ export const AccessibilityStatement = ({
         </Box>
         <Box sx={{paddingTop: '10px', paddingLeft: '10px'}}>
           <Typography variant="h2" id="improve-accessibility">What we’re doing to improve accessibility</Typography>
-          <Typography sx={{paddingTop: '10px'}}>We plan to address the above areas of non-compliance with accessibility regulations on this website by <strong>February 2025</strong>.
+          <Typography sx={{paddingTop: '10px'}}>We plan to address the above areas of non-compliance with accessibility
+            regulations on this website by <strong>February 2025</strong>.
           </Typography>
         </Box>
         <Box sx={{paddingTop: '10px', paddingLeft: '10px'}}>
