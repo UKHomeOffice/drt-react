@@ -1,4 +1,7 @@
+import * as React from 'react';
 import { Preview, ReactRenderer } from "@storybook/react";
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { fn } from '@storybook/test';
 import { withTests } from '@storybook/addon-jest';
 import { withThemeFromJSXProvider } from '@storybook/addon-themes';
@@ -26,16 +29,26 @@ const preview: Preview = {
     }),
     withTests({
       results,
-    })
+    }),
+    (Story) => (
+      <LocalizationProvider dateAdapter={AdapterMoment}>
+        <Story />
+      </LocalizationProvider>
+    )
   ],
   parameters: {
-    actions: { onClick: fn() },
+    actions: { onClick: fn(), argTypesRegex: '^on[A-Z].*' },
     controls: {
+      expanded: true, // Adds the description and default columns
       matchers: {
         color: /(background|color)$/i,
         date: /Date$/,
       },
     },
+    github: {
+      repository: "UKHomeOffice/drt-react",
+      branch: "main",
+    }
   },
 };
 

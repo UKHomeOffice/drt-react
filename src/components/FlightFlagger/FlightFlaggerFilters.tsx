@@ -99,7 +99,7 @@ export const FlightFlaggerFilters = ({
   const [currentFormState, setCurrentFormState] = useState<FormState>(initialFormState)
   const [appliedSearchFlags, setAppliedSearchFlags] = useState<FormState>(initialFormState)
 
-  const formIsTouched = (initialForm, currentForm) => {
+  const formIsTouched = (initialForm: FormState, currentForm: FormState) => {
     return currentForm.selectedNationalities.length !== initialForm.selectedNationalities.length ||
       currentForm.selectedAgeGroups.length !== initialForm.selectedAgeGroups.length ||
       currentForm.showTransitPaxNumber != initialForm.showTransitPaxNumber ||

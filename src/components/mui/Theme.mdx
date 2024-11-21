@@ -1,0 +1,15 @@
+
+import { Meta, Canvas, Source } from '@storybook/blocks';
+import drtTheme from '../../drt-theme'
+
+<Meta title='DRT Components/Theme Reference' />
+
+# MUI Theme Reference
+
+This is the theme object returned from mui's [useTheme()](https://mui.com/material-ui/customization/theming/#accessing-the-theme-in-a-component) component hook.
+
+**NOTE:** This only displays theme variables, and does not document any theme helper function, such as [theme.spacing()](https://mui.com/material-ui/customization/spacing/) or [breakpoint media queries](https://mui.com/material-ui/customization/spacing/).
+
+<Source code={JSON.stringify(drtTheme, null, 2)} dark={true} />
+
+

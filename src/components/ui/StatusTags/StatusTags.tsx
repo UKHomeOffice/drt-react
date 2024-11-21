@@ -1,6 +1,6 @@
 import React from "react";
 import { Alert, AlertColor, AlertProps } from "@mui/material";
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import InfoIcon from '@mui/icons-material/Info';
 import ErrorIcon from '@mui/icons-material/Error';
@@ -22,27 +22,28 @@ export interface IStatusTag {
 }
 
 export const StatusTag = ({type, text}: IStatusTag) => {
+  const theme = useTheme()
   let bgColor, icon; 
   let severity = 'success';
   switch (type) {
     case 'success':
-      bgColor = '#547A00'
+      bgColor = theme.palette.success.main
       severity = 'success'
       icon = <CheckCircleIcon />
       break;
     case 'warning':
-      bgColor = '#C94900'
+      bgColor = theme.palette.warning.main
       severity = 'warning'
       icon = <ErrorIcon />
       break;
     case 'error':
-      bgColor = '#99001E'
+      bgColor = theme.palette.error.main
       severity = 'error'
       icon = <ReportIcon />
       break;
     case 'info':
     default:
-      bgColor = '#404252'
+      bgColor = theme.palette.info.main
       severity = 'info'
       icon = <InfoIcon />
       break;

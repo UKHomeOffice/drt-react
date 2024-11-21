@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Box, Card, CardContent, Typography, Chip, Paper, BoxProps } from "@mui/material";
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import { StatusTag } from "../StatusTags";
+import { StatusTag } from "../ui/StatusTags";
 import { styled } from '@mui/material/styles';
 import { getConfidenceAlert } from "./FlightFlaggerTable";
 import { FlightArrival } from "./FlightArrival";
