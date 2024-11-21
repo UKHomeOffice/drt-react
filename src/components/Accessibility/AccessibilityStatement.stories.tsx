@@ -12,7 +12,6 @@ type Story = StoryObj<typeof AccessibilityStatementComponent>;
 export const AccessibilityStatement: Story = {
   args: {
     teamEmail: 'team@example.com',
-    emailUsToReportAProblem: () => console.log('Email us to report a problem'),
-    onClose: () => console.log('Close button clicked'),
+    emailUsToReportAProblem: () => console.log('Email us to report a problem')
   }
 };
