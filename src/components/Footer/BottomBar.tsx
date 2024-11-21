@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, Link} from "@mui/material";
+import {AppBar, Box, Link, Toolbar, Typography} from "@mui/material";
 
 export interface BottomBarProps {
   title: string;
@@ -10,34 +10,24 @@ export interface BottomBarProps {
 
 export const BottomBar = ({title, email, clickAccessibility, url}: BottomBarProps) => {
   return (
-    <Box className="bottom-bar" sx={{
-      height: '70px',
-      width: '96%',
-      margin: 'auto',
-      display: 'flex',
-      gap: '12px',
-      borderTop: '11px solid #ddd',
-      flexDirection: {xs: 'column', sm: 'row'},
-      alignItems: {xs: 'flex-start', sm: 'center'}
-    }}>
-      <Box sx={{paddingLeft: '10px'}}>Support links:</Box>
-      <Box sx={{paddingLeft: '10px'}}>
+    <AppBar position="static" color="default" sx={{top: 'auto', bottom: 0}}>
+      <Toolbar sx={{
+        display: 'flex',
+        gap: '12px',
+        flexDirection: {xs: 'column', sm: 'row'},
+        alignItems: {xs: 'flex-start', sm: 'center'}
+      }}>
+        <Typography variant="body1">Support links:</Typography>
         <Link href={`mailto:${email}`} target="_blank" underline="always">Email us</Link>
-      </Box>
-      <Box className="separator" sx={{paddingLeft: '10px', display: {xs: 'none', sm: 'block'}}}>/</Box>
-      <Box sx={{paddingLeft: '10px'}}>
         <Link underline="always" onClick={() => {
           window.location.hash = 'accessibility';
           clickAccessibility();
         }} title={`${title}`}>
           Accessibility statement
         </Link>
-      </Box>
-      <Box className="separator" sx={{paddingLeft: '10px', display: {xs: 'none', sm: 'block'}}}>/</Box>
-      <Box sx={{paddingLeft: '10px'}}>
         <Link href={`${url}`} target="_blank" underline="always">Give feedback</Link>
-      </Box>
-    </Box>
+      </Toolbar>
+    </AppBar>
   );
 };
 
