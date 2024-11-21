@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from '@mui/x-date-pickers';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import {InfoTooltip} from '../ui/InfoTooltip';
@@ -55,14 +53,14 @@ export const PaxFormLayout: Story = {
   render: () => {
       const [args, updateArgs] = useArgs();
 
-      const handleChangeDay = ( event: React.MouseEvent<HTMLElement>, newValue: string | null) => {
+      const handleChangeDay = (event: React.MouseEvent<HTMLElement>, newValue: string | null) => {
         updateArgs({
           ...args,
           day: newValue
         });
       };
 
-      const handleChangeTime = ( event: React.MouseEvent<HTMLElement>, newValue: string | null) => {
+      const handleChangeTime = (event: React.MouseEvent<HTMLElement>, newValue: string | null) => {
         updateArgs({
           ...args,
           time: newValue
@@ -78,7 +76,6 @@ export const PaxFormLayout: Story = {
       };
 
       return (
-      <LocalizationProvider dateAdapter={AdapterMoment}>
         <Box sx={(theme) => ({
           maxWidth: '600px',
           padding: 2,
@@ -124,7 +121,6 @@ export const PaxFormLayout: Story = {
             <Typography variant='body1'>{args.timeMachine ? 'On' : 'Off'}</Typography>
           </Stack>
         </Box>
-      </LocalizationProvider>
     )
   }
 };
