@@ -1,4 +1,4 @@
-import React,{ useEffect } from 'react';
+import React, {useEffect} from 'react';
 import {Box, Button, Link, List, ListItem, ListItemIcon, ListItemText, Typography} from '@mui/material';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
@@ -17,7 +17,7 @@ export const AccessibilityStatement = ({
     if (scrollSection) {
       const element = document.getElementById(scrollSection);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        element.scrollIntoView({behavior: 'smooth'});
       }
     }
   }, [scrollSection]);
@@ -140,12 +140,14 @@ export const AccessibilityStatement = ({
         </Box>
         <Box sx={{paddingTop: '10px', paddingLeft: '10px'}}>
           <Typography variant="h2" id="feedback">Feedback and contact information</Typography>
-          <Typography sx={{paddingTop: '10px'}}>The Dynamic Response Tool (DRT) team, which works within Technology
-            Delivery Centre, is responsible for the accessibility of this service. We’re always looking to improve the
-            accessibility of this website. If you
-            find any problems not listed on this page or think we’re not meeting other accessibility requirements,
-            contact us:</Typography>
-          <Button color="primary" variant="contained" size="large" style={{textTransform: 'none', fontSize: '16px'}}
+          <Typography sx={{paddingTop: '10px', paddingBottom: '10px',}}>The Dynamic Response Tool (DRT) team, which
+            works within Technology Delivery Centre, is responsible for the accessibility of this service. We’re always
+            looking to improve the accessibility of
+            this website. If you find any problems not listed on this page or think we’re not meeting other
+            accessibility requirements, contact us:
+          </Typography>
+          <Button color="primary" variant="contained" size="large"
+                  style={{textTransform: 'none', fontSize: '16px'}}
                   href={`mailto:${teamEmail}`} target="_blank"
                   onClick={sendReportProblemGaEvent}>Email us to report a problem
           </Button>
