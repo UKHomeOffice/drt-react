@@ -13,7 +13,7 @@ export const BottomBar: Story = {
   args: {
     title: 'Accessibility Statement',
     email: 'team@example.com',
-    clickAccessibility: () => console.log('Click Accessibility'),
+    onClickAccessibilityStatement: () => console.log('Click Accessibility'),
     url: 'http://localhost:6006'
   }
 };

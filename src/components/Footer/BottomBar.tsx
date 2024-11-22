@@ -4,11 +4,11 @@ import {AppBar, Box, Link, Toolbar, Typography} from "@mui/material";
 export interface BottomBarProps {
   title: string;
   email: string;
-  clickAccessibility: () => void;
+  onClickAccessibilityStatement: () => void;
   url: string;
 }
 
-export const BottomBar = ({title, email, clickAccessibility, url}: BottomBarProps) => {
+export const BottomBar = ({title, email, onClickAccessibilityStatement, url}: BottomBarProps) => {
   return (
     <AppBar position="static" color="default" sx={{top: 'auto', bottom: 0}}>
       <Toolbar sx={{
@@ -21,7 +21,7 @@ export const BottomBar = ({title, email, clickAccessibility, url}: BottomBarProp
         <Link href={`mailto:${email}`} target="_blank" underline="always">Email us</Link>
         <Link underline="always" onClick={() => {
           window.location.hash = 'accessibility';
-          clickAccessibility();
+          onClickAccessibilityStatement();
         }} title={`${title}`}>
           Accessibility statement
         </Link>
