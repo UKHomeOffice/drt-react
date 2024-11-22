@@ -1,16 +1,27 @@
-import React from 'react';
+import React,{ useEffect } from 'react';
 import {Box, Button, Link, List, ListItem, ListItemIcon, ListItemText, Typography} from '@mui/material';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
 export interface IAccessibilityStatementProps {
   teamEmail: string;
-  emailUsToReportAProblem: () => void;
+  sendReportProblemGaEvent: () => void;
+  scrollSection: string;
 }
 
 export const AccessibilityStatement = ({
                                          teamEmail,
-                                         emailUsToReportAProblem
+                                         sendReportProblemGaEvent,
+                                         scrollSection
                                        }: IAccessibilityStatementProps) => {
+  useEffect(() => {
+    if (scrollSection) {
+      const element = document.getElementById(scrollSection);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [scrollSection]);
+
   return (
     <Box sx={{maxWidth: '70%', fontSize: '16px'}}>
       <Box sx={{
@@ -136,7 +147,7 @@ export const AccessibilityStatement = ({
             contact us:</Typography>
           <Button color="primary" variant="contained" size="large" style={{textTransform: 'none', fontSize: '16px'}}
                   href={`mailto:${teamEmail}`} target="_blank"
-                  onClick={emailUsToReportAProblem}>Email us to report a problem
+                  onClick={sendReportProblemGaEvent}>Email us to report a problem
           </Button>
         </Box>
         <Box sx={{paddingTop: '10px', paddingLeft: '10px'}}>
