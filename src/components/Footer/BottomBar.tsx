@@ -18,7 +18,7 @@ export const BottomBar = ({email, onClickAccessibilityStatement, url}: BottomBar
       }}>
         <Typography variant="body1">Support links:</Typography>
         <Link href={`mailto:${email}`} target="_blank" underline="always">Email us</Link>
-        <Link underline="always" href="#accessibility" onClick={() => {
+        <Link underline="always" href="#accessibility/" onClick={() => {
           onClickAccessibilityStatement();
         }}>
           Accessibility statement
