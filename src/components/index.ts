@@ -20,3 +20,9 @@ export type * from "./Pax";
 
 export * from './ui';
 export type * from './ui';
+
+export type {IAccessibilityStatementProps} from './Accessibility'
+export {AccessibilityStatement} from './Accessibility'
+
+export type {BottomBarProps} from './Footer'
+export {BottomBar} from './Footer'
