@@ -1,14 +1,13 @@
 import React from 'react';
-import {AppBar, Box, Link, Toolbar, Typography} from "@mui/material";
+import {AppBar, Link, Toolbar, Typography} from "@mui/material";
 
 export interface BottomBarProps {
-  title: string;
   email: string;
-  clickAccessibility: () => void;
+  onClickAccessibilityStatement: () => void;
   url: string;
 }
 
-export const BottomBar = ({title, email, clickAccessibility, url}: BottomBarProps) => {
+export const BottomBar = ({email, onClickAccessibilityStatement, url}: BottomBarProps) => {
   return (
     <AppBar position="static" color="default" sx={{top: 'auto', bottom: 0}}>
       <Toolbar sx={{
@@ -19,10 +18,9 @@ export const BottomBar = ({title, email, clickAccessibility, url}: BottomBarProp
       }}>
         <Typography variant="body1">Support links:</Typography>
         <Link href={`mailto:${email}`} target="_blank" underline="always">Email us</Link>
-        <Link underline="always" onClick={() => {
-          window.location.hash = 'accessibility';
-          clickAccessibility();
-        }} title={`${title}`}>
+        <Link underline="always" href="#accessibility/" onClick={() => {
+          onClickAccessibilityStatement();
+        }}>
           Accessibility statement
         </Link>
         <Link href={`${url}`} target="_blank" underline="always">Give feedback</Link>

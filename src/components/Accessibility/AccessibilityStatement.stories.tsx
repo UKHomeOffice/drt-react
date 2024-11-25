@@ -12,6 +12,7 @@ type Story = StoryObj<typeof AccessibilityStatementComponent>;
 export const AccessibilityStatement: Story = {
   args: {
     teamEmail: 'team@example.com',
-    emailUsToReportAProblem: () => console.log('Email us to report a problem')
+    sendReportProblemGaEvent: () => console.log('Email us to report a problem'),
+    scrollSection: ""
   }
 };
