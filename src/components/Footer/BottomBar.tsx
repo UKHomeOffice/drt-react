@@ -10,7 +10,7 @@ export interface BottomBarProps {
 
 export const BottomBar = ({email, onClickAccessibilityStatement, url}: BottomBarProps) => {
   return (
-    <ThemeProvider theme={drtTheme}>
+    // <ThemeProvider theme={drtTheme}>
       <AppBar position="static" color="default" sx={{top: 'auto', bottom: 0}}>
         <Toolbar sx={{
           display: 'flex',
@@ -28,7 +28,7 @@ export const BottomBar = ({email, onClickAccessibilityStatement, url}: BottomBar
           <Link href={`${url}`} target="_blank" underline="always">Give feedback</Link>
         </Toolbar>
       </AppBar>
-    </ThemeProvider>
+    // </ThemeProvider>
   );
 };
 
