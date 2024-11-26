@@ -14,6 +14,7 @@ export const BottomBar: Story = {
     title: 'Accessibility Statement',
     email: 'team@example.com',
     onClickAccessibilityStatement: () => console.log('Click Accessibility'),
-    url: 'http://localhost:6006'
+    url: '/#accessibility/',
+    feedbackUrl: 'http://localhost:6006'
   }
 };
