@@ -38,7 +38,7 @@ export const AccessibilityStatement = ({
         <Box sx={{paddingTop: '10px', paddingLeft: '10px'}}>
           <Typography variant="h2" sx={{paddingBottom: '10px'}}>In this page:</Typography>
           <List sx={{border: '1px solid #B4B5BE'}}>
-            <ListItem component={Link} href={`${url}"introduction`} sx={{textDecoration: 'underline'}}>
+            <ListItem component={Link} href={`${url}introduction`} sx={{textDecoration: 'underline'}}>
               <ListItemIcon sx={{minWidth: '20px'}}>
                 <FiberManualRecordIcon fontSize="inherit" sx={{fontSize: '10px'}}/>
               </ListItemIcon>
