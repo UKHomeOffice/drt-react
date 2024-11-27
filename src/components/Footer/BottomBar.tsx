@@ -8,7 +8,7 @@ export interface BottomBarProps {
   feedbackUrl: string;
 }
 
-export const BottomBar = ({email, onClickAccessibilityStatement, accessibilityStatementUrl ,feedbackUrl}: BottomBarProps) => {
+const BottomBar = ({email, onClickAccessibilityStatement, accessibilityStatementUrl ,feedbackUrl}: BottomBarProps) => {
   return (
     <AppBar position="static" color="default" sx={{top: 'auto', bottom: 0}}>
       <Toolbar sx={{
@@ -28,3 +28,4 @@ export const BottomBar = ({email, onClickAccessibilityStatement, accessibilitySt
   );
 };
 
+export default BottomBar;

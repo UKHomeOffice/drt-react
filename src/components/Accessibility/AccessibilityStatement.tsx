@@ -10,7 +10,7 @@ export interface IAccessibilityStatementProps {
   scrollSection: string;
 }
 
-export const AccessibilityStatement = ({
+const AccessibilityStatement = ({
                                          accessibilityStatementUrl,
                                          teamEmail,
                                          sendReportProblemGaEvent,
@@ -285,3 +285,5 @@ export const AccessibilityStatement = ({
     </ThemeProvider>
   );
 };
+
+export default AccessibilityStatement;

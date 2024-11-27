@@ -22,7 +22,7 @@ export * from './ui';
 export type * from './ui';
 
 export type {IAccessibilityStatementProps} from './Accessibility'
-export {AccessibilityStatement} from './Accessibility'
+export {default as AccessibilityStatement} from './Accessibility'
 
 export type {BottomBarProps} from './Footer'
-export {BottomBar} from './Footer'
+export {default as BottomBar} from './Footer'
