@@ -1,5 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import {BottomBar as BottomBarComponent} from './BottomBar';
+import { default as BottomBarComponent } from ".";
 
 export default {
   title: 'DRT Components/UI/BottomBarComponent',
