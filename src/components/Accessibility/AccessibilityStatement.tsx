@@ -4,12 +4,14 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import {drtTheme} from "../../index";
 
 export interface IAccessibilityStatementProps {
+  accessibilityStatementUrl: string
   teamEmail: string;
   sendReportProblemGaEvent: () => void;
   scrollSection: string;
 }
 
 export const AccessibilityStatement = ({
+                                         accessibilityStatementUrl,
                                          teamEmail,
                                          sendReportProblemGaEvent,
                                          scrollSection
@@ -36,37 +38,37 @@ export const AccessibilityStatement = ({
         <Box sx={{paddingTop: '10px', paddingLeft: '10px'}}>
           <Typography variant="h2" sx={{paddingBottom: '10px'}}>In this page:</Typography>
           <List sx={{border: '1px solid #B4B5BE'}}>
-            <ListItem component={Link} href="#accessibility/introduction" sx={{textDecoration: 'underline'}}>
+            <ListItem component={Link} href={`${accessibilityStatementUrl}/introduction`} sx={{textDecoration: 'underline'}}>
               <ListItemIcon sx={{minWidth: '20px'}}>
                 <FiberManualRecordIcon fontSize="inherit" sx={{fontSize: '10px'}}/>
               </ListItemIcon>
               <ListItemText primary="Introduction"/>
             </ListItem>
-            <ListItem component={Link} href="#accessibility/how-accessible" sx={{textDecoration: 'underline'}}>
+            <ListItem component={Link} href={`${accessibilityStatementUrl}/how-accessible`} sx={{textDecoration: 'underline'}}>
               <ListItemIcon sx={{minWidth: '20px'}}>
                 <FiberManualRecordIcon fontSize="inherit" sx={{fontSize: '10px'}}/>
               </ListItemIcon>
               <ListItemText primary="How accessible this service is"/>
             </ListItem>
-            <ListItem component={Link} href="#accessibility/feedback" sx={{textDecoration: 'underline'}}>
+            <ListItem component={Link} href={`${accessibilityStatementUrl}/feedback`} sx={{textDecoration: 'underline'}}>
               <ListItemIcon sx={{minWidth: '20px'}}>
                 <FiberManualRecordIcon fontSize="inherit" sx={{fontSize: '10px'}}/>
               </ListItemIcon>
               <ListItemText primary="Feedback and contact information"/>
             </ListItem>
-            <ListItem component={Link} href="#accessibility/enforcement" sx={{textDecoration: 'underline'}}>
+            <ListItem component={Link} href={`${accessibilityStatementUrl}/enforcement`} sx={{textDecoration: 'underline'}}>
               <ListItemIcon sx={{minWidth: '20px'}}>
                 <FiberManualRecordIcon fontSize="inherit" sx={{fontSize: '10px'}}/>
               </ListItemIcon>
               <ListItemText primary="Enforcement procedure"/>
             </ListItem>
-            <ListItem component={Link} href="#accessibility/technical-info" sx={{textDecoration: 'underline'}}>
+            <ListItem component={Link} href={`${accessibilityStatementUrl}/technical-info`} sx={{textDecoration: 'underline'}}>
               <ListItemIcon sx={{minWidth: '20px'}}>
                 <FiberManualRecordIcon fontSize="inherit" sx={{fontSize: '10px'}}/>
               </ListItemIcon>
               <ListItemText primary="Technical information about this website’s accessibility"/>
             </ListItem>
-            <ListItem component={Link} href="#accessibility/improve-accessibility" sx={{textDecoration: 'underline'}}>
+            <ListItem component={Link} href={`${accessibilityStatementUrl}/improve-accessibility`} sx={{textDecoration: 'underline'}}>
               <ListItemIcon sx={{minWidth: '20px'}}>
                 <FiberManualRecordIcon fontSize="inherit" sx={{fontSize: '10px'}}/>
               </ListItemIcon>

@@ -11,9 +11,9 @@ type Story = StoryObj<typeof BottomBarComponent>;
 
 export const BottomBar: Story = {
   args: {
-    title: 'Accessibility Statement',
     email: 'team@example.com',
     onClickAccessibilityStatement: () => console.log('Click Accessibility'),
-    url: 'http://localhost:6006'
+    accessibilityStatementUrl: '/#accessibility',
+    feedbackUrl: 'http://localhost:6006'
   }
 };
