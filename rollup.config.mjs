@@ -20,7 +20,8 @@ export default [
 				format: 'cjs',
 				sourcemap: true,
 				exports: 'named',
-				noConflict: true
+				noConflict: true,
+				interop: "auto",
 			},
 			{
 				file: pkg.module,
