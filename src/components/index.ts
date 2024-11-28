@@ -15,14 +15,15 @@ export {StaffUpdateSuccess} from './Staff'
 export type {IUpdateStaffForTimeRangeData, IUpdateStaffForTimeRangeForm} from './Staff'
 export {UpdateStaffForTimeRangeForm} from './Staff'
 
+export type {IAccessibilityStatementProps} from './Accessibility'
+export {AccessibilityStatement} from './Accessibility'
+
+export type {BottomBarProps} from './Footer'
+export {BottomBar} from './Footer'
+
 export * from "./Pax";
 export type * from "./Pax";
 
 export * from './ui';
 export type * from './ui';
 
-export type {IAccessibilityStatementProps} from './Accessibility'
-export {AccessibilityStatement} from './Accessibility'
-
-export type {BottomBarProps} from './Footer'
-export {BottomBar} from './Footer'
