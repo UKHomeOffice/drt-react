@@ -1,2 +1,2 @@
-export type {AddStaffBarProps} from './AddStaffBar'
-export {AddStaffBar} from "./AddStaffBar";
+export type {AddShiftBarProps} from './AddShiftBar'
+export {AddShiftBar} from "./AddShiftBar";

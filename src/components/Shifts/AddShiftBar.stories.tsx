@@ -1,15 +1,15 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import {AddStaffBar as AddStaffBarComponent} from './AddStaffBar';
+import {AddShiftBar as AddShiftBarComponent} from './AddShiftBar';
 
 export default {
   title: 'DRT Components/UI/AddStaffBarComponent',
-  component: AddStaffBarComponent,
+  component: AddShiftBarComponent,
 } as Meta;
 
-type Story = StoryObj<typeof AddStaffBarComponent>;
+type Story = StoryObj<typeof AddShiftBarComponent>;
 
 
-export const AddStaffBar: Story = {
+export const AddShiftBar: Story = {
   args: {
     onClickGetStarted: () => console.log('Get Started'),
   }

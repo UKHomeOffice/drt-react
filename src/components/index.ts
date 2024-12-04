@@ -27,5 +27,5 @@ export {AccessibilityStatement} from './Accessibility'
 export type {BottomBarProps} from './Footer'
 export {BottomBar} from './Footer'
 
-export type {AddStaffBarProps} from './Shifts'
-export {AddStaffBar} from './Shifts'
+export type {AddShiftBarProps} from './Shifts'
+export {AddShiftBar} from './Shifts'
