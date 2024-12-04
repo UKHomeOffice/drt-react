@@ -17,6 +17,7 @@ export const AddStaffBar = ({
         <Button variant="outlined"
                 sx={{
                   ml: 1,
+                  backgroundColor: 'white',
                   '&:hover': {
                     backgroundColor: 'secondary.contrastText',
                     color: 'secondary.main'
