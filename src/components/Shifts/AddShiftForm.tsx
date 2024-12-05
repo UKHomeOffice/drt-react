@@ -8,12 +8,12 @@ export interface Shift {
   name: string;
   startTime: string;
   endTime: string;
-  defaultStaffNumber?: number;
+  defaultStaffNumber: number;
 }
 
 export interface Shifts {
   interval: number;
-  initialShifts?: Shift[];
+  initialShifts: Shift[];
 }
 
 export const AddShiftForm = ({interval, initialShifts}: Shifts) => {
