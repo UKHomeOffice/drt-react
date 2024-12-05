@@ -53,6 +53,9 @@ export const AddShiftForm = ({interval, initialShifts}: Shifts) => {
     <Box sx={{p: 2, width: '400px'}}>
       <Typography variant="h5">Add staff to BHX (Birmingham) T1</Typography>
       <Typography variant="h6">Step 1 of 2 - Create your shift pattern</Typography>
+      {shifts.length > 0 && <Typography variant="body1">{shifts.length} Add your shifts below</Typography>}
+      {shifts.length === 0 && <Typography variant="body1">No shifts added</Typography>}
+      {console.log(shifts)}
       {shifts.map((shift) => (
         <Box key={shift.id} sx={{mb: 2, p: 2, border: '1px solid #ccc', borderRadius: 2}}>
           <Typography variant="h6">Shift #{shift.id}</Typography>
