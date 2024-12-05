@@ -17,16 +17,15 @@ export interface ShiftsProps {
 }
 
 export const AddShiftForm = ({interval, initialShifts}: ShiftsProps) => {
-  const [shifts, setShifts] = useState<Shift[]>(initialShifts || [
-    {id: 1, name: '', startTime: '00:00', endTime: '00:00', defaultStaffNumber: 0}
+  const [shifts, setShifts] = useState<Shift[]>(Array.from(initialShifts).length > 0 ? initialShifts : [
+    { id: 1, name: '', startTime: '00:00', endTime: '00:00', defaultStaffNumber: 0 }
   ]);
-
   const onContinue = () => {
     console.log(shifts);
   }
   const handleAddShift = () => {
     setShifts([
-      ...shifts,
+      ...Array.from(shifts),
       {id: shifts.length + 1, name: '', startTime: '00:00', endTime: '00:00', defaultStaffNumber: 0}
     ]);
   };
