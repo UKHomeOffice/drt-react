@@ -29,3 +29,6 @@ export {BottomBar} from './Footer'
 
 export type {AddShiftBarProps} from './Shifts'
 export {AddShiftBar} from './Shifts'
+
+export type {Shift, Shifts} from './Shifts'
+export {AddShiftForm} from './Shifts'
