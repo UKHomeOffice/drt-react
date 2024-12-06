@@ -14,14 +14,16 @@ export interface Shift {
 export interface ShiftsProps {
   interval: number;
   initialShifts: Shift[];
+  continueHandler: (shifts: Shift[]) => void;
 }
 
-export const AddShiftForm = ({interval, initialShifts}: ShiftsProps) => {
+export const AddShiftForm = ({interval, initialShifts, continueHandler}: ShiftsProps) => {
   const [shifts, setShifts] = useState<Shift[]>(Array.from(initialShifts).length > 0 ? initialShifts : [
-    { id: 1, name: '', startTime: '00:00', endTime: '00:00', defaultStaffNumber: 0 }
+    {id: 1, name: '', startTime: '00:00', endTime: '00:00', defaultStaffNumber: 0}
   ]);
   const onContinue = () => {
     console.log(shifts);
+    continueHandler(shifts);
   }
   const handleAddShift = () => {
     setShifts([
