@@ -20,7 +20,7 @@ export interface ShiftsSummaryProps {
   cancelHandler: () => void;
 }
 
-export const ConfirmShiftSummary = ({shifts, confirmHandler}: ShiftsSummaryProps) => {
+export const ConfirmShiftSummary = ({shifts, editShiftsHandler, confirmHandler, cancelHandler}: ShiftsSummaryProps) => {
   return (
     <Box sx={{p: 2, width: '600px'}}>
       <Typography variant="h6">Total Shifts: {Array.from(shifts).length}</Typography>
@@ -50,12 +50,12 @@ export const ConfirmShiftSummary = ({shifts, confirmHandler}: ShiftsSummaryProps
         <Typography variant="h6">Please confirm the shifts above</Typography>
         <Box sx={{display: 'flex', justifyContent: 'flex-start', paddingTop: '10px'}}>
           <Box sx={{paddingRight: '10px'}}>
-            <Button variant="contained" color="primary">Edit</Button>
+            <Button variant="contained" color="primary" onClick={() => editShiftsHandler(shifts)}>Edit</Button>
           </Box>
           <Box sx={{paddingRight: '10px'}}>
             <Button variant="contained" color="primary" onClick={() => confirmHandler(shifts)}>Confirm</Button>
           </Box>
-          <Button variant="contained" color="secondary">Cancel</Button>
+          <Button variant="contained" color="secondary" onClick={cancelHandler}>Cancel</Button>
         </Box>
       </Box>
     </Box>
