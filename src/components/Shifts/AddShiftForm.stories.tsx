@@ -20,6 +20,9 @@ export const AddShiftForm: Story = {
         endTime: '00:15',
         defaultStaffNumber: 10
       } as Shift
-    ]
+    ],
+    confirmHandler: (shifts: Shift[]) => {
+      console.log(shifts);
+    }
   }
 };

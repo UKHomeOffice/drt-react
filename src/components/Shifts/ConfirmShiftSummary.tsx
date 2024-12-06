@@ -53,7 +53,7 @@ export const ConfirmShiftSummary = ({shifts, editShiftsHandler, confirmHandler, 
             <Button variant="contained" color="primary" onClick={() => editShiftsHandler(shifts)}>Edit</Button>
           </Box>
           <Box sx={{paddingRight: '10px'}}>
-            <Button variant="contained" color="primary" onClick={() => confirmHandler(shifts)}>Confirm</Button>
+            <Button variant="contained" color="primary" onClick={() => confirmHandler(Array.from(shifts))}>Confirm</Button>
           </Box>
           <Button variant="contained" color="secondary" onClick={cancelHandler}>Cancel</Button>
         </Box>

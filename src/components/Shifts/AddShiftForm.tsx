@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import {Box, Button, TextField, Typography, Grid, IconButton, Select, MenuItem} from '@mui/material';
+import {Box, Button, TextField, Typography, Grid, IconButton, Select, MenuItem, ThemeProvider} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {timeOptions, endTimeOptions} from '../Util';
 import {ConfirmShiftSummary} from "./ConfirmShiftSummary";
+import {drtTheme} from "../../index";
 
 export interface Shift {
   id: number;
@@ -62,100 +63,102 @@ export const AddShiftForm = ({interval, initialShifts, confirmHandler}: ShiftsPr
   console.log(Array.from(shifts))
 
   return (
-    <Box>
-      {!showConfirm ? (
-        <Box sx={{p: 2, width: '400px'}}>
-          <Typography variant="h5">Add staff to BHX (Birmingham) T1</Typography>
-          <Typography variant="h6">Step 1 of 2 - Create your shift pattern</Typography>
-          {shifts.length > 0 && <Typography variant="body1">{shifts.length} Add your shifts below</Typography>}
-          {shifts.length === 0 && <Typography variant="body1">No shifts added</Typography>}
-          {Array.from(shifts).map((shift) => (
-            <Box key={shift.id} sx={{mb: 2, p: 2, border: '1px solid #ccc', borderRadius: 2}}>
-              <Typography variant="h6">Shift #{shift.id}</Typography>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <TextField
-                    label="Name of shift"
-                    fullWidth
-                    value={shift.name}
-                    onChange={(e) => handleChange(shift.id, 'name', e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography variant="h6">Start Time</Typography>
-                  <Box>
+    <ThemeProvider theme={drtTheme}>
+      <Box>
+        {!showConfirm ? (
+          <Box sx={{p: 2, width: '400px'}}>
+            <Typography variant="h5">Add staff to BHX (Birmingham) T1</Typography>
+            <Typography variant="h6">Step 1 of 2 - Create your shift pattern</Typography>
+            {shifts.length > 0 && <Typography variant="body1">{shifts.length} Add your shifts below</Typography>}
+            {shifts.length === 0 && <Typography variant="body1">No shifts added</Typography>}
+            {Array.from(shifts).map((shift) => (
+              <Box key={shift.id} sx={{mb: 2, p: 2, border: '1px solid #ccc', borderRadius: 2}}>
+                <Typography variant="h6">Shift #{shift.id}</Typography>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <TextField
+                      label="Name of shift"
+                      fullWidth
+                      value={shift.name}
+                      onChange={(e) => handleChange(shift.id, 'name', e.target.value)}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="h6">Start Time</Typography>
+                    <Box>
+                      <Select
+                        variant="outlined"
+                        value={shift.startTime}
+                        onChange={(e) => {
+                          const [hour, minute] = e.target.value.split(':').map(Number);
+                          handleStartTimeChange(shift.id, hour, minute);
+                        }}
+                        fullWidth
+                        inputProps={{role: 'start-time-select'}}
+                        data-cy="start-time-select"
+                      >
+                        {timeOptions(interval).map(time => (
+                          <MenuItem key={time} value={time}
+                                    data-cy={`select-start-time-option-${time.replace(':', '-')}`}>{time} </MenuItem>
+                        ))}
+                      </Select>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="h6">End Time</Typography>
                     <Select
                       variant="outlined"
-                      value={shift.startTime}
+                      value={shift.endTime}
                       onChange={(e) => {
                         const [hour, minute] = e.target.value.split(':').map(Number);
-                        handleStartTimeChange(shift.id, hour, minute);
+                        handleEndTimeChange(shift.id, hour, minute);
                       }}
                       fullWidth
-                      inputProps={{role: 'start-time-select'}}
-                      data-cy="start-time-select"
+                      inputProps={{role: 'end-time-select'}}
+                      data-cy="end-time-select"
                     >
-                      {timeOptions(interval).map(time => (
+                      {endTimeOptions(interval).map(time => (
                         <MenuItem key={time} value={time}
-                                  data-cy={`select-start-time-option-${time.replace(':', '-')}`}>{time} </MenuItem>
+                                  data-cy={`select-end-time-option-${time.replace(':', '-')}`}>{time}</MenuItem>
                       ))}
                     </Select>
-                  </Box>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      label="Default staff number (optional)"
+                      type="number"
+                      fullWidth
+                      value={shift.defaultStaffNumber}
+                      onChange={(e) => handleChange(shift.id, 'defaultStaffNumber', parseInt(e.target.value, 10))}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Typography variant="body2">
+                      For current season only (change this at any time). It will only overwrite zero staffing in DRT.
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <IconButton color="secondary" onClick={() => handleRemoveShift(shift.id)}>
+                      <DeleteIcon/> Remove shift
+                    </IconButton>
+                  </Grid>
                 </Grid>
-                <Grid item xs={6}>
-                  <Typography variant="h6">End Time</Typography>
-                  <Select
-                    variant="outlined"
-                    value={shift.endTime}
-                    onChange={(e) => {
-                      const [hour, minute] = e.target.value.split(':').map(Number);
-                      handleEndTimeChange(shift.id, hour, minute);
-                    }}
-                    fullWidth
-                    inputProps={{role: 'end-time-select'}}
-                    data-cy="end-time-select"
-                  >
-                    {endTimeOptions(interval).map(time => (
-                      <MenuItem key={time} value={time}
-                                data-cy={`select-end-time-option-${time.replace(':', '-')}`}>{time}</MenuItem>
-                    ))}
-                  </Select>
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    label="Default staff number (optional)"
-                    type="number"
-                    fullWidth
-                    value={shift.defaultStaffNumber}
-                    onChange={(e) => handleChange(shift.id, 'defaultStaffNumber', parseInt(e.target.value, 10))}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="body2">
-                    For current season only (change this at any time). It will only overwrite zero staffing in DRT.
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <IconButton color="secondary" onClick={() => handleRemoveShift(shift.id)}>
-                    <DeleteIcon/> Remove shift
-                  </IconButton>
-                </Grid>
-              </Grid>
-            </Box>
-          ))}
-          <Button variant="contained" color="primary" onClick={handleAddShift}>
-            Add a shift
-          </Button>
-          <Button variant="contained" color="primary" sx={{ml: 2}} onClick={onContinue}>
-            Continue
-          </Button>
-        </Box>) : (
-        <ConfirmShiftSummary shifts={shifts}
-                             editShiftsHandler={onCancel}
-                             confirmHandler={confirmHandler}
-                             cancelHandler={onCancel}/>)
-      }
-    </Box>
+              </Box>
+            ))}
+            <Button variant="contained" color="primary" onClick={handleAddShift}>
+              Add a shift
+            </Button>
+            <Button variant="contained" color="primary" sx={{ml: 2}} onClick={onContinue}>
+              Continue
+            </Button>
+          </Box>) : (
+          <ConfirmShiftSummary shifts={shifts}
+                               editShiftsHandler={onCancel}
+                               confirmHandler={confirmHandler}
+                               cancelHandler={onCancel}/>)
+        }
+      </Box>
+    </ThemeProvider>
   )
 };
 
