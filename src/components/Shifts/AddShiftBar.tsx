@@ -14,7 +14,7 @@ export const AddShiftBar = ({
       <Toolbar>
         <EventRepeatIcon sx={{mr: 1}} />
         <Typography variant="h6">
-          Save time : add shift staff to shifts
+          Save time: add staff to shifts
         </Typography>
         <Button variant="outlined"
                 sx={{
