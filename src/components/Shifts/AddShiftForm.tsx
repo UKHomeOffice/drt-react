@@ -14,12 +14,14 @@ export interface Shift {
 }
 
 export interface ShiftsProps {
+  port: string;
+  terminal: string;
   interval: number;
   initialShifts: Shift[];
   confirmHandler: (shifts: Shift[]) => void;
 }
 
-export const AddShiftForm = ({interval, initialShifts, confirmHandler}: ShiftsProps) => {
+export const AddShiftForm = ({port, terminal , interval, initialShifts, confirmHandler}: ShiftsProps) => {
   const [shifts, setShifts] = useState<Shift[]>(Array.from(initialShifts).length > 0 ? initialShifts : [
     {id: 1, name: '', startTime: '00:00', endTime: '00:00', defaultStaffNumber: 0}
   ]);
@@ -67,7 +69,7 @@ export const AddShiftForm = ({interval, initialShifts, confirmHandler}: ShiftsPr
       <Box>
         {!showConfirm ? (
           <Box sx={{p: 2, width: '400px'}}>
-            <Typography variant="h5">Add staff to BHX (Birmingham) T1</Typography>
+            <Typography variant="h5">Add staff to {port} {terminal}</Typography>
             <Typography variant="h6">Step 1 of 2 - Create your shift pattern</Typography>
             {shifts.length > 0 && <Typography variant="body1">{shifts.length} Add your shifts below</Typography>}
             {shifts.length === 0 && <Typography variant="body1">No shifts added</Typography>}
