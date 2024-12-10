@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {Box, Button, TextField, Typography, Grid, IconButton, Select, MenuItem, ThemeProvider} from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
 import {timeOptions, endTimeOptions} from '../Util';
 import {ConfirmShiftSummary} from "./ConfirmShiftSummary";
 import {drtTheme} from "../../index";
+import CloseIcon from "@mui/icons-material/Close";
 
 export interface Shift {
   id: number;
@@ -21,7 +21,7 @@ export interface ShiftsProps {
   confirmHandler: (shifts: Shift[]) => void;
 }
 
-export const AddShiftForm = ({port, terminal , interval, initialShifts, confirmHandler}: ShiftsProps) => {
+export const AddShiftForm = ({port, terminal, interval, initialShifts, confirmHandler}: ShiftsProps) => {
   const [shifts, setShifts] = useState<Shift[]>(Array.from(initialShifts).length > 0 ? initialShifts : [
     {id: 1, name: '', startTime: '00:00', endTime: '00:00', defaultStaffNumber: 0}
   ]);
@@ -68,14 +68,13 @@ export const AddShiftForm = ({port, terminal , interval, initialShifts, confirmH
     <ThemeProvider theme={drtTheme}>
       <Box>
         {!showConfirm ? (
-          <Box sx={{p: 2, width: '400px'}}>
-            <Typography variant="h5">Add staff to {port} {terminal}</Typography>
-            <Typography variant="h6">Step 1 of 2 - Create your shift pattern</Typography>
-            {shifts.length > 0 && <Typography variant="body1">{shifts.length} Add your shifts below</Typography>}
-            {shifts.length === 0 && <Typography variant="body1">No shifts added</Typography>}
+          <Box sx={{p: 2, width: '500px'}}>
+            <Typography>Add staff to {port} {terminal}</Typography>
+            <Typography variant="h4" sx={{paddingBottom: '10px'}}>Step 1 of 2 - Create your shift pattern</Typography>
             {Array.from(shifts).map((shift) => (
-              <Box key={shift.id} sx={{mb: 2, p: 2, border: '1px solid #ccc', borderRadius: 2}}>
-                <Typography variant="h6">Shift #{shift.id}</Typography>
+              <Box key={shift.id}
+                   sx={{mb: 2, p: 2, border: '1px solid #ccc', borderRadius: 2, width: '300px'}}>
+                <Typography variant="h6" sx={{paddingBottom: '10px'}}>Shift #{shift.id}</Typography>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     <TextField
@@ -141,18 +140,22 @@ export const AddShiftForm = ({port, terminal , interval, initialShifts, confirmH
                   </Grid>
                   <Grid item xs={12}>
                     <IconButton color="secondary" onClick={() => handleRemoveShift(shift.id)}>
-                      <DeleteIcon/> Remove shift
+                      <CloseIcon/> <Typography sx={{ textDecoration: 'underline' }}>Remove shift</Typography>
                     </IconButton>
                   </Grid>
                 </Grid>
               </Box>
             ))}
-            <Button variant="contained" color="primary" onClick={handleAddShift}>
-              Add a shift
-            </Button>
-            <Button variant="contained" color="primary" sx={{ml: 2}} onClick={onContinue}>
-              Continue
-            </Button>
+            <Box>
+              <Button variant="outlined" color="primary" onClick={handleAddShift}>
+                Add a shift
+              </Button>
+            </Box>
+            <Box sx={{"paddingTop": "10px"}}>
+              <Button variant="contained" color="primary" onClick={onContinue}>
+                Continue
+              </Button>
+            </Box>
           </Box>) : (
           <ConfirmShiftSummary shifts={shifts}
                                editShiftsHandler={onCancel}

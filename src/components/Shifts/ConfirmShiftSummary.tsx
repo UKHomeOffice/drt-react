@@ -23,7 +23,7 @@ export interface ShiftsSummaryProps {
 export const ConfirmShiftSummary = ({shifts, editShiftsHandler, confirmHandler, cancelHandler}: ShiftsSummaryProps) => {
   return (
     <Box sx={{p: 2, width: '600px'}}>
-      <Typography variant="h6">Total Shifts: {Array.from(shifts).length}</Typography>
+      <Typography variant="h6" sx={{paddingBottom: '10px'}}>Total Shifts: {Array.from(shifts).length}</Typography>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -53,7 +53,8 @@ export const ConfirmShiftSummary = ({shifts, editShiftsHandler, confirmHandler, 
             <Button variant="contained" color="primary" onClick={() => editShiftsHandler(shifts)}>Edit</Button>
           </Box>
           <Box sx={{paddingRight: '10px'}}>
-            <Button variant="contained" color="primary" onClick={() => confirmHandler(Array.from(shifts))}>Confirm</Button>
+            <Button variant="contained" color="primary"
+                    onClick={() => confirmHandler(Array.from(shifts))}>Confirm</Button>
           </Box>
           <Button variant="contained" color="secondary" onClick={cancelHandler}>Cancel</Button>
         </Box>
