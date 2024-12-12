@@ -5,6 +5,8 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import Handsontable from 'handsontable';
 import {HotTable} from '@handsontable/react';
 import moment from 'moment';
+import { registerAllModules } from 'handsontable/registry';
+import 'handsontable/dist/handsontable.full.min.css';
 
 interface Shift {
   id: number;
@@ -69,7 +71,9 @@ const generateRows = (data: Day[], shiftType: string, interval: number, isExpand
   return rows;
 };
 
-export const ShiftHandsonView: React.FC<{ month: number, interval: number }> = ({month, interval}) => {
+export const ShiftHotTableView: React.FC<{ month: number, interval: number }> = ({month, interval}) => {
+  registerAllModules();
+
   const daysInMonth = moment().month(month - 1).daysInMonth();
   const [expandedRows, setExpandedRows] = useState<{ [key: string]: boolean }>({});
 

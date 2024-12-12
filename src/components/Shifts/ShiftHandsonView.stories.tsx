@@ -1,15 +1,15 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import {ShiftHandsonView as ShiftHandsonViewComponent} from "./ShiftHandsonView";
+import {ShiftHotTableView as ShiftHotTableViewComponent} from "./ShiftHotTableView";
 
 export default {
-  title: 'DRT Components/UI/ShiftHandsonViewComponent',
-  component: ShiftHandsonViewComponent,
+  title: 'DRT Components/UI/ShiftHotTableViewComponent',
+  component: ShiftHotTableViewComponent,
 } as Meta;
 
-type Story = StoryObj<typeof ShiftHandsonViewComponent>;
+type Story = StoryObj<typeof ShiftHotTableViewComponent>;
 
 
-export const ShiftHandsonView: Story = {
+export const ShiftHotTableView: Story = {
   args: {
     month: 1,
     interval: 60,
