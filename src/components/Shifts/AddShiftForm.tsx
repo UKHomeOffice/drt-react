@@ -140,7 +140,7 @@ export const AddShiftForm = ({port, terminal, interval, initialShifts, confirmHa
                   </Grid>
                   <Grid item xs={12}>
                     <IconButton color="secondary" onClick={() => handleRemoveShift(shift.id)}>
-                      <CloseIcon/> <Typography sx={{ textDecoration: 'underline' }}>Remove shift</Typography>
+                      <CloseIcon/> <Typography sx={{textDecoration: 'underline'}}>Remove shift</Typography>
                     </IconButton>
                   </Grid>
                 </Grid>
@@ -157,10 +157,12 @@ export const AddShiftForm = ({port, terminal, interval, initialShifts, confirmHa
               </Button>
             </Box>
           </Box>) : (
-          <ConfirmShiftSummary shifts={shifts}
+          <ConfirmShiftSummary port={port}
+                               terminal={terminal}
+                               shifts={shifts}
                                editShiftsHandler={onCancel}
                                confirmHandler={confirmHandler}
-                               cancelHandler={onCancel}/>)
+                               removeShiftHandler={handleRemoveShift}/>)
         }
       </Box>
     </ThemeProvider>
