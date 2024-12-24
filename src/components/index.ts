@@ -33,5 +33,5 @@ export {AddShiftBar} from './Shifts'
 export type {Shift, ShiftsProps} from './Shifts'
 export {AddShiftForm} from './Shifts'
 
-export type {ShiftData, DefaultShift, ShiftAssignment} from './Shifts'
+export type {ShiftData, DefaultShift, ShiftAssignment,ShiftHotTableViewProps} from './Shifts'
 export {ShiftHotTableView, LocalDate} from './Shifts'

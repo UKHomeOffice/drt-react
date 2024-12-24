@@ -88,12 +88,19 @@ const generateRows = (tableIndex: number, shift: ShiftData, month: number, inter
   return rows;
 };
 
+export interface ShiftHotTableViewProps {
+  month: number;
+  interval: number;
+  initialShifts: ShiftData[];
+  handleSaveChanges: (shifts: ShiftData[]) => void;
+}
+
 export const ShiftHotTableView: React.FC<{
   month: number,
   interval: number,
   initialShifts: ShiftData[],
   handleSaveChanges: (shifts: ShiftData[]) => void
-}> = ({month, interval, initialShifts, handleSaveChanges}) => {
+}> = ({month, interval, initialShifts, handleSaveChanges}: ShiftHotTableViewProps) => {
   registerAllModules();
 
   const daysInMonth = moment().month(month - 1).daysInMonth();
@@ -111,36 +118,38 @@ export const ShiftHotTableView: React.FC<{
     td.style.padding = '0';
   };
 
-const handleAfterChange = (changes: Handsontable.CellChange[] | null, source: string) => {
-  if (changes && source !== 'loadData') {
-    const newShifts = [...shifts];
-    changes.forEach(([row, prop, oldValue, newValue]) => {
-      if (typeof prop === 'string') {
-        const [tableIndex, columnIndex] = prop.split('-').map(Number);
-        console.log('tableIndex', tableIndex, 'columnIndex', columnIndex,'row',row);
-        newShifts.forEach(shift => {console.log('shift',shift)});
-        const shiftIndex = newShifts.findIndex(shift => shift.index === tableIndex);
-        console.log('shiftIndex', shiftIndex);
-        if (shiftIndex !== -1) {
-          if (columnIndex) {
-            // Handle changes in the column cells
-            const assignmentIndex = newShifts[shiftIndex].assignments.findIndex(assignment => assignment.row === row && assignment.column === columnIndex);
-            console.log('assignmentIndex', assignmentIndex);
-            if (assignmentIndex !== -1) {
-              newShifts[shiftIndex].assignments[assignmentIndex].staffNumber = parseInt(newValue, 10);
+  const handleAfterChange = (changes: Handsontable.CellChange[] | null, source: string) => {
+    if (changes && source !== 'loadData') {
+      const newShifts = [...shifts];
+      changes.forEach(([row, prop, oldValue, newValue]) => {
+        if (typeof prop === 'string') {
+          const [tableIndex, columnIndex] = prop.split('-').map(Number);
+          console.log('tableIndex', tableIndex, 'columnIndex', columnIndex, 'row', row);
+          newShifts.forEach(shift => {
+            console.log('shift', shift)
+          });
+          const shiftIndex = newShifts.findIndex(shift => shift.index === tableIndex);
+          console.log('shiftIndex', shiftIndex);
+          if (shiftIndex !== -1) {
+            if (columnIndex) {
+              // Handle changes in the column cells
+              const assignmentIndex = newShifts[shiftIndex].assignments.findIndex(assignment => assignment.row === row && assignment.column === columnIndex);
+              console.log('assignmentIndex', assignmentIndex);
+              if (assignmentIndex !== -1) {
+                newShifts[shiftIndex].assignments[assignmentIndex].staffNumber = parseInt(newValue, 10);
+              }
+            } else if (prop === 'time') {
+              // Handle changes in the first column
+              const [startTime, endTime] = newValue.split(' - ');
+              newShifts[shiftIndex].defaultShift.startTime = startTime;
+              newShifts[shiftIndex].defaultShift.endTime = endTime;
             }
-          } else if (prop === 'time') {
-            // Handle changes in the first column
-            const [startTime, endTime] = newValue.split(' - ');
-            newShifts[shiftIndex].defaultShift.startTime = startTime;
-            newShifts[shiftIndex].defaultShift.endTime = endTime;
           }
         }
-      }
-    });
-    setShifts(newShifts);
-  }
-};
+      });
+      setShifts(newShifts);
+    }
+  };
 
   return (
     <Box sx={{width: '100%'}}>
