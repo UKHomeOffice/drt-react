@@ -4,8 +4,9 @@ import {
   Shift,
   ShiftAssignment,
   DefaultShift
-} from "./ShiftHotTableView";
-import {LocalDate} from "./LocalDate";
+} from './ShiftHotTableView';
+import {LocalDate} from './LocalDate';
+import React from 'react';
 
 export default {
   title: 'DRT Components/UI/ShiftHotTableViewComponent',
@@ -19,8 +20,7 @@ const initialShift: DefaultShift[] = [
   {name: 'Mid shift', defaultStaffNumber: 12, startTime: '12:00', endTime: '22:30'},
   {name: 'Late shift', defaultStaffNumber: 12, startTime: '13:00', endTime: '23:00'},
   {name: 'Night shift', defaultStaffNumber: 12, startTime: '21:30', endTime: '23:30'}
-]
-
+];
 
 const month = 1;
 
@@ -34,10 +34,12 @@ const generateShiftAssignments = (defaultShifts: DefaultShift, interval: number)
     const start = new LocalDate(2024, month, day, startHour, startMinute);
     const end = new LocalDate(2024, month, day, endHour, endMinute);
     let current = start;
-
+    let rowId = 1;
     while (current.isBefore(end)) {
       const next = current.addMinutes(interval);
       assignments.push({
+        column: day,
+        row: rowId++,
         name: defaultShifts.name,
         staffNumber: defaultShifts.defaultStaffNumber,
         startTime: current,
@@ -50,23 +52,29 @@ const generateShiftAssignments = (defaultShifts: DefaultShift, interval: number)
   return assignments;
 };
 
-const initialDefaultShifts: Shift[] = initialShift.map((defaultShift) => {
+const initialDefaultShifts: Shift[] = initialShift.map((defaultShift, index) => {
   const assignments = generateShiftAssignments(defaultShift, 60);
-  return {defaultShift, assignments};
+  return {index, defaultShift, assignments};
 });
 
-
-const handleSaveChanges = (shifts:Shift[]) => {
+const handleSaveChanges = (shifts: Shift[]) => {
   // Function to handle saving changes
   console.log('Data to be saved:', shifts);
   // Add your data submission logic here
 };
 
+const ShiftHotTableViewStory: React.FC = () => {
+
+  return (
+    <ShiftHotTableViewComponent
+      month={month}
+      interval={60}
+      initialShifts={initialDefaultShifts}
+      handleSaveChanges={handleSaveChanges}
+    />
+  );
+};
+
 export const ShiftHotTableView: Story = {
-  args: {
-    month: month,
-    interval: 60,
-    shifts: initialDefaultShifts,
-    handleSaveChanges: handleSaveChanges
-  }
+  render: () => <ShiftHotTableViewStory/>
 };
