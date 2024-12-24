@@ -1,7 +1,7 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import {
   ShiftHotTableView as ShiftHotTableViewComponent,
-  Shift,
+  ShiftData,
   ShiftAssignment,
   DefaultShift
 } from './ShiftHotTableView';
@@ -52,12 +52,12 @@ const generateShiftAssignments = (defaultShifts: DefaultShift, interval: number)
   return assignments;
 };
 
-const initialDefaultShifts: Shift[] = initialShift.map((defaultShift, index) => {
+const initialDefaultShifts: ShiftData[] = initialShift.map((defaultShift, index) => {
   const assignments = generateShiftAssignments(defaultShift, 60);
   return {index, defaultShift, assignments};
 });
 
-const handleSaveChanges = (shifts: Shift[]) => {
+const handleSaveChanges = (shifts: ShiftData[]) => {
   // Function to handle saving changes
   console.log('Data to be saved:', shifts);
   // Add your data submission logic here

@@ -25,7 +25,7 @@ export interface ShiftAssignment {
   endTime: LocalDate;
 }
 
-export interface Shift {
+export interface ShiftData {
   index: number;
   defaultShift: DefaultShift;
   assignments: ShiftAssignment[];
@@ -51,7 +51,7 @@ const generateColumns = (tableIndex: number, daysInMonth: number) => {
   return columns;
 };
 
-const generateRows = (tableIndex: number, shift: Shift, month: number, interval: number, isExpanded: boolean) => {
+const generateRows = (tableIndex: number, shift: ShiftData, month: number, interval: number, isExpanded: boolean) => {
   const rows: any[] = [];
   const daysInMonth = moment().month(month - 1).daysInMonth();
 
@@ -91,14 +91,14 @@ const generateRows = (tableIndex: number, shift: Shift, month: number, interval:
 export const ShiftHotTableView: React.FC<{
   month: number,
   interval: number,
-  initialShifts: Shift[],
-  handleSaveChanges: (shifts: Shift[]) => void
+  initialShifts: ShiftData[],
+  handleSaveChanges: (shifts: ShiftData[]) => void
 }> = ({month, interval, initialShifts, handleSaveChanges}) => {
   registerAllModules();
 
   const daysInMonth = moment().month(month - 1).daysInMonth();
   const [expandedRows, setExpandedRows] = useState<{ [key: string]: boolean }>({});
-  const [shifts, setShifts] = useState<Shift[]>(initialShifts);
+  const [shifts, setShifts] = useState<ShiftData[]>(initialShifts);
 
   const toggleRowExpansion = (shiftType: string) => {
     setExpandedRows(prev => ({...prev, [shiftType]: !prev[shiftType]}));
