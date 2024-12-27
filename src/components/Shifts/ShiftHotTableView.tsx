@@ -217,6 +217,7 @@ export const ShiftHotTableView: React.FC<{
               </Box>
               <HotTable
                 id={`hot-table-${index}`}
+                className={`shift-hot-table-${index}`}
                 data={rows}
                 colHeaders={generateColumnHeaders(daysInMonth)}
                 columns={generateColumns(index, daysInMonth)}
