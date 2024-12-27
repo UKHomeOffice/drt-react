@@ -166,8 +166,23 @@ export const ShiftHotTableView: React.FC<{
         <Typography variant="h6" gutterBottom>{month}</Typography></Box>
       <Box><Typography variant="h6" gutterBottom>{interval}</Typography></Box>
       <Box><Typography variant="h6" gutterBottom>{shifts.length}</Typography></Box>
-      <Box><Typography variant="h6" gutterBottom>{initialShifts.length}</Typography></Box>
-      {/*<Box><Typography variant="h6"> {generateRows(0,shifts[0],month,interval,true)}</Typography>  </Box>*/}
+      <Box><Typography variant="h6" gutterBottom>{Array.from(initialShifts).length}</Typography></Box>
+      <Box>{Array.from(shifts).map((shift, index) =>
+        <Box key={index}>
+          <Typography variant="h6" gutterBottom>{shift.defaultShift.name}</Typography>
+          <Box>{Array.from(shift.assignments).map((assignment, index) =>
+            <Box key={index}>
+              <Typography variant="h6" gutterBottom>
+                name: {assignment.name} &nbsp;
+                 row - column {assignment.column} - {assignment.row} &nbsp;
+                  staffNumber : {assignment.staffNumber} &nbsp;
+                 start time : {`${assignment.startTime.year}-${assignment.startTime.month}-${assignment.startTime.day} ${assignment.startTime.hour}:${assignment.startTime.minute}`} &nbsp;
+                 end Time :{`${assignment.endTime.year}-${assignment.endTime.month}-${assignment.endTime.day} ${assignment.endTime.hour}:${assignment.endTime.minute}`}
+              </Typography>
+            </Box>
+          )}</Box>
+        </Box>
+      )}</Box>
       {Array.from(shifts).map((shift, index) => {
         console.log('shift', shift);
         const isExpanded = expandedRows[shift.defaultShift.name] || false;
