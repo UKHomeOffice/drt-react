@@ -154,7 +154,7 @@ export const ShiftHotTableView: React.FC<{
   return (
     <Box sx={{width: '100%'}}>
       <Typography variant="h4" gutterBottom>{moment().month(month - 1).format('MMMM YYYY')}</Typography>
-      {shifts.map((shift, index) => {
+      {Array.from(shifts).map((shift, index) => {
         const isExpanded = expandedRows[shift.defaultShift.name] || false;
         const rows = generateRows(index, shift, month, interval, isExpanded);
         return (
@@ -194,7 +194,7 @@ export const ShiftHotTableView: React.FC<{
           </Box>
         );
       })}
-      <Button variant="contained" color="primary" onClick={() => handleSaveChanges(shifts)}>
+      <Button variant="contained" color="primary" onClick={() => handleSaveChanges(Array.from(shifts))}>
         Save Changes
       </Button>
     </Box>
