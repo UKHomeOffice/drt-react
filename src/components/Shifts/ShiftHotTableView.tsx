@@ -65,7 +65,7 @@ const generateRows = (tableIndex: number, shift: ShiftData, month: number, inter
 
   const headerRow: any = {id: 'header', time: `${shift.defaultShift.startTime} - ${shift.defaultShift.endTime}`};
   for (let day = 1; day <= daysInMonth; day++) {
-    const dayAssignments = Array.from(shift.assignments).filter(assignment => assignment.startTime.day === day);
+    const dayAssignments = shift.assignments.filter(assignment => assignment.startTime.day === day);
     const staffNumbers = dayAssignments.map(assignment => assignment.staffNumber);
     const minStaffNumber = Math.min(...staffNumbers);
     const maxStaffNumber = Math.max(...staffNumbers);
@@ -84,7 +84,7 @@ const generateRows = (tableIndex: number, shift: ShiftData, month: number, inter
       const nextTime = currentTime.addMinutes(interval);
       const row: any = {time: `${currentTime.hour.toString().padStart(2, '0')}:${currentTime.minute.toString().padStart(2, '0')} - ${nextTime.hour.toString().padStart(2, '0')}:${nextTime.minute.toString().padStart(2, '0')}`};
       for (let day = 1; day <= daysInMonth; day++) {
-        const dayAssignments = Array.from(shift.assignments).filter(assignment => assignment.startTime.day === day && assignment.startTime.hour === currentTime.hour && assignment.startTime.minute === currentTime.minute);
+        const dayAssignments = shift.assignments.filter(assignment => assignment.startTime.day === day && assignment.startTime.hour === currentTime.hour && assignment.startTime.minute === currentTime.minute);
         const staffNumber = dayAssignments.length > 0 ? dayAssignments[0].staffNumber : '';
         row[`${tableIndex}-${day}`] = staffNumber;
       }
@@ -113,7 +113,7 @@ export const ShiftHotTableView: React.FC<{
 
   const daysInMonth = moment().month(month - 1).daysInMonth();
   const [expandedRows, setExpandedRows] = useState<{ [key: string]: boolean }>({});
-  const [shifts, setShifts] = useState<ShiftData[]>(Array.from(initialShifts));
+  const [shifts, setShifts] = useState<ShiftData[]>(initialShifts);
 
   const toggleRowExpansion = (shiftType: string) => {
     setExpandedRows(prev => ({...prev, [shiftType]: !prev[shiftType]}));
@@ -166,11 +166,11 @@ export const ShiftHotTableView: React.FC<{
         <Typography variant="h6" gutterBottom>{month}</Typography></Box>
       <Box><Typography variant="h6" gutterBottom>{interval}</Typography></Box>
       <Box><Typography variant="h6" gutterBottom>{shifts.length}</Typography></Box>
-      <Box><Typography variant="h6" gutterBottom>{Array.from(initialShifts).length}</Typography></Box>
-      <Box>{Array.from(shifts).map((shift, index) =>
+      <Box><Typography variant="h6" gutterBottom>{initialShifts.length}</Typography></Box>
+      <Box>{shifts.map((shift, index) =>
         <Box key={index}>
           <Typography variant="h6" gutterBottom>{shift.defaultShift.name}</Typography>
-          <Box>{Array.from(shift.assignments).map((assignment, index) =>
+          <Box>{shift.assignments.map((assignment, index) =>
             <Box key={index}>
               <Typography variant="h6" gutterBottom>
                 name: {assignment.name} &nbsp;
@@ -183,7 +183,7 @@ export const ShiftHotTableView: React.FC<{
           )}</Box>
         </Box>
       )}</Box>
-      {Array.from(shifts).map((shift, index) => {
+      {shifts.map((shift, index) => {
         console.log('shift', shift);
         const isExpanded = expandedRows[shift.defaultShift.name] || false;
         const rows = generateRows(index, shift, month, interval, isExpanded);
@@ -224,7 +224,7 @@ export const ShiftHotTableView: React.FC<{
           </Box>
         );
       })}
-      <Button variant="contained" color="primary" onClick={() => handleSaveChanges(Array.from(shifts))}>
+      <Button variant="contained" color="primary" onClick={() => handleSaveChanges(shifts)}>
         Save Changes
       </Button>
     </Box>
