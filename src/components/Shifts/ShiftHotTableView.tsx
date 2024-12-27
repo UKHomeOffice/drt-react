@@ -7,7 +7,15 @@ import {HotTable} from '@handsontable/react';
 import moment from 'moment';
 import {registerAllModules} from 'handsontable/registry';
 import 'handsontable/dist/handsontable.full.min.css';
-import {LocalDate} from './LocalDate';
+import {LocalDate} from "./LocalDate";
+
+export interface ShiftDate {
+  year: number;
+  month: number;
+  day: number;
+  hour: number;
+  minute: number;
+}
 
 export interface DefaultShift {
   name: string;
@@ -21,8 +29,8 @@ export interface ShiftAssignment {
   row: number;
   name: string;
   staffNumber: number;
-  startTime: LocalDate;
-  endTime: LocalDate;
+  startTime: ShiftDate;
+  endTime: ShiftDate;
 }
 
 export interface ShiftData {
@@ -68,8 +76,8 @@ const generateRows = (tableIndex: number, shift: ShiftData, month: number, inter
   if (isExpanded) {
     const [startHour, startMinute] = shift.defaultShift.startTime.split(':').map(Number);
     const [endHour, endMinute] = shift.defaultShift.endTime.split(':').map(Number);
-    const startTime = new LocalDate(2024, month, 1, startHour, startMinute);
-    const endTime = new LocalDate(2024, month, 1, endHour, endMinute);
+    const startTime: LocalDate = new LocalDate(2024, month, 1, startHour, startMinute);
+    const endTime: LocalDate = new LocalDate(2024, month, 1, endHour, endMinute);
 
     let currentTime = startTime;
     while (currentTime.isBefore(endTime)) {
