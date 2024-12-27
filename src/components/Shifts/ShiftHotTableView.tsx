@@ -76,8 +76,8 @@ const generateRows = (tableIndex: number, shift: ShiftData, month: number, inter
   if (isExpanded) {
     const [startHour, startMinute] = shift.defaultShift.startTime.split(':').map(Number);
     const [endHour, endMinute] = shift.defaultShift.endTime.split(':').map(Number);
-    const startTime: LocalDate = new LocalDate(2024, month, 1, startHour, startMinute);
-    const endTime: LocalDate = new LocalDate(2024, month, 1, endHour, endMinute);
+    const startTime: LocalDate = new LocalDate(2025, month, 1, startHour, startMinute);
+    const endTime: LocalDate = new LocalDate(2025, month, 1, endHour, endMinute);
 
     let currentTime = startTime;
     while (currentTime.isBefore(endTime)) {
