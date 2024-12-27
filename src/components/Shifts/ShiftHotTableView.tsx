@@ -167,62 +167,90 @@ export const ShiftHotTableView: React.FC<{
       <Box><Typography variant="h6" gutterBottom>{interval}</Typography></Box>
       <Box><Typography variant="h6" gutterBottom>{shifts.length}</Typography></Box>
       <Box><Typography variant="h6" gutterBottom>{initialShifts.length}</Typography></Box>
-      <Box>{shifts.map((shift, index) =>
-        <Box key={index}>
-          <Typography variant="h6" gutterBottom>{shift.defaultShift.name}</Typography>
-          <Box>{shift.assignments.map((assignment, index) =>
-            <Box key={index}>
-              <Typography variant="h6" gutterBottom>
-                name: {assignment.name} &nbsp;
-                 row - column {assignment.column} - {assignment.row} &nbsp;
-                  staffNumber : {assignment.staffNumber} &nbsp;
-                 start time : {`${assignment.startTime.year}-${assignment.startTime.month}-${assignment.startTime.day} ${assignment.startTime.hour}:${assignment.startTime.minute}`} &nbsp;
-                 end Time :{`${assignment.endTime.year}-${assignment.endTime.month}-${assignment.endTime.day} ${assignment.endTime.hour}:${assignment.endTime.minute}`}
+      <Box>
+        {shifts.map((shift, index) => {
+          try {
+            return (
+              <Box key={index}>
+                <Typography variant="h6" gutterBottom>{shift.defaultShift.name}</Typography>
+                <Box>
+                  {shift.assignments.map((assignment, index) => (
+                    <Box key={index}>
+                      <Typography variant="h6" gutterBottom>
+                        name: {assignment.name} &nbsp;
+                        row - column {assignment.column} - {assignment.row} &nbsp;
+                        staffNumber: {assignment.staffNumber} &nbsp;
+                        start time: {`${assignment.startTime.year}-${assignment.startTime.month}-${assignment.startTime.day} ${assignment.startTime.hour}:${assignment.startTime.minute}`} &nbsp;
+                        end time: {`${assignment.endTime.year}-${assignment.endTime.month}-${assignment.endTime.day} ${assignment.endTime.hour}:${assignment.endTime.minute}`}
+                      </Typography>
+                    </Box>
+                  ))}
+                </Box>
+              </Box>
+            );
+          } catch (error) {
+            console.error(`Error generating rows for shift before hot table ${shift.defaultShift.name}:`, error);
+            return (
+              <Box key={index} sx={{ marginBottom: 4 }}>
+                <Typography variant="h6" color="error" gutterBottom>
+                  Error generating rows for shift {shift.defaultShift.name}: {error.message}
+                </Typography>
+              </Box>
+            );
+          }
+        })}
+      </Box>
+      {shifts.map((shift, index) => {
+        console.log('shift...', shift);
+        try {
+          const isExpanded = expandedRows[shift.defaultShift.name] || false;
+          const rows = generateRows(index, shift, month, interval, isExpanded);
+          return (
+            <Box key={index} sx={{marginBottom: 4}}>
+              <Box display="flex" alignItems="center">
+                <Typography variant="h6" gutterBottom>{shift.defaultShift.name}</Typography>
+                <IconButton onClick={() => toggleRowExpansion(shift.defaultShift.name)}>
+                  {isExpanded ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
+                </IconButton>
+              </Box>
+              <HotTable
+                id={`hot-table-${index}`}
+                data={rows}
+                colHeaders={generateColumnHeaders(daysInMonth)}
+                columns={generateColumns(index, daysInMonth)}
+                style={{border: '1px solid #ccc', borderSpacing: '0'}}
+                dropdownMenu={false}
+                hiddenColumns={{indicators: true}}
+                contextMenu={false}
+                multiColumnSorting={true}
+                filters={true}
+                rowHeaders={false}
+                autoWrapCol={true}
+                autoWrapRow={true}
+                manualRowMove={true}
+                manualColumnMove={true}
+                licenseKey="non-commercial-and-evaluation"
+                preventOverflow="horizontal"
+                selectionMode="multiple"
+                fillHandle={{autoInsertRow: true}}
+                cells={(row, col) => ({renderer: cellRenderer})}
+                afterChange={handleAfterChange}
+              />
+              <style>
+                {`.htFocusCatcher { display: none !important; }`}
+              </style>
+            </Box>
+          );
+        } catch (error) {
+          console.error(`Error generating rows for shift ${shift.defaultShift.name}:`, error);
+          return (
+            <Box key={index} sx={{ marginBottom: 4 }}>
+              <Typography variant="h6" color="error" gutterBottom>
+                Error generating rows for shift {shift.defaultShift.name}: {error.message}
               </Typography>
             </Box>
-          )}</Box>
-        </Box>
-      )}</Box>
-      {shifts.map((shift, index) => {
-        console.log('shift', shift);
-        const isExpanded = expandedRows[shift.defaultShift.name] || false;
-        const rows = generateRows(index, shift, month, interval, isExpanded);
-        return (
-          <Box key={index} sx={{marginBottom: 4}}>
-            <Box display="flex" alignItems="center">
-              <Typography variant="h6" gutterBottom>{shift.defaultShift.name}</Typography>
-              <IconButton onClick={() => toggleRowExpansion(shift.defaultShift.name)}>
-                {isExpanded ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
-              </IconButton>
-            </Box>
-            <HotTable
-              id={`hot-table-${index}`}
-              data={rows}
-              colHeaders={generateColumnHeaders(daysInMonth)}
-              columns={generateColumns(index, daysInMonth)}
-              style={{border: '1px solid #ccc', borderSpacing: '0'}}
-              dropdownMenu={false}
-              hiddenColumns={{indicators: true}}
-              contextMenu={false}
-              multiColumnSorting={true}
-              filters={true}
-              rowHeaders={false}
-              autoWrapCol={true}
-              autoWrapRow={true}
-              manualRowMove={true}
-              manualColumnMove={true}
-              licenseKey="non-commercial-and-evaluation"
-              preventOverflow="horizontal"
-              selectionMode="multiple"
-              fillHandle={{autoInsertRow: true}}
-              cells={(row, col) => ({renderer: cellRenderer})}
-              afterChange={handleAfterChange}
-            />
-            <style>
-              {`.htFocusCatcher { display: none !important; }`}
-            </style>
-          </Box>
-        );
+          );
+        }
       })}
       <Button variant="contained" color="primary" onClick={() => handleSaveChanges(shifts)}>
         Save Changes
