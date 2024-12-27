@@ -113,7 +113,7 @@ export const ShiftHotTableView: React.FC<{
 
   const daysInMonth = moment().month(month - 1).daysInMonth();
   const [expandedRows, setExpandedRows] = useState<{ [key: string]: boolean }>({});
-  const [shifts, setShifts] = useState<ShiftData[]>(initialShifts);
+  const [shifts, setShifts] = useState<ShiftData[]>(Array.from(initialShifts));
 
   const toggleRowExpansion = (shiftType: string) => {
     setExpandedRows(prev => ({...prev, [shiftType]: !prev[shiftType]}));
@@ -162,6 +162,12 @@ export const ShiftHotTableView: React.FC<{
   return (
     <Box sx={{width: '100%'}}>
       <Typography variant="h4" gutterBottom>{moment().month(month - 1).format('MMMM YYYY')}</Typography>
+      <Box display="flex" alignItems="center">
+        <Typography variant="h6" gutterBottom>{month}</Typography></Box>
+      <Box><Typography variant="h6" gutterBottom>{interval}</Typography></Box>
+      <Box><Typography variant="h6" gutterBottom>{shifts.length}</Typography></Box>
+      <Box><Typography variant="h6" gutterBottom>{initialShifts.length}</Typography></Box>
+      {/*<Box><Typography variant="h6"> {generateRows(0,shifts[0],month,interval,true)}</Typography>  </Box>*/}
       {Array.from(shifts).map((shift, index) => {
         console.log('shift', shift);
         const isExpanded = expandedRows[shift.defaultShift.name] || false;
