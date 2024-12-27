@@ -215,29 +215,29 @@ export const ShiftHotTableView: React.FC<{
                   {isExpanded ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
                 </IconButton>
               </Box>
-              <HotTable
-                id={`hot-table-${index}`}
-                data={rows}
-                colHeaders={generateColumnHeaders(daysInMonth)}
-                columns={generateColumns(index, daysInMonth)}
-                style={{border: '1px solid #ccc', borderSpacing: '0'}}
-                dropdownMenu={false}
-                hiddenColumns={{indicators: true}}
-                contextMenu={false}
-                multiColumnSorting={true}
-                filters={true}
-                rowHeaders={false}
-                autoWrapCol={true}
-                autoWrapRow={true}
-                manualRowMove={true}
-                manualColumnMove={true}
-                licenseKey="non-commercial-and-evaluation"
-                preventOverflow="horizontal"
-                selectionMode="multiple"
-                fillHandle={{autoInsertRow: true}}
-                cells={(row, col) => ({renderer: cellRenderer})}
-                afterChange={handleAfterChange}
-              />
+              {/*<HotTable*/}
+              {/*  id={`hot-table-${index}`}*/}
+              {/*  data={rows}*/}
+              {/*  colHeaders={generateColumnHeaders(daysInMonth)}*/}
+              {/*  columns={generateColumns(index, daysInMonth)}*/}
+              {/*  style={{border: '1px solid #ccc', borderSpacing: '0'}}*/}
+              {/*  dropdownMenu={false}*/}
+              {/*  hiddenColumns={{indicators: true}}*/}
+              {/*  contextMenu={false}*/}
+              {/*  multiColumnSorting={true}*/}
+              {/*  filters={true}*/}
+              {/*  rowHeaders={false}*/}
+              {/*  autoWrapCol={true}*/}
+              {/*  autoWrapRow={true}*/}
+              {/*  manualRowMove={true}*/}
+              {/*  manualColumnMove={true}*/}
+              {/*  licenseKey="non-commercial-and-evaluation"*/}
+              {/*  preventOverflow="horizontal"*/}
+              {/*  selectionMode="multiple"*/}
+              {/*  fillHandle={{autoInsertRow: true}}*/}
+              {/*  cells={(row, col) => ({renderer: cellRenderer})}*/}
+              {/*  afterChange={handleAfterChange}*/}
+              {/*/>*/}
               <style>
                 {`.htFocusCatcher { display: none !important; }`}
               </style>
