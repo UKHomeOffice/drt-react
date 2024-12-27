@@ -155,6 +155,7 @@ export const ShiftHotTableView: React.FC<{
     <Box sx={{width: '100%'}}>
       <Typography variant="h4" gutterBottom>{moment().month(month - 1).format('MMMM YYYY')}</Typography>
       {Array.from(shifts).map((shift, index) => {
+        console.log('shift', shift);
         const isExpanded = expandedRows[shift.defaultShift.name] || false;
         const rows = generateRows(index, shift, month, interval, isExpanded);
         return (
