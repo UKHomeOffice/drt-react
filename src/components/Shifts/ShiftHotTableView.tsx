@@ -57,7 +57,7 @@ const generateRows = (tableIndex: number, shift: ShiftData, month: number, inter
 
   const headerRow: any = {id: 'header', time: `${shift.defaultShift.startTime} - ${shift.defaultShift.endTime}`};
   for (let day = 1; day <= daysInMonth; day++) {
-    const dayAssignments = shift.assignments.filter(assignment => assignment.startTime.day === day);
+    const dayAssignments = Array.from(shift.assignments).filter(assignment => assignment.startTime.day === day);
     const staffNumbers = dayAssignments.map(assignment => assignment.staffNumber);
     const minStaffNumber = Math.min(...staffNumbers);
     const maxStaffNumber = Math.max(...staffNumbers);
@@ -76,7 +76,7 @@ const generateRows = (tableIndex: number, shift: ShiftData, month: number, inter
       const nextTime = currentTime.addMinutes(interval);
       const row: any = {time: `${currentTime.hour.toString().padStart(2, '0')}:${currentTime.minute.toString().padStart(2, '0')} - ${nextTime.hour.toString().padStart(2, '0')}:${nextTime.minute.toString().padStart(2, '0')}`};
       for (let day = 1; day <= daysInMonth; day++) {
-        const dayAssignments = shift.assignments.filter(assignment => assignment.startTime.day === day && assignment.startTime.hour === currentTime.hour && assignment.startTime.minute === currentTime.minute);
+        const dayAssignments = Array.from(shift.assignments).filter(assignment => assignment.startTime.day === day && assignment.startTime.hour === currentTime.hour && assignment.startTime.minute === currentTime.minute);
         const staffNumber = dayAssignments.length > 0 ? dayAssignments[0].staffNumber : '';
         row[`${tableIndex}-${day}`] = staffNumber;
       }
