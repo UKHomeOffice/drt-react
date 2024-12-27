@@ -62,8 +62,9 @@ const generateColumns = (tableIndex: number, daysInMonth: number) => {
 const generateRows = (tableIndex: number, shift: ShiftData, month: number, interval: number, isExpanded: boolean) => {
   const rows: any[] = [];
   const daysInMonth = moment().month(month - 1).daysInMonth();
-
+  console.log('daysInMonth', daysInMonth);
   const headerRow: any = {id: 'header', time: `${shift.defaultShift.startTime} - ${shift.defaultShift.endTime}`};
+  console.log('headerRow', headerRow);
   for (let day = 1; day <= daysInMonth; day++) {
     const dayAssignments = shift.assignments.filter(assignment => assignment.startTime.day === day);
     const staffNumbers = dayAssignments.map(assignment => assignment.staffNumber);
@@ -71,6 +72,7 @@ const generateRows = (tableIndex: number, shift: ShiftData, month: number, inter
     const maxStaffNumber = Math.max(...staffNumbers);
     headerRow[`${tableIndex}-${day}`] = `${minStaffNumber} - ${maxStaffNumber}`;
   }
+  console.log('headerRow', headerRow);
   rows.push(headerRow);
 
   if (isExpanded) {
@@ -92,7 +94,7 @@ const generateRows = (tableIndex: number, shift: ShiftData, month: number, inter
       currentTime = currentTime.addMinutes(interval);
     }
   }
-
+    console.log('rows', rows);
   return rows;
 };
 
