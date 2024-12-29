@@ -224,29 +224,29 @@ export const ShiftHotTableView: React.FC<{
                 // colHeaders={generateColumnHeaders(daysInMonth)}
                 // columns={generateColumns(index, daysInMonth)}
                 // style={{border: '1px solid #ccc', borderSpacing: '0'}}
-                dropdownMenu={false}
-                hiddenColumns={{indicators: true}}
-                contextMenu={false}
-                multiColumnSorting={true}
-                filters={true}
-                rowHeaders={false}
-                autoWrapCol={true}
-                autoWrapRow={true}
-                manualRowMove={true}
-                manualColumnMove={true}
+                // dropdownMenu={false}
+                // hiddenColumns={{indicators: true}}
+                // contextMenu={false}
+                // multiColumnSorting={true}
+                // filters={true}
+                // rowHeaders={false}
+                // autoWrapCol={true}
+                // autoWrapRow={true}
+                // manualRowMove={true}
+                // manualColumnMove={true}
                 licenseKey="non-commercial-and-evaluation"
-                preventOverflow="horizontal"
-                selectionMode="multiple"
-                fillHandle={{autoInsertRow: true}}
+                // preventOverflow="horizontal"
+                // selectionMode="multiple"
+                // fillHandle={{autoInsertRow: true}}
                 // cells={(row, col) => ({
                 //   className: 'htCenter htMiddle',
                 //   renderer: 'text'
                 // })}
-                afterChange={handleAfterChange}
+                // afterChange={handleAfterChange}
               />
-              <style>
-                {`.htFocusCatcher { display: none !important; }`}
-              </style>
+              {/*<style>*/}
+              {/*  {`.htFocusCatcher { display: none !important; }`}*/}
+              {/*</style>*/}
             </Box>
           );
         } catch (error) {
