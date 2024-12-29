@@ -218,12 +218,12 @@ export const ShiftHotTableView: React.FC<{
                 </IconButton>
               </Box>
               <HotTable
-                id={`hot-table-${index}`}
+                // id={`hot-table-${index}`}
                 // className={`shift-hot-table-${index}`}
                 // data={rows}
                 // colHeaders={generateColumnHeaders(daysInMonth)}
                 // columns={generateColumns(index, daysInMonth)}
-                style={{border: '1px solid #ccc', borderSpacing: '0'}}
+                // style={{border: '1px solid #ccc', borderSpacing: '0'}}
                 dropdownMenu={false}
                 hiddenColumns={{indicators: true}}
                 contextMenu={false}
