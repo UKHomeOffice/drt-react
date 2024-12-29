@@ -238,7 +238,10 @@ export const ShiftHotTableView: React.FC<{
                 preventOverflow="horizontal"
                 selectionMode="multiple"
                 fillHandle={{autoInsertRow: true}}
-                cells={(row, col) => ({renderer: cellRenderer})}
+                cells={(row, col) => ({
+                  className: 'htCenter htMiddle',
+                  renderer: 'text'
+                })}
                 afterChange={handleAfterChange}
               />
               <style>
