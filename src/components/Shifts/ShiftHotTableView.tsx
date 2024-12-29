@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Box, Button, IconButton, Typography} from '@mui/material';
+import {Box, Button, IconButton, ThemeProvider, Typography} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import Handsontable from 'handsontable';
@@ -8,6 +8,7 @@ import moment from 'moment';
 import {registerAllModules} from 'handsontable/registry';
 import 'handsontable/dist/handsontable.full.min.css';
 import {LocalDate} from "./LocalDate";
+import {drtTheme} from "../../index";
 
 export interface ShiftDate {
   year: number;
@@ -63,7 +64,7 @@ const generateRows = (tableIndex: number, shift: ShiftData, month: number, inter
   const rows: any[] = [];
   const daysInMonth = moment().month(month - 1).daysInMonth();
   console.log('daysInMonth', daysInMonth);
-  if(shift) {
+  if (shift) {
     const headerRow: any = {id: 'header', time: `${shift.defaultShift.startTime} - ${shift.defaultShift.endTime}`};
     console.log('headerRow', headerRow);
     for (let day = 1; day <= daysInMonth; day++) {
@@ -164,46 +165,43 @@ export const ShiftHotTableView: React.FC<{
   };
 
   return (
-    <Box sx={{width: '100%'}}>
-      <Typography variant="h4" gutterBottom>{moment().month(month - 1).format('MMMM YYYY')}</Typography>
-      <Box display="flex" alignItems="center">
-        <Typography variant="h6" gutterBottom>{month}</Typography></Box>
-      <Box><Typography variant="h6" gutterBottom>{interval}</Typography></Box>
-      <Box><Typography variant="h6" gutterBottom>{shifts.length}</Typography></Box>
-      <Box><Typography variant="h6" gutterBottom>{initialShifts.length}</Typography></Box>
-      <Box>
-        {shifts.map((shift, index) => {
-          try {
-            return (
-              <Box key={index}>
-                <Typography variant="h6" gutterBottom>{shift.defaultShift.name}</Typography>
-                <Box>
-                  {shift.assignments.map((assignment, index) => (
-                    <Box key={index}>
-                      <Typography variant="h6" gutterBottom>
-                        name: {assignment.name} &nbsp;
-                        row - column {assignment.column} - {assignment.row} &nbsp;
-                        staffNumber: {assignment.staffNumber} &nbsp;
-                        start time: {`${assignment.startTime.year}-${assignment.startTime.month}-${assignment.startTime.day} ${assignment.startTime.hour}:${assignment.startTime.minute}`} &nbsp;
-                        end time: {`${assignment.endTime.year}-${assignment.endTime.month}-${assignment.endTime.day} ${assignment.endTime.hour}:${assignment.endTime.minute}`}
-                      </Typography>
-                    </Box>
-                  ))}
-                </Box>
-              </Box>
-            );
-          } catch (error) {
-            console.error(`Error generating rows for shift before hot table ${shift.defaultShift.name}:`, error);
-            return (
-              <Box key={index} sx={{ marginBottom: 4 }}>
-                <Typography variant="h6" color="error" gutterBottom>
-                  Error generating rows for shift {shift.defaultShift.name}: {error.message}
-                </Typography>
-              </Box>
-            );
-          }
-        })}
-      </Box>
+    <ThemeProvider theme={drtTheme}>
+      {/*<Box sx={{width: '100%'}}>*/}
+      {/*  <Typography variant="h4" gutterBottom>{moment().month(month - 1).format('MMMM YYYY')}</Typography>*/}
+      {/*  {shifts.map((shift, index) => {*/}
+      {/*    try {*/}
+      {/*      return (*/}
+      {/*        <Box key={index}>*/}
+      {/*          <Typography variant="h6" gutterBottom>{shift.defaultShift.name}</Typography>*/}
+      {/*          <Box>*/}
+      {/*            {shift.assignments.map((assignment, index) => (*/}
+      {/*              <Box key={index}>*/}
+      {/*                <Typography variant="h6" gutterBottom>*/}
+      {/*                  name: {assignment.name} &nbsp;*/}
+      {/*                  row - column {assignment.column} - {assignment.row} &nbsp;*/}
+      {/*                  staffNumber: {assignment.staffNumber} &nbsp;*/}
+      {/*                  start*/}
+      {/*                  time: {`${assignment.startTime.year}-${assignment.startTime.month}-${assignment.startTime.day} ${assignment.startTime.hour}:${assignment.startTime.minute}`} &nbsp;*/}
+      {/*                  end*/}
+      {/*                  time: {`${assignment.endTime.year}-${assignment.endTime.month}-${assignment.endTime.day} ${assignment.endTime.hour}:${assignment.endTime.minute}`}*/}
+      {/*                </Typography>*/}
+      {/*              </Box>*/}
+      {/*            ))}*/}
+      {/*          </Box>*/}
+      {/*        </Box>*/}
+      {/*      );*/}
+      {/*    } catch (error) {*/}
+      {/*      console.error(`Error generating rows for shift before hot table ${shift.defaultShift.name}:`, error);*/}
+      {/*      return (*/}
+      {/*        <Box key={index} sx={{marginBottom: 4}}>*/}
+      {/*          <Typography variant="h6" color="error" gutterBottom>*/}
+      {/*            Error generating rows for shift {shift.defaultShift.name}: {error.message}*/}
+      {/*          </Typography>*/}
+      {/*        </Box>*/}
+      {/*      );*/}
+      {/*    }*/}
+      {/*  })}*/}
+      {/*</Box>*/}
       {shifts.map((shift, index) => {
         console.log('shift...', shift);
         try {
@@ -242,7 +240,7 @@ export const ShiftHotTableView: React.FC<{
                   className: 'htCenter htMiddle',
                   renderer: 'text'
                 })}
-                // afterChange={handleAfterChange}
+                afterChange={handleAfterChange}
               />
               {/*<style>*/}
               {/*  {`.htFocusCatcher { display: none !important; }`}*/}
@@ -252,7 +250,7 @@ export const ShiftHotTableView: React.FC<{
         } catch (error) {
           console.error(`Error generating rows for shift ${shift.defaultShift.name}:`, error);
           return (
-            <Box key={index} sx={{ marginBottom: 4 }}>
+            <Box key={index} sx={{marginBottom: 4}}>
               <Typography variant="h6" color="error" gutterBottom>
                 Error generating rows for shift {shift.defaultShift.name}: {error.message}
               </Typography>
@@ -263,6 +261,7 @@ export const ShiftHotTableView: React.FC<{
       <Button variant="contained" color="primary" onClick={() => handleSaveChanges(shifts)}>
         Save Changes
       </Button>
-    </Box>
-  );
+    </ThemeProvider>
+  )
+    ;
 };
