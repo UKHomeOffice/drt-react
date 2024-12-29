@@ -208,7 +208,7 @@ export const ShiftHotTableView: React.FC<{
         console.log('shift...', shift);
         try {
           const isExpanded = expandedRows[shift.defaultShift.name] || false;
-          const rows = generateRows(index, shift, month, interval, isExpanded);
+          // const rows = generateRows(index, shift, month, interval, isExpanded);
           return (
             <Box key={index} sx={{marginBottom: 4}}>
               <Box display="flex" alignItems="center">
@@ -220,9 +220,9 @@ export const ShiftHotTableView: React.FC<{
               <HotTable
                 id={`hot-table-${index}`}
                 className={`shift-hot-table-${index}`}
-                data={rows}
-                colHeaders={generateColumnHeaders(daysInMonth)}
-                columns={generateColumns(index, daysInMonth)}
+                // data={rows}
+                // colHeaders={generateColumnHeaders(daysInMonth)}
+                // columns={generateColumns(index, daysInMonth)}
                 style={{border: '1px solid #ccc', borderSpacing: '0'}}
                 dropdownMenu={false}
                 hiddenColumns={{indicators: true}}
@@ -238,10 +238,10 @@ export const ShiftHotTableView: React.FC<{
                 preventOverflow="horizontal"
                 selectionMode="multiple"
                 fillHandle={{autoInsertRow: true}}
-                cells={(row, col) => ({
-                  className: 'htCenter htMiddle',
-                  renderer: 'text'
-                })}
+                // cells={(row, col) => ({
+                //   className: 'htCenter htMiddle',
+                //   renderer: 'text'
+                // })}
                 afterChange={handleAfterChange}
               />
               <style>
