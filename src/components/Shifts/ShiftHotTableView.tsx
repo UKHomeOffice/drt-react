@@ -152,7 +152,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({ month, int
       {shifts.map((shift, index) => {
         const isExpanded = expandedRows[shift.defaultShift.name] || false;
         const rows = generateRows(index, shift, month, interval, isExpanded);
-        const tableHeight = rows.length * 24  + 48 ; // Assuming each row is 24px high
+        const tableHeight = rows.length * 24  + 60 ; // Assuming each row is 24px high
 
         return (
           <Box key={index} sx={{ marginBottom: 4 }}>
