@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Box, Button, IconButton, ThemeProvider, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
@@ -168,7 +168,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({ month, int
               data={rows}
               colHeaders={generateColumnHeaders(daysInMonth)}
               columns={generateColumns(index, daysInMonth)}
-              style={{ border: '1px solid #ccc', borderSpacing: '0', minHeight: `100px` }}
+              style={{ border: '1px solid #ccc', borderSpacing: '0', minHeight: `100px`, maxHeight: `500px` }}
               cells={(row, col) => ({
                 className: 'htCenter htMiddle',
                 renderer: 'text'
