@@ -146,6 +146,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({ month, int
       });
       console.log('New shifts:', newShifts);
       setShifts(newShifts);
+      handleSaveChanges(newShifts);
     }
   };
 
@@ -180,9 +181,9 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({ month, int
           </Box>
         );
       })}
-      <Button variant="contained" color="primary" onClick={() => handleSaveChanges(shifts)}>
-        Save Changes
-      </Button>
+      {/*<Button variant="contained" color="primary" onClick={() => handleSaveChanges(shifts)}>*/}
+      {/*  Save Changes*/}
+      {/*</Button>*/}
     </ThemeProvider>
   );
 };
