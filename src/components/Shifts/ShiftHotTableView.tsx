@@ -110,7 +110,6 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({ month, int
 
   const daysInMonth = moment().month(month - 1).daysInMonth();
   const [expandedRows, setExpandedRows] = useState<{ [key: string]: boolean }>({});
-  // const [shifts, setShifts] = useState<ShiftData[]>(initialShifts);
 
   const toggleRowExpansion = (shiftType: string) => {
     setExpandedRows(prev => ({ ...prev, [shiftType]: !prev[shiftType] }));
@@ -156,7 +155,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({ month, int
       {initialShifts.map((shift, index) => {
         const isExpanded = expandedRows[shift.defaultShift.name] || false;
         const rows = generateRows(index, shift, month, interval, isExpanded);
-        // const tableHeight = rows.length * 24 + 60;
+        const tableHeight = rows.length * 24 + 60;
 
         return (
           <Box key={index} sx={{ marginBottom: 4 }}>
@@ -172,19 +171,15 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({ month, int
               data={rows}
               colHeaders={generateColumnHeaders(daysInMonth)}
               columns={generateColumns(index, daysInMonth)}
-              style={{ border: '1px solid #ccc', borderSpacing: '0', height : '400px' }}
+              style={{ border: '1px solid #ccc', borderSpacing: '0', height : `${tableHeight}px` }}
               cells={(row, col) => ({
-                className: 'htCenter htMiddle',
-                renderer: 'text'
+                renderer: cellRenderer
               })}
               afterChange={handleAfterChange}
             />
           </Box>
         );
       })}
-      {/*<Button variant="contained" color="primary" onClick={() => handleSaveChanges(shifts)}>*/}
-      {/*  Save Changes*/}
-      {/*</Button>*/}
     </ThemeProvider>
   );
 };
