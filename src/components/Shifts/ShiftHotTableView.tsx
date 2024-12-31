@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { Box, Button, IconButton, ThemeProvider, Typography } from '@mui/material';
+import React, {useState} from 'react';
+import {Box, Button, IconButton, ThemeProvider, Typography} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import Handsontable from 'handsontable';
-import { HotTable } from '@handsontable/react';
+import {HotTable} from '@handsontable/react';
 import moment from 'moment';
-import { registerAllModules } from 'handsontable/registry';
+import {registerAllModules} from 'handsontable/registry';
 import 'handsontable/dist/handsontable.full.min.css';
-import { LocalDate } from './LocalDate';
-import { drtTheme } from '../../index';
+import {LocalDate} from './LocalDate';
+import {drtTheme} from '../../index';
 
 export interface ShiftDate {
   year: number;
@@ -51,21 +51,21 @@ const generateColumnHeaders = (daysInMonth: number) => {
 };
 
 const generateColumns = (tableIndex: number, daysInMonth: number) => {
-  const columns: Handsontable.ColumnSettings[] = [{ data: 'time', title: 'Time', width: 100, readOnly: true }];
+  const columns: Handsontable.ColumnSettings[] = [{data: 'time', title: 'Time', width: 100, readOnly: true}];
   const columnWidth = Math.max(55, Math.floor(1200 / daysInMonth));
 
   for (let day = 1; day <= daysInMonth; day++) {
-    columns.push({ data: `${tableIndex}-${day}`, title: ``, width: columnWidth, readOnly: false });
+    columns.push({data: `${tableIndex}-${day}`, title: ``, width: columnWidth, readOnly: false});
   }
   return columns;
 };
 
-const generateRows = (tableIndex: number, shift: ShiftData, month: number, interval: number, isExpanded: boolean) => {
+const generateRows = (tableIndex: number, shift: ShiftData, month: number, year: number, interval: number, isExpanded: boolean) => {
   const rows: any[] = [];
   console.log('generateRows Shift:...', shift);
   const daysInMonth = moment().month(month - 1).daysInMonth();
   if (shift) {
-    const headerRow: any = { id: 'header', time: `${shift.defaultShift.startTime} - ${shift.defaultShift.endTime}` };
+    const headerRow: any = {id: 'header', time: `${shift.defaultShift.startTime} - ${shift.defaultShift.endTime}`};
     for (let day = 1; day <= daysInMonth; day++) {
       const dayAssignments = shift.assignments.filter(assignment => assignment.startTime.day === day);
       const staffNumbers = dayAssignments.map(assignment => assignment.staffNumber);
@@ -78,13 +78,13 @@ const generateRows = (tableIndex: number, shift: ShiftData, month: number, inter
     if (isExpanded) {
       const [startHour, startMinute] = shift.defaultShift.startTime.split(':').map(Number);
       const [endHour, endMinute] = shift.defaultShift.endTime.split(':').map(Number);
-      const startTime: LocalDate = new LocalDate(2025, month, 1, startHour, startMinute);
-      const endTime: LocalDate = new LocalDate(2025, month, 1, endHour, endMinute);
+      const startTime: LocalDate = new LocalDate(year, month, 1, startHour, startMinute);
+      const endTime: LocalDate = new LocalDate(year, month, 1, endHour, endMinute);
 
       let currentTime = startTime;
       while (currentTime.isBefore(endTime)) {
         const nextTime = currentTime.addMinutes(interval);
-        const row: any = { time: `${currentTime.hour.toString().padStart(2, '0')}:${currentTime.minute.toString().padStart(2, '0')} - ${nextTime.hour.toString().padStart(2, '0')}:${nextTime.minute.toString().padStart(2, '0')}` };
+        const row: any = {time: `${currentTime.hour.toString().padStart(2, '0')}:${currentTime.minute.toString().padStart(2, '0')} - ${nextTime.hour.toString().padStart(2, '0')}:${nextTime.minute.toString().padStart(2, '0')}`};
         for (let day = 1; day <= daysInMonth; day++) {
           const dayAssignments = shift.assignments.filter(assignment => assignment.startTime.day === day && assignment.startTime.hour === currentTime.hour && assignment.startTime.minute === currentTime.minute);
           const staffNumber = dayAssignments.length > 0 ? dayAssignments[0].staffNumber : '';
@@ -100,19 +100,26 @@ const generateRows = (tableIndex: number, shift: ShiftData, month: number, inter
 
 export interface ShiftHotTableViewProps {
   month: number;
+  year: number;
   interval: number;
   initialShifts: ShiftData[];
   handleSaveChanges: (shifts: ShiftData[]) => void;
 }
 
-export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({ month, interval, initialShifts, handleSaveChanges }) => {
+export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
+                                                                      month,
+                                                                      year,
+                                                                      interval,
+                                                                      initialShifts,
+                                                                      handleSaveChanges
+                                                                    }) => {
   registerAllModules();
 
   const daysInMonth = moment().month(month - 1).daysInMonth();
   const [expandedRows, setExpandedRows] = useState<{ [key: string]: boolean }>({});
 
   const toggleRowExpansion = (shiftType: string) => {
-    setExpandedRows(prev => ({ ...prev, [shiftType]: !prev[shiftType] }));
+    setExpandedRows(prev => ({...prev, [shiftType]: !prev[shiftType]}));
   };
 
   const cellRenderer = function (this: any, instance: Handsontable, td: HTMLTableCellElement, row: number, col: number, prop: string | number, value: any, cellProperties: Handsontable.CellProperties) {
@@ -125,17 +132,20 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({ month, int
   const handleAfterChange = (changes: Handsontable.CellChange[] | null, source: string) => {
     if (changes && source !== 'loadData') {
       const newShifts = [...initialShifts];
-      changes.forEach(([row, prop, oldValue, newValue]) => {
-        if (typeof prop === 'string') {
-          const [tableIndex, columnIndex] = prop.split('-').map(Number);
+      changes.forEach(([row, tableColumn, oldValue, newValue]) => {
+        if (typeof tableColumn === 'string') {
+          const [tableIndex, columnIndex] = tableColumn.split('-').map(Number);
           const shiftIndex = newShifts.findIndex(shift => shift.index === tableIndex);
           if (shiftIndex !== -1) {
             if (columnIndex) {
               const assignmentIndex = newShifts[shiftIndex].assignments.findIndex(assignment => assignment.row === row && assignment.column === columnIndex);
+              console.log('Assignment index:', assignmentIndex);
+              console.log('newShifts[shiftIndex].assignments[assignmentIndex].staffNumber:', newShifts[shiftIndex].assignments[assignmentIndex]);
+
               if (assignmentIndex !== -1) {
                 newShifts[shiftIndex].assignments[assignmentIndex].staffNumber = parseInt(newValue, 10);
               }
-            } else if (prop === 'time') {
+            } else if (tableColumn === 'time') {
               const [startTime, endTime] = newValue.split(' - ');
               newShifts[shiftIndex].defaultShift.startTime = startTime;
               newShifts[shiftIndex].defaultShift.endTime = endTime;
@@ -154,15 +164,15 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({ month, int
     <ThemeProvider theme={drtTheme}>
       {initialShifts.map((shift, index) => {
         const isExpanded = expandedRows[shift.defaultShift.name] || false;
-        const rows = generateRows(index, shift, month, interval, isExpanded);
+        const rows = generateRows(index, shift, year, month, interval, isExpanded);
         const tableHeight = rows.length * 24 + 60;
 
         return (
-          <Box key={index} sx={{ marginBottom: 4 }}>
+          <Box key={index} sx={{marginBottom: 4}}>
             <Box display="flex" alignItems="center">
               <Typography variant="h6" gutterBottom>{shift.defaultShift.name}</Typography>
               <IconButton onClick={() => toggleRowExpansion(shift.defaultShift.name)}>
-                {isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                {isExpanded ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
               </IconButton>
             </Box>
             <HotTable
@@ -171,7 +181,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({ month, int
               data={rows}
               colHeaders={generateColumnHeaders(daysInMonth)}
               columns={generateColumns(index, daysInMonth)}
-              style={{ border: '1px solid #ccc', borderSpacing: '0', height : `${tableHeight}px` }}
+              style={{border: '1px solid #ccc', borderSpacing: '0', height: `${tableHeight}px`}}
               cells={(row, col) => ({
                 renderer: cellRenderer
               })}

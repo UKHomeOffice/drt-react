@@ -68,6 +68,7 @@ const ShiftHotTableViewStory: React.FC = () => {
   return (
     <ShiftHotTableViewComponent
       month={month}
+      year={2025}
       interval={60}
       initialShifts={initialDefaultShifts}
       handleSaveChanges={handleSaveChanges}

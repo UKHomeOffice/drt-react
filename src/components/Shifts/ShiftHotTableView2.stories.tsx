@@ -24,7 +24,7 @@ const initialShift: DefaultShift[] = [
 ];
 
 const month = 1;
-
+const year = 2025;
 
 const parseShiftAssignments = (data: string): ShiftAssignment[] => {
   const jsonData = JSON.parse(data).assignments;
@@ -52,39 +52,6 @@ const parseShiftAssignments = (data: string): ShiftAssignment[] => {
 
 const assignments: ShiftAssignment[] = parseShiftAssignments(testData);
 console.log(assignments);
-
-// const generateShiftAssignments = (defaultShifts: DefaultShift, interval: number): ShiftAssignment[] => {
-//   const assignments: ShiftAssignment[] = [];
-//   const daysInMonth = 31; // Assuming 31 days in the 1st month
-//
-//   for (let day = 1; day <= daysInMonth; day++) {
-//     const [startHour, startMinute] = defaultShifts.startTime.split(':').map(Number);
-//     const [endHour, endMinute] = defaultShifts.endTime.split(':').map(Number);
-//     const start = new LocalDate(2025, month, day, startHour, startMinute);
-//     const end = new LocalDate(2025, month, day, endHour, endMinute);
-//     let current = start;
-//     let rowId = 1;
-//     while (current.isBefore(end)) {
-//       const next = current.addMinutes(interval);
-//       assignments.push({
-//         column: day,
-//         row: rowId++,
-//         name: defaultShifts.name,
-//         staffNumber: defaultShifts.defaultStaffNumber,
-//         startTime: current,
-//         endTime: next
-//       });
-//       current = next;
-//     }
-//   }
-//
-//   return assignments;
-// };
-
-// const initialDefaultShifts: ShiftData[] = initialShift.map((defaultShift, index) => {
-//   const assignments = parseShiftAssignments//generateShiftAssignments(defaultShift, 60);
-//   return {index, defaultShift, assignments};
-// });
 
 const generateShiftAssignments = (defaultShifts: DefaultShift, interval: number, parsedAssignments: ShiftAssignment[]): ShiftAssignment[] => {
   const assignments: ShiftAssignment[] = [];
@@ -136,6 +103,7 @@ const ShiftHotTableViewStory: React.FC = () => {
   return (
     <ShiftHotTableViewComponent
       month={month}
+      year={year}
       interval={60}
       initialShifts={initialDefaultShifts}
       handleSaveChanges={handleSaveChanges}
