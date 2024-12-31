@@ -110,7 +110,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({ month, int
 
   const daysInMonth = moment().month(month - 1).daysInMonth();
   const [expandedRows, setExpandedRows] = useState<{ [key: string]: boolean }>({});
-  const [shifts, setShifts] = useState<ShiftData[]>(initialShifts);
+  // const [shifts, setShifts] = useState<ShiftData[]>(initialShifts);
 
   const toggleRowExpansion = (shiftType: string) => {
     setExpandedRows(prev => ({ ...prev, [shiftType]: !prev[shiftType] }));
@@ -125,7 +125,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({ month, int
 
   const handleAfterChange = (changes: Handsontable.CellChange[] | null, source: string) => {
     if (changes && source !== 'loadData') {
-      const newShifts = [...shifts];
+      const newShifts = [...initialShifts];
       changes.forEach(([row, prop, oldValue, newValue]) => {
         if (typeof prop === 'string') {
           const [tableIndex, columnIndex] = prop.split('-').map(Number);
@@ -145,14 +145,15 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({ month, int
         }
       });
       console.log('New shifts:', newShifts);
-      setShifts(newShifts);
+      // setShifts(newShifts);
       handleSaveChanges(newShifts);
+      console.log('Changes:', changes);
     }
   };
 
   return (
     <ThemeProvider theme={drtTheme}>
-      {shifts.map((shift, index) => {
+      {initialShifts.map((shift, index) => {
         const isExpanded = expandedRows[shift.defaultShift.name] || false;
         const rows = generateRows(index, shift, month, interval, isExpanded);
         // const tableHeight = rows.length * 24 + 60;
@@ -171,7 +172,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({ month, int
               data={rows}
               colHeaders={generateColumnHeaders(daysInMonth)}
               columns={generateColumns(index, daysInMonth)}
-              style={{ border: '1px solid #ccc', borderSpacing: '0', height : 'auto' }}
+              style={{ border: '1px solid #ccc', borderSpacing: '0', height : '400px' }}
               cells={(row, col) => ({
                 className: 'htCenter htMiddle',
                 renderer: 'text'
