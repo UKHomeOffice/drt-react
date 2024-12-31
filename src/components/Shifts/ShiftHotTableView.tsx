@@ -62,6 +62,7 @@ const generateColumns = (tableIndex: number, daysInMonth: number) => {
 
 const generateRows = (tableIndex: number, shift: ShiftData, month: number, interval: number, isExpanded: boolean) => {
   const rows: any[] = [];
+  console.log('generateRows Shift:...', shift);
   const daysInMonth = moment().month(month - 1).daysInMonth();
   if (shift) {
     const headerRow: any = { id: 'header', time: `${shift.defaultShift.startTime} - ${shift.defaultShift.endTime}` };
@@ -143,6 +144,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({ month, int
           }
         }
       });
+      console.log('New shifts:', newShifts);
       setShifts(newShifts);
     }
   };
@@ -168,7 +170,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({ month, int
               data={rows}
               colHeaders={generateColumnHeaders(daysInMonth)}
               columns={generateColumns(index, daysInMonth)}
-              style={{ border: '1px solid #ccc', borderSpacing: '0', minHeight: `100px`, maxHeight: `500px` }}
+              style={{ border: '1px solid #ccc', borderSpacing: '0', height : 'auto' }}
               cells={(row, col) => ({
                 className: 'htCenter htMiddle',
                 renderer: 'text'
