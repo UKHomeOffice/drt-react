@@ -7,7 +7,7 @@ import {
 } from './ShiftHotTableView';
 import {LocalDate} from './LocalDate';
 import React from 'react';
-import { data as testData } from './TestData';
+import {data as testData} from './TestData';
 
 export default {
   title: 'DRT Components/UI/ShiftHotTableViewComponent2',
@@ -60,8 +60,8 @@ const generateShiftAssignments = (defaultShifts: DefaultShift, interval: number,
   for (let day = 1; day <= daysInMonth; day++) {
     const [startHour, startMinute] = defaultShifts.startTime.split(':').map(Number);
     const [endHour, endMinute] = defaultShifts.endTime.split(':').map(Number);
-    const start = new LocalDate(2025, month, day, startHour, startMinute);
-    const end = new LocalDate(2025, month, day, endHour, endMinute);
+    const start = new LocalDate(year, month, day, startHour, startMinute);
+    const end = new LocalDate(year, month, day, endHour, endMinute);
     let current = start;
     let rowId = 1;
     while (current.isBefore(end)) {
@@ -89,12 +89,13 @@ const generateShiftAssignments = (defaultShifts: DefaultShift, interval: number,
 const parsedAssignments: ShiftAssignment[] = parseShiftAssignments(testData);
 const initialDefaultShifts: ShiftData[] = initialShift.map((defaultShift, index) => {
   const assignments = generateShiftAssignments(defaultShift, 60, parsedAssignments);
-  return { index, defaultShift, assignments };
+  return {index, defaultShift, assignments};
 });
 
-const handleSaveChanges = (shifts: ShiftData[]) => {
+const handleSaveChanges = (shifts: ShiftData[], changedAssignments: ShiftAssignment[]) => {
   // Function to handle saving changes
   console.log('Data to be saved:', shifts);
+  console.log('Changed assignments:', changedAssignments);
   // Add your data submission logic here
 };
 

@@ -103,7 +103,7 @@ export interface ShiftHotTableViewProps {
   year: number;
   interval: number;
   initialShifts: ShiftData[];
-  handleSaveChanges: (shifts: ShiftData[]) => void;
+  handleSaveChanges: (shifts: ShiftData[], changedAssignments: ShiftAssignment[]) => void;
 }
 
 export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
@@ -132,6 +132,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
   const handleAfterChange = (changes: Handsontable.CellChange[] | null, source: string) => {
     if (changes && source !== 'loadData') {
       const newShifts = [...initialShifts];
+      const changedAssignments: ShiftAssignment[] = [];
       changes.forEach(([row, tableColumn, oldValue, newValue]) => {
         if (typeof tableColumn === 'string') {
           const [tableIndex, columnIndex] = tableColumn.split('-').map(Number);
@@ -144,6 +145,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
 
               if (assignmentIndex !== -1) {
                 newShifts[shiftIndex].assignments[assignmentIndex].staffNumber = parseInt(newValue, 10);
+                changedAssignments.push(newShifts[shiftIndex].assignments[assignmentIndex]);
               }
             } else if (tableColumn === 'time') {
               const [startTime, endTime] = newValue.split(' - ');
@@ -154,8 +156,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
         }
       });
       console.log('New shifts:', newShifts);
-      // setShifts(newShifts);
-      handleSaveChanges(newShifts);
+      handleSaveChanges(newShifts, changedAssignments);
       console.log('Changes:', changes);
     }
   };
