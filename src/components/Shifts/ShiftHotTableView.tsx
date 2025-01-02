@@ -40,12 +40,13 @@ export interface ShiftData {
   assignments: ShiftAssignment[];
 }
 
-const generateColumnHeaders = (daysInMonth: number) => {
+const generateColumnHeaders = (daysInMonth: number, month: number, year: number) => {
   const headers: string[] = ['Time'];
   for (let i = 1; i <= daysInMonth; i++) {
-    const date = moment().date(i).format('D');
-    const day = moment().date(i).format('ddd');
-    headers.push(`${date}</br>${day}`);
+    const date = moment({ year, month: month - 1, day: i });
+    const formattedDate = date.format('D');
+    const day = date.format('ddd');
+    headers.push(`${formattedDate}</br>${day}`);
   }
   return headers;
 };
@@ -64,6 +65,7 @@ const generateRows = (tableIndex: number, shift: ShiftData, month: number, year:
   const rows: any[] = [];
   console.log('generateRows Shift:...', shift);
   const daysInMonth = moment().month(month - 1).daysInMonth();
+  console.log('generateRows month, year and daysInMonth :...', month, year, daysInMonth);
   if (shift) {
     const headerRow: any = {id: 'header', time: `${shift.defaultShift.startTime} - ${shift.defaultShift.endTime}`};
     for (let day = 1; day <= daysInMonth; day++) {
@@ -165,7 +167,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
     <ThemeProvider theme={drtTheme}>
       {initialShifts.map((shift, index) => {
         const isExpanded = expandedRows[shift.defaultShift.name] || false;
-        const rows = generateRows(index, shift, year, month, interval, isExpanded);
+        const rows = generateRows(index, shift, month, year, interval, isExpanded);
         const tableHeight = rows.length * 24 + 60;
 
         return (
@@ -180,7 +182,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               id={`hot-table-${index}`}
               className={`shift-hot-table-${index}`}
               data={rows}
-              colHeaders={generateColumnHeaders(daysInMonth)}
+              colHeaders={generateColumnHeaders(daysInMonth, month, year)}
               columns={generateColumns(index, daysInMonth)}
               style={{border: '1px solid #ccc', borderSpacing: '0', height: `${tableHeight}px`}}
               cells={(row, col) => ({

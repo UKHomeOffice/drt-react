@@ -23,7 +23,7 @@ const initialShift: DefaultShift[] = [
   {name: 'Night shift', defaultStaffNumber: 12, startTime: '21:30', endTime: '23:30'}
 ];
 
-const month = 1;
+const month = 2;
 const year = 2025;
 
 const parseShiftAssignments = (data: string): ShiftAssignment[] => {
