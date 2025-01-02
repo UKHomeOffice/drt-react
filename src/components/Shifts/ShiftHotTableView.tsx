@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Box, Button, IconButton, ThemeProvider, Typography} from '@mui/material';
+import {Box, IconButton, ThemeProvider, Typography} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import Handsontable from 'handsontable';
@@ -89,8 +89,7 @@ const generateRows = (tableIndex: number, shift: ShiftData, month: number, year:
         const row: any = {time: `${currentTime.hour.toString().padStart(2, '0')}:${currentTime.minute.toString().padStart(2, '0')} - ${nextTime.hour.toString().padStart(2, '0')}:${nextTime.minute.toString().padStart(2, '0')}`};
         for (let day = 1; day <= daysInMonth; day++) {
           const dayAssignments = shift.assignments.filter(assignment => assignment.startTime.day === day && assignment.startTime.hour === currentTime.hour && assignment.startTime.minute === currentTime.minute);
-          const staffNumber = dayAssignments.length > 0 ? dayAssignments[0].staffNumber : '';
-          row[`${tableIndex}-${day}`] = staffNumber;
+          row[`${tableIndex}-${day}`] = dayAssignments.length > 0 ? dayAssignments[0].staffNumber : '';
         }
         rows.push(row);
         currentTime = currentTime.addMinutes(interval);
