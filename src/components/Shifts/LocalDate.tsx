@@ -24,6 +24,11 @@ export class LocalDate {
     );
   }
 
+  addDays(days: number): LocalDate {
+    const date = new Date(this.year, this.month - 1, this.day + days, this.hour, this.minute);
+    return new LocalDate(date.getFullYear(), date.getMonth() + 1, date.getDate(), date.getHours(), date.getMinutes());
+  }
+
   addMinutes(minutes: number): LocalDate {
     const totalMinutes = this.minute + minutes;
     const newHour = this.hour + Math.floor(totalMinutes / 60);
