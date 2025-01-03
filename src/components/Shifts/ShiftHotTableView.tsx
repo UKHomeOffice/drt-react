@@ -137,16 +137,19 @@ const generateRows = (viewDate: ViewDate, dayRange: string, tableIndex: number, 
     if (isExpanded) {
       const [startHour, startMinute] = shift.defaultShift.startTime.split(':').map(Number);
       const [endHour, endMinute] = shift.defaultShift.endTime.split(':').map(Number);
-      const startTime: LocalDate = new LocalDate(viewDate.year, viewDate.month, firstDay.day, startHour, startMinute);
-      const endTime: LocalDate = new LocalDate(viewDate.year, viewDate.month, firstDay.day, endHour, endMinute);
+      const startTime: LocalDate = new LocalDate(firstDay.year, firstDay.month, firstDay.day, startHour, startMinute);
+      const endTime: LocalDate = new LocalDate(firstDay.year, firstDay.month, firstDay.day, endHour, endMinute);
 
       let currentTime = startTime;
       while (currentTime.isBefore(endTime)) {
         const nextTime = currentTime.addMinutes(interval);
         const row: any = {time: `${currentTime.hour.toString().padStart(2, '0')}:${currentTime.minute.toString().padStart(2, '0')} - ${nextTime.hour.toString().padStart(2, '0')}:${nextTime.minute.toString().padStart(2, '0')}`};
+        let nextDate = firstDay;
         for (let day = 1; day <= daysCount; day++) {
-          const dayAssignments = shift.assignments.filter(assignment => assignment.startTime.day === firstDay.day + day - 1 && assignment.startTime.hour === currentTime.hour && assignment.startTime.minute === currentTime.minute);
+          const dayAssignments = shift.assignments.filter(assignment =>  assignment.startTime.year === nextDate.year && assignment.startTime.month === nextDate.month
+            && assignment.startTime.day === nextDate.day && assignment.startTime.hour === currentTime.hour && assignment.startTime.minute === currentTime.minute);
           row[`${tableIndex}-${day}`] = dayAssignments.length > 0 ? dayAssignments[0].staffNumber : '';
+          nextDate = nextDate.addDays(1);
         }
         rows.push(row);
         currentTime = currentTime.addMinutes(interval);

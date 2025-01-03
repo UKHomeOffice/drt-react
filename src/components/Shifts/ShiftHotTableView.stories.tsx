@@ -70,7 +70,7 @@ const ShiftHotTableViewStory: React.FC = () => {
   return (
     <ShiftHotTableViewComponent
       interval={60}
-      dayRange={'weekly'}
+      dayRange={'monthly'}
       viewDate={{year: 2025, month: 1, day: 1}}
       initialShifts={initialDefaultShifts}
       handleSaveChanges={handleSaveChanges}
