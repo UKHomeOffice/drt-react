@@ -144,12 +144,12 @@ const generateRows = (viewDate: ViewDate, dayRange: string, tableIndex: number, 
       while (currentTime.isBefore(endTime)) {
         const nextTime = currentTime.addMinutes(interval);
         const row: any = {time: `${currentTime.hour.toString().padStart(2, '0')}:${currentTime.minute.toString().padStart(2, '0')} - ${nextTime.hour.toString().padStart(2, '0')}:${nextTime.minute.toString().padStart(2, '0')}`};
-        let nextDate = firstDay;
+        let nextDay = firstDay;
         for (let day = 1; day <= daysCount; day++) {
-          const dayAssignments = shift.assignments.filter(assignment =>  assignment.startTime.year === nextDate.year && assignment.startTime.month === nextDate.month
-            && assignment.startTime.day === nextDate.day && assignment.startTime.hour === currentTime.hour && assignment.startTime.minute === currentTime.minute);
+          const dayAssignments = shift.assignments.filter(assignment =>  assignment.startTime.year === nextDay.year && assignment.startTime.month === nextDay.month
+            && assignment.startTime.day === nextDay.day && assignment.startTime.hour === currentTime.hour && assignment.startTime.minute === currentTime.minute);
           row[`${tableIndex}-${day}`] = dayAssignments.length > 0 ? dayAssignments[0].staffNumber : '';
-          nextDate = nextDate.addDays(1);
+          nextDay = nextDay.addDays(1);
         }
         rows.push(row);
         currentTime = currentTime.addMinutes(interval);
@@ -243,7 +243,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               data={rows}
               colHeaders={generateColumnHeaders(viewDate, dayRange, daysInMonth)}
               columns={generateColumns(dayRange, index, daysInMonth)}
-              style={{border: '1px solid #ccc', borderSpacing: '0', height: `${tableHeight}px`}}
+              style={{borderSpacing: '0', height: `${tableHeight}px`}}
               cells={(row, col) => ({
                 renderer: cellRenderer
               })}
