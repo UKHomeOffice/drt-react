@@ -36,7 +36,13 @@ const generateShiftAssignments = (defaultShifts: DefaultShift, interval: number,
       let current = start;
       let rowId = 1;
       while (current.isBefore(end)) {
-        const next = current.addMinutes(interval);
+        let next
+        if((current.minute === 30 && interval === 60) || (current.hour === endHour && interval === 60 && endMinute === 30)) {
+          next = current.addMinutes(30);
+        } else {
+          next = current.addMinutes(interval);
+        }
+
         assignments.push({
           column: day,
           row: rowId++,

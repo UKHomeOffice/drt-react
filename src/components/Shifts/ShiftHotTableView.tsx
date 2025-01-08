@@ -133,7 +133,12 @@ const generateRows = (viewDate: ViewDate, dayRange: string, tableIndex: number, 
 
       let currentTime = startTime;
       while (currentTime.isBefore(endTime)) {
-        const nextTime = currentTime.addMinutes(interval);
+        let nextTime
+        if ((currentTime.minute === 30 && interval === 60) || (currentTime.hour === endTime.hour && interval === 60 && endTime.minute === 30)) {
+          nextTime = currentTime.addMinutes(30);
+        } else {
+          nextTime = currentTime.addMinutes(interval);
+        }
         let nextTimeHourDisplay = 0;
         if (nextTime.hour === 24)
           nextTimeHourDisplay = 0
@@ -148,12 +153,13 @@ const generateRows = (viewDate: ViewDate, dayRange: string, tableIndex: number, 
           nextDay = nextDay.addDays(1);
         }
         rows.push(row);
-        currentTime = currentTime.addMinutes(interval);
+        currentTime = nextTime;
       }
     }
+    return rows;
   }
-  return rows;
-};
+
+}
 
 export interface ShiftHotTableViewProps {
   interval: number;
