@@ -46,23 +46,14 @@ export interface ShiftData {
   assignments: ShiftAssignment[];
 }
 
-const getWeekRange = (date: ViewDate) => {
+const getWeekFirstDate = (date: ViewDate) => {
   const givenDate = moment({year: date.year, month: date.month - 1, day: date.day});
   const startOfWeek = givenDate.clone().startOf('week');
-  const endOfWeek = givenDate.clone().endOf('week');
-
   return {
     firstDate: {
       year: startOfWeek.year(),
       month: startOfWeek.month() + 1,
       day: startOfWeek.date(),
-      hours: 0,
-      minutes: 0
-    },
-    lastDate: {
-      year: endOfWeek.year(),
-      month: endOfWeek.month() + 1,
-      day: endOfWeek.date(),
       hours: 0,
       minutes: 0
     }
@@ -80,14 +71,11 @@ const numberOfDays = (dayRange: string, daysInMonth: number) => {
 
 const generateColumnHeaders = (viewDate: ViewDate, dayRange: string, daysInMonth: number) => {
   const headers: string[] = ['Time'];
-  const {firstDate, lastDate} = getWeekRange(viewDate);
+  const {firstDate} = getWeekFirstDate(viewDate);
   const daysCount = numberOfDays(dayRange, daysInMonth);
-  const firstDay = dayRange === 'weekly' ?
+  let nextDate = dayRange === 'weekly' ?
     new LocalDate(firstDate.year, firstDate.month, firstDate.day, 0, 0) : dayRange === 'daily' ?
       new LocalDate(viewDate.year, viewDate.month, viewDate.day, 0, 0) : new LocalDate(viewDate.year, viewDate.month, 1, 0, 0);
-
-  console.log(`firstDate: ${firstDate.year} ${firstDate.month} ${firstDate.day}, lastDate: ${lastDate.year} ${lastDate.month} ${lastDate.day}, daysCount: ${daysCount}, firstDay: ${firstDay}`);
-  let nextDate = firstDay;
   for (let i = 1; i <= daysCount; i++) {
     const date = moment({year: nextDate.year, month: nextDate.month - 1, day: nextDate.day});
     const formattedDate = date.format('D');
@@ -111,17 +99,20 @@ const generateColumns = (dayRange: string, tableIndex: number, daysInMonth: numb
 
 const generateRows = (viewDate: ViewDate, dayRange: string, tableIndex: number, shift: ShiftData, interval: number, isExpanded: boolean) => {
   const rows: any[] = [];
-  console.log('generateRows Shift:...', shift);
   const daysInMonth = moment().month(viewDate.month - 1).daysInMonth();
-  const {firstDate, lastDate} = getWeekRange(viewDate);
+  const {firstDate} = getWeekFirstDate(viewDate);
   const daysCount = numberOfDays(dayRange, daysInMonth);
   const firstDay = dayRange === 'weekly' ?
     new LocalDate(firstDate.year, firstDate.month, firstDate.day, 0, 0) : dayRange === 'daily' ?
       new LocalDate(viewDate.year, viewDate.month, viewDate.day, 0, 0) : new LocalDate(viewDate.year, viewDate.month, 1, 0, 0);
 
-  console.log('generateRows month, year and daysInMonth :...', viewDate.month, viewDate.year, daysInMonth);
   if (shift) {
-    const headerRow: any = {id: 'header', time: `${shift.defaultShift.startTime} - ${shift.defaultShift.endTime}`};
+    let displayEndTime = '';
+    if (shift.defaultShift.endTime === '24:00')
+      displayEndTime = '00:00'
+    else
+      displayEndTime = shift.defaultShift.endTime
+    const headerRow: any = {id: 'header', time: `${shift.defaultShift.startTime} - ${displayEndTime}`};
     let nextDate = firstDay;
 
     for (let day = 1; day <= daysCount; day++) {
@@ -143,10 +134,15 @@ const generateRows = (viewDate: ViewDate, dayRange: string, tableIndex: number, 
       let currentTime = startTime;
       while (currentTime.isBefore(endTime)) {
         const nextTime = currentTime.addMinutes(interval);
-        const row: any = {time: `${currentTime.hour.toString().padStart(2, '0')}:${currentTime.minute.toString().padStart(2, '0')} - ${nextTime.hour.toString().padStart(2, '0')}:${nextTime.minute.toString().padStart(2, '0')}`};
+        let nextTimeHourDisplay = 0;
+        if (nextTime.hour === 24)
+          nextTimeHourDisplay = 0
+        else
+          nextTimeHourDisplay = nextTime.hour
+        const row: any = {time: `${currentTime.hour.toString().padStart(2, '0')}:${currentTime.minute.toString().padStart(2, '0')} - ${nextTimeHourDisplay.toString().padStart(2, '0')}:${nextTime.minute.toString().padStart(2, '0')}`};
         let nextDay = firstDay;
         for (let day = 1; day <= daysCount; day++) {
-          const dayAssignments = shift.assignments.filter(assignment =>  assignment.startTime.year === nextDay.year && assignment.startTime.month === nextDay.month
+          const dayAssignments = shift.assignments.filter(assignment => assignment.startTime.year === nextDay.year && assignment.startTime.month === nextDay.month
             && assignment.startTime.day === nextDay.day && assignment.startTime.hour === currentTime.hour && assignment.startTime.minute === currentTime.minute);
           row[`${tableIndex}-${day}`] = dayAssignments.length > 0 ? dayAssignments[0].staffNumber : '';
           nextDay = nextDay.addDays(1);
@@ -201,8 +197,6 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
           if (shiftIndex !== -1) {
             if (columnIndex) {
               const assignmentIndex = newShifts[shiftIndex].assignments.findIndex(assignment => assignment.row === row && assignment.column === columnIndex);
-              console.log('Assignment index:', assignmentIndex);
-              console.log('newShifts[shiftIndex].assignments[assignmentIndex].staffNumber:', newShifts[shiftIndex].assignments[assignmentIndex]);
 
               if (assignmentIndex !== -1) {
                 newShifts[shiftIndex].assignments[assignmentIndex].staffNumber = parseInt(newValue, 10);
@@ -216,9 +210,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
           }
         }
       });
-      console.log('New shifts:', newShifts);
       handleSaveChanges(newShifts, changedAssignments);
-      console.log('Changes:', changes);
     }
   };
 
