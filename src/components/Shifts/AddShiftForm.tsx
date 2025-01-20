@@ -84,7 +84,7 @@ export const AddShiftForm = ({port, terminal, interval, initialShifts, confirmHa
                       onChange={(e) => handleChange(shift.id, 'name', e.target.value)}
                     />
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={12}>
                     <Typography variant="h6">Start Time</Typography>
                     <Box>
                       <Select
@@ -105,7 +105,7 @@ export const AddShiftForm = ({port, terminal, interval, initialShifts, confirmHa
                       </Select>
                     </Box>
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={12}>
                     <Typography variant="h6">End Time</Typography>
                     <Select
                       variant="outlined"
