@@ -9,6 +9,8 @@ import {registerAllModules} from 'handsontable/registry';
 import 'handsontable/dist/handsontable.full.min.css';
 import {LocalDate} from './LocalDate';
 import {drtTheme} from '../../index';
+import {ShiftSummary as ShiftSummaryComponent} from "./ShiftSummary";
+import {bottom} from "@popperjs/core";
 
 export interface ViewDate {
   year: number;
@@ -236,6 +238,9 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
 
   return (
     <ThemeProvider theme={drtTheme}>
+      <Box sx={{paddingBottom: 5}}>
+        <ShiftSummaryComponent shifts={initialShifts.map(s => s.defaultShift)}/>
+      </Box>
       {initialShifts.map((shift, index) => {
         const isExpanded = expandedRows[shift.defaultShift.name] || false;
         const rows = generateRows(viewDate, dayRange, index, shift, interval, isExpanded);
