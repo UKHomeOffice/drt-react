@@ -30,11 +30,22 @@ export class LocalDate {
   }
 
   addMinutes(minutes: number): LocalDate {
-    const totalMinutes = this.minute + minutes;
-    const newHour = this.hour + Math.floor(totalMinutes / 60);
-    const newMinute = totalMinutes % 60;
-    return new LocalDate(this.year, this.month, this.day, newHour, newMinute);
+    const date = new Date(this.year, this.month - 1, this.day, this.hour, this.minute + minutes);
+    return new LocalDate(
+      date.getFullYear(),
+      date.getMonth() + 1,
+      date.getDate(),
+      date.getHours(),
+      date.getMinutes()
+    );
   }
+
+  // addMinutes(minutes: number): LocalDate {
+  //   const totalMinutes = this.minute + minutes;
+  //   const newHour = this.hour + Math.floor(totalMinutes / 60);
+  //   const newMinute = totalMinutes % 60;
+  //   return new LocalDate(this.year, this.month, this.day, newHour, newMinute);
+  // }
 
   isBefore(other: LocalDate): boolean {
     if (this.year !== other.year) return this.year < other.year;

@@ -69,6 +69,7 @@ const numberOfDays = (dayRange: string, daysInMonth: number) => {
     return daysInMonth;
 }
 
+
 const generateColumnHeaders = (viewDate: ViewDate, dayRange: string, daysInMonth: number) => {
   const headers: string[] = ['Time'];
   const {firstDate} = getWeekFirstDate(viewDate);
@@ -129,7 +130,20 @@ const generateRows = (viewDate: ViewDate, dayRange: string, tableIndex: number, 
       const [startHour, startMinute] = shift.defaultShift.startTime.split(':').map(Number);
       const [endHour, endMinute] = shift.defaultShift.endTime.split(':').map(Number);
       const startTime: LocalDate = new LocalDate(firstDay.year, firstDay.month, firstDay.day, startHour, startMinute);
-      const endTime: LocalDate = new LocalDate(firstDay.year, firstDay.month, firstDay.day, endHour, endMinute);
+
+      const isShiftEndAfterMidNight = endHour < startHour || (endHour == startHour && endMinute < startMinute)
+      let endDate  = new LocalDate(firstDay.year, firstDay.month, firstDay.day, endHour, endMinute);
+      if (isShiftEndAfterMidNight) {
+        // const nDate = moment({ year: endDate.year, month: endDate.month - 1, day: endDate.day, hour: endDate.hour, minute: endDate.minute });
+        // const d = nDate.add(1, 'day');
+        // endDate = new LocalDate(d.year(), d.month() + 1, d.date(), endHour, endMinute);
+        // console.log('inside new end date',new LocalDate(d.year(), d.month() + 1, d.date(), endHour, endMinute), 'nDate', nDate , 'startTime',startTime , 'endDate', endDate)
+        endDate = endDate.addDays(1)
+        console.log('new end date',endDate.addDays(1), 'end date', endDate , 'start date', startTime)
+      }
+
+      const endTime: LocalDate = endDate;
+
 
       let currentTime = startTime;
       while (currentTime.isBefore(endTime)) {
@@ -225,7 +239,8 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
       {initialShifts.map((shift, index) => {
         const isExpanded = expandedRows[shift.defaultShift.name] || false;
         const rows = generateRows(viewDate, dayRange, index, shift, interval, isExpanded);
-        const tableHeight = rows.length * 24 + 60;
+        let tableHeight = 84;
+        if(rows) tableHeight = rows.length * 24 + 60;
 
         return (
           <Box key={index} sx={{marginBottom: 4}}>

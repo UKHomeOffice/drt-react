@@ -59,4 +59,96 @@ describe('LocalDate', () => {
     });
 
   });
+  describe('addDays', () => {
+    it('should correctly add days within the same month', () => {
+      const date = new LocalDate(2023, 10, 1, 10, 30);
+      const newDate = date.addDays(1);
+      expect(newDate.year).toBe(2023);
+      expect(newDate.month).toBe(10);
+      expect(newDate.day).toBe(2);
+      expect(newDate.hour).toBe(10);
+      expect(newDate.minute).toBe(30);
+    });
+
+    it('should correctly add days across month boundaries', () => {
+      const date = new LocalDate(2023, 10, 28, 10, 30);
+      const newDate = date.addDays(5);
+      expect(newDate.year).toBe(2023);
+      expect(newDate.month).toBe(11);
+      expect(newDate.day).toBe(2);
+      expect(newDate.hour).toBe(10);
+      expect(newDate.minute).toBe(30);
+    });
+
+    it('should correctly add days across year boundaries', () => {
+      const date = new LocalDate(2023, 12, 28, 10, 30);
+      const newDate = date.addDays(5);
+      expect(newDate.year).toBe(2024);
+      expect(newDate.month).toBe(1);
+      expect(newDate.day).toBe(2);
+      expect(newDate.hour).toBe(10);
+      expect(newDate.minute).toBe(30);
+    });
+
+    it('should correctly handle leap years', () => {
+      const date = new LocalDate(2024, 2, 28, 10, 30);
+      const newDate = date.addDays(2);
+      expect(newDate.year).toBe(2024);
+      expect(newDate.month).toBe(3);
+      expect(newDate.day).toBe(1);
+      expect(newDate.hour).toBe(10);
+      expect(newDate.minute).toBe(30);
+    });
+  });
+  describe('addMinutes', () => {
+    it('should correctly add minutes within the same hour', () => {
+      const date = new LocalDate(2023, 10, 1, 10, 30);
+      const newDate = date.addMinutes(15);
+      expect(newDate.year).toBe(2023);
+      expect(newDate.month).toBe(10);
+      expect(newDate.day).toBe(1);
+      expect(newDate.hour).toBe(10);
+      expect(newDate.minute).toBe(45);
+    });
+
+    it('should correctly add minutes across hour boundaries', () => {
+      const date = new LocalDate(2023, 10, 1, 10, 45);
+      const newDate = date.addMinutes(30);
+      expect(newDate.year).toBe(2023);
+      expect(newDate.month).toBe(10);
+      expect(newDate.day).toBe(1);
+      expect(newDate.hour).toBe(11);
+      expect(newDate.minute).toBe(15);
+    });
+
+    it('should correctly add minutes across day boundaries', () => {
+      const date = new LocalDate(2023, 10, 1, 23, 45);
+      const newDate = date.addMinutes(30);
+      expect(newDate.year).toBe(2023);
+      expect(newDate.month).toBe(10);
+      expect(newDate.day).toBe(2);
+      expect(newDate.hour).toBe(0);
+      expect(newDate.minute).toBe(15);
+    });
+
+    it('should correctly add minutes across month boundaries', () => {
+      const date = new LocalDate(2023, 10, 31, 23, 45);
+      const newDate = date.addMinutes(30);
+      expect(newDate.year).toBe(2023);
+      expect(newDate.month).toBe(11);
+      expect(newDate.day).toBe(1);
+      expect(newDate.hour).toBe(0);
+      expect(newDate.minute).toBe(15);
+    });
+
+    it('should correctly add minutes across year boundaries', () => {
+      const date = new LocalDate(2023, 12, 31, 23, 45);
+      const newDate = date.addMinutes(30);
+      expect(newDate.year).toBe(2024);
+      expect(newDate.month).toBe(1);
+      expect(newDate.day).toBe(1);
+      expect(newDate.hour).toBe(0);
+      expect(newDate.minute).toBe(15);
+    });
+  });
 });
