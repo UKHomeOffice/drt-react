@@ -255,6 +255,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
                 {isExpanded ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
               </IconButton>
             </Box>
+            <Typography>Default Staff : {shift.defaultShift.defaultStaffNumber}</Typography>
             <HotTable
               id={`hot-table-${index}`}
               className={`shift-hot-table-${index}`}
