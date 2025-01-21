@@ -19,7 +19,7 @@ export const generateShiftAssignments = (defaultShifts: DefaultShift, interval: 
       const end = endDate;
 
       let current = start;
-      let rowId = 1;
+      let rowId = 0;
       while (current.isBefore(end) || (current.hour === end.hour && current.minute < end.minute)) {
         let next;
         if ((current.minute === 30 && interval === 60) || (current.hour === endHour && interval === 60 && endMinute === 30)) {
@@ -42,7 +42,6 @@ export const generateShiftAssignments = (defaultShifts: DefaultShift, interval: 
           next = new LocalDate(next.year + 1, 1, next.day, next.hour, next.minute);
         }
 
-        console.log('rowid...', rowId , 'day...', day, 'current...', current, 'next...', next)
         assignments.push({
           column: day,
           row: rowId++,

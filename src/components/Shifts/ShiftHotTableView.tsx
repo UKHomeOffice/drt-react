@@ -251,7 +251,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
           <Box key={index} sx={{marginBottom: 4}}>
             <Box display="flex" alignItems="center">
               <Typography variant="h6" gutterBottom>
-                {shift.defaultShift.name} {isExpanded ? `${shift.defaultShift.startTime} - ${shift.defaultShift.endTime}` : ''}
+                {shift.defaultShift.name} {isExpanded ? `[ ${shift.defaultShift.startTime} - ${shift.defaultShift.endTime} ]` : ''}
               </Typography>
               <IconButton onClick={() => toggleRowExpansion(shift.defaultShift.name)}>
                 {isExpanded ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
