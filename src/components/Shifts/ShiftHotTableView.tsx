@@ -115,18 +115,6 @@ const generateRows = (viewDate: ViewDate, dayRange: string, tableIndex: number, 
       displayEndTime = '00:00'
     else
       displayEndTime = shift.defaultShift.endTime
-    const headerRow: any = {id: 'header', time: `${shift.defaultShift.startTime} - ${displayEndTime}`};
-    let nextDate = firstDay;
-
-    for (let day = 1; day <= daysCount; day++) {
-      const dayAssignments = shift.assignments.filter(assignment => assignment.startTime.day === nextDate.day && assignment.startTime.year === nextDate.year && assignment.startTime.month === nextDate.month);
-      const staffNumbers = dayAssignments.map(assignment => assignment.staffNumber);
-      const minStaffNumber = Math.min(...staffNumbers);
-      const maxStaffNumber = Math.max(...staffNumbers);
-      headerRow[`${tableIndex}-${day}`] = `${minStaffNumber} - ${maxStaffNumber}`;
-      nextDate = nextDate.addDays(1);
-    }
-    rows.push(headerRow);
 
     if (isExpanded) {
       const [startHour, startMinute] = shift.defaultShift.startTime.split(':').map(Number);
@@ -145,7 +133,6 @@ const generateRows = (viewDate: ViewDate, dayRange: string, tableIndex: number, 
       }
 
       const endTime: LocalDate = endDate;
-
 
       let currentTime = startTime;
       while (currentTime.isBefore(endTime)) {
@@ -171,6 +158,19 @@ const generateRows = (viewDate: ViewDate, dayRange: string, tableIndex: number, 
         rows.push(row);
         currentTime = nextTime;
       }
+    } else {
+      const headerRow: any = {id: 'header', time: `${shift.defaultShift.startTime} - ${displayEndTime}`};
+      let nextDate = firstDay;
+
+      for (let day = 1; day <= daysCount; day++) {
+        const dayAssignments = shift.assignments.filter(assignment => assignment.startTime.day === nextDate.day && assignment.startTime.year === nextDate.year && assignment.startTime.month === nextDate.month);
+        const staffNumbers = dayAssignments.map(assignment => assignment.staffNumber);
+        const minStaffNumber = Math.min(...staffNumbers);
+        const maxStaffNumber = Math.max(...staffNumbers);
+        headerRow[`${tableIndex}-${day}`] = `${minStaffNumber} - ${maxStaffNumber}`;
+        nextDate = nextDate.addDays(1);
+      }
+      rows.push(headerRow);
     }
     return rows;
   }
@@ -250,7 +250,9 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
         return (
           <Box key={index} sx={{marginBottom: 4}}>
             <Box display="flex" alignItems="center">
-              <Typography variant="h6" gutterBottom>{shift.defaultShift.name}</Typography>
+              <Typography variant="h6" gutterBottom>
+                {shift.defaultShift.name} {isExpanded ? `${shift.defaultShift.startTime} - ${shift.defaultShift.endTime}` : ''}
+              </Typography>
               <IconButton onClick={() => toggleRowExpansion(shift.defaultShift.name)}>
                 {isExpanded ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
               </IconButton>
