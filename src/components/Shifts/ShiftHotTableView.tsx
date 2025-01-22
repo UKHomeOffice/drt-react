@@ -167,7 +167,7 @@ const generateRows = (viewDate: ViewDate, dayRange: string, tableIndex: number, 
         const staffNumbers = dayAssignments.map(assignment => assignment.staffNumber);
         const minStaffNumber = Math.min(...staffNumbers);
         const maxStaffNumber = Math.max(...staffNumbers);
-        headerRow[`${tableIndex}-${day}`] = `${minStaffNumber} - ${maxStaffNumber}`;
+        headerRow[`${tableIndex}-${day}`] = `${minStaffNumber} to ${maxStaffNumber}`;
         nextDate = nextDate.addDays(1);
       }
       rows.push(headerRow);
