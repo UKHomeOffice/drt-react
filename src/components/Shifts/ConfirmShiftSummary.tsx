@@ -63,7 +63,7 @@ export const ConfirmShiftSummary = ({
       <Typography variant="h3" sx={{paddingTop: '10px',fontSize: '20px'}}>Shifts</Typography>
       {
         shifts.map((shift) => (
-          <TableContainer key={shift.id} component={Paper} sx={{paddingTop: '10px', backgroundColor: 'transparent'}}>
+          <TableContainer key={shift.id} component={Paper} sx={{maxWidth: '500px',paddingTop: '10px', backgroundColor: 'transparent'}}>
             <Table>
               <TableHead>
                 <TableRow>
