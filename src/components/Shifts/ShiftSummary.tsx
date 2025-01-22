@@ -8,7 +8,7 @@ export interface InitialShiftsProps {
 
 export const ShiftSummary: React.FC<InitialShiftsProps> = ({shifts}: InitialShiftsProps) => {
   return (
-    <Box>
+    <Box sx={{p: 2, maxWidth: '800px'}}>
       <Typography variant="h4" gutterBottom>Shift Summary</Typography>
       <Table>
         <TableHead>
