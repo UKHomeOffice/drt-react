@@ -11,6 +11,8 @@ type Story = StoryObj<typeof ConfirmShiftSummaryComponent>;
 
 export const ConfirmShiftSummary: Story = {
   args: {
+    port: 'BHX',
+    terminal: 'T2',
     shifts: [
       {
         id: 1,

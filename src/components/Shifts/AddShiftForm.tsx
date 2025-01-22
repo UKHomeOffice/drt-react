@@ -4,6 +4,8 @@ import {timeOptions, endTimeOptions} from '../Util';
 import {ConfirmShiftSummary} from "./ConfirmShiftSummary";
 import {drtTheme} from "../../index";
 import CloseIcon from "@mui/icons-material/Close";
+import {getAirportByCode, getAirportNameByCode} from "../../aiports";
+import AddIcon from '@mui/icons-material/Add';
 
 export interface Shift {
   id: number;
@@ -68,24 +70,24 @@ export const AddShiftForm = ({port, terminal, interval, initialShifts, confirmHa
     <ThemeProvider theme={drtTheme}>
       <Box>
         {!showConfirm ? (
-          <Box sx={{p: 2, width: '500px'}}>
-            <Typography>Add staff to {port} {terminal}</Typography>
-            <Typography variant="h4" sx={{paddingBottom: '10px'}}>Step 1 of 2 - Create your shift pattern</Typography>
+          <Box sx={{p: 2, minWidth: '500px'}}>
+            <Typography sx={{fontSize: '20px'}}>Add staff to {port} {getAirportNameByCode(port)} {terminal}</Typography>
+            <Typography variant="h1" sx={{paddingBottom: '10px'}}>Step 1 of 2 - Create your shift pattern</Typography>
             {Array.from(shifts).map((shift) => (
               <Box key={shift.id}
-                   sx={{mb: 2, p: 2, border: '1px solid #ccc', borderRadius: 2, width: '300px'}}>
-                <Typography variant="h6" sx={{paddingBottom: '10px'}}>Shift #{shift.id}</Typography>
+                   sx={{mb: 2, p: 2, border: '1px solid #ccc', width: '300px', backgroundColor: '#E6E9F1'}}>
+                <Typography variant="h2" sx={{paddingBottom: '10px', fontSize: '24px'}}>Shift #{shift.id}</Typography>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
+                    <Typography sx={{fontSize: '16px', fontWeight: 'bold'}}>Name of shift</Typography>
                     <TextField
-                      label="Name of shift"
                       fullWidth
                       value={shift.name}
                       onChange={(e) => handleChange(shift.id, 'name', e.target.value)}
                     />
                   </Grid>
                   <Grid item xs={12}>
-                    <Typography variant="h6">Start Time</Typography>
+                    <Typography sx={{fontSize: '16px', fontWeight: 'bold'}}>Start time</Typography>
                     <Box>
                       <Select
                         variant="outlined"
@@ -106,7 +108,7 @@ export const AddShiftForm = ({port, terminal, interval, initialShifts, confirmHa
                     </Box>
                   </Grid>
                   <Grid item xs={12}>
-                    <Typography variant="h6">End Time</Typography>
+                    <Typography sx={{fontSize: '16px', fontWeight: 'bold'}}>End time</Typography>
                     <Select
                       variant="outlined"
                       value={shift.endTime}
@@ -125,19 +127,20 @@ export const AddShiftForm = ({port, terminal, interval, initialShifts, confirmHa
                     </Select>
                   </Grid>
                   <Grid item xs={12}>
+                    <Typography sx={{fontSize: '16px', fontWeight: 'bold'}}>Default staff number (optional)</Typography>
+                    <Grid item xs={12}>
+                      <Typography variant="body2" sx={{fontSize: '14px'}}>
+                        For current season only (change this at any time). It will only overwrite zero staffing in DRT.
+                      </Typography>
+                    </Grid>
                     <TextField
-                      label="Default staff number (optional)"
                       type="number"
                       fullWidth
                       value={shift.defaultStaffNumber}
                       onChange={(e) => handleChange(shift.id, 'defaultStaffNumber', parseInt(e.target.value, 10))}
                     />
                   </Grid>
-                  <Grid item xs={12}>
-                    <Typography variant="body2">
-                      For current season only (change this at any time). It will only overwrite zero staffing in DRT.
-                    </Typography>
-                  </Grid>
+
                   <Grid item xs={12}>
                     <IconButton color="secondary" onClick={() => handleRemoveShift(shift.id)}>
                       <CloseIcon/> <Typography sx={{textDecoration: 'underline'}}>Remove shift</Typography>
@@ -147,7 +150,10 @@ export const AddShiftForm = ({port, terminal, interval, initialShifts, confirmHa
               </Box>
             ))}
             <Box>
-              <Button variant="outlined" color="primary" onClick={handleAddShift}>
+              <Button variant="outlined" color="primary" onClick={handleAddShift} sx={{gap: 0, paddingLeft: '0'}}>
+                <IconButton color="primary" sx={{padding: '0'}}>
+                  <AddIcon/>
+                </IconButton>
                 Add a shift
               </Button>
             </Box>

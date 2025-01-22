@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import CloseIcon from "@mui/icons-material/Close";
 import {EditIcon} from "@storybook/icons";
+import {getAirportNameByCode} from "../../aiports";
 
 export interface ShiftsSummaryProps {
   port: string
@@ -53,16 +54,16 @@ export const ConfirmShiftSummary = ({
   const {minStartTime, maxEndTime} = findMinStartTimeAndMaxEndTime(shifts);
 
   return (
-    <Box sx={{p: 2, width: '500px'}}>
-      <Typography sx={{paddingBottom: '10px'}}>Add staff to {port} {terminal}</Typography>
-      <Typography variant="h4" sx={{paddingBottom: '10px'}}>Step 2 of 2 - Check your shifts</Typography>
-      <Typography variant="h6" sx={{paddingBottom: '10px',}}>Summary</Typography>
+    <Box sx={{p: 2, minWidth: '500px'}}>
+      <Typography sx={{fontSize: '20px'}}>Add staff to {port} {getAirportNameByCode(port)} {terminal}</Typography>
+      <Typography variant="h1" sx={{paddingBottom: '10px'}}>Step 2 of 2 - Check your shifts</Typography>
+      <Typography variant="h2" sx={{paddingBottom: '10px',fontSize: '24px'}}>Summary</Typography>
       <Typography variant="body1">Total shifts: {shifts.length}</Typography>
       <Typography variant="body1" sx={{paddingTop: '10px'}}>Hours covered: {minStartTime} to {maxEndTime}</Typography>
-      <Typography variant="h6" sx={{paddingTop: '10px'}}>Shifts</Typography>
+      <Typography variant="h3" sx={{paddingTop: '10px',fontSize: '20px'}}>Shifts</Typography>
       {
         shifts.map((shift) => (
-          <TableContainer component={Paper} sx={{paddingTop: '10px', backgroundColor: 'transparent'}}>
+          <TableContainer key={shift.id} component={Paper} sx={{paddingTop: '10px', backgroundColor: 'transparent'}}>
             <Table>
               <TableHead>
                 <TableRow>

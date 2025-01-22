@@ -11,8 +11,8 @@ type Story = StoryObj<typeof AddShiftFormComponent>;
 
 export const AddShiftForm: Story = {
   args: {
-    port: 'LHR',
-    terminal: 'T1',
+    port: 'BHX',
+    terminal: 'T2',
     interval: 15,
     initialShifts: [
       {
