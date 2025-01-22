@@ -7,7 +7,7 @@ import {
 } from './ShiftHotTableView';
 import {LocalDate} from './LocalDate';
 import React from 'react';
-import moment from "moment/moment";
+import {generateShiftAssignments} from './GenerateShift';
 
 export default {
   title: 'DRT Components/UI/ShiftHotTableViewComponent2',
@@ -20,38 +20,8 @@ const initialShift: DefaultShift[] = [
   {name: 'Early shift', defaultStaffNumber: 0, startTime: '06:30', endTime: '16:30'},
   {name: 'Mid shift', defaultStaffNumber: 0, startTime: '12:00', endTime: '22:30'},
   {name: 'Late shift', defaultStaffNumber: 0, startTime: '13:00', endTime: '23:00'},
-  {name: 'Night shift', defaultStaffNumber: 0, startTime: '21:30', endTime: '24:00'}
+  {name: 'Night shift', defaultStaffNumber: 0, startTime: '21:30', endTime: '02:00'}
 ];
-
-
-const generateShiftAssignments = (defaultShifts: DefaultShift, interval: number, months: LocalDate[]): ShiftAssignment[] => {
-  const assignments: ShiftAssignment[] = [];
-  months.forEach(date => {
-    const daysInMonth = moment().month(date.month - 1).daysInMonth();
-    for (let day = 1; day <= daysInMonth; day++) {
-      const [startHour, startMinute] = defaultShifts.startTime.split(':').map(Number);
-      const [endHour, endMinute] = defaultShifts.endTime.split(':').map(Number);
-      const start = new LocalDate(date.year, date.month, day, startHour, startMinute);
-      const end = new LocalDate(date.year, date.month, day, endHour, endMinute);
-      let current = start;
-      let rowId = 1;
-      while (current.isBefore(end)) {
-        const next = current.addMinutes(interval);
-        assignments.push({
-          column: day,
-          row: rowId++,
-          name: defaultShifts.name,
-          staffNumber: defaultShifts.defaultStaffNumber + day,
-          startTime: current,
-          endTime: next
-        });
-        current = next;
-      }
-    }
-  })
-
-  return assignments;
-};
 
 const initialDefaultShifts: ShiftData[] = initialShift.map((defaultShift, index) => {
   const assignments = generateShiftAssignments(defaultShift, 30, [new LocalDate(2024, 12, 1, 0, 0), new LocalDate(2025, 1, 1, 0, 0), new LocalDate(2025, 2, 1, 0, 0)]);

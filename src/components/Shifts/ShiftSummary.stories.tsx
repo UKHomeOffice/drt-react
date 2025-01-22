@@ -1,6 +1,6 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import {ShiftSummary as ShiftSummaryComponent} from './ShiftSummary';
-import {DefaultShift, ShiftHotTableView as ShiftHotTableViewComponent} from "./ShiftHotTableView";
+import {DefaultShift} from "./ShiftHotTableView";
 import React from "react";
 
 export default {

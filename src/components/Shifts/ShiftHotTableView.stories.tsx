@@ -7,7 +7,6 @@ import {
 } from './ShiftHotTableView';
 import {LocalDate} from './LocalDate';
 import React from 'react';
-import moment from "moment/moment";
 import {generateShiftAssignments} from './GenerateShift';
 
 export default {
