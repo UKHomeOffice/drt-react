@@ -269,6 +269,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
                 renderer: cellRenderer
               })}
               afterChange={handleAfterChange}
+              licenseKey={'non-commercial-and-evaluation'}
             />
           </Box>
         );
