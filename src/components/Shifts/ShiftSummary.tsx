@@ -9,13 +9,13 @@ export interface InitialShiftsProps {
 export const ShiftSummary: React.FC<InitialShiftsProps> = ({shifts}: InitialShiftsProps) => {
   return (
     <Box sx={{maxWidth: '800px'}}>
-      <Typography variant="h4" gutterBottom>Shift Summary</Typography>
+      <Typography variant="h2" gutterBottom>Shift summary</Typography>
       <Table>
         <TableHead>
           <TableRow>
             <TableCell sx={{border: '1px solid #ccc', width: '150px'}}>Shift</TableCell>
-            <TableCell sx={{border: '1px solid #ccc', width: '200px'}}>Times Covered</TableCell>
-            <TableCell sx={{border: '1px solid #ccc', width: '100px'}}>Default Staff</TableCell>
+            <TableCell sx={{border: '1px solid #ccc', width: '200px'}}>Times covered</TableCell>
+            <TableCell sx={{border: '1px solid #ccc', width: '100px'}}>Default staff</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
