@@ -40,13 +40,6 @@ export class LocalDate {
     );
   }
 
-  // addMinutes(minutes: number): LocalDate {
-  //   const totalMinutes = this.minute + minutes;
-  //   const newHour = this.hour + Math.floor(totalMinutes / 60);
-  //   const newMinute = totalMinutes % 60;
-  //   return new LocalDate(this.year, this.month, this.day, newHour, newMinute);
-  // }
-
   isBefore(other: LocalDate): boolean {
     if (this.year !== other.year) return this.year < other.year;
     if (this.month !== other.month) return this.month < other.month;

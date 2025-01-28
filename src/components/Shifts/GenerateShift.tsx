@@ -1,9 +1,9 @@
 import {LocalDate} from "./LocalDate";
 import moment from "moment/moment";
-import {DefaultShift, ShiftAssignment} from "./ShiftHotTableView";
+import {ShiftSummary, StaffTableEntry} from "./ShiftHotTableView";
 
-export const generateShiftAssignments = (defaultShifts: DefaultShift, interval: number, months: LocalDate[]): ShiftAssignment[] => {
-  const assignments: ShiftAssignment[] = [];
+export const generateShiftAssignments = (defaultShifts: ShiftSummary, interval: number, months: LocalDate[]): StaffTableEntry[] => {
+  const assignments: StaffTableEntry[] = [];
   months.forEach(date => {
     const daysInMonth = moment().month(date.month - 1).daysInMonth();
     for (let day = 1; day <= daysInMonth; day++) {

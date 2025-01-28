@@ -2,25 +2,18 @@ import React from 'react';
 import {Box, Typography, IconButton, Divider, Paper, Button} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
-
-export interface Shift {
-  id: number;
-  name: string;
-  startTime: string;
-  endTime: string;
-  defaultStaffNumber: number;
-}
+import {ShiftForm} from "./AddShiftForm";
 
 export interface ShiftsSummaryProps {
   port: string;
   terminal: string;
-  shifts: Shift[];
-  editShiftsHandler: (shifts: Shift[]) => void;
-  confirmHandler: (shifts: Shift[]) => void;
+  shifts: ShiftForm[];
+  editShiftsHandler: (shifts: ShiftForm[]) => void;
+  confirmHandler: (shifts: ShiftForm[]) => void;
   removeShiftHandler: (id: number) => void;
 }
 
-const findMinStartTimeAndMaxEndTime = (shifts: Shift[]) => {
+const findMinStartTimeAndMaxEndTime = (shifts: ShiftForm[]) => {
   if (shifts.length === 0) return {minStartTime: null, maxEndTime: null};
 
   let minStartTime = shifts[0].startTime;
@@ -38,7 +31,7 @@ const findMinStartTimeAndMaxEndTime = (shifts: Shift[]) => {
   return {minStartTime, maxEndTime};
 };
 
-export const ConfirmShiftSummary = ({
+export const ConfirmShiftForms = ({
                                       port,
                                       terminal,
                                       shifts,

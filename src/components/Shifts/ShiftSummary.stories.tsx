@@ -1,16 +1,16 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import {ShiftSummary as ShiftSummaryComponent} from './ShiftSummary';
-import {DefaultShift} from "./ShiftHotTableView";
+import {ShiftSummaryView as ShiftSummaryViewComponent} from './ShiftSummaryView';
+import {ShiftSummary} from "./ShiftHotTableView";
 import React from "react";
 
 export default {
   title: 'DRT Components/UI/ShiftSummaryComponent',
-  component: ShiftSummaryComponent,
+  component: ShiftSummaryViewComponent,
 } as Meta;
 
-type Story = StoryObj<typeof ShiftSummaryComponent>;
+type Story = StoryObj<typeof ShiftSummaryViewComponent>;
 
-const initialShift: DefaultShift[] = [
+const shiftSummary: ShiftSummary[] = [
   {name: 'Early shift', defaultStaffNumber: 0, startTime: '06:30', endTime: '16:30'},
   {name: 'Mid shift', defaultStaffNumber: 0, startTime: '12:00', endTime: '22:30'},
   {name: 'Late shift', defaultStaffNumber: 0, startTime: '13:00', endTime: '23:00'},
@@ -20,10 +20,10 @@ const initialShift: DefaultShift[] = [
 const ShiftSummaryStory: React.FC = () => {
 
   return (
-    <ShiftSummaryComponent shifts={initialShift}/>
+    <ShiftSummaryViewComponent shiftSummaries={shiftSummary}/>
   );
 };
 
-export const ShiftSummary: Story = {
+export const ShiftSummaryView: Story = {
   render: () => <ShiftSummaryStory/>
 };

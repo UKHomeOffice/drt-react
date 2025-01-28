@@ -1,8 +1,8 @@
 export type {AddShiftBarProps} from './AddShiftBar'
 export {AddShiftBar} from "./AddShiftBar";
-export type {Shift, ShiftsProps} from './AddShiftForm'
+export type {ShiftForm, ShiftsFormProps} from './AddShiftForm'
 export {AddShiftForm} from "./AddShiftForm";
-export type {ShiftDate, ShiftData, DefaultShift, ShiftAssignment, ShiftHotTableViewProps} from './ShiftHotTableView'
+export type {ShiftDate, ShiftSummaryStaffing, ShiftSummary, StaffTableEntry, ShiftHotTableViewProps} from './ShiftHotTableView'
 export {ShiftHotTableView} from "./ShiftHotTableView";
-export type {InitialShiftsProps} from './ShiftSummary'
-export {ShiftSummary} from "./ShiftSummary";
+export type {ShiftSummaryProps} from './ShiftSummaryView'
+export {ShiftSummaryView} from "./ShiftSummaryView";

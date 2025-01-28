@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import {Box, Button, TextField, Typography, Grid, IconButton, Select, MenuItem, ThemeProvider} from '@mui/material';
 import {timeOptions, endTimeOptions} from '../Util';
-import {ConfirmShiftSummary} from "./ConfirmShiftSummary";
+import {ConfirmShiftForms} from "./ConfirmShiftForms";
 import {drtTheme} from "../../index";
 import CloseIcon from "@mui/icons-material/Close";
 import {getAirportNameByCode} from "../../aiports";
 import AddIcon from '@mui/icons-material/Add';
 
-export interface Shift {
+export interface ShiftForm {
   id: number;
   name: string;
   startTime: string;
@@ -15,16 +15,16 @@ export interface Shift {
   defaultStaffNumber: number;
 }
 
-export interface ShiftsProps {
+export interface ShiftsFormProps {
   port: string;
   terminal: string;
   interval: number;
-  initialShifts: Shift[];
-  confirmHandler: (shifts: Shift[]) => void;
+  shiftForms: ShiftForm[];
+  confirmHandler: (shiftForms: ShiftForm[]) => void;
 }
 
-export const AddShiftForm = ({port, terminal, interval, initialShifts, confirmHandler}: ShiftsProps) => {
-  const [shifts, setShifts] = useState<Shift[]>(Array.from(initialShifts).length > 0 ? initialShifts : [
+export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandler}: ShiftsFormProps) => {
+  const [shifts, setShifts] = useState<ShiftForm[]>(Array.from(shiftForms).length > 0 ? shiftForms : [
     {id: 1, name: 'Shift 1', startTime: '00:00', endTime: '01:00', defaultStaffNumber: 0}
   ]);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -56,7 +56,7 @@ export const AddShiftForm = ({port, terminal, interval, initialShifts, confirmHa
     setShifts(shifts.filter(shift => shift.id !== id));
   };
 
-  const handleChange = (id: number, field: keyof Shift, value: any) => {
+  const handleChange = (id: number, field: keyof ShiftForm, value: any) => {
     setShifts(shifts.map(shift => shift.id === id ? {...shift, [field]: value} : shift));
   };
 
@@ -179,12 +179,12 @@ export const AddShiftForm = ({port, terminal, interval, initialShifts, confirmHa
               )}
             </Box>
           </Box>) : (
-          <ConfirmShiftSummary port={port}
-                               terminal={terminal}
-                               shifts={shifts}
-                               editShiftsHandler={onCancel}
-                               confirmHandler={confirmHandler}
-                               removeShiftHandler={handleRemoveShift}/>)
+          <ConfirmShiftForms port={port}
+                             terminal={terminal}
+                             shifts={shifts}
+                             editShiftsHandler={onCancel}
+                             confirmHandler={confirmHandler}
+                             removeShiftHandler={handleRemoveShift}/>)
         }
       </Box>
     </ThemeProvider>

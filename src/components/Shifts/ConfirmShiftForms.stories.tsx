@@ -1,15 +1,15 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import {Shift} from './AddShiftForm';
-import {ConfirmShiftSummary as ConfirmShiftSummaryComponent} from "./ConfirmShiftSummary";
+import {ShiftForm} from './AddShiftForm';
+import {ConfirmShiftForms as ConfirmShiftFormsComponent} from "./ConfirmShiftForms";
 
 export default {
-  title: 'DRT Components/UI/ConfirmShiftSummaryComponent',
-  component: ConfirmShiftSummaryComponent,
+  title: 'DRT Components/UI/ConfirmShiftFormsComponent',
+  component: ConfirmShiftFormsComponent,
 } as Meta;
 
-type Story = StoryObj<typeof ConfirmShiftSummaryComponent>;
+type Story = StoryObj<typeof ConfirmShiftFormsComponent>;
 
-export const ConfirmShiftSummary: Story = {
+export const ConfirmShiftForms: Story = {
   args: {
     port: 'BHX',
     terminal: 'T2',
@@ -35,8 +35,8 @@ export const ConfirmShiftSummary: Story = {
         endTime: '00:45',
         defaultStaffNumber: 10
       }
-    ] as Shift[],
-    confirmHandler: (shifts: Shift[]) => {
+    ] as ShiftForm[],
+    confirmHandler: (shifts: ShiftForm[]) => {
       console.log(shifts);
     }
   }
