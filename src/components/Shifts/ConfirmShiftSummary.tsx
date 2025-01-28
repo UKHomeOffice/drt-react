@@ -1,24 +1,19 @@
-import {Shift} from './AddShiftForm';
 import React from 'react';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Typography,
-  Box,
-  Button, IconButton
-} from '@mui/material';
-import CloseIcon from "@mui/icons-material/Close";
-import {EditIcon} from "@storybook/icons";
-import {getAirportNameByCode} from "../../aiports";
+import {Box, Typography, IconButton, Divider, Paper, Button} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import EditIcon from '@mui/icons-material/Edit';
+
+export interface Shift {
+  id: number;
+  name: string;
+  startTime: string;
+  endTime: string;
+  defaultStaffNumber: number;
+}
 
 export interface ShiftsSummaryProps {
-  port: string
-  terminal: string
+  port: string;
+  terminal: string;
   shifts: Shift[];
   editShiftsHandler: (shifts: Shift[]) => void;
   confirmHandler: (shifts: Shift[]) => void;
@@ -26,7 +21,7 @@ export interface ShiftsSummaryProps {
 }
 
 const findMinStartTimeAndMaxEndTime = (shifts: Shift[]) => {
-  if (shifts.length === 0) return { minStartTime: null, maxEndTime: null };
+  if (shifts.length === 0) return {minStartTime: null, maxEndTime: null};
 
   let minStartTime = shifts[0].startTime;
   let maxEndTime = shifts[0].endTime;
@@ -40,7 +35,7 @@ const findMinStartTimeAndMaxEndTime = (shifts: Shift[]) => {
     }
   });
 
-  return { minStartTime, maxEndTime };
+  return {minStartTime, maxEndTime};
 };
 
 export const ConfirmShiftSummary = ({
@@ -55,55 +50,67 @@ export const ConfirmShiftSummary = ({
 
   return (
     <Box sx={{p: 2, minWidth: '500px'}}>
-      <Typography sx={{fontSize: '20px'}}>Add staff to {port} {getAirportNameByCode(port)} {terminal}</Typography>
+      <Typography sx={{fontSize: '20px'}}>Add staff to {port} {terminal}</Typography>
       <Typography variant="h1" sx={{paddingBottom: '10px'}}>Step 2 of 2 - Check your shifts</Typography>
-      <Typography variant="h2" sx={{paddingBottom: '10px',fontSize: '24px'}}>Summary</Typography>
+      <Typography variant="h2" sx={{paddingBottom: '10px', fontSize: '24px'}}>Summary</Typography>
       <Typography variant="body1">Total shifts: {shifts.length}</Typography>
       <Typography variant="body1" sx={{paddingTop: '10px'}}>Hours covered: {minStartTime} to {maxEndTime}</Typography>
-      <Typography variant="h3" sx={{paddingTop: '10px',fontSize: '20px'}}>Shifts</Typography>
+      <Typography variant="h2" sx={{paddingTop: '10px', fontSize: '24px'}}>Shifts</Typography>
       {
         shifts.map((shift) => (
-          <TableContainer key={shift.id} component={Paper} sx={{maxWidth: '500px',paddingTop: '10px', backgroundColor: 'transparent'}}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell sx={{color: "black", backgroundColor: "#B4B5BE"}}>{shift.name}</TableCell>
-                  <TableCell
-                    sx={{color: "black", backgroundColor: "#B4B5BE", display: "flex", justifyContent: "flex-end"}}>
-                    <IconButton color="secondary" onClick={() => editShiftsHandler([shift])}>
-                      <EditIcon/> <Typography sx={{textDecoration: 'underline'}}>Edit shift</Typography>
-                    </IconButton>
-                    <IconButton color="secondary" onClick={() => removeShiftHandler(shift.id)}>
-                      <CloseIcon/> <Typography sx={{textDecoration: 'underline'}}>Remove shift</Typography>
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableRow key={shift.id}>
-                  <TableCell>Start time</TableCell>
-                  <TableCell>{shift.startTime}</TableCell>
-                </TableRow>
-                <TableRow key={shift.id}>
-                  <TableCell>End time</TableCell>
-                  <TableCell>{shift.endTime}</TableCell>
-                </TableRow>
-                <TableRow key={shift.id}>
-                  <TableCell>Default staff number </TableCell>
-                  <TableCell>{shift.defaultStaffNumber}</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
+          <Box key={shift.id}
+               sx={{maxWidth: '500px', backgroundColor: 'transparent', border: '1px solid #ddd',marginTop: '10px'}}>
+            <Box component="dl" sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              backgroundColor: '#F3F5F9',
+              padding: '10px',
+              marginTop: '0px'
+            }}>
+              <Box component="dt" sx={{flex: '1', color: 'black'}}>
+                <Typography variant="h3" sx={{fontSize: '20px'}}>{shift.name}</Typography>
+              </Box>
+              <Box component="dd" sx={{flex: '1', display: 'flex', justifyContent: 'flex-end', color: 'black'}}>
+                <IconButton color="secondary" onClick={() => removeShiftHandler(shift.id)} sx={{gap: '8px'}}>
+                  <CloseIcon sx={{height: '24px', width: '24px'}}/> <Typography sx={{textDecoration: 'underline'}}>Remove
+                  shift</Typography>
+                </IconButton>
+                <Divider orientation="vertical" flexItem sx={{mx: 1, paddingRight: '20px'}}/>
+                <IconButton color="secondary" onClick={() => editShiftsHandler([shift])}
+                            sx={{gap: '8px', paddingLeft: '20px'}}>
+                  <EditIcon sx={{height: '24px', width: '24px'}}/> <Typography sx={{textDecoration: 'underline'}}>Edit
+                  shift</Typography>
+                </IconButton>
+              </Box>
+            </Box>
+            <Box component="dl" sx={{display: 'flex', justifyContent: 'flex-start', padding: '10px'}}>
+              <Box component="dt" sx={{fontWeight: 'bold', minWidth: '150px'}}>Start time</Box>
+              <Box component="dd">{shift.startTime}</Box>
+            </Box>
+            <Box>
+            <Box component="dl" sx={{display: 'flex', justifyContent: 'flex-start', padding: '10px'}}>
+              <Box component="dt" sx={{fontWeight: 'bold', minWidth: '150px'}}>End time</Box>
+              <Box component="dd">{shift.endTime}</Box>
+            </Box>
+            {shift.endTime < shift.startTime && (
+              <Box component="dt" sx={{paddingLeft: '10px'}}>
+                <Typography color="warning" variant="body2">This is a midnight shift spanning to the next day</Typography>
+              </Box>
+            )}
+            </Box>
+            <Box component="dl" sx={{display: 'flex', justifyContent: 'flex-start', padding: '10px'}}>
+              <Box component="dt" sx={{fontWeight: 'bold', minWidth: '150px'}}>Default staff number</Box>
+              <Box component="dd">{shift.defaultStaffNumber}</Box>
+            </Box>
+          </Box>
         ))
       }
-
       <Box sx={{paddingTop: '10px'}}>
         <Box sx={{paddingRight: '10px'}}>
           <Button variant="contained" color="primary" onClick={() => confirmHandler(shifts)}>Confirm</Button>
         </Box>
       </Box>
     </Box>
-
-  )
-}
+  );
+};

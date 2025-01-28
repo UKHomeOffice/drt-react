@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Box, Button, TextField, Typography, Grid, IconButton, Select, MenuItem, ThemeProvider} from '@mui/material';
 import {timeOptions, endTimeOptions} from '../Util';
 import {ConfirmShiftSummary} from "./ConfirmShiftSummary";
 import {drtTheme} from "../../index";
 import CloseIcon from "@mui/icons-material/Close";
-import {getAirportByCode, getAirportNameByCode} from "../../aiports";
+import {getAirportNameByCode} from "../../aiports";
 import AddIcon from '@mui/icons-material/Add';
 
 export interface Shift {
@@ -25,25 +25,31 @@ export interface ShiftsProps {
 
 export const AddShiftForm = ({port, terminal, interval, initialShifts, confirmHandler}: ShiftsProps) => {
   const [shifts, setShifts] = useState<Shift[]>(Array.from(initialShifts).length > 0 ? initialShifts : [
-    {id: 1, name: '', startTime: '00:00', endTime: '00:00', defaultStaffNumber: 0}
+    {id: 1, name: 'Shift 1', startTime: '00:00', endTime: '01:00', defaultStaffNumber: 0}
   ]);
-
   const [showConfirm, setShowConfirm] = useState(false);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    const hasError = shifts.some(shift => shift.name === '' || shift.startTime === shift.endTime);
+    setError(hasError);
+  }, [shifts]);
 
   const onContinue = () => {
-    console.log(shifts);
-    setShowConfirm(true);
-  }
+    if (!error) {
+      setShowConfirm(true);
+    }
+  };
+
   const onCancel = () => {
-    console.log('cancel');
     setShowConfirm(false);
-  }
+  };
 
   const handleAddShift = () => {
     setShifts([
-      ...Array.from(shifts),
-      {id: shifts.length + 1, name: '', startTime: '00:00', endTime: '00:00', defaultStaffNumber: 0}
-    ]);
+                ...Array.from(shifts),
+                {id: shifts.length + 1, name: 'Shift ' + (shifts.length + 1), startTime: '00:00', endTime: '01:00', defaultStaffNumber: 0}
+              ]);
   };
 
   const handleRemoveShift = (id: number) => {
@@ -64,8 +70,6 @@ export const AddShiftForm = ({port, terminal, interval, initialShifts, confirmHa
     handleChange(id, 'endTime', newEndTime);
   };
 
-  console.log(Array.from(shifts))
-
   return (
     <ThemeProvider theme={drtTheme}>
       <Box>
@@ -84,6 +88,8 @@ export const AddShiftForm = ({port, terminal, interval, initialShifts, confirmHa
                       fullWidth
                       value={shift.name}
                       onChange={(e) => handleChange(shift.id, 'name', e.target.value)}
+                      error={shift.name === ''}
+                      helperText={shift.name === '' ? 'Name is required' : ''}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -119,12 +125,19 @@ export const AddShiftForm = ({port, terminal, interval, initialShifts, confirmHa
                       fullWidth
                       inputProps={{role: 'end-time-select'}}
                       data-cy="end-time-select"
+                      error={shift.startTime === shift.endTime}
                     >
                       {endTimeOptions(interval).map(time => (
                         <MenuItem key={time} value={time}
                                   data-cy={`select-end-time-option-${time.replace(':', '-')}`}>{time}</MenuItem>
                       ))}
                     </Select>
+                    {shift.startTime === shift.endTime && (
+                      <Typography color="error" variant="body2">Start time and end time cannot be the same</Typography>
+                    )}
+                    {shift.endTime < shift.startTime && (
+                      <Typography color="warning" variant="body2">This is a midnight shift spanning to the next day</Typography>
+                    )}
                   </Grid>
                   <Grid item xs={12}>
                     <Typography sx={{fontSize: '16px', fontWeight: 'bold'}}>Default staff number (optional)</Typography>
@@ -158,9 +171,12 @@ export const AddShiftForm = ({port, terminal, interval, initialShifts, confirmHa
               </Button>
             </Box>
             <Box sx={{"paddingTop": "10px"}}>
-              <Button variant="contained" color="primary" onClick={onContinue}>
+              <Button variant="contained" color="primary" onClick={onContinue} disabled={error}>
                 Continue
               </Button>
+              {error && (
+                <Typography color="error" variant="body2">Please fix the errors before continuing</Typography>
+              )}
             </Box>
           </Box>) : (
           <ConfirmShiftSummary port={port}
