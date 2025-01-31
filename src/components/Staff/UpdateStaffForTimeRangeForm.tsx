@@ -8,6 +8,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import {AdapterMoment} from "@mui/x-date-pickers/AdapterMoment";
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
+import { timeOptions, endTimeOptions } from '../Util';
 
 moment.updateLocale('en-gb', {
   week: {
@@ -96,35 +97,6 @@ export const UpdateStaffForTimeRangeForm = ({
     handleSubmit(ess);
   };
 
-  function timesBy15Minutes(): string[] {
-    const times: string[] = [];
-    for (let hour = 0; hour < 24; hour++) {
-      for (let minute = 0; minute <= 45; minute += interval) {
-        times.push(`${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`);
-      }
-    }
-    return times;
-  }
-
-  const timeOptions = timesBy15Minutes()
-
-  function timesBy15MinutesWithEnd(): string[] {
-    const times: string[] = [];
-    for (let hour = 0; hour < 24; hour++) {
-      for (let minute = 0; minute <= 45; minute += interval) {
-        const time = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`
-        if (time !== '00:00') {
-          times.push(time);
-        }
-      }
-    }
-    times.push('00:00');
-    return times;
-  }
-
-
-  const endTimeOptions = timesBy15MinutesWithEnd()
-
   return (
     <Box data-cy={`shift-staff-form`} sx={{padding: '10px 20px', width: '400px'}}>
       <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
@@ -173,7 +145,7 @@ export const UpdateStaffForTimeRangeForm = ({
                 inputProps={{ role: 'start-time-select' }}
                 data-cy="start-time-select"
               >
-                {timeOptions.map(time => (
+                {timeOptions(interval).map(time => (
                   <MenuItem key={time} value={time} data-cy={`select-start-time-option-${time.replace(':', '-')}`}>{time} </MenuItem>
                 ))}
               </Select>
@@ -192,7 +164,7 @@ export const UpdateStaffForTimeRangeForm = ({
               inputProps={{ role: 'end-time-select' }}
               data-cy="end-time-select"
             >
-              {endTimeOptions.map(time => (
+              {endTimeOptions(interval).map(time => (
                 <MenuItem key={time} value={time} data-cy={`select-end-time-option-${time.replace(':', '-')}`}>{time}</MenuItem>
               ))}
             </Select>

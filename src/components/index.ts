@@ -26,3 +26,15 @@ export {AccessibilityStatement} from './Accessibility'
 
 export type {BottomBarProps} from './Footer'
 export {BottomBar} from './Footer'
+
+export type {AddShiftBarProps} from './Shifts'
+export {AddShiftBar} from './Shifts'
+
+export type {ShiftForm, ShiftsFormProps} from './Shifts'
+export {AddShiftForm} from './Shifts'
+
+export type {ShiftDate, ShiftSummaryStaffing, ShiftSummary, StaffTableEntry, ShiftHotTableViewProps} from './Shifts'
+export {ShiftHotTableView} from './Shifts'
+
+export type {ShiftSummaryProps} from './Shifts'
+export {ShiftSummaryView} from './Shifts'

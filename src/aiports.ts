@@ -12,6 +12,25 @@ export type Airport = {
   code: string;
 }
 
+export const getAirportNameByCode = (portCode: string): string => {
+  let airportName: string = '';
+  Object.keys(airports).map((regionKey: string) => {
+    let region = airports[regionKey];
+    console.log(`Checking ${region.code} against ${portCode}`)
+    if (region.code == portCode) {
+      airportName = region.name;
+    } else {
+      region.ports.map((port) => {
+        console.log(`-- Checking port ${port.code} against ${portCode}`)
+        if (port.code == portCode) {
+          airportName = `(${port.name})`
+        }
+      })
+    }
+  })
+  return airportName || ''
+}
+
 export const getAirportByCode = (portCode: string): string => {
   let airportName: string = '';
   Object.keys(airports).map((regionKey: string) => {
