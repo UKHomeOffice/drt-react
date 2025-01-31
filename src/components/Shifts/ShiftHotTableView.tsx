@@ -10,7 +10,7 @@ import 'handsontable/dist/handsontable.full.min.css';
 import {LocalDate} from './LocalDate';
 import {drtTheme} from '../../index';
 import {ShiftSummaryView as ShiftSummaryComponent} from "./ShiftSummaryView";
-
+import './styles.css';
 export interface ViewDate {
   year: number;
   month: number;
@@ -72,7 +72,7 @@ const numberOfDays = (dayRange: string, daysInMonth: number) => {
 
 
 const generateColumnHeaders = (viewDate: ViewDate, dayRange: string, daysInMonth: number) => {
-  const headers: string[] = ['Time'];
+  const headers: string[] = [];
   const {firstDate} = getWeekFirstDate(viewDate);
   const daysCount = numberOfDays(dayRange, daysInMonth);
   let nextDate = dayRange === 'weekly' ?
@@ -82,14 +82,14 @@ const generateColumnHeaders = (viewDate: ViewDate, dayRange: string, daysInMonth
     const date = moment({year: nextDate.year, month: nextDate.month - 1, day: nextDate.day});
     const formattedDate = date.format('D');
     const day = date.format('ddd');
-    headers.push(`${formattedDate}</br>${day}`);
+    headers.push(`<div class="left-align-header"><div>${formattedDate}</div><div>${day}</div></div>`);
     nextDate = nextDate.addDays(1);
   }
   return headers;
 };
 
 const generateColumns = (dayRange: string, tableIndex: number, daysInMonth: number) => {
-  const columns: Handsontable.ColumnSettings[] = [{data: 'time', title: 'Time', width: 100, readOnly: true}];
+  const columns: Handsontable.ColumnSettings[] = [];//[{data: 'time', title: 'Time', width: 100, readOnly: true}];
   const columnWidth = Math.max(55, Math.floor(1200 / daysInMonth));
   const daysCount = numberOfDays(dayRange, daysInMonth);
 
@@ -101,6 +101,7 @@ const generateColumns = (dayRange: string, tableIndex: number, daysInMonth: numb
 
 const generateRows = (viewDate: ViewDate, dayRange: string, tableIndex: number, shift: ShiftSummaryStaffing, interval: number, isExpanded: boolean) => {
   const rows: any[] = [];
+  const rowHeaders: string[] = [];
   const daysInMonth = moment().month(viewDate.month - 1).daysInMonth();
   const {firstDate} = getWeekFirstDate(viewDate);
   const daysCount = numberOfDays(dayRange, daysInMonth);
@@ -121,10 +122,10 @@ const generateRows = (viewDate: ViewDate, dayRange: string, tableIndex: number, 
       const startTime: LocalDate = new LocalDate(firstDay.year, firstDay.month, firstDay.day, startHour, startMinute);
 
       const isShiftEndAfterMidNight = endHour < startHour || (endHour == startHour && endMinute < startMinute)
-      let endDate  = new LocalDate(firstDay.year, firstDay.month, firstDay.day, endHour, endMinute);
+      let endDate = new LocalDate(firstDay.year, firstDay.month, firstDay.day, endHour, endMinute);
       if (isShiftEndAfterMidNight) {
         endDate = endDate.addDays(1)
-        console.log('new end date',endDate.addDays(1), 'end date', endDate , 'start date', startTime)
+        console.log('new end date', endDate.addDays(1), 'end date', endDate, 'start date', startTime)
       }
 
       const endTime: LocalDate = endDate;
@@ -142,7 +143,7 @@ const generateRows = (viewDate: ViewDate, dayRange: string, tableIndex: number, 
           nextTimeHourDisplay = 0
         else
           nextTimeHourDisplay = nextTime.hour
-        const row: any = {time: `${currentTime.hour.toString().padStart(2, '0')}:${currentTime.minute.toString().padStart(2, '0')} - ${nextTimeHourDisplay.toString().padStart(2, '0')}:${nextTime.minute.toString().padStart(2, '0')}`};
+        const row: any = {}
         let nextDay = firstDay;
         for (let day = 1; day <= daysCount; day++) {
           const dayAssignments = shift.staffTableEntries.filter(assignment => assignment.startTime.year === nextDay.year && assignment.startTime.month === nextDay.month
@@ -151,10 +152,11 @@ const generateRows = (viewDate: ViewDate, dayRange: string, tableIndex: number, 
           nextDay = nextDay.addDays(1);
         }
         rows.push(row);
+        rowHeaders.push(`${currentTime.hour.toString().padStart(2, '0')}:${currentTime.minute.toString().padStart(2, '0')} to ${nextTimeHourDisplay.toString().padStart(2, '0')}:${nextTime.minute.toString().padStart(2, '0')}`);
         currentTime = nextTime;
       }
     } else {
-      const headerRow: any = {id: 'header', time: `${shift.shiftSummary.startTime} - ${displayEndTime}`};
+      const headerRow: any = {};
       let nextDate = firstDay;
 
       for (let day = 1; day <= daysCount; day++) {
@@ -166,10 +168,10 @@ const generateRows = (viewDate: ViewDate, dayRange: string, tableIndex: number, 
         nextDate = nextDate.addDays(1);
       }
       rows.push(headerRow);
+      rowHeaders.push(`${shift.shiftSummary.startTime} to ${displayEndTime}`);
     }
-    return rows;
+    return {rows, rowHeaders};
   }
-
 }
 
 export interface ShiftHotTableViewProps {
@@ -198,9 +200,8 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
 
   const cellRenderer = function (this: any, instance: Handsontable, td: HTMLTableCellElement, row: number, col: number, prop: string | number, value: any, cellProperties: Handsontable.CellProperties) {
     Handsontable.renderers.TextRenderer.apply(this, [instance, td, row, col, prop, value, cellProperties]);
-    td.style.border = '1px solid #ccc';
     td.style.borderSpacing = '0';
-    td.style.padding = '0';
+    td.style.padding = '1';
   };
 
   const handleAfterChange = (changes: Handsontable.CellChange[] | null, source: string) => {
@@ -238,15 +239,15 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
       </Box>
       {shiftSummaries.map((shift, index) => {
         const isExpanded = expandedRows[shift.shiftSummary.name] || false;
-        const rows = generateRows(viewDate, dayRange, index, shift, interval, isExpanded);
+        const {rows, rowHeaders} = generateRows(viewDate, dayRange, index, shift, interval, isExpanded);
         let tableHeight = 84;
-        if(rows) tableHeight = rows.length * 24 + 60;
+        if (rows) tableHeight = rows.length * 24 + 60;
 
         return (
           <Box key={index} sx={{marginBottom: 4}}>
             <Box display="flex" alignItems="center">
               <Typography variant="h6" gutterBottom>
-                {shift.shiftSummary.name} {isExpanded ? `[ ${shift.shiftSummary.startTime} - ${shift.shiftSummary.endTime} ]` : ''}
+                {shift.shiftSummary.name} {`[ ${shift.shiftSummary.startTime} to ${shift.shiftSummary.endTime} ]`}
               </Typography>
               <IconButton onClick={() => toggleRowExpansion(shift.shiftSummary.name)}>
                 {isExpanded ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
@@ -264,6 +265,10 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
                 renderer: cellRenderer
               })}
               afterChange={handleAfterChange}
+              bindRowsWithHeaders="strict"
+              rowHeaders={rowHeaders}
+              autoRowSize={true}
+              rowHeaderWidth={100}
               licenseKey={'non-commercial-and-evaluation'}
             />
           </Box>
