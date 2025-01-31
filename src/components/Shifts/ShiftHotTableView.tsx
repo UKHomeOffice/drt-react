@@ -10,7 +10,7 @@ import 'handsontable/dist/handsontable.full.min.css';
 import {LocalDate} from './LocalDate';
 import {drtTheme} from '../../index';
 import {ShiftSummaryView as ShiftSummaryComponent} from "./ShiftSummaryView";
-import './styles.css';
+
 export interface ViewDate {
   year: number;
   month: number;
@@ -82,7 +82,7 @@ const generateColumnHeaders = (viewDate: ViewDate, dayRange: string, daysInMonth
     const date = moment({year: nextDate.year, month: nextDate.month - 1, day: nextDate.day});
     const formattedDate = date.format('D');
     const day = date.format('ddd');
-    headers.push(`<div class="left-align-header"><div>${formattedDate}</div><div>${day}</div></div>`);
+    headers.push(`<div style="text-align: left; padding-left: 1px; margin: 0;">${formattedDate}<br>${day}</div>`);
     nextDate = nextDate.addDays(1);
   }
   return headers;
