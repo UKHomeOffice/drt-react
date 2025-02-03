@@ -164,7 +164,7 @@ const generateRows = (viewDate: ViewDate, dayRange: string, tableIndex: number, 
         const staffNumbers = dayAssignments.map(assignment => assignment.staffNumber);
         const minStaffNumber = Math.min(...staffNumbers);
         const maxStaffNumber = Math.max(...staffNumbers);
-        headerRow[`${tableIndex}-${day}`] = `${minStaffNumber} to ${maxStaffNumber}`;
+        headerRow[`${tableIndex}-${day}`] = (minStaffNumber === maxStaffNumber) ? `${minStaffNumber}` : `${minStaffNumber} to ${maxStaffNumber}`;
         nextDate = nextDate.addDays(1);
       }
       rows.push(headerRow);
@@ -198,10 +198,24 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
     setExpandedRows(prev => ({...prev, [shiftType]: !prev[shiftType]}));
   };
 
-  const cellRenderer = function (this: any, instance: Handsontable, td: HTMLTableCellElement, row: number, col: number, prop: string | number, value: any, cellProperties: Handsontable.CellProperties) {
-    Handsontable.renderers.TextRenderer.apply(this, [instance, td, row, col, prop, value, cellProperties]);
-    td.style.borderSpacing = '0';
-    td.style.padding = '1';
+  const cellRenderer = (isExpanded: boolean) => {
+    return function (
+      this: any,
+      instance: Handsontable,
+      td: HTMLTableCellElement,
+      row: number,
+      col: number,
+      prop: string | number,
+      value: any,
+      cellProperties: Handsontable.CellProperties
+    ) {
+      Handsontable.renderers.TextRenderer.apply(this, [instance, td, row, col, prop, value, cellProperties]);
+      td.style.borderSpacing = '0';
+      td.style.padding = '1';
+
+      // Apply readOnly logic based on `isExpanded` and `col === 0`
+      cellProperties.readOnly = !isExpanded && row === 0;
+    };
   };
 
   const handleAfterChange = (changes: Handsontable.CellChange[] | null, source: string) => {
@@ -262,7 +276,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               columns={generateColumns(dayRange, index, daysInMonth)}
               style={{borderSpacing: '0', height: `${tableHeight}px`}}
               cells={(row, col) => ({
-                renderer: cellRenderer
+                renderer: cellRenderer(isExpanded)
               })}
               afterChange={handleAfterChange}
               bindRowsWithHeaders="strict"
