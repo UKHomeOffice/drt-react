@@ -44,7 +44,7 @@ const Header = ({
                 }: IHeader) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selectedPortOption, setSelectedPortOption] = React.useState<string>(initialSelectedPortMenuItem);
-  const open = Boolean(anchorEl);
+  const adminMenuOpen = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -70,9 +70,9 @@ const Header = ({
                 width: '35px'
               }
             }}>
-              <Link 
+              <Link
                 title="Border Force - Dynamic Response Tool"
-                href="https://drt.homeoffice.gov.uk/" 
+                href="https://drt.homeoffice.gov.uk/"
                 style={{
                   display: 'flex',
                   textDecoration: 'none'
@@ -86,16 +86,16 @@ const Header = ({
                 }}>
                   <Grid item>
                     <Typography color="inherit" noWrap sx={{
-                      flexGrow: 0, 
+                      flexGrow: 0,
                       fontSize: {
                         xs: '1rem',
                         sm: '1.3rem',
-                      }, 
+                      },
                       lineHeight: {
                         xs: '1.2rem',
                         sm: '2rem',
-                      }, 
-                      mr: 2, 
+                      },
+                      mr: 2,
                       color: '#000'
                     }}>
                       Border Force
@@ -107,14 +107,14 @@ const Header = ({
                       sm: 'auto',
                     }
                   }}>
-                    <Typography color="inherit" noWrap 
+                    <Typography color="inherit" noWrap
                       sx={{
-                        flexGrow: 0, 
+                        flexGrow: 0,
                         color: '#404252',
                         fontSize: {
                           xs: '0.7rem',
                           sm: '1rem',
-                        }, 
+                        },
                         lineHeight: {
                           xs: '1rem',
                           sm: '2.1rem',
@@ -144,9 +144,9 @@ const Header = ({
                 data-testid="mobile-admin-menu-trigger"
                 variant="outlined"
                 id="demo-positioned-button"
-                aria-controls={open ? 'demo-positioned-menu' : undefined}
+                aria-controls={adminMenuOpen ? 'demo-positioned-menu' : undefined}
                 aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
+                aria-expanded={adminMenuOpen ? 'true' : undefined}
                 onClick={handleClick}
                 sx={{marginLeft: 'auto', display: {xs: 'block', md: 'none'}}}
               >
@@ -154,7 +154,7 @@ const Header = ({
               </Button>
               <Menu
                 anchorEl={anchorEl}
-                open={open}
+                open={adminMenuOpen}
                 onClose={handleClose}
               >
                 {adminMenuItems.map((item) => {
@@ -162,7 +162,10 @@ const Header = ({
                   return hasRole && <MenuItem
                     data-testid={`menu-${item.link}`}
                     key={item.link}
-                    onClick={() => routingFunction(item.link)}>
+                    onClick={() => {
+                      setAnchorEl(null)
+                      routingFunction(item.link)
+                    }}>
                     {item.label}
                   </MenuItem>
                 })}
@@ -178,7 +181,8 @@ const Header = ({
           }, flexWrap: 'nowrap'}}>
             <Grid container spacing={3}>
               <Grid item flexGrow={{xs: 1, md: 0}}>
-                <PortSelector options={portMenuItems} handleChangePort={routingFunction}
+                <PortSelector options={portMenuItems}
+                              handleChangePort={routingFunction}
                               selectedOption={selectedPortOption}/>
               </Grid>
               {
