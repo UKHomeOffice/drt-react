@@ -11,3 +11,7 @@ export type { IPaxCard, PaxTimeRange, PortQueue } from "./PaxCard";
 
 export type { IPlaneStatusLabel } from "./PlaneStatusLabel";
 export { PlaneStatus, PlaneStatusLabel } from "./PlaneStatusLabel";
+
+export { PaxSearchForm } from "./PaxSearchForm";
+export type { PaxSearchFormDay, PaxSearchFormTime, PaxSearchFormState, IPaxSearchForm } from "./PaxSearchForm";
+
