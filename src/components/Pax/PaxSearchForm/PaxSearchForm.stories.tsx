@@ -70,16 +70,11 @@ export const PaxFormLayout: Story = {
   render: () => {
       const [args, updateArgs] = useArgs();
 
-      const onSubmit = (searchFormState: PaxSearchFormState) => {
-        console.log(searchFormState)
-      };
-
       const onChange = (searchFormState: PaxSearchFormState) => {
         updateArgs(searchFormState)
       };
       return (
         <PaxSearchForm 
-          onSubmit={onSubmit} 
           onChange={onChange}
           timeMachine={args.timeMachine} 
           day={args.day} 
