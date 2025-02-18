@@ -248,6 +248,8 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
     }
   };
 
+  console.log('********* Rich changes')
+
   return (
     <ThemeProvider theme={drtTheme}>
       <Box sx={{paddingBottom: 5}}>
@@ -256,8 +258,6 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
       {shiftSummaries.map((shift, index) => {
         const isExpanded = expandedRows[shift.shiftSummary.name] || false;
         const {rows, rowHeaders} = generateRows(viewDate, dayRange, index, shift, interval, isExpanded);
-        // let tableHeight = 84;
-        // if (rows) tableHeight = isExpanded ? Math.min(rows.length * 24 + 60, 500) : 84;
 
         return (
           <Box key={index} sx={{marginBottom: 4}}>
@@ -277,7 +277,6 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               rowHeights={rows.map(() => 24)}
               colHeaders={generateColumnHeaders(viewDate, dayRange, daysInMonth)}
               columns={generateColumns(dayRange, index, daysInMonth)}
-              // style={{borderSpacing: '0', height: `${tableHeight}px`}}
               cells={(row, col) => ({
                 renderer: cellRenderer(isExpanded)
               })}
