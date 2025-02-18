@@ -9,7 +9,7 @@ export interface ShiftSummaryProps {
 export const ShiftSummaryView: React.FC<ShiftSummaryProps> = ({shiftSummaries}: ShiftSummaryProps) => {
   return (
     <Box sx={{maxWidth: '800px'}}>
-      <Typography variant="h2" gutterBottom>Shift summary</Typography>
+      <Typography variant="h2" gutterBottom>Shift summaryzzzzzzzzzz</Typography>
       <Table>
         <TableHead>
           <TableRow>
