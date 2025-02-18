@@ -13,10 +13,15 @@ export const PaxDatasource = ({status}: IPaxDatasource) => {
   const content = getPaxContent(status);
 
   return (
-    <Tooltip title={`${status}: ${content.statusText}`} sx={{cursor: 'pointer'}}>
-      <Box sx={{maxWidth: '25px', position: 'relative'}}>
+    <Tooltip title={`${content.statusText}`} sx={{cursor: 'pointer'}}>
+      <Box sx={{maxWidth: '25px', position: 'relative', }}>
         <DatasourceIcon />
-        <Box sx={{position: 'absolute', bottom: -8, right: -12}}>{ content.icon }</Box>
+        { content.iconBg && <Box sx={{position: 'absolute', bottom: -8, right: -12}}>
+          { content.iconBg }
+        </Box>}
+        <Box sx={{position: 'absolute', bottom: -8, right: -12, textAlign: 'center'}}>
+          { content.icon }
+        </Box>
       </Box>
     </Tooltip>
   )
