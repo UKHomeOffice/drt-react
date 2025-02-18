@@ -281,7 +281,6 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               afterChange={handleAfterChange}
               bindRowsWithHeaders="strict"
               rowHeaders={rowHeaders}
-              // autoRowSize={true}
               rowHeaderWidth={100}
               licenseKey={'non-commercial-and-evaluation'}
             />
