@@ -171,6 +171,8 @@ const generateRows = (viewDate: ViewDate, dayRange: string, tableIndex: number, 
       rowHeaders.push(`${shift.shiftSummary.startTime} to ${displayEndTime}`);
     }
     return {rows, rowHeaders};
+  } else {
+    return {rows: [], rowHeaders: []}
   }
 }
 
@@ -210,8 +212,8 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
       cellProperties: Handsontable.CellProperties
     ) {
       Handsontable.renderers.TextRenderer.apply(this, [instance, td, row, col, prop, value, cellProperties]);
-      td.style.borderSpacing = '0';
-      td.style.padding = '1';
+      // td.style.borderSpacing = '0';
+      // td.style.padding = '1';
 
       // Apply readOnly logic based on `isExpanded` and `col === 0`
       cellProperties.readOnly = !isExpanded && row === 0;
@@ -254,8 +256,8 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
       {shiftSummaries.map((shift, index) => {
         const isExpanded = expandedRows[shift.shiftSummary.name] || false;
         const {rows, rowHeaders} = generateRows(viewDate, dayRange, index, shift, interval, isExpanded);
-        let tableHeight = 84;
-        if (rows) tableHeight = isExpanded ? Math.min(rows.length * 24 + 60, 500) : 84;
+        // let tableHeight = 84;
+        // if (rows) tableHeight = isExpanded ? Math.min(rows.length * 24 + 60, 500) : 84;
 
         return (
           <Box key={index} sx={{marginBottom: 4}}>
@@ -272,15 +274,17 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               id={`hot-table-${index}`}
               className={`shift-hot-table-${index}`}
               data={rows}
+              rowHeights={rows.map(() => 24)}
               colHeaders={generateColumnHeaders(viewDate, dayRange, daysInMonth)}
               columns={generateColumns(dayRange, index, daysInMonth)}
-              style={{borderSpacing: '0', height: `${tableHeight}px`}}
+              // style={{borderSpacing: '0', height: `${tableHeight}px`}}
               cells={(row, col) => ({
                 renderer: cellRenderer(isExpanded)
               })}
               afterChange={handleAfterChange}
               bindRowsWithHeaders="strict"
               rowHeaders={rowHeaders}
+              autoRowSize={false}
               renderAllRows={true}
               rowHeaderWidth={100}
               licenseKey={'non-commercial-and-evaluation'}
