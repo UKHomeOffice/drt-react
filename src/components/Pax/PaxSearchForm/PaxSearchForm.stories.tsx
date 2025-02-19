@@ -3,16 +3,16 @@ import * as React from 'react';
 
 import { useArgs } from '@storybook/preview-api';
 import type { Meta, StoryObj } from '@storybook/react';
-import { PaxSearchForm, PaxSearchFormState } from './PaxSearchForm';
+import { PaxSearchForm, PaxSearchFormPayload } from './PaxSearchForm';
 import moment from 'moment';
 
 interface PaxSearchFormStoryControls {
   timeMachine: boolean,
   day: "yesterday" | "today" | "tomorrow",
   time: "now" | "24hour",
-  arrivalDate: moment.Moment,
-  fromDate:  moment.Moment,
-  toDate:  moment.Moment,
+  arrivalDate: Date,
+  fromDate:  Date,
+  toDate:  Date,
 }
 
 const meta: Meta<PaxSearchFormStoryControls>  = {
@@ -62,15 +62,15 @@ export const PaxFormLayout: Story = {
     timeMachine: false,
     day: "today",
     time: "now",
-    arrivalDate: moment(),
-    fromDate: moment(),
-    toDate: moment(),
+    arrivalDate: new Date(),
+    fromDate: new Date(),
+    toDate: new Date(),
   },
 
   render: () => {
       const [args, updateArgs] = useArgs();
 
-      const onChange = (searchFormState: PaxSearchFormState) => {
+      const onChange = (searchFormState: PaxSearchFormPayload) => {
         updateArgs(searchFormState)
       };
       return (
