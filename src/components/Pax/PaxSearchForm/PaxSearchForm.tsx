@@ -48,7 +48,6 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
     toDate: moment(toDate) || moment(),
     timeMachine: timeMachine || false,
   });
-  const [disabledTo, setDisableTo] = React.useState<boolean>(false);
 
   const handleOnChangeCallback = (payload: PaxSearchFormState) => {
     onChange && onChange({
@@ -75,7 +74,9 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
     const newState = {
       ...formState,
       day: newValue,
-      arrivalDate
+      arrivalDate,
+      fromDate: arrivalDate.clone().set('hour', fromDate.get('hours')).set('minute', fromDate.get('hours')),
+      toDate: arrivalDate.clone().set('hour', toDate.get('hours')).set('minute', toDate.get('hours')),
     }
     setFormState(newState);
     handleOnChangeCallback(newState);
@@ -86,11 +87,9 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
     switch (newValue) {
       case '24hour':
         toDate = moment().add(24, 'hours');
-        setDisableTo(true);
         break;
       default:
         toDate = moment()
-        setDisableTo(false);
         break;
     }
     const newState = {
@@ -144,6 +143,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
           <Stack spacing={2}>
             <DatePicker
               label="Arrival date"
+              format="DD/MM/YYYY"
               value={formState.arrivalDate}
               onChange={(value) => handleDatepickerChange('arrivalDate', value)}
             />
@@ -154,7 +154,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
                 onChange={(value) => handleDatepickerChange('fromDate', value)}
               />
               <TimePicker
-                disabled={disabledTo}
+                disabled={formState.time === PaxSearchFormTime.Day}
                 label="To"
                 value={formState.toDate}
                 onChange={(value) => handleDatepickerChange('toDate', value)}
