@@ -26,36 +26,79 @@ export type PaxSearchFormState = {
   timeMachine?: boolean
 }
 
+export type PaxSearchFormPayload = {
+  day?: PaxSearchFormDay,
+  time?: PaxSearchFormTime,
+  arrivalDate: Date,
+  fromDate: Date,
+  toDate: Date,
+  timeMachine?: boolean
+}
+
 export type IPaxSearchForm = PaxSearchFormState & {
-  onChange: (values: PaxSearchFormState) => void
+  onChange: (values: PaxSearchFormPayload) => void
 }
 
 export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMachine, onChange}: IPaxSearchForm) => {
   const [formState, setFormState] = React.useState<PaxSearchFormState>({
     day: day || PaxSearchFormDay.Yesterday,
     time: time || PaxSearchFormTime.Now,
-    arrivalDate: arrivalDate || moment(),
-    fromDate: fromDate || moment(),
-    toDate: toDate || moment(),
+    arrivalDate: moment(arrivalDate) || moment(),
+    fromDate: moment(fromDate) || moment(),
+    toDate: moment(toDate) || moment(),
     timeMachine: timeMachine || false,
   });
 
+  const handleOnChangeCallback = (payload: PaxSearchFormState) => {
+    onChange && onChange({
+      ...payload,
+      arrivalDate: payload.arrivalDate.toDate(),
+      fromDate: payload.fromDate.toDate(),
+      toDate: payload.toDate.toDate(),
+    });
+  }
+
   const handleChangeDay = (event: React.MouseEvent<HTMLElement>, newValue: PaxSearchFormDay) => {
+    let arrivalDate;
+    switch (newValue) {
+      case PaxSearchFormDay.Yesterday:
+        arrivalDate = moment().subtract(1, 'day');
+        break;
+      case PaxSearchFormDay.Tomorrow:
+        arrivalDate = moment().add(1, 'day');
+        break;
+      default:
+        arrivalDate = moment()
+        break;
+    }
     const newState = {
       ...formState,
-      day: newValue
+      day: newValue,
+      arrivalDate,
+      fromDate: arrivalDate.clone().set('hour', fromDate.get('hours')).set('minute', fromDate.get('hours')),
+      toDate: arrivalDate.clone().set('hour', toDate.get('hours')).set('minute', toDate.get('hours')),
     }
     setFormState(newState);
-    onChange && onChange(newState);
+    handleOnChangeCallback(newState);
   };
 
   const handleChangeTime = (event: React.MouseEvent<HTMLElement>, newValue: PaxSearchFormTime) => {
+    let toDate;
+    switch (newValue) {
+      case '24hour':
+        toDate = moment().add(24, 'hours');
+        break;
+      default:
+        toDate = moment()
+        break;
+    }
     const newState = {
       ...formState,
-      time: newValue
+      time: newValue,
+      toDate
     }
     setFormState(newState);
-    onChange && onChange(newState);
+    handleOnChangeCallback(newState);
   };
 
   const handleChangeTimeMachine = ( event: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,7 +107,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
       timeMachine: event.target.checked
     }
     setFormState(newState);
-    onChange && onChange(newState);
+    handleOnChangeCallback(newState);
   };
 
   const handleDatepickerChange = (field: string, value: moment.Moment | null) => {
@@ -73,7 +116,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
       [field]: value
     }
     setFormState(newState);
-    onChange && onChange(newState);
+    handleOnChangeCallback(newState);
   }
 
   return (
@@ -100,6 +143,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
           <Stack spacing={2}>
             <DatePicker
               label="Arrival date"
+              format="DD/MM/YYYY"
               value={formState.arrivalDate}
               onChange={(value) => handleDatepickerChange('arrivalDate', value)}
             />
@@ -110,6 +154,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
                 onChange={(value) => handleDatepickerChange('fromDate', value)}
               />
               <TimePicker
+                disabled={formState.time === PaxSearchFormTime.Day}
                 label="To"
                 value={formState.toDate}
                 onChange={(value) => handleDatepickerChange('toDate', value)}
