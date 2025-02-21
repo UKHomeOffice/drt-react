@@ -17,7 +17,7 @@ export enum PaxSearchFormTime {
   Day = "24hour",
 }
 
-export type PaxSearchFormState = {
+type PaxSearchFormState = {
   day?: PaxSearchFormDay,
   time?: PaxSearchFormTime,
   arrivalDate: moment.Moment,
@@ -35,7 +35,7 @@ export type PaxSearchFormPayload = {
   timeMachine?: boolean
 }
 
-export type IPaxSearchForm = PaxSearchFormState & {
+export type IPaxSearchForm = PaxSearchFormPayload & {
   onChange: (values: PaxSearchFormPayload) => void
 }
 
