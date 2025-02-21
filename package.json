@@ -1,5 +1,5 @@
 {
-  "name": "@drt/drt-react-components",
+  "name": "@drt/drt-react",
   "version": "1.6.7",
   "description": "React components for DRT applications",
   "main": "dist/cjs/bundle.js",
