@@ -75,8 +75,8 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
       ...formState,
       day: newValue,
       arrivalDate,
-      fromDate: arrivalDate.clone().set('hour', fromDate.get('hours')).set('minute', fromDate.get('hours')),
-      toDate: arrivalDate.clone().set('hour', toDate.get('hours')).set('minute', toDate.get('hours')),
+      fromDate: arrivalDate.clone().set('hour', formState.fromDate.get('hours')).set('minute', formState.fromDate.get('hours')),
+      toDate: arrivalDate.clone().set('hour', formState.toDate.get('hours')).set('minute', formState.toDate.get('hours')),
     }
     setFormState(newState);
     handleOnChangeCallback(newState);

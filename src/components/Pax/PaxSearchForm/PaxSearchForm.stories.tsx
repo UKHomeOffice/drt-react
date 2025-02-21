@@ -79,9 +79,9 @@ export const PaxFormLayout: Story = {
           timeMachine={args.timeMachine} 
           day={args.day} 
           time={args.time}
-          arrivalDate={moment(args.arrivalDate)}
-          fromDate={moment(args.fromDate)}
-          toDate={moment(args.toDate)}
+          arrivalDate={args.arrivalDate}
+          fromDate={args.fromDate}
+          toDate={args.toDate}
           />
     )
   }
