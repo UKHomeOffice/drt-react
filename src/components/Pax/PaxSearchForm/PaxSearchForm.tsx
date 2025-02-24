@@ -5,6 +5,8 @@ import  { InfoTooltip } from '../../ui/InfoTooltip';
 import moment from 'moment';
 import { Box,Grid, ToggleButton, ToggleButtonGroup, Stack, Switch, FormLabel, Typography } from '@mui/material';
 import * as React from 'react';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { LocalizationProvider } from '@mui/x-date-pickers';
 
 export enum PaxSearchFormDay {
   Yesterday = "yesterday",
@@ -120,6 +122,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
   }
 
   return (
+    <LocalizationProvider dateAdapter={AdapterMoment}>
     <Box sx={(theme) => ({
       maxWidth: '600px',
       padding: 2,
@@ -170,5 +173,6 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
         <Typography variant='body1'>{formState.timeMachine ? 'On' : 'Off'}</Typography>
       </Stack>
     </Box>
+    </LocalizationProvider>
   )
 }
