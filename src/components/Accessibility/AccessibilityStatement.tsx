@@ -200,7 +200,7 @@ export const AccessibilityStatement = ({
               Regulations 2018.
             </Typography>
             <Box sx={{paddingTop: '10px', paddingLeft: '10px'}}>
-              <Typography variant="h3" id="compliance-status">Yo! Compliance status</Typography>
+              <Typography variant="h3" id="compliance-status">Compliance status</Typography>
               <Typography sx={{paddingTop: '10px'}}>
                 The website has been tested against the Web Content Accessibility
                 Guidelines (WCAG) 2.2 AA standard.
