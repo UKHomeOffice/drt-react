@@ -71,6 +71,7 @@ export const PaxFormLayout: Story = {
       const [args, updateArgs] = useArgs();
 
       const onChange = (searchFormState: PaxSearchFormPayload) => {
+        console.log(searchFormState);
         updateArgs(searchFormState)
       };
       return (

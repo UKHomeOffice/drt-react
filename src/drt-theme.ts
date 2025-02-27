@@ -1,5 +1,6 @@
 
 import { createTheme, darken, lighten } from "@mui/material";
+import type {} from '@mui/x-date-pickers/themeAugmentation';
 import React from "react";
 
 declare module '@mui/material/styles' {
@@ -251,6 +252,20 @@ const drtTheme = createTheme({
           '&:nth-of-type(even)': {
             backgroundColor: defaultValues.palette.grey[100],
           },
+        }
+      }
+    },
+    MuiPickersDay: {
+      styleOverrides: {
+        root: {
+          fontSize: '14px',
+        }
+      }
+    },
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          fontSize: '12px'
         }
       }
     }

@@ -5,8 +5,6 @@ import  { InfoTooltip } from '../../ui/InfoTooltip';
 import moment from 'moment';
 import { Box,Grid, ToggleButton, ToggleButtonGroup, Stack, Switch, FormLabel, Typography } from '@mui/material';
 import * as React from 'react';
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import { LocalizationProvider } from '@mui/x-date-pickers';
 
 export enum PaxSearchFormDay {
   Yesterday = "yesterday",
@@ -52,12 +50,15 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
   });
 
   const handleOnChangeCallback = (payload: PaxSearchFormState) => {
-    onChange && onChange({
-      ...payload,
-      arrivalDate: payload.arrivalDate.toDate(),
-      fromDate: payload.fromDate.toDate(),
-      toDate: payload.toDate.toDate(),
-    });
+    const formValues : PaxSearchFormPayload = {
+      day: payload.day ? payload.day : formState.day,
+      time: payload.time ? payload.time : formState.time,
+      arrivalDate: payload.arrivalDate ? payload.arrivalDate.toDate() : formState.arrivalDate.toDate(),
+      fromDate: payload.fromDate ? payload.fromDate.toDate() : formState.fromDate.toDate(),
+      toDate: payload.toDate ? payload.toDate.toDate() : formState.fromDate.toDate(),
+      timeMachine: payload.hasOwnProperty('timeMachine') ? payload.timeMachine : formState.timeMachine,
+    }
+    onChange && onChange(formValues);
   }
 
   const handleChangeDay = (event: React.MouseEvent<HTMLElement>, newValue: PaxSearchFormDay) => {
@@ -73,30 +74,33 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
         arrivalDate = moment()
         break;
     }
+
+
     const newState = {
       ...formState,
       day: newValue,
       arrivalDate,
-      fromDate: arrivalDate.clone().set('hour', formState.fromDate.get('hours')).set('minute', formState.fromDate.get('hours')),
-      toDate: arrivalDate.clone().set('hour', formState.toDate.get('hours')).set('minute', formState.toDate.get('hours')),
     }
     setFormState(newState);
     handleOnChangeCallback(newState);
   };
 
   const handleChangeTime = (event: React.MouseEvent<HTMLElement>, newValue: PaxSearchFormTime) => {
-    let toDate;
+    let toDate, fromDate;
     switch (newValue) {
-      case '24hour':
+      case PaxSearchFormTime.Day:
         toDate = moment().add(24, 'hours');
+        fromDate = formState.fromDate;
         break;
       default:
-        toDate = moment()
+        fromDate = moment();
+        toDate = moment();
         break;
     }
     const newState = {
       ...formState,
       time: newValue,
+      fromDate,
       toDate
     }
     setFormState(newState);
@@ -112,17 +116,17 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
     handleOnChangeCallback(newState);
   };
 
-  const handleDatepickerChange = (field: string, value: moment.Moment | null) => {
+  const handleDatepickerChange = (field: string, value: moment.Moment) => {
     const newState = {
       ...formState,
-      [field]: value
+      [field]: value,
+      toDate: field === 'fromDate' && formState.time === PaxSearchFormTime.Day ? value!.add(24, 'hours') : formState.toDate,
     }
     setFormState(newState);
     handleOnChangeCallback(newState);
   }
 
   return (
-    <LocalizationProvider dateAdapter={AdapterMoment}>
     <Box sx={(theme) => ({
       maxWidth: '600px',
       padding: 2,
@@ -148,19 +152,21 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
               label="Arrival date"
               format="DD/MM/YYYY"
               value={formState.arrivalDate}
-              onChange={(value) => handleDatepickerChange('arrivalDate', value)}
+              onChange={(value) => handleDatepickerChange('arrivalDate', value || moment())}
             />
             <Stack direction={'row'} spacing={2}>
               <TimePicker
+                ampm={false}
                 label="From"
                 value={formState.fromDate}
-                onChange={(value) => handleDatepickerChange('fromDate', value)}
+                onChange={(value) => handleDatepickerChange('fromDate', value || moment())}
               />
               <TimePicker
+                ampm={false}
                 disabled={formState.time === PaxSearchFormTime.Day}
                 label="To"
                 value={formState.toDate}
-                onChange={(value) => handleDatepickerChange('toDate', value)}
+                onChange={(value) => handleDatepickerChange('toDate', value || moment())}
               />
             </Stack>
           </Stack>
@@ -173,6 +179,5 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
         <Typography variant='body1'>{formState.timeMachine ? 'On' : 'Off'}</Typography>
       </Stack>
     </Box>
-    </LocalizationProvider>
   )
 }
