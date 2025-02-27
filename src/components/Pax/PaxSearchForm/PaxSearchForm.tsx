@@ -128,7 +128,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
   }
 
   return (
-    LocalDateProvider({children: (
+    <LocalDateProvider>
     <Box sx={(theme) => ({
       maxWidth: '600px',
       padding: 2,
@@ -181,5 +181,6 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
         <Typography variant='body1'>{formState.timeMachine ? 'On' : 'Off'}</Typography>
       </Stack>
     </Box>
-  )}))
+    </LocalDateProvider>
+  )
 }
