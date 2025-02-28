@@ -1,11 +1,21 @@
-import { DatePicker} from '@mui/x-date-pickers';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import  { InfoTooltip } from '../../ui/InfoTooltip';
+import {DatePicker} from '@mui/x-date-pickers';
+import {InfoTooltip} from '../../ui/InfoTooltip';
 
 import moment from 'moment';
-import { Box,Grid, ToggleButton, ToggleButtonGroup, Stack, Switch, FormLabel, Typography } from '@mui/material';
+import {
+  Box,
+  Grid,
+  ToggleButton,
+  ToggleButtonGroup,
+  Stack,
+  Switch,
+  FormLabel,
+  Typography,
+  Select,
+  MenuItem
+} from '@mui/material';
 import * as React from 'react';
-import {LocalDateProvider} from "../../Util/LocaleDateProvider";
+import {endTimeOptions, timeOptions} from "../../Util";
 
 export enum PaxSearchFormDay {
   Yesterday = "yesterday",
@@ -22,8 +32,8 @@ type PaxSearchFormState = {
   day?: PaxSearchFormDay,
   time?: PaxSearchFormTime,
   arrivalDate: moment.Moment,
-  fromDate: moment.Moment,
-  toDate: moment.Moment,
+  fromDate: string,
+  toDate: string,
   timeMachine?: boolean
 }
 
@@ -31,8 +41,8 @@ export type PaxSearchFormPayload = {
   day?: PaxSearchFormDay,
   time?: PaxSearchFormTime,
   arrivalDate: Date,
-  fromDate: Date,
-  toDate: Date,
+  fromDate: string,
+  toDate: string,
   timeMachine?: boolean
 }
 
@@ -42,21 +52,21 @@ export type IPaxSearchForm = PaxSearchFormPayload & {
 
 export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMachine, onChange}: IPaxSearchForm) => {
   const [formState, setFormState] = React.useState<PaxSearchFormState>({
-    day: day || PaxSearchFormDay.Yesterday,
-    time: time || PaxSearchFormTime.Now,
-    arrivalDate: moment(arrivalDate) || moment(),
-    fromDate: moment(fromDate) || moment(),
-    toDate: moment(toDate) || moment(),
-    timeMachine: timeMachine || false,
-  });
+                                                                         day: day || PaxSearchFormDay.Yesterday,
+                                                                         time: time || PaxSearchFormTime.Now,
+                                                                         arrivalDate: moment(arrivalDate) || moment(),
+                                                                         fromDate: fromDate,
+                                                                         toDate: toDate,
+                                                                         timeMachine: timeMachine || false,
+                                                                       });
 
   const handleOnChangeCallback = (payload: PaxSearchFormState) => {
-    const formValues : PaxSearchFormPayload = {
+    const formValues: PaxSearchFormPayload = {
       day: payload.day ? payload.day : formState.day,
       time: payload.time ? payload.time : formState.time,
       arrivalDate: payload.arrivalDate ? payload.arrivalDate.toDate() : formState.arrivalDate.toDate(),
-      fromDate: payload.fromDate ? payload.fromDate.toDate() : formState.fromDate.toDate(),
-      toDate: payload.toDate ? payload.toDate.toDate() : formState.fromDate.toDate(),
+      fromDate: payload.fromDate ? payload.fromDate : formState.fromDate,
+      toDate: payload.toDate ? payload.toDate : formState.fromDate,
       timeMachine: payload.hasOwnProperty('timeMachine') ? payload.timeMachine : formState.timeMachine,
     }
     onChange && onChange(formValues);
@@ -90,12 +100,12 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
     let toDate, fromDate;
     switch (newValue) {
       case PaxSearchFormTime.Day:
-        toDate = moment().add(24, 'hours');
+        toDate = '24:00';
         fromDate = formState.fromDate;
         break;
       default:
-        fromDate = moment();
-        toDate = moment();
+        fromDate = '00:00';
+        toDate = '24:00';
         break;
     }
     const newState = {
@@ -108,7 +118,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
     handleOnChangeCallback(newState);
   };
 
-  const handleChangeTimeMachine = ( event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeTimeMachine = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newState = {
       ...formState,
       timeMachine: event.target.checked
@@ -121,7 +131,17 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
     const newState = {
       ...formState,
       [field]: value,
-      toDate: field === 'fromDate' && formState.time === PaxSearchFormTime.Day ? value!.add(24, 'hours') : formState.toDate,
+      // toDate: field === 'fromDate' && formState.time === PaxSearchFormTime.Day ? value!.add(24, 'hours') : formState.toDate,
+    }
+    setFormState(newState);
+    handleOnChangeCallback(newState);
+  }
+
+  const handleTimeChange = (field: string, value:string) => {
+    const newState = {
+      ...formState,
+      [field]: value,
+      // toDate: field === 'fromDate' && formState.time === PaxSearchFormTime.Day ? value!.add(24, 'hours') : formState.toDate,
     }
     setFormState(newState);
     handleOnChangeCallback(newState);
@@ -141,7 +161,8 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
               <ToggleButton value="today">Today</ToggleButton>
               <ToggleButton value="tomorrow">Tomorrow</ToggleButton>
             </ToggleButtonGroup>
-            <ToggleButtonGroup exclusive color='primary' size='medium' value={formState.time} onChange={handleChangeTime}>
+            <ToggleButtonGroup exclusive color='primary' size='medium' value={formState.time}
+                               onChange={handleChangeTime}>
               <ToggleButton value="now">Now</ToggleButton>
               <ToggleButton value="24hour">24 hours</ToggleButton>
             </ToggleButtonGroup>
@@ -156,27 +177,75 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
               onChange={(value) => handleDatepickerChange('arrivalDate', value || moment())}
             />
             <Stack direction={'row'} spacing={2}>
-              <TimePicker
-                ampm={false}
-                label="From"
-                value={formState.fromDate}
-                onChange={(value) => handleDatepickerChange('fromDate', value || moment())}
-              />
-              <TimePicker
-                ampm={false}
-                disabled={formState.time === PaxSearchFormTime.Day}
-                label="To"
+              {/*<Grid item xs={12}>*/}
+              <Typography sx={{fontSize: '16px', fontWeight: 'bold'}}>Start time</Typography>
+              <Box>
+                <Select
+                  variant="outlined"
+                  value={formState.fromDate}
+                  onChange={(e) => {
+                    // const [hour, minute] = e.target.value.split(':').map(Number);
+                    handleTimeChange('fromDate', e.target.value);
+                  }}
+                  fullWidth
+                  inputProps={{role: 'start-time-select'}}
+                  data-cy="start-time-select"
+                >
+                  {timeOptions(60).map(time => (
+                    <MenuItem key={time} value={time}
+                              data-cy={`select-start-time-option-${time.replace(':', '-')}`}>{time}</MenuItem>
+                  ))}
+                </Select>
+              </Box>
+              {/*</Grid>*/}
+              {/*<Grid item xs={12}>*/}
+              <Typography sx={{fontSize: '16px', fontWeight: 'bold'}}>End time</Typography>
+              <Select
+                variant="outlined"
                 value={formState.toDate}
-                onChange={(value) => handleDatepickerChange('toDate', value || moment())}
-              />
+                onChange={(e) => {
+                  // const [hour, minute] = e.target.value.split(':').map(Number);
+                  handleTimeChange('toDate', e.target.value);
+                }}
+                fullWidth
+                inputProps={{role: 'end-time-select'}}
+                data-cy="end-time-select"
+                // error={shift.startTime === shift.endTime}
+              >
+                {endTimeOptions(60).map(time => (
+                  <MenuItem key={time} value={time}
+                            data-cy={`select-end-time-option-${time.replace(':', '-')}`}>{time}</MenuItem>
+                ))}
+              </Select>
+              {/*{shift.startTime === shift.endTime && (*/}
+              {/*  <Typography color="error" variant="body2">Start time and end time cannot be the same</Typography>*/}
+              {/*)}*/}
+              {/*{shift.endTime < shift.startTime && (*/}
+              {/*  <Typography color="warning" variant="body2">This is a midnight shift spanning to the next day</Typography>*/}
+              {/*)}*/}
+              {/*</Grid>*/}
+              {/*<TimePicker*/}
+              {/*  ampm={false}*/}
+              {/*  label="From"*/}
+              {/*  value={formState.fromDate}*/}
+              {/*  onChange={(value) => handleDatepickerChange('fromDate', value || moment())}*/}
+              {/*/>*/}
+              {/*<TimePicker*/}
+              {/*  ampm={false}*/}
+              {/*  disabled={formState.time === PaxSearchFormTime.Day}*/}
+              {/*  label="To"*/}
+              {/*  value={formState.toDate}*/}
+              {/*  onChange={(value) => handleDatepickerChange('toDate', value || moment())}*/}
+              {/*/>*/}
             </Stack>
           </Stack>
         </Grid>
       </Grid>
       <Stack direction="row" sx={{alignItems: 'center', mt: 1}}>
         <FormLabel htmlFor='time-machine' sx={{fontWeight: 'bold'}}>Time Machine</FormLabel>
-        <InfoTooltip text='See what DRT was showing for this day on a specific date & time in the past. This can be useful to compare what DRT forecasted for a date compared to what ended up happening' />
-        <Switch id="time-machine" checked={formState.timeMachine} onChange={handleChangeTimeMachine} />
+        <InfoTooltip
+          text='See what DRT was showing for this day on a specific date & time in the past. This can be useful to compare what DRT forecasted for a date compared to what ended up happening'/>
+        <Switch id="time-machine" checked={formState.timeMachine} onChange={handleChangeTimeMachine}/>
         <Typography variant='body1'>{formState.timeMachine ? 'On' : 'Off'}</Typography>
       </Stack>
     </Box>
