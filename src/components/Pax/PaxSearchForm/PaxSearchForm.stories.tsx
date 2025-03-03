@@ -60,10 +60,10 @@ export const PaxFormLayout: Story = {
   args: {
     timeMachine: false,
     day: "today",
-    time: "now",
+    time: "24hour",
     arrivalDate: new Date(),
     fromDate: '00:00',
-    toDate: '23:00',
+    toDate: "00:00",
   },
 
   render: () => {
@@ -71,8 +71,12 @@ export const PaxFormLayout: Story = {
 
       const onChange = (searchFormState: PaxSearchFormPayload) => {
         console.log(searchFormState);
-        updateArgs(searchFormState)
-      };
+        if(searchFormState.time === '24hour') {
+          updateArgs(searchFormState)
+        } else {
+          updateArgs({ ...searchFormState, fromDate: '12:00', toDate: '16:00' });
+        }
+      }
       return (
         <PaxSearchForm 
           onChange={onChange}

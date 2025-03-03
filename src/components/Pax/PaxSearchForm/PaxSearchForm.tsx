@@ -100,12 +100,12 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
     let toDate, fromDate;
     switch (newValue) {
       case PaxSearchFormTime.Day:
-        toDate = '24:00';
+        toDate = '00:00';
         fromDate = formState.fromDate;
         break;
       default:
         fromDate = '00:00';
-        toDate = '24:00';
+        toDate = '00:00';
         break;
     }
     const newState = {
