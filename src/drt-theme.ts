@@ -1,5 +1,6 @@
 
 import { createTheme, darken, lighten } from "@mui/material";
+import type {} from '@mui/x-date-pickers/themeAugmentation';
 import React from "react";
 
 declare module '@mui/material/styles' {
@@ -197,8 +198,16 @@ const drtTheme = createTheme({
               backgroundColor: defaultValues.palette.primary.dark,
               color: defaultValues.palette.common.white,
               cursor: 'default'
+            },
+            '&.Mui-disabled': {
+              backgroundColor: defaultValues.palette.grey[300],
+              color: defaultValues.palette.grey[700],
+              cursor: 'default'
             }
           }
+        },
+        primary: {
+          
         }
       }
     },
@@ -251,6 +260,20 @@ const drtTheme = createTheme({
           '&:nth-of-type(even)': {
             backgroundColor: defaultValues.palette.grey[100],
           },
+        }
+      }
+    },
+    MuiPickersDay: {
+      styleOverrides: {
+        root: {
+          fontSize: '14px',
+        }
+      }
+    },
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          fontSize: '12px'
         }
       }
     }

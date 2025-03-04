@@ -11,8 +11,8 @@ interface PaxSearchFormStoryControls {
   day: "yesterday" | "today" | "tomorrow",
   time: "now" | "24hour",
   arrivalDate: Date,
-  fromDate:  Date,
-  toDate:  Date,
+  fromDate:  string,
+  toDate:  string,
 }
 
 const meta: Meta<PaxSearchFormStoryControls>  = {
@@ -43,12 +43,12 @@ const meta: Meta<PaxSearchFormStoryControls>  = {
     },
     fromDate: {
       control: {
-        type: 'date'
+        type: 'text'
       }
     },
     toDate: {
       control: {
-        type: 'date'
+        type: 'text'
       }
     }
   }
@@ -61,18 +61,23 @@ export const PaxFormLayout: Story = {
   args: {
     timeMachine: false,
     day: "today",
-    time: "now",
+    time: "24hour",
     arrivalDate: new Date(),
-    fromDate: new Date(),
-    toDate: new Date(),
+    fromDate: moment().subtract(1, 'hours').format('HH:00'),
+    toDate: moment().add(3, 'hours').format('HH:00'),
   },
 
   render: () => {
       const [args, updateArgs] = useArgs();
 
       const onChange = (searchFormState: PaxSearchFormPayload) => {
-        updateArgs(searchFormState)
-      };
+        console.log(searchFormState);
+        if(searchFormState.time === '24hour') {
+          updateArgs(searchFormState)
+        } else {
+          updateArgs({ ...searchFormState, fromDate: '12:00', toDate: '16:00' });
+        }
+      }
       return (
         <PaxSearchForm 
           onChange={onChange}

@@ -1,6 +1,6 @@
 {
   "name": "@drt/drt-react",
-  "version": "1.6.7",
+  "version": "1.6.8",
   "description": "React components for DRT applications",
   "main": "dist/cjs/bundle.js",
   "module": "dist/esm/bundle.js",

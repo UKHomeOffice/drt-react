@@ -38,3 +38,6 @@ export {ShiftHotTableView} from './Shifts'
 
 export type {ShiftSummaryProps} from './Shifts'
 export {ShiftSummaryView} from './Shifts'
+
+export type {ILocalDateProvider} from './Util/LocaleDateProvider'
+export {LocalDateProvider} from './Util/LocaleDateProvider'

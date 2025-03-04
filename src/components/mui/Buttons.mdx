@@ -1,0 +1,37 @@
+
+{ /* MuiFormDocs.mdx */ }
+
+import { Meta, Canvas } from '@storybook/blocks';
+import * as ButtonStories from './Buttons.stories';
+
+
+<Meta title='DRT Components/MUI Components/Buttons' />
+
+# Buttons
+
+### Basic button
+The Button comes with three variants: text (default), contained, and outlined.
+<Canvas of={ButtonStories.BasicButtons} />
+
+### Text buttons
+Text buttons are typically used for less-pronounced actions, including those located: in dialogs, in cards. In cards, text buttons help maintain an emphasis on card content.
+<Canvas of={ButtonStories.TextButtons} />
+
+### Contained buttons
+Contained buttons are high-emphasis, distinguished by their use of elevation and fill. They contain actions that are primary to your app.
+<Canvas of={ButtonStories.ContainedButtons} />
+
+### Outlined buttons
+Outlined buttons are medium-emphasis buttons. They contain actions that are important but aren't the primary action in an app.
+
+Outlined buttons are also a lower emphasis alternative to contained buttons, or a higher emphasis alternative to text buttons.
+<Canvas of={ButtonStories.OutlinedButtons} />
+
+### Color
+<Canvas of={ButtonStories.ColorButtons} />
+
+### Sizes
+<Canvas of={ButtonStories.SizeButtons} />
+
+### Button Groups
+<Canvas of={ButtonStories.ButtonGroups} />
