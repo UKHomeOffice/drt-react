@@ -1,5 +1,8 @@
 import {DatePicker} from '@mui/x-date-pickers';
 import {InfoTooltip} from '../../ui/InfoTooltip';
+import BoltIcon from '@mui/icons-material/Bolt';
+import UpdateIcon from '@mui/icons-material/Update';
+import BrowseGalleryIcon from '@mui/icons-material/BrowseGallery';
 
 import moment from 'moment';
 import {
@@ -15,7 +18,8 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-  breadcrumbsClasses
+  breadcrumbsClasses,
+  IconButton
 } from '@mui/material';
 import * as React from 'react';
 import {endTimeOptions, timeOptions} from "../../Util";
@@ -29,11 +33,12 @@ export enum PaxSearchFormDay {
 export enum PaxSearchFormTime {
   Now = "now",
   Day = "24hour",
+  Range = "range",
 }
 
 type PaxSearchFormState = {
   day?: PaxSearchFormDay,
-  time?: PaxSearchFormTime | null,
+  time?: PaxSearchFormTime,
   arrivalDate: moment.Moment,
   fromDate: string,
   toDate: string,
@@ -42,7 +47,7 @@ type PaxSearchFormState = {
 
 export type PaxSearchFormPayload = {
   day?: PaxSearchFormDay,
-  time?: PaxSearchFormTime | null,
+  time?: PaxSearchFormTime,
   arrivalDate: Date,
   fromDate: string,
   toDate: string,
@@ -81,11 +86,11 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
       switch (newValue) {
         case PaxSearchFormDay.Yesterday:
           arrivalDate = moment().subtract(1, 'day');
-          time = PaxSearchFormTime.Day
+          time = formState.time === PaxSearchFormTime.Now ? PaxSearchFormTime.Day : formState.time;
           break;
         case PaxSearchFormDay.Tomorrow:
           arrivalDate = moment().add(1, 'day');
-          time = PaxSearchFormTime.Day
+          time = formState.time === PaxSearchFormTime.Now ? PaxSearchFormTime.Day : formState.time;
           break;
         default:
           arrivalDate = moment()
@@ -159,10 +164,10 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
     if (formState.time === PaxSearchFormTime.Now) {
       switch (field) {
         case 'fromDate':
-          newState.time = value === nowFrom ? PaxSearchFormTime.Now : null;
+          newState.time = value === nowFrom ? PaxSearchFormTime.Now : PaxSearchFormTime.Range;
           break;
         case 'toDate':
-          newState.time = value === nowTo ? PaxSearchFormTime.Now : null;
+          newState.time = value === nowTo ? PaxSearchFormTime.Now : PaxSearchFormTime.Range;
           break;
         default:
           break;
@@ -174,21 +179,22 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
 
   return (
     <Box sx={(theme) => ({
-      maxWidth: '600px',
+      maxWidth: '800px',
       padding: 2,
       backgroundColor: theme.palette.secondary.light || theme.palette.grey[200]
     })}>
       <Grid container spacing={2} flexWrap={'nowrap'}>
         <Grid item>
           <Stack spacing={2}>
-            <ToggleButtonGroup color='primary' exclusive size='medium' value={formState.day} onChange={handleChangeDay}>
+            <ToggleButtonGroup exclusive color='primary' size='medium' value={formState.day} onChange={handleChangeDay}>
               <ToggleButton value="yesterday" defaultChecked>Yesterday</ToggleButton>
               <ToggleButton value="today">Today</ToggleButton>
               <ToggleButton value="tomorrow">Tomorrow</ToggleButton>
             </ToggleButtonGroup>
             <ToggleButtonGroup exclusive color='primary' size='medium' value={formState.time} onChange={handleChangeTime}>
-              <ToggleButton value="now" disabled={formState.day !== PaxSearchFormDay.Today}>Now</ToggleButton>
-              <ToggleButton value="24hour">24 hours</ToggleButton>
+              <ToggleButton value="now" disabled={formState.day !== PaxSearchFormDay.Today}><BoltIcon />Live</ToggleButton>
+              <ToggleButton value="24hour"><UpdateIcon />+24hr</ToggleButton>
+              <ToggleButton value="range"><BrowseGalleryIcon /> Custom</ToggleButton>
             </ToggleButtonGroup>
           </Stack>
         </Grid>

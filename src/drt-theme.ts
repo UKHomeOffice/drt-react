@@ -187,23 +187,31 @@ const drtTheme = createTheme({
       styleOverrides: {
         root: {
           flexGrow: 1,
+          fontWeight: 'normal',
+          paddingRight: defaultValues.spacing(2),
+          paddingLeft: defaultValues.spacing(2),
           '&.MuiToggleButton-primary': {
-            backgroundColor: defaultValues.palette.primary.main,
-            color: defaultValues.palette.common.white,
+            backgroundColor: defaultValues.palette.common.white,
+            color: defaultValues.palette.text.primary,
             '&:hover': {
-              backgroundColor: lighten(defaultValues.palette.primary.main, 0.1),
-              color: defaultValues.palette.common.white,
+              color: defaultValues.palette.primary.main,
+              backgroundColor: defaultValues.palette.primary.light,
             },
             '&.Mui-selected': {
-              backgroundColor: defaultValues.palette.primary.dark,
+              backgroundColor: defaultValues.palette.primary.main,
               color: defaultValues.palette.common.white,
               cursor: 'default'
             },
             '&.Mui-disabled': {
-              backgroundColor: defaultValues.palette.grey[300],
-              color: defaultValues.palette.grey[700],
-              cursor: 'default'
+              backgroundColor: defaultValues.palette.grey[200],
+              color: defaultValues.palette.grey[600],
             }
+          },
+          '> .MuiSvgIcon-root': {
+            marginRight: defaultValues.spacing(1),
+            opacity: 0.8,
+            width: '0.8em',
+
           }
         },
         primary: {

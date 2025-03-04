@@ -9,7 +9,7 @@ import moment from 'moment';
 interface PaxSearchFormStoryControls {
   timeMachine: boolean,
   day: "yesterday" | "today" | "tomorrow",
-  time: "now" | "24hour",
+  time: "now" | "24hour" | "range",
   arrivalDate: Date,
   fromDate:  string,
   toDate:  string,
