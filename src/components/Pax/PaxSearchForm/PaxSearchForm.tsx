@@ -12,7 +12,9 @@ import {
   FormLabel,
   Typography,
   Select,
-  MenuItem
+  MenuItem,
+  FormControl,
+  InputLabel
 } from '@mui/material';
 import * as React from 'react';
 import {endTimeOptions, timeOptions} from "../../Util";
@@ -52,13 +54,13 @@ export type IPaxSearchForm = PaxSearchFormPayload & {
 
 export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMachine, onChange}: IPaxSearchForm) => {
   const [formState, setFormState] = React.useState<PaxSearchFormState>({
-                                                                         day: day || PaxSearchFormDay.Yesterday,
-                                                                         time: time || PaxSearchFormTime.Now,
-                                                                         arrivalDate: moment(arrivalDate) || moment(),
-                                                                         fromDate: fromDate,
-                                                                         toDate: toDate,
-                                                                         timeMachine: timeMachine || false,
-                                                                       });
+    day: day || PaxSearchFormDay.Yesterday,
+    time: time || PaxSearchFormTime.Now,
+    arrivalDate: moment(arrivalDate) || moment(),
+    fromDate: fromDate,
+    toDate: toDate,
+    timeMachine: timeMachine || false,
+  });
 
   const handleOnChangeCallback = (payload: PaxSearchFormState) => {
     const formValues: PaxSearchFormPayload = {
@@ -73,49 +75,56 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
   }
 
   const handleChangeDay = (event: React.MouseEvent<HTMLElement>, newValue: PaxSearchFormDay) => {
-    let arrivalDate;
-    switch (newValue) {
-      case PaxSearchFormDay.Yesterday:
-        arrivalDate = moment().subtract(1, 'day');
-        break;
-      case PaxSearchFormDay.Tomorrow:
-        arrivalDate = moment().add(1, 'day');
-        break;
-      default:
-        arrivalDate = moment()
-        break;
+    if (newValue) {
+      let arrivalDate, time;
+      switch (newValue) {
+        case PaxSearchFormDay.Yesterday:
+          arrivalDate = moment().subtract(1, 'day');
+          time = PaxSearchFormTime.Day
+          break;
+        case PaxSearchFormDay.Tomorrow:
+          arrivalDate = moment().add(1, 'day');
+          time = PaxSearchFormTime.Day
+          break;
+        default:
+          arrivalDate = moment()
+          time = formState.time
+          break;
+      }
+  
+      const newState = {
+        ...formState,
+        day: newValue,
+        arrivalDate,
+        time,
+      }
+      setFormState(newState);
+      handleOnChangeCallback(newState);
     }
-
-
-    const newState = {
-      ...formState,
-      day: newValue,
-      arrivalDate,
-    }
-    setFormState(newState);
-    handleOnChangeCallback(newState);
   };
 
   const handleChangeTime = (event: React.MouseEvent<HTMLElement>, newValue: PaxSearchFormTime) => {
-    let toDate, fromDate;
-    switch (newValue) {
-      case PaxSearchFormTime.Day:
-        toDate = '00:00';
-        fromDate = formState.fromDate;
-        break;
-      default:
-        fromDate = '00:00';
-        toDate = '00:00';
-        break;
+    if (newValue) {
+      let toDate, fromDate;
+      switch (newValue) {
+        case PaxSearchFormTime.Day:
+          toDate = formState.fromDate;
+          fromDate = formState.fromDate;
+          break;
+        default:
+          fromDate = moment().format('hh:00');
+          toDate = '00:00';
+          break;
+      }
+      const newState = {
+        ...formState,
+        time: newValue,
+        fromDate,
+        toDate
+      }
+      newValue && setFormState(newState);
+      handleOnChangeCallback(newState);
     }
-    const newState = {
-      ...formState,
-      time: newValue,
-      fromDate,
-      toDate
-    }
-    setFormState(newState);
-    handleOnChangeCallback(newState);
   };
 
   const handleChangeTimeMachine = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -140,8 +149,8 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
   const handleTimeChange = (field: string, value:string) => {
     const newState = {
       ...formState,
+      toDate: field === 'fromDate' && formState.time === PaxSearchFormTime.Day ? value : formState.toDate,
       [field]: value,
-      // toDate: field === 'fromDate' && formState.time === PaxSearchFormTime.Day ? value!.add(24, 'hours') : formState.toDate,
     }
     setFormState(newState);
     handleOnChangeCallback(newState);
@@ -156,14 +165,13 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
       <Grid container spacing={2} flexWrap={'nowrap'}>
         <Grid item>
           <Stack spacing={2}>
-            <ToggleButtonGroup exclusive color='primary' size='medium' value={formState.day} onChange={handleChangeDay}>
+            <ToggleButtonGroup color='primary' exclusive size='medium' value={formState.day} onChange={handleChangeDay}>
               <ToggleButton value="yesterday" defaultChecked>Yesterday</ToggleButton>
               <ToggleButton value="today">Today</ToggleButton>
               <ToggleButton value="tomorrow">Tomorrow</ToggleButton>
             </ToggleButtonGroup>
-            <ToggleButtonGroup exclusive color='primary' size='medium' value={formState.time}
-                               onChange={handleChangeTime}>
-              <ToggleButton value="now">Now</ToggleButton>
+            <ToggleButtonGroup exclusive color='primary' size='medium' value={formState.time} onChange={handleChangeTime}>
+              <ToggleButton value="now" disabled={formState.day !== PaxSearchFormDay.Today}>Now</ToggleButton>
               <ToggleButton value="24hour">24 hours</ToggleButton>
             </ToggleButtonGroup>
           </Stack>
@@ -177,66 +185,49 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
               onChange={(value) => handleDatepickerChange('arrivalDate', value || moment())}
             />
             <Stack direction={'row'} spacing={2}>
-              {/*<Grid item xs={12}>*/}
-              <Typography sx={{fontSize: '16px', fontWeight: 'bold'}}>Start time</Typography>
-              <Box>
+              <FormControl sx={{flexGrow: 1}}>
+                <InputLabel id="demo-simple-select-label">From</InputLabel>
                 <Select
-                  variant="outlined"
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
                   value={formState.fromDate}
+                  label="Age"
+                  fullWidth
+                  inputProps={{role: 'start-time-select'}}
                   onChange={(e) => {
                     // const [hour, minute] = e.target.value.split(':').map(Number);
                     handleTimeChange('fromDate', e.target.value);
                   }}
-                  fullWidth
-                  inputProps={{role: 'start-time-select'}}
-                  data-cy="start-time-select"
                 >
                   {timeOptions(60).map(time => (
                     <MenuItem key={time} value={time}
-                              data-cy={`select-start-time-option-${time.replace(':', '-')}`}>{time}</MenuItem>
+                      data-cy={`select-start-time-option-${time.replace(':', '-')}`}>{time}
+                    </MenuItem>
                   ))}
                 </Select>
-              </Box>
-              {/*</Grid>*/}
-              {/*<Grid item xs={12}>*/}
-              <Typography sx={{fontSize: '16px', fontWeight: 'bold'}}>End time</Typography>
-              <Select
-                variant="outlined"
-                value={formState.toDate}
-                onChange={(e) => {
-                  // const [hour, minute] = e.target.value.split(':').map(Number);
-                  handleTimeChange('toDate', e.target.value);
-                }}
-                fullWidth
-                inputProps={{role: 'end-time-select'}}
-                data-cy="end-time-select"
-                // error={shift.startTime === shift.endTime}
-              >
-                {endTimeOptions(60).map(time => (
-                  <MenuItem key={time} value={time}
-                            data-cy={`select-end-time-option-${time.replace(':', '-')}`}>{time}</MenuItem>
-                ))}
-              </Select>
-              {/*{shift.startTime === shift.endTime && (*/}
-              {/*  <Typography color="error" variant="body2">Start time and end time cannot be the same</Typography>*/}
-              {/*)}*/}
-              {/*{shift.endTime < shift.startTime && (*/}
-              {/*  <Typography color="warning" variant="body2">This is a midnight shift spanning to the next day</Typography>*/}
-              {/*)}*/}
-              {/*</Grid>*/}
-              {/*<TimePicker*/}
-              {/*  ampm={false}*/}
-              {/*  label="From"*/}
-              {/*  value={formState.fromDate}*/}
-              {/*  onChange={(value) => handleDatepickerChange('fromDate', value || moment())}*/}
-              {/*/>*/}
-              {/*<TimePicker*/}
-              {/*  ampm={false}*/}
-              {/*  disabled={formState.time === PaxSearchFormTime.Day}*/}
-              {/*  label="To"*/}
-              {/*  value={formState.toDate}*/}
-              {/*  onChange={(value) => handleDatepickerChange('toDate', value || moment())}*/}
-              {/*/>*/}
+              </FormControl>
+              <FormControl sx={{flexGrow: 1}}>
+                <InputLabel id="demo-simple-select-label">To</InputLabel>
+                <Select
+                  disabled={formState.time === PaxSearchFormTime.Day}
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={formState.toDate}
+                  label="Age"
+                  fullWidth
+                  inputProps={{role: 'end-time-select'}}
+                  onChange={(e) => {
+                    handleTimeChange('toDate', e.target.value);
+                  }}
+                >
+                  {timeOptions(60).map(time => (
+                    <MenuItem key={time} value={time}
+                      data-cy={`select-start-time-option-${time.replace(':', '-')}`}>
+                        {time}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Stack>
           </Stack>
         </Grid>

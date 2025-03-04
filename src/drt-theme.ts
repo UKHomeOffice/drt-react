@@ -198,8 +198,16 @@ const drtTheme = createTheme({
               backgroundColor: defaultValues.palette.primary.dark,
               color: defaultValues.palette.common.white,
               cursor: 'default'
+            },
+            '&.Mui-disabled': {
+              backgroundColor: defaultValues.palette.grey[300],
+              color: defaultValues.palette.grey[700],
+              cursor: 'default'
             }
           }
+        },
+        primary: {
+          
         }
       }
     },

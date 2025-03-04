@@ -4,6 +4,7 @@ import * as React from 'react';
 import { useArgs } from '@storybook/preview-api';
 import type { Meta, StoryObj } from '@storybook/react';
 import { PaxSearchForm, PaxSearchFormPayload } from './PaxSearchForm';
+import moment from 'moment';
 
 interface PaxSearchFormStoryControls {
   timeMachine: boolean,
@@ -62,8 +63,8 @@ export const PaxFormLayout: Story = {
     day: "today",
     time: "24hour",
     arrivalDate: new Date(),
-    fromDate: '00:00',
-    toDate: "00:00",
+    fromDate: moment().format('hh:00'),
+    toDate: moment().format('hh:00'),
   },
 
   render: () => {
