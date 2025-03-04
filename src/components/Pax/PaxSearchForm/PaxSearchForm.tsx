@@ -14,7 +14,8 @@ import {
   Select,
   MenuItem,
   FormControl,
-  InputLabel
+  InputLabel,
+  breadcrumbsClasses
 } from '@mui/material';
 import * as React from 'react';
 import {endTimeOptions, timeOptions} from "../../Util";
@@ -32,7 +33,7 @@ export enum PaxSearchFormTime {
 
 type PaxSearchFormState = {
   day?: PaxSearchFormDay,
-  time?: PaxSearchFormTime,
+  time?: PaxSearchFormTime | null,
   arrivalDate: moment.Moment,
   fromDate: string,
   toDate: string,
@@ -41,7 +42,7 @@ type PaxSearchFormState = {
 
 export type PaxSearchFormPayload = {
   day?: PaxSearchFormDay,
-  time?: PaxSearchFormTime,
+  time?: PaxSearchFormTime | null,
   arrivalDate: Date,
   fromDate: string,
   toDate: string,
@@ -112,8 +113,8 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
           fromDate = formState.fromDate;
           break;
         default:
-          fromDate = moment().format('hh:00');
-          toDate = moment().add(3, 'h').format('hh:00');
+          fromDate = moment().subtract(1, 'hour').format('HH:00');
+          toDate = moment().add(3, 'hours').format('HH:00');
           break;
       }
       const newState = {
@@ -122,7 +123,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
         fromDate,
         toDate
       }
-      newValue && setFormState(newState);
+      setFormState(newState);
       handleOnChangeCallback(newState);
     }
   };
@@ -147,10 +148,25 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
   }
 
   const handleTimeChange = (field: string, value:string) => {
+    const nowFrom = moment().format('hh:00');
+    const nowTo = moment().add(4, 'hours').format('hh:00');
+
     const newState = {
       ...formState,
       toDate: field === 'fromDate' && formState.time === PaxSearchFormTime.Day ? value : formState.toDate,
       [field]: value,
+    }
+    if (formState.time === PaxSearchFormTime.Now) {
+      switch (field) {
+        case 'fromDate':
+          newState.time = value === nowFrom ? PaxSearchFormTime.Now : null;
+          break;
+        case 'toDate':
+          newState.time = value === nowTo ? PaxSearchFormTime.Now : null;
+          break;
+        default:
+          break;
+      }
     }
     setFormState(newState);
     handleOnChangeCallback(newState);
