@@ -113,7 +113,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
           break;
         default:
           fromDate = moment().format('hh:00');
-          toDate = '00:00';
+          toDate = moment().add(3, 'h').format('hh:00');
           break;
       }
       const newState = {
