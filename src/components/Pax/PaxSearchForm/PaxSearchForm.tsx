@@ -210,6 +210,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
               <FormControl sx={{flexGrow: 1}}>
                 <InputLabel id="demo-simple-select-label">From</InputLabel>
                 <Select
+                  disabled={formState.time === PaxSearchFormTime.Now}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={formState.fromDate}
@@ -231,7 +232,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
               <FormControl sx={{flexGrow: 1}}>
                 <InputLabel id="demo-simple-select-label">To</InputLabel>
                 <Select
-                  disabled={formState.time === PaxSearchFormTime.Day}
+                  disabled={formState.time !== PaxSearchFormTime.Range}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={formState.toDate}
