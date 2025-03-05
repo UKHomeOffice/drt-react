@@ -65,17 +65,21 @@ export type IPaxSearchForm = PaxSearchFormPayload & {
 export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMachine, onChange}: IPaxSearchForm) => {
 
   const convertHourToOffset = (hour:string, startTime: string) => {
-    console.log(startTime, startTime.substring(0,2),hour, hour.substring(0,2))
+    const isNextDay = hour.includes('+');
     const startMoment = moment().set('hours', parseInt(startTime.substring(0,2)));
     const endMoment = startMoment.clone().set('hours', parseInt(hour.substring(0,2)));
+    if (isNextDay) {
+      endMoment.add(1, 'day');
+    }
     const momentDuration = moment.duration(endMoment.diff(startMoment));
     return `${momentDuration.asHours()}`;
   }
 
   const convertOffsetToHour = (offset:string, startTime: string) => {
+    const parsedOffset = parseInt(offset);
     const offsetTime = moment().set('hours', parseInt(startTime.substring(0,2)));
-    offsetTime.add(offset, 'hours');
-    return offsetTime.format('HH:00')
+    offsetTime.add(parsedOffset, 'hours');
+    return`${offsetTime.format('HH:00')}${parsedOffset > 24 ? ' +1': ''}`
   }
 
   const [formState, setFormState] = React.useState<PaxSearchFormState>({
