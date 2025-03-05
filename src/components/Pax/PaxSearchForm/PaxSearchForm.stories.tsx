@@ -65,7 +65,7 @@ export const PaxFormLayout: Story = {
     time: "now",
     arrivalDate: new Date(),
     fromDate: moment().subtract(1, 'hours').format('HH:00'),
-    toDate: '4',
+    toDate:  moment().add(3, 'hours').format('HH:00'),
   },
 
   render: () => {

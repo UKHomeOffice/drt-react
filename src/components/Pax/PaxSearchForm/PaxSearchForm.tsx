@@ -63,23 +63,32 @@ export type IPaxSearchForm = PaxSearchFormPayload & {
 }
 
 export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMachine, onChange}: IPaxSearchForm) => {
+
+  const convertHourToOffset = (hour:string, startTime: string) => {
+    console.log(startTime, startTime.substring(0,2),hour, hour.substring(0,2))
+    const startMoment = moment().set('hours', parseInt(startTime.substring(0,2)));
+    const endMoment = startMoment.clone().set('hours', parseInt(hour.substring(0,2)));
+    const momentDuration = moment.duration(endMoment.diff(startMoment));
+    return `${momentDuration.asHours()}`;
+  }
+
+  const convertOffsetToHour = (offset:string, startTime: string) => {
+    const offsetTime = moment().set('hours', parseInt(startTime.substring(0,2)));
+    offsetTime.add(offset, 'hours');
+    return offsetTime.format('HH:00')
+  }
+
   const [formState, setFormState] = React.useState<PaxSearchFormState>({
     day: day || PaxSearchFormDay.Yesterday,
     time: time || PaxSearchFormTime.Now,
     arrivalDate: moment(arrivalDate) || moment(),
     fromDate: fromDate,
-    toDate: toDate,
+    toDate: convertHourToOffset(toDate, fromDate),
     timeMachine: timeMachine || false,
   });
 
-  const convertOffsetToHour = (offset:string, startTime: string) => {
-    let offsetTime = moment().set('hours', parseInt(startTime.substring(0,2)));
-    offsetTime.add(offset, 'hours');
-    return offsetTime.format('HH:00')
-  }
-
   const handleOnChangeCallback = (payload: PaxSearchFormState) => {
-    let latestFromDate = payload.fromDate ? payload.fromDate : formState.fromDate;
+    const latestFromDate = payload.fromDate ? payload.fromDate : formState.fromDate;
 
     const formValues: PaxSearchFormPayload = {
       day: payload.day ? payload.day : formState.day,
@@ -185,14 +194,6 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
           break;
         case 'toDate':
           newState.time = value === nowTo ? PaxSearchFormTime.Now : PaxSearchFormTime.Range;
-          break;
-        default:
-          break;
-      }
-    } else {
-      switch (field) {
-        case 'toDate':
-          newState.time = value == '24' ? PaxSearchFormTime.Day : PaxSearchFormTime.Range;
           break;
         default:
           break;
