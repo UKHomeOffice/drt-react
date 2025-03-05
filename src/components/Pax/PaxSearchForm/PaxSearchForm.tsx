@@ -72,15 +72,24 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
     timeMachine: timeMachine || false,
   });
 
+  const convertOffsetToHour = (offset:string, startTime: string) => {
+    let offsetTime = moment().set('hours', parseInt(startTime.substring(0,2)));
+    offsetTime.add(offset, 'hours');
+    return offsetTime.format('HH:00')
+  }
+
   const handleOnChangeCallback = (payload: PaxSearchFormState) => {
+    let latestFromDate = payload.fromDate ? payload.fromDate : formState.fromDate;
+
     const formValues: PaxSearchFormPayload = {
       day: payload.day ? payload.day : formState.day,
       time: payload.time ? payload.time : formState.time,
       arrivalDate: payload.arrivalDate ? payload.arrivalDate.toDate() : formState.arrivalDate.toDate(),
       fromDate: payload.fromDate ? payload.fromDate : formState.fromDate,
-      toDate: payload.toDate ? payload.toDate : formState.fromDate,
+      toDate: payload.toDate ? convertOffsetToHour(payload.toDate, latestFromDate) : convertOffsetToHour(payload.toDate, latestFromDate),
       timeMachine: payload.hasOwnProperty('timeMachine') ? payload.timeMachine : formState.timeMachine,
     }
+    console.log(formValues);
     onChange && onChange(formValues);
   }
 
@@ -119,7 +128,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
       switch (newValue) {
         case PaxSearchFormTime.Day:
           toDate = '24';
-          fromDate = formState.fromDate;
+          fromDate = '00:00';
           break;
         case PaxSearchFormTime.Range:
           toDate = '1';
@@ -161,8 +170,6 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
   }
 
   const handleTimeChange = (field: string, value:string) => {
-
-    console.log(formState.time, field, value);
 
     const newState = {
       ...formState,
@@ -228,6 +235,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">From</InputLabel>
                   <Select
+                    disabled={formState.time != PaxSearchFormTime.Range}
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={formState.fromDate}
@@ -251,6 +259,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">To</InputLabel>
                   <Select
+                    disabled={formState.time != PaxSearchFormTime.Range}
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={formState.toDate}
