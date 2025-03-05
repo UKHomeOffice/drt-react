@@ -5,6 +5,7 @@ import { useArgs } from '@storybook/preview-api';
 import type { Meta, StoryObj } from '@storybook/react';
 import { PaxSearchForm, PaxSearchFormPayload } from './PaxSearchForm';
 import moment from 'moment';
+import { Box } from '@mui/material';
 
 interface PaxSearchFormStoryControls {
   timeMachine: boolean,
@@ -61,10 +62,10 @@ export const PaxFormLayout: Story = {
   args: {
     timeMachine: false,
     day: "today",
-    time: "24hour",
+    time: "now",
     arrivalDate: new Date(),
     fromDate: moment().subtract(1, 'hours').format('HH:00'),
-    toDate: moment().add(3, 'hours').format('HH:00'),
+    toDate: '4',
   },
 
   render: () => {
@@ -79,15 +80,17 @@ export const PaxFormLayout: Story = {
         }
       }
       return (
-        <PaxSearchForm 
-          onChange={onChange}
-          timeMachine={args.timeMachine} 
-          day={args.day} 
-          time={args.time}
-          arrivalDate={args.arrivalDate}
-          fromDate={args.fromDate}
-          toDate={args.toDate}
-          />
-    )
+        <Box sx={{maxWidth: '800px'}}>
+          <PaxSearchForm 
+            onChange={onChange}
+            timeMachine={args.timeMachine} 
+            day={args.day} 
+            time={args.time}
+            arrivalDate={args.arrivalDate}
+            fromDate={args.fromDate}
+            toDate={args.toDate}
+            />
+        </Box>
+      )
   }
 };

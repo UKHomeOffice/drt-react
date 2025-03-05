@@ -200,7 +200,10 @@ const drtTheme = createTheme({
             '&.Mui-selected': {
               backgroundColor: defaultValues.palette.primary.main,
               color: defaultValues.palette.common.white,
-              cursor: 'default'
+              cursor: 'default',
+              '.live': {
+                color: '#ffd700',
+              }
             },
             '&.Mui-disabled': {
               backgroundColor: defaultValues.palette.grey[200],
@@ -211,7 +214,6 @@ const drtTheme = createTheme({
             marginRight: defaultValues.spacing(1),
             opacity: 0.8,
             width: '0.8em',
-
           }
         },
         primary: {
