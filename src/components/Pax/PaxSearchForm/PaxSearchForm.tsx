@@ -276,7 +276,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
                     }}
                   >
                     {
-                      Array.from(Array(36)).map((value, index) => {
+                      Array.from(Array(36 - parseInt(formState.fromDate.substring(0,2)))).map((value, index) => {
                         let fromHour = parseInt(formState.fromDate.substring(0,2));
                         let time = moment().set('hours', fromHour).add(index + 1, 'hours');
                         return <MenuItem 
