@@ -102,7 +102,6 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
       toDate: payload.toDate ? convertOffsetToHour(payload.toDate, latestFromDate) : convertOffsetToHour(payload.toDate, latestFromDate),
       timeMachine: payload.hasOwnProperty('timeMachine') ? payload.timeMachine : formState.timeMachine,
     }
-    console.log(formValues);
     onChange && onChange(formValues);
   }
 
@@ -189,18 +188,11 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
       toDate: formState.time === PaxSearchFormTime.Day ? '24' : formState.toDate,
       [field]: value,
     }
-    if (formState.time === PaxSearchFormTime.Now) {
-      const nowFrom = moment().format('hh:00');
-      const nowTo = moment().add(4, 'hours').format('hh:00');
-      switch (field) {
-        case 'fromDate':
-          newState.time = value === nowFrom ? PaxSearchFormTime.Now : PaxSearchFormTime.Range;
-          break;
-        case 'toDate':
-          newState.time = value === nowTo ? PaxSearchFormTime.Now : PaxSearchFormTime.Range;
-          break;
-        default:
-          break;
+    if (field == 'fromDate' && formState.time === PaxSearchFormTime.Range) {
+      const fromHour = parseInt(value.substring(0,2));
+      const toOffset = parseInt(formState.toDate)
+      if (toOffset > (36 - fromHour)) {
+        newState.toDate = `${36 - fromHour}`;
       }
     }
     setFormState(newState);

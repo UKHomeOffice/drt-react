@@ -62,10 +62,10 @@ export const PaxFormLayout: Story = {
   args: {
     timeMachine: false,
     day: "today",
-    time: "range",
+    time: "24hour",
     arrivalDate: new Date(),
-    fromDate: "12:00",
-    toDate:  "16:00 +1",
+    fromDate: '00:00',
+    toDate:  "00:00 +1",
   },
 
   render: () => {
