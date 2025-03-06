@@ -179,7 +179,6 @@ export const FlightFlaggerFilters = ({
   }
 
   const buttonStyles = {
-    fontWeight: 'normal',
     '& .MuiButton-startIcon': {
       fill: '#ffffff',
     },
