@@ -187,7 +187,6 @@ const drtTheme = createTheme({
       styleOverrides: {
         root: {
           flexGrow: 1,
-          fontWeight: 'normal',
           paddingRight: defaultValues.spacing(2),
           paddingLeft: defaultValues.spacing(2),
           '&.MuiToggleButton-primary': {
