@@ -38,52 +38,57 @@ export const getPaxContent = (status: DatasourceStatus) : PaxStatusContent =>  {
     icon: <></>,
   }
 
+  const iconStyle = {
+    height: '0.8em'
+  }
+
+
   switch (status) {
     case DatasourceStatus.PortForecast:
       content.paxColor = "warning"
       content.statusText = "Based on an historical average or an estimated load factor";
-      content.icon = <WarningIcon color={content.paxColor as any} />
+      content.icon = <WarningIcon style={iconStyle} color={content.paxColor as any} />
       break;
     case DatasourceStatus.DRTForecast:
       content.paxColor = "warning"
       content.statusText = "Machine learning from multiple information sources and historical trends";
-      content.icon = <CheckIcon style={{color: 'white', width: '60%'}}  />
-      content.iconBg = <CircleIcon color='info' />
+      content.icon = <CheckIcon style={{color: 'white', width: '55%', marginLeft: '3px', ...iconStyle}}  />
+      content.iconBg = <CircleIcon style={iconStyle} color='info' />
       break;
     case DatasourceStatus.PortLiveData:
       content.paxColor = "success"
       content.statusText = "Live data from the port operator";
-      content.icon = <CheckIcon style={{color: 'white', width: '60%'}}  />
-      content.iconBg = <ShieldIcon color='success' />
+      content.icon = <CheckIcon style={{color: 'white', width: '55%', marginLeft: '3px', ...iconStyle}}  />
+      content.iconBg = <ShieldIcon style={iconStyle} color='success' />
       break;
     case DatasourceStatus.CarrierData:
       content.paxColor = "info"
       content.statusText = "Advance Passenger Information (API) from the carrier";
-      content.icon = <CheckIcon style={{color: 'white', width: '60%'}}  />
-      content.iconBg = <CircleIcon color='info' />
+      content.icon = <CheckIcon style={{color: 'white', width: '55%', marginLeft: '3px', ...iconStyle}}  />
+      content.iconBg = <CircleIcon style={iconStyle} color='info' />
       break;
     case DatasourceStatus.Estimate:
       content.paxColor = "error"
       content.statusText = "Based on an historical average or an estimated load factor";
-      content.icon = <ReportIcon color={content.paxColor as any} />
-      content.iconBg = <HexagonIcon style={{color: 'white'}} />
+      content.icon = <ReportIcon style={iconStyle} color={content.paxColor as any} />
+      content.iconBg = <HexagonIcon style={{color: 'white', marginLeft: '2px', ...iconStyle}} />
       break;
     case DatasourceStatus.TerminalAverageData:
       content.paxColor = "error"
       content.statusText = "Based on historical average pax splits for this terminal";
-      content.icon = <ReportIcon color={content.paxColor as any} />
-      content.iconBg = <HexagonIcon style={{color: 'white'}} />
+      content.icon = <ReportIcon style={iconStyle} color={content.paxColor as any} />
+      content.iconBg = <HexagonIcon style={{color: 'white', marginLeft: '2px', ...iconStyle}} />
       break;
     case DatasourceStatus.PastCarrierData:
       content.paxColor = "warning"
       content.statusText = "Based on historical Advance Passenger Information (API) from this flight or route";
-      content.icon = <WarningIcon color={content.paxColor as any}  />
+      content.icon = <WarningIcon style={iconStyle} color={content.paxColor as any}  />
       break;
     case DatasourceStatus.VerifiedCarrierData:
       content.paxColor = "success"
       content.statusText = "Advance Passenger Information (API) from the carrier";
-      content.icon = <CheckIcon style={{color: 'white', width: '60%'}}  />
-      content.iconBg = <ShieldIcon color='success' />
+      content.icon = <CheckIcon style={{color: 'white', width: '55%', marginLeft: '3px', ...iconStyle}}  />
+      content.iconBg = <ShieldIcon style={iconStyle} color='success' />
       break;
   }
 

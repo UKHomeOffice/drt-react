@@ -14,12 +14,12 @@ export const PaxDatasource = ({status}: IPaxDatasource) => {
 
   return (
     <Tooltip title={`${content.statusText}`} sx={{cursor: 'pointer'}}>
-      <Box sx={{maxWidth: '25px', position: 'relative', }}>
-        <DatasourceIcon />
-        { content.iconBg && <Box sx={{position: 'absolute', bottom: -8, right: -12}}>
+      <Box sx={{maxWidth: '33px', maxHeight: '24px', position: 'relative', marginTop: '-1px' }}>
+        <DatasourceIcon width={'20px'} />
+        { content.iconBg && <Box sx={{position: 'absolute', top: 3, left: 10}}>
           { content.iconBg }
         </Box>}
-        <Box sx={{position: 'absolute', bottom: -8, right: -12, textAlign: 'center'}}>
+        <Box sx={{position: 'absolute', top: 3, left: 10, textAlign: 'center'}}>
           { content.icon }
         </Box>
       </Box>
