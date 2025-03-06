@@ -79,7 +79,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
     const parsedOffset = parseInt(offset);
     const offsetTime = moment().set('hours', parseInt(startTime.substring(0,2)));
     offsetTime.add(parsedOffset, 'hours');
-    return`${offsetTime.format('HH:00')}${parsedOffset > 24 ? ' +1': ''}`
+    return `${offsetTime.format('HH:00')}${parsedOffset > (24 - parseInt(startTime.substring(0, 2))) ? ' +1' : ''}`;
   }
 
   const [formState, setFormState] = React.useState<PaxSearchFormState>({
