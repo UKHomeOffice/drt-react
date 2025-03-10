@@ -178,6 +178,15 @@ export const FlightFlaggerFilters = ({
     clearFiltersCallback(emptyState)
   }
 
+  const buttonStyles = {
+    '& .MuiButton-startIcon': {
+      fill: '#ffffff',
+    },
+    '& .MuiChip-root': {
+      backgroundColor: 'rgba(0,0,0,0.2)'
+    }
+  }
+
   return <>
     <Grid container sx={{backgroundColor: '#F3F5F9', width: '100%', ml: 0, pt: 2, flexWrap: {xs: 'wrap', md: 'nowrap'}}}
           spacing={2}>
@@ -209,20 +218,14 @@ export const FlightFlaggerFilters = ({
         <InputLabel sx={{mb: 1}}><strong>Highlight flights</strong></InputLabel>
         <Button
           data-testid="show-filters"
-          color="secondary"
+          color="primary"
           onClick={() => toggleFilters()}
           disableElevation
-          variant="outlined"
-          sx={{
-            textTransform: 'none',
-            letterSpacing: 0,
-            whiteSpace: 'nowrap',
-            height: '40px',
-            backgroundColor: '#fff'
-          }}
-          startIcon={<HighlightIcon/>}
+          variant="contained"
+          sx={buttonStyles}
+          startIcon={<HighlightIcon />}
           endIcon={<Chip
-            color={someCriteriaSelected(appliedSearchFlags) ? "primary" : "default"}
+            color={someCriteriaSelected(appliedSearchFlags) ? "primary" : "primary"}
             size="small"
             label={`${getFilterCount(appliedSearchFlags)}`}
             sx={{fontSize: '0.8125rem !important'}}/>
