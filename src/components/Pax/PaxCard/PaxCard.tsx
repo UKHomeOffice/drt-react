@@ -1,5 +1,5 @@
-import { BorderBottom } from '@mui/icons-material';
-import { Paper, styled, Theme, Typography, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
+import {BorderBottom} from '@mui/icons-material';
+import {Paper, styled, Theme, Typography, Table, TableHead, TableRow, TableCell, TableBody} from '@mui/material';
 import * as React from 'react';
 
 
@@ -21,7 +21,7 @@ export interface IPaxCard {
   endTime: Date,
 }
 
-const StyledPaxCard = styled(Paper)(({theme} : {theme: Theme}) => ({
+const StyledPaxCard = styled(Paper)(({theme}: { theme: Theme }) => ({
   display: 'inline-block',
   padding: theme.spacing(2),
   backgroundColor: theme.palette.grey[100],
@@ -41,13 +41,15 @@ const StyledPaxCard = styled(Paper)(({theme} : {theme: Theme}) => ({
   }
 }));
 
-const formatTime = (datetime:Date) => {
-  return `${datetime.getHours()}:${datetime.getMinutes()}`
+const formatTime = (datetime: Date) => {
+  const hours = datetime.getHours().toString().padStart(2, '0');
+  const minutes = datetime.getMinutes().toString().padStart(2, '0');
+  return `${hours}:${minutes}`;
 }
 
 export const PaxCard = ({queues, timeRange, startTime, endTime}: IPaxCard) => {
 
-  
+
   return (
     <StyledPaxCard elevation={0}>
       <Typography variant='h5'>{timeRange}</Typography>
@@ -59,7 +61,7 @@ export const PaxCard = ({queues, timeRange, startTime, endTime}: IPaxCard) => {
           <TableHead>
             <TableRow>
               <TableCell>Estimated pax:</TableCell>
-              <TableCell align='right'>{ queues.reduce((sum, q) => sum + q.queueCount, 0)}</TableCell>
+              <TableCell align='right'>{queues.reduce((sum, q) => sum + q.queueCount, 0)}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -68,7 +70,7 @@ export const PaxCard = ({queues, timeRange, startTime, endTime}: IPaxCard) => {
                 return (
                   <TableRow key={queue.queueName}>
                     <TableCell>{`${queue.queueName}:`}</TableCell>
-                    <TableCell align='right'>{ queue.queueCount }</TableCell>
+                    <TableCell align='right'>{queue.queueCount}</TableCell>
                   </TableRow>
                 )
               })

@@ -5,14 +5,15 @@ import { useArgs } from '@storybook/preview-api';
 import type { Meta, StoryObj } from '@storybook/react';
 import { PaxSearchForm, PaxSearchFormPayload } from './PaxSearchForm';
 import moment from 'moment';
+import { Box } from '@mui/material';
 
 interface PaxSearchFormStoryControls {
   timeMachine: boolean,
   day: "yesterday" | "today" | "tomorrow",
-  time: "now" | "24hour",
+  time: "now" | "24hour" | "range",
   arrivalDate: Date,
-  fromDate:  Date,
-  toDate:  Date,
+  fromDate:  string,
+  toDate:  string,
 }
 
 const meta: Meta<PaxSearchFormStoryControls>  = {
@@ -43,12 +44,12 @@ const meta: Meta<PaxSearchFormStoryControls>  = {
     },
     fromDate: {
       control: {
-        type: 'date'
+        type: 'text'
       }
     },
     toDate: {
       control: {
-        type: 'date'
+        type: 'text'
       }
     }
   }
@@ -61,28 +62,35 @@ export const PaxFormLayout: Story = {
   args: {
     timeMachine: false,
     day: "today",
-    time: "now",
+    time: "24hour",
     arrivalDate: new Date(),
-    fromDate: new Date(),
-    toDate: new Date(),
+    fromDate: '00:00',
+    toDate:  "00:00 +1",
   },
 
   render: () => {
       const [args, updateArgs] = useArgs();
 
       const onChange = (searchFormState: PaxSearchFormPayload) => {
-        updateArgs(searchFormState)
-      };
+        console.log(searchFormState);
+        if(searchFormState.time === '24hour') {
+          updateArgs(searchFormState)
+        } else {
+          updateArgs({ ...searchFormState, fromDate: '12:00', toDate: '16:00' });
+        }
+      }
       return (
-        <PaxSearchForm 
-          onChange={onChange}
-          timeMachine={args.timeMachine} 
-          day={args.day} 
-          time={args.time}
-          arrivalDate={args.arrivalDate}
-          fromDate={args.fromDate}
-          toDate={args.toDate}
-          />
-    )
+        <Box sx={{maxWidth: '800px'}}>
+          <PaxSearchForm 
+            onChange={onChange}
+            timeMachine={args.timeMachine} 
+            day={args.day} 
+            time={args.time}
+            arrivalDate={args.arrivalDate}
+            fromDate={args.fromDate}
+            toDate={args.toDate}
+            />
+        </Box>
+      )
   }
 };
