@@ -1,5 +1,6 @@
 
 import { createTheme, darken, lighten } from "@mui/material";
+import type {} from '@mui/x-date-pickers/themeAugmentation';
 import React from "react";
 
 declare module '@mui/material/styles' {
@@ -186,19 +187,36 @@ const drtTheme = createTheme({
       styleOverrides: {
         root: {
           flexGrow: 1,
+          paddingRight: defaultValues.spacing(2),
+          paddingLeft: defaultValues.spacing(2),
           '&.MuiToggleButton-primary': {
-            backgroundColor: defaultValues.palette.primary.main,
-            color: defaultValues.palette.common.white,
+            backgroundColor: defaultValues.palette.common.white,
+            color: defaultValues.palette.text.primary,
             '&:hover': {
-              backgroundColor: lighten(defaultValues.palette.primary.main, 0.1),
-              color: defaultValues.palette.common.white,
+              color: defaultValues.palette.primary.main,
+              backgroundColor: defaultValues.palette.primary.light,
             },
             '&.Mui-selected': {
-              backgroundColor: defaultValues.palette.primary.dark,
+              backgroundColor: defaultValues.palette.primary.main,
               color: defaultValues.palette.common.white,
-              cursor: 'default'
+              cursor: 'default',
+              '.live': {
+                color: '#ffd700',
+              }
+            },
+            '&.Mui-disabled': {
+              backgroundColor: defaultValues.palette.grey[200],
+              color: defaultValues.palette.grey[600],
             }
+          },
+          '> .MuiSvgIcon-root': {
+            marginRight: defaultValues.spacing(1),
+            opacity: 0.8,
+            width: '0.8em',
           }
+        },
+        primary: {
+          
         }
       }
     },
@@ -251,6 +269,20 @@ const drtTheme = createTheme({
           '&:nth-of-type(even)': {
             backgroundColor: defaultValues.palette.grey[100],
           },
+        }
+      }
+    },
+    MuiPickersDay: {
+      styleOverrides: {
+        root: {
+          fontSize: '14px',
+        }
+      }
+    },
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          fontSize: '12px'
         }
       }
     }

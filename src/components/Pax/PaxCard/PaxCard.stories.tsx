@@ -27,14 +27,14 @@ const queues = [
 ]
 
 
-startTime1.setHours(11, 26);
-endTime1.setHours(11, 26);
+startTime1.setHours(9, 26);
+endTime1.setHours(10, 26);
 
-startTime2.setHours(11, 26);
+startTime2.setHours(11, 9);
 endTime2.setHours(11, 31);
 
 startTime3.setHours(11, 31);
-endTime3.setHours(11, 36);
+endTime3.setHours(8, 36);
 
 export const PaxCardSingle:Story = {
   args: {
