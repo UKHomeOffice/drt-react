@@ -48,7 +48,7 @@ export const getPaxContent = (status: DatasourceStatus): PaxStatusContent => {
       content.paxColor = "warning"
       content.statusText = "Machine learning from multiple information sources and historical trends";
       content.icon = <CheckIcon style={{color: 'white', width: '155%', marginLeft: '6px', height: '0.8em'}}/>
-      content.iconBg = <CircleIcon style={{height: '0.8em', backgroundColor: '#404252 !important'}} color='info'/>
+      content.iconBg = <CircleIcon style={{height: '0.8em', color: '#404252 !important'}}/>
       break;
     case DatasourceStatus.PortLiveData:
       content.paxColor = "success"
@@ -60,7 +60,7 @@ export const getPaxContent = (status: DatasourceStatus): PaxStatusContent => {
       content.paxColor = "info"
       content.statusText = "Advance Passenger Information (API) from the carrier";
       content.icon = <CheckIcon style={{color: 'white', width: '155%', marginLeft: '6px', height: '0.8em'}}/>
-      content.iconBg = <CircleIcon style={{height: '0.8em', backgroundColor: '#404252 !important'}} color='info'/>
+      content.iconBg = <CircleIcon style={{height: '0.8em', color: '#404252 !important'}}/>
       break;
     case DatasourceStatus.Estimate:
       content.paxColor = "error"
