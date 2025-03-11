@@ -60,7 +60,7 @@ export const getPaxContent = (status: DatasourceStatus) : PaxStatusContent =>  {
       content.paxColor = "info"
       content.statusText = "Advance Passenger Information (API) from the carrier";
       content.icon = <CheckIcon style={{color: 'white', width: '155%', marginLeft: '6px', height: '0.8em'}}  />
-      content.iconBg = <CircleIcon style={{height: '0.8em'}} color='info' />
+      content.iconBg = <CircleIcon style={{height: '0.8em',backgroundColor: '#404252 !important'}} color='info' />
       break;
     case DatasourceStatus.Estimate:
       content.paxColor = "error"
