@@ -53,13 +53,13 @@ export const getPaxContent = (status: DatasourceStatus) : PaxStatusContent =>  {
     case DatasourceStatus.PortLiveData:
       content.paxColor = "success"
       content.statusText = "Live data from the port operator";
-      content.icon = <CheckIcon style={{color: 'white', width: '175%', marginLeft: '3px', height: '0.8em'}}  />
+      content.icon = <CheckIcon style={{color: 'white', width: '175%', marginLeft: '5px', height: '0.8em'}}  />
       content.iconBg = <ShieldIcon style={{height: '0.8em'}} color='success' />
       break;
     case DatasourceStatus.CarrierData:
       content.paxColor = "info"
       content.statusText = "Advance Passenger Information (API) from the carrier";
-      content.icon = <CheckIcon style={{color: 'white', width: '175%', marginLeft: '3px', height: '0.8em'}}  />
+      content.icon = <CheckIcon style={{color: 'white', width: '175%', marginLeft: '5px', height: '0.8em'}}  />
       content.iconBg = <CircleIcon style={{height: '0.8em'}} color='info' />
       break;
     case DatasourceStatus.Estimate:
@@ -82,7 +82,7 @@ export const getPaxContent = (status: DatasourceStatus) : PaxStatusContent =>  {
     case DatasourceStatus.VerifiedCarrierData:
       content.paxColor = "success"
       content.statusText = "Advance Passenger Information (API) from the carrier";
-      content.icon = <CheckIcon style={{color: 'white', width: '175%', marginLeft: '3px', height: '0.8em'}}  />
+      content.icon = <CheckIcon style={{color: 'white', width: '175%', marginLeft: '5px', height: '0.8em'}}  />
       content.iconBg = <ShieldIcon style={{height: '0.8em'}} color='success' />
       break;
   }
