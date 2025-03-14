@@ -248,9 +248,6 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
 
   return (
     <ThemeProvider theme={drtTheme}>
-      <Box sx={{paddingBottom: 5}}>
-        <ShiftSummaryComponent shiftSummaries={shiftSummaries.map(s => s.shiftSummary)}/>
-      </Box>
       {shiftSummaries.map((shift, index) => {
         const isExpanded = expandedRows[shift.shiftSummary.name] || false;
         const {rows, rowHeaders} = generateRows(viewDate, dayRange, index, shift, interval, isExpanded);
