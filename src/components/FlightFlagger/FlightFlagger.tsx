@@ -4,9 +4,12 @@ import { FlightFlaggerResults } from "./FlightFlaggerResults";
 import { SearchFilterPayload } from "./FlightFlaggerFilters";
 import {CircularProgress} from "@mui/material";
 import { FlightArrival } from "./FlightArrival";
+import { sendAnalyticsEvent } from '../Util/analytics';
 
 
 export interface IFlightFlagger {
+  port: string,
+  terminal: string,
   nationalities: Country[],
   ageGroups: string[],
   submitCallback: (payload:SearchFilterPayload) => void,
@@ -15,23 +18,38 @@ export interface IFlightFlagger {
   maybeInitialFilterFormState?: FormState
 }
 
-const FlightFlagger = ({nationalities, ageGroups, submitCallback, flights, isLoading, maybeInitialFilterFormState}: IFlightFlagger) => {
+const FlightFlagger = ({port,terminal,nationalities, ageGroups, submitCallback, flights, isLoading, maybeInitialFilterFormState}: IFlightFlagger) => {
 
   const [showHighlightOnly, setShowHighlightOnly] = useState<boolean>(false);
 
   const toggleHighlightDisplay = (event: React.ChangeEvent<HTMLInputElement>) => {
     setShowHighlightOnly(event.target.value  === 'true')
+    sendAnalyticsEvent(
+      port,
+      terminal,
+      'FlightFlagger',
+      event.target.value === 'true' ? 'Highlighted flights only' : 'All flights'
+    );
   }
 
   const onChangeInput = (searchTerm: string) => {}
 
   return <>
     <FlightFlaggerFilters
+      port={port}
+      terminal={terminal}
       nationalities={nationalities}
       ageGroups={ageGroups}
       onChangeInput={onChangeInput}
       submitCallback={submitCallback}
-      clearFiltersCallback={()=> {}}
+      clearFiltersCallback={()=> {
+        sendAnalyticsEvent(
+          port,
+          terminal,
+          'FlightFlagger',
+          'Clear filters'
+        );
+      }}
       showAllCallback={toggleHighlightDisplay}
       maybeInitialState={maybeInitialFilterFormState}
     />

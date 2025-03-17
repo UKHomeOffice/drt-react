@@ -22,6 +22,7 @@ import {
 } from "@mui/material"
 import SearchIcon from '@mui/icons-material/Search'
 import CustomHighlightIcon from "./icon-highlight-pax.svg"
+import {sendAnalyticsEvent} from "../Util/analytics";
 
 export type FormState = {
   showTransitPaxNumber: boolean,
@@ -48,6 +49,8 @@ export type SearchFilterPayload = {
 }
 
 export interface IFlightFlaggerFilters {
+  port: string,
+  terminal: string,
   nationalities: Country[],
   ageGroups: string[],
   submitCallback: (payload: SearchFilterPayload) => void,
@@ -82,6 +85,8 @@ function emptyFilterFormState(flightNumber: string) {
 
 
 export const FlightFlaggerFilters = ({
+                                       port,
+                                       terminal,
                                        nationalities,
                                        ageGroups,
                                        submitCallback,
@@ -146,6 +151,7 @@ export const FlightFlaggerFilters = ({
   }
 
   const toggleFilters = () => {
+    sendAnalyticsEvent(port, terminal, 'Select pax info to reveal',(!currentFormState.showFilters).toString())
     setCurrentFormState({...currentFormState, showFilters: !currentFormState.showFilters})
   }
 
