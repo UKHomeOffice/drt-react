@@ -4,7 +4,7 @@ import { FlightFlaggerResults } from "./FlightFlaggerResults";
 import { SearchFilterPayload } from "./FlightFlaggerFilters";
 import {CircularProgress} from "@mui/material";
 import { FlightArrival } from "./FlightArrival";
-import { sendAnalyticsEvent } from '../Util/analytics';
+import {IAnalyticsEvent} from '../Util';
 
 
 export interface IFlightFlagger {
@@ -16,20 +16,19 @@ export interface IFlightFlagger {
   flights: FlightArrival[],
   isLoading: boolean,
   maybeInitialFilterFormState?: FormState
+  sendEvent: (event: IAnalyticsEvent) => void
 }
 
-const FlightFlagger = ({port,terminal,nationalities, ageGroups, submitCallback, flights, isLoading, maybeInitialFilterFormState}: IFlightFlagger) => {
+const FlightFlagger = ({port,terminal,nationalities, ageGroups, submitCallback, flights, isLoading, maybeInitialFilterFormState,sendEvent}: IFlightFlagger) => {
 
   const [showHighlightOnly, setShowHighlightOnly] = useState<boolean>(false);
 
   const toggleHighlightDisplay = (event: React.ChangeEvent<HTMLInputElement>) => {
     setShowHighlightOnly(event.target.value  === 'true')
-    sendAnalyticsEvent(
-      port,
-      terminal,
-      'FlightFlagger',
-      event.target.value === 'true' ? 'Highlighted flights only' : 'All flights'
-    );
+    sendEvent({ category :`${port}_${terminal}`,
+                action :'FlightFlagger',
+                label : event.target.value === 'true' ? 'Highlighted flights only' : 'All flights'
+              });
   }
 
   const onChangeInput = (searchTerm: string) => {}
@@ -43,15 +42,14 @@ const FlightFlagger = ({port,terminal,nationalities, ageGroups, submitCallback, 
       onChangeInput={onChangeInput}
       submitCallback={submitCallback}
       clearFiltersCallback={()=> {
-        sendAnalyticsEvent(
-          port,
-          terminal,
-          'FlightFlagger',
-          'Clear filters'
-        );
-      }}
+        sendEvent({category :`${port}_${terminal}`,
+                   action :'FlightFlagger',
+                   label : 'Clear filters'});
+      }
+     }
       showAllCallback={toggleHighlightDisplay}
       maybeInitialState={maybeInitialFilterFormState}
+      sendEvent={sendEvent}
     />
     { isLoading? <div style={{display: 'flex', justifyContent: 'center', padding: '50px'}}><CircularProgress data-testid="flight-flagger-loading-spinner" /></div> : <FlightFlaggerResults flights={flights} showHighlightOnly={showHighlightOnly} />}
   </>
