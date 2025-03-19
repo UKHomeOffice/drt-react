@@ -19,13 +19,13 @@ export interface IFlightFlagger {
   sendEvent: (event: IAnalyticsEvent) => void
 }
 
-const FlightFlagger = ({port,terminal,nationalities, ageGroups, submitCallback, flights, isLoading, maybeInitialFilterFormState,sendEvent}: IFlightFlagger) => {
+const FlightFlagger = ({port, terminal, nationalities, ageGroups, submitCallback, flights, isLoading, maybeInitialFilterFormState, sendEvent}: IFlightFlagger) => {
 
   const [showHighlightOnly, setShowHighlightOnly] = useState<boolean>(false);
 
   const toggleHighlightDisplay = (event: React.ChangeEvent<HTMLInputElement>) => {
     setShowHighlightOnly(event.target.value  === 'true')
-    sendEvent({ category :`${port}_${terminal}`,
+    sendEvent({ category : terminal,
                 action :'FlightFlagger',
                 label : event.target.value === 'true' ? 'Highlighted flights only' : 'All flights'
               });
@@ -42,8 +42,8 @@ const FlightFlagger = ({port,terminal,nationalities, ageGroups, submitCallback, 
       onChangeInput={onChangeInput}
       submitCallback={submitCallback}
       clearFiltersCallback={()=> {
-        sendEvent({category :`${port}_${terminal}`,
-                   action :'FlightFlagger',
+        sendEvent({category : terminal,
+                   action : 'FlightFlagger',
                    label : 'Clear filters'});
       }
      }

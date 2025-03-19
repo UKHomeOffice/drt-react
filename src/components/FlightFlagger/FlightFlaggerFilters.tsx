@@ -153,7 +153,7 @@ export const FlightFlaggerFilters = ({
   }
 
   const toggleFilters = () => {
-    sendEvent({category :`${port}_${terminal}`,
+    sendEvent({ category :terminal,
                 action: 'Select pax info to reveal',
                 label: (!currentFormState.showFilters).toString()})
     setCurrentFormState({...currentFormState, showFilters: !currentFormState.showFilters})
