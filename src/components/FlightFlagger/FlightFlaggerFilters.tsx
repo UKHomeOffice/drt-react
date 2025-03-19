@@ -49,7 +49,6 @@ export type SearchFilterPayload = {
 }
 
 export interface IFlightFlaggerFilters {
-  port: string,
   terminal: string,
   nationalities: Country[],
   ageGroups: string[],
@@ -86,7 +85,6 @@ function emptyFilterFormState(flightNumber: string) {
 
 
 export const FlightFlaggerFilters = ({
-                                       port,
                                        terminal,
                                        nationalities,
                                        ageGroups,

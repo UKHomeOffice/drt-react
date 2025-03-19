@@ -8,7 +8,6 @@ import {IAnalyticsEvent} from '../Util';
 
 
 export interface IFlightFlagger {
-  port: string,
   terminal: string,
   nationalities: Country[],
   ageGroups: string[],
@@ -19,7 +18,7 @@ export interface IFlightFlagger {
   sendEvent: (event: IAnalyticsEvent) => void
 }
 
-const FlightFlagger = ({port, terminal, nationalities, ageGroups, submitCallback, flights, isLoading, maybeInitialFilterFormState, sendEvent}: IFlightFlagger) => {
+const FlightFlagger = ({terminal, nationalities, ageGroups, submitCallback, flights, isLoading, maybeInitialFilterFormState, sendEvent}: IFlightFlagger) => {
 
   const [showHighlightOnly, setShowHighlightOnly] = useState<boolean>(false);
 
@@ -35,7 +34,6 @@ const FlightFlagger = ({port, terminal, nationalities, ageGroups, submitCallback
 
   return <>
     <FlightFlaggerFilters
-      port={port}
       terminal={terminal}
       nationalities={nationalities}
       ageGroups={ageGroups}
