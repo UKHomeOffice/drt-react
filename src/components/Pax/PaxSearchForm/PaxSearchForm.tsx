@@ -31,7 +31,8 @@ import {endTimeOptions, timeOptions} from "../../Util";
 export enum PaxSearchFormDay {
   Yesterday = "yesterday",
   Today = "today",
-  Tomorrow = "tomorrow"
+  Tomorrow = "tomorrow",
+  Other = ""
 }
 
 export enum PaxSearchFormTime {
@@ -176,6 +177,15 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
       ...formState,
       [field]: value,
       // toDate: field === 'fromDate' && formState.time === PaxSearchFormTime.Day ? value!.add(24, 'hours') : formState.toDate,
+    }
+    if (value.toISOString() === moment().toISOString()) {
+      newState.day === PaxSearchFormDay.Today;
+    } else if (value.toISOString() === moment().add(1, 'day').toISOString()) {
+      newState.day === PaxSearchFormDay.Tomorrow;
+    } else if (value.toISOString() === moment().subtract(1, 'day').toISOString()) {
+      newState.day === PaxSearchFormDay.Yesterday;
+    } else {
+      newState.day === PaxSearchFormDay.Other;
     }
     setFormState(newState);
     handleOnChangeCallback(newState);
