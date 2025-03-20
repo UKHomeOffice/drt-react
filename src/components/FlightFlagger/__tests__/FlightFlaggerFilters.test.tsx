@@ -21,9 +21,11 @@ const initialFormStateWithSomeFilter = {
   selectedAgeGroups: [],
   showFilters: false,
 }
+const sendEvent = jest.fn();
 
 test("does not display option to hide or show flights before any criteria are applied", async () => {
   render(<FlightFlaggerFilters
+    terminal={"T1"}
     nationalities={nationalities}
     ageGroups={ageGroups}
     submitCallback={() => {}}
@@ -31,6 +33,7 @@ test("does not display option to hide or show flights before any criteria are ap
     onChangeInput={() => {}}
     clearFiltersCallback={() => {}}
     maybeInitialState={undefined}
+    sendEvent={sendEvent}
   />)
 
   const highlightedOnlyButton = screen.queryByTestId('show-highlighted-only')
@@ -42,6 +45,7 @@ test("apply button is only enabled when there are changes to apply", async () =>
   const callBack = jest.fn()
 
   render(<FlightFlaggerFilters
+    terminal={"T1"}
     nationalities={nationalities}
     ageGroups={ageGroups}
     submitCallback={callBack}
@@ -49,6 +53,7 @@ test("apply button is only enabled when there are changes to apply", async () =>
     onChangeInput={() => {}}
     clearFiltersCallback={() => {}}
     maybeInitialState={{...initialFormStateWithSomeFilter, showFilters: true}}
+    sendEvent={sendEvent}
   />)
 
   const applyButton = screen.queryByTestId('flight-flagger-filter-submit')
@@ -72,12 +77,14 @@ test("apply button is only enabled when there are changes to apply", async () =>
 
 test("cancel button removes any un-applied changes to the form", async () => {
   render(<FlightFlaggerFilters
+    terminal={"T1"}
     nationalities={nationalities}
     ageGroups={ageGroups}
     submitCallback={() => {}}
     showAllCallback={() => {}}
     onChangeInput={() => {}}
     clearFiltersCallback={() => {}}
+    sendEvent={sendEvent}
   />)
 
   fireEvent.click(screen.getByTestId('show-filters'))
@@ -98,6 +105,7 @@ test("cancel button removes any un-applied changes to the form", async () => {
 
 test("does display option to hide or show flights when some criteria are applied", async () => {
   render(<FlightFlaggerFilters
+    terminal={"T1"}
     nationalities={nationalities}
     ageGroups={ageGroups}
     submitCallback={() => {}}
@@ -105,6 +113,7 @@ test("does display option to hide or show flights when some criteria are applied
     onChangeInput={() => {}}
     clearFiltersCallback={() => {}}
     maybeInitialState={initialFormStateWithSomeFilter}
+    sendEvent={sendEvent}
   />)
 
   const highlightedOnlyButton = screen.queryByTestId('show-highlighted-only')
@@ -114,12 +123,14 @@ test("does display option to hide or show flights when some criteria are applied
 
 test("hides and shows the search filters", async () => {
   render(<FlightFlaggerFilters
+    terminal={"T1"}
     nationalities={nationalities}
     ageGroups={ageGroups}
     submitCallback={() => {}}
     showAllCallback={() => {}}
     onChangeInput={() => {}}
     clearFiltersCallback={() => {}}
+    sendEvent={sendEvent}
   />)
 
   let filters = await screen.queryByTestId('flight-flagger-filters')
@@ -157,12 +168,14 @@ test("calls the submitCallback with the correct filters", async () => {
   }
 
   render(<FlightFlaggerFilters
+    terminal={"T1"}
     nationalities={nationalities}
     ageGroups={ageGroups}
     submitCallback={callBack}
     showAllCallback={() => {}}
     onChangeInput={() => {}}
     clearFiltersCallback={() => {}}
+    sendEvent={sendEvent}
   />)
 
   await fireEvent.click(screen.getByTestId('show-filters'))
@@ -202,6 +215,7 @@ test("calls the submitCallback when the user hits enter on the flight number inp
   const callBack = jest.fn()
 
   render(<FlightFlaggerFilters
+    terminal={"T1"}
     nationalities={nationalities}
     ageGroups={ageGroups}
     submitCallback={callBack}
@@ -209,6 +223,7 @@ test("calls the submitCallback when the user hits enter on the flight number inp
     onChangeInput={() => {}}
     clearFiltersCallback={() => {}}
     maybeInitialState={initialFormStateWithSomeFilter}
+    sendEvent={sendEvent}
   />)
 
   const flightNumber = screen.getByLabelText('Enter flight details')
@@ -232,6 +247,7 @@ test("calls the submitCallback when the user clears selected filters", async () 
   }
 
   render(<FlightFlaggerFilters
+    terminal={"T1"}
     nationalities={nationalities}
     ageGroups={ageGroups}
     submitCallback={() => {}}
@@ -247,6 +263,7 @@ test("calls the submitCallback when the user clears selected filters", async () 
       selectedAgeGroups: ageGroups,
       showFilters: false,
     }}
+    sendEvent={sendEvent}
   />)
 
   const flightNumber = screen.getByLabelText('Enter flight details')
