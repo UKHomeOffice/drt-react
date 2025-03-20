@@ -234,16 +234,19 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
               label="Arrival date"
               format="DD/MM/YYYY"
               value={formState.arrivalDate}
+              showDaysOutsideCurrentMonth
+              minDate={moment().subtract(2, 'years')}
+              maxDate={moment().add(2, 'years')}
               onChange={(value) => handleDatepickerChange('arrivalDate', value || moment())}
             />
             <Grid container >
               <Grid item xs={6} pr={0.5}>
                 <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">From</InputLabel>
+                  <InputLabel id="from-date-label">From</InputLabel>
                   <Select
                     disabled={formState.time != PaxSearchFormTime.Range}
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
+                    labelId="from-date-label"
+                    id="from-date"
                     value={formState.fromDate}
                     label="Age"
                     fullWidth
@@ -263,11 +266,11 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
               </Grid>
               <Grid item xs={6} pl={0.5}>
                 <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">To</InputLabel>
+                  <InputLabel id="to-date-label">To</InputLabel>
                   <Select
                     disabled={formState.time != PaxSearchFormTime.Range}
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
+                    labelId="to-date-label"
+                    id="to-date"
                     value={formState.toDate}
                     label="Age"
                     fullWidth
