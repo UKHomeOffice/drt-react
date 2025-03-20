@@ -23,13 +23,18 @@ const FlightFlagger = ({terminal, nationalities, ageGroups, submitCallback, flig
   const [showHighlightOnly, setShowHighlightOnly] = useState<boolean>(false);
 
   const toggleHighlightDisplay = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setShowHighlightOnly(event.target.value  === 'true')
     sendEvent({ category : terminal,
                 action :'FlightFlagger',
                 label : event.target.value === 'true' ? 'Highlighted flights only' : 'All flights'
               });
+    setShowHighlightOnly(event.target.value  === 'true')
   }
 
+  const clearFilters = () => {
+    sendEvent({category : terminal,
+               action : 'FlightFlagger',
+               label : 'Clear filters'});
+  }
   const onChangeInput = (searchTerm: string) => {}
 
   return <>
@@ -39,12 +44,7 @@ const FlightFlagger = ({terminal, nationalities, ageGroups, submitCallback, flig
       ageGroups={ageGroups}
       onChangeInput={onChangeInput}
       submitCallback={submitCallback}
-      clearFiltersCallback={()=> {
-        sendEvent({category : terminal,
-                   action : 'FlightFlagger',
-                   label : 'Clear filters'});
-      }
-     }
+      clearFiltersCallback={clearFilters}
       showAllCallback={toggleHighlightDisplay}
       maybeInitialState={maybeInitialFilterFormState}
       sendEvent={sendEvent}
