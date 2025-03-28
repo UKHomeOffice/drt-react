@@ -258,13 +258,16 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
           <Box key={index} sx={{marginBottom: 4}}>
             <Box display="flex" alignItems="center">
               <Typography variant="h6" gutterBottom>
-                {shift.shiftSummary.name} {`[ ${shift.shiftSummary.startTime} to ${shift.shiftSummary.endTime} ]`}
+                {shift.shiftSummary.name}
               </Typography>
               <IconButton onClick={() => toggleRowExpansion(shift.shiftSummary.name)}>
                 {isExpanded ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
               </IconButton>
             </Box>
-            <Typography>Default Staff : {shift.shiftSummary.defaultStaffNumber}</Typography>
+            <Box display="flex" gap="20px" alignItems="center" paddingBottom="10px">
+              <Typography>{`Time covered: ${shift.shiftSummary.startTime} to ${shift.shiftSummary.endTime}`}</Typography>
+              <Typography>Default Staff : {shift.shiftSummary.defaultStaffNumber}</Typography>
+            </Box>
             <HotTable
               id={`hot-table-${index}`}
               className={`shift-hot-table-${index}`}
@@ -278,7 +281,6 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               afterChange={handleAfterChange}
               bindRowsWithHeaders="strict"
               rowHeaders={rowHeaders}
-              // autoRowSize={true}
               rowHeaderWidth={100}
               licenseKey={'non-commercial-and-evaluation'}
             />
