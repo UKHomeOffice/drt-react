@@ -266,7 +266,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
             </Box>
             <Box display="flex" gap="20px" alignItems="center" paddingBottom="10px">
               <Typography>{`Time covered: ${shift.shiftSummary.startTime} to ${shift.shiftSummary.endTime}`}</Typography>
-              <Typography>Default Staff : {shift.shiftSummary.defaultStaffNumber}</Typography>
+              <Typography>Default staff: {shift.shiftSummary.defaultStaffNumber}</Typography>
             </Box>
             <HotTable
               id={`hot-table-${index}`}
