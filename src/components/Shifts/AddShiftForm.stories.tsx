@@ -15,13 +15,6 @@ export const AddShiftForm: Story = {
     terminal: 'T2',
     interval: 15,
     shiftForms: [
-      {
-        id: 1,
-        name: 'shift 1',
-        startTime: '00:00',
-        endTime: '00:15',
-        defaultStaffNumber: 10
-      } as ShiftForm
     ],
     confirmHandler: (shifts: ShiftForm[]) => {
       console.log(shifts);

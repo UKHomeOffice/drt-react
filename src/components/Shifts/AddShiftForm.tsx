@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect,useRef} from 'react';
 import {Box, Button, TextField, Typography, Grid, IconButton, Select, MenuItem, ThemeProvider} from '@mui/material';
 import {timeOptions, endTimeOptions} from '../Util';
 import {ConfirmShiftForms} from "./ConfirmShiftForms";
@@ -25,13 +25,21 @@ export interface ShiftsFormProps {
 
 export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandler}: ShiftsFormProps) => {
   const [shifts, setShifts] = useState<ShiftForm[]>(Array.from(shiftForms).length > 0 ? shiftForms : [
-    {id: 1, name: 'Shift 1', startTime: '00:00', endTime: '01:00', defaultStaffNumber: 0}
+    {id: 1, name: '', startTime: '', endTime: '', defaultStaffNumber: 0}
   ]);
   const [showConfirm, setShowConfirm] = useState(false);
   const [error, setError] = useState(false);
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
-    const hasError = shifts.some(shift => shift.name === '' || shift.startTime === shift.endTime);
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    const hasError = shifts.some(shift => shift.name === '' ||
+      shift.startTime === shift.endTime ||
+      shift.startTime === 'Select start time' ||
+      shift.endTime === 'Select end time');
     setError(hasError);
   }, [shifts]);
 
@@ -46,10 +54,22 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
   };
 
   const handleAddShift = () => {
+    const hasError = shifts.some(shift => shift.name === '' ||
+      shift.startTime === shift.endTime ||
+      shift.startTime === 'Select start time' ||
+      shift.endTime === 'Select end time');
+
+    if (hasError) {
+      setError(true);
+      return;
+    }
+
     setShifts([
-                ...Array.from(shifts),
-                {id: shifts.length + 1, name: 'Shift ' + (shifts.length + 1), startTime: '00:00', endTime: '01:00', defaultStaffNumber: 0}
-              ]);
+      ...shifts,
+      { id: shifts.length + 1, name: '', startTime: '', endTime: '', defaultStaffNumber: 0 }
+    ]);
+    setError(false);
+    isFirstRender.current = true;
   };
 
   const handleRemoveShift = (id: number) => {
@@ -81,15 +101,30 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
               <Box key={shift.id}
                    sx={{mb: 2, p: 2, border: '1px solid #ccc', width: '300px', backgroundColor: '#E6E9F1'}}>
                 <Typography variant="h2" sx={{paddingBottom: '10px', fontSize: '24px'}}>Shift #{shift.id}</Typography>
+                {error && (shift.name === '') && (
+                  <Typography color="error" variant="body2">Please add shift name</Typography>
+                )}
+                {error && (shift.startTime === 'Select start time' || shift.startTime === '') && (
+                  <Typography color="error" variant="body2">Please select start time</Typography>
+                )}
+                {error && (shift.endTime === 'Select end time' || shift.endTime === '') && (
+                  <Typography color="error" variant="body2">Please select end time</Typography>
+                )}
+                {error && shift.startTime === shift.endTime && (
+                  <Typography color="error" variant="body2">Start time and end time cannot be the same</Typography>
+                )}
+                {shift.endTime < shift.startTime && (
+                  <Typography color="warning" variant="body2">This is a midnight shift spanning to the next day</Typography>
+                )}
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     <Typography sx={{fontSize: '16px', fontWeight: 'bold'}}>Name of shift</Typography>
                     <TextField
                       fullWidth
                       value={shift.name}
+                      placeholder="Enter the shift name"
+                      autoFocus
                       onChange={(e) => handleChange(shift.id, 'name', e.target.value)}
-                      error={shift.name === ''}
-                      helperText={shift.name === '' ? 'Name is required' : ''}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -97,18 +132,22 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
                     <Box>
                       <Select
                         variant="outlined"
-                        value={shift.startTime}
+                        value={timeOptions(interval).includes(shift.startTime) ? shift.startTime : "Select start time"}
                         onChange={(e) => {
-                          const [hour, minute] = e.target.value.split(':').map(Number);
+                          const [hour, minute] = (e.target.value as string).split(':').map(Number);
                           handleStartTimeChange(shift.id, hour, minute);
                         }}
                         fullWidth
-                        inputProps={{role: 'start-time-select'}}
+                        inputProps={{ role: 'start-time-select' }}
                         data-cy="start-time-select"
                       >
+                        <MenuItem value="Select start time" disabled>
+                          Select start time
+                        </MenuItem>
                         {timeOptions(interval).map(time => (
-                          <MenuItem key={time} value={time}
-                                    data-cy={`select-start-time-option-${time.replace(':', '-')}`}>{time} </MenuItem>
+                          <MenuItem key={time} value={time} data-cy={`select-start-time-option-${time.replace(':', '-')}`}>
+                            {time}
+                          </MenuItem>
                         ))}
                       </Select>
                     </Box>
@@ -117,7 +156,7 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
                     <Typography sx={{fontSize: '16px', fontWeight: 'bold'}}>End time</Typography>
                     <Select
                       variant="outlined"
-                      value={shift.endTime}
+                      value={timeOptions(interval).includes(shift.endTime) ? shift.endTime : "Select end time"}
                       onChange={(e) => {
                         const [hour, minute] = e.target.value.split(':').map(Number);
                         handleEndTimeChange(shift.id, hour, minute);
@@ -125,19 +164,15 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
                       fullWidth
                       inputProps={{role: 'end-time-select'}}
                       data-cy="end-time-select"
-                      error={shift.startTime === shift.endTime}
                     >
+                      <MenuItem value="Select end time" disabled>
+                        Select end time
+                      </MenuItem>
                       {endTimeOptions(interval).map(time => (
                         <MenuItem key={time} value={time}
                                   data-cy={`select-end-time-option-${time.replace(':', '-')}`}>{time}</MenuItem>
                       ))}
                     </Select>
-                    {shift.startTime === shift.endTime && (
-                      <Typography color="error" variant="body2">Start time and end time cannot be the same</Typography>
-                    )}
-                    {shift.endTime < shift.startTime && (
-                      <Typography color="warning" variant="body2">This is a midnight shift spanning to the next day</Typography>
-                    )}
                   </Grid>
                   <Grid item xs={12}>
                     <Typography sx={{fontSize: '16px', fontWeight: 'bold'}}>Default staff number (optional)</Typography>
@@ -171,7 +206,7 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
               </Button>
             </Box>
             <Box sx={{"paddingTop": "10px"}}>
-              <Button variant="contained" color="primary" onClick={onContinue} disabled={error}>
+              <Button variant="contained" color="primary" onClick={onContinue} disabled={error || isFirstRender.current}>
                 Continue
               </Button>
               {error && (
