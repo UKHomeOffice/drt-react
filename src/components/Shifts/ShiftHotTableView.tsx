@@ -9,7 +9,6 @@ import {registerAllModules} from 'handsontable/registry';
 import 'handsontable/dist/handsontable.full.min.css';
 import {LocalDate} from './LocalDate';
 import {drtTheme} from '../../index';
-import {ShiftSummaryView as ShiftSummaryComponent} from "./ShiftSummaryView";
 
 export interface ViewDate {
   year: number;

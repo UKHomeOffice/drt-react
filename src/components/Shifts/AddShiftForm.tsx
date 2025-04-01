@@ -1,4 +1,4 @@
-import React, {useState, useEffect,useRef} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {Box, Button, TextField, Typography, Grid, IconButton, Select, MenuItem, ThemeProvider} from '@mui/material';
 import {timeOptions, endTimeOptions} from '../Util';
 import {ConfirmShiftForms} from "./ConfirmShiftForms";
@@ -38,8 +38,8 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
     }
     const hasError = shifts.some(shift => shift.name === '' ||
       shift.startTime === shift.endTime ||
-      shift.startTime === 'Select start time' ||
-      shift.endTime === 'Select end time');
+      shift.startTime === 'Select start time' || shift.startTime === '' ||
+      shift.endTime === 'Select end time' || shift.endTime === '');
     setError(hasError);
   }, [shifts]);
 
@@ -56,8 +56,8 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
   const handleAddShift = () => {
     const hasError = shifts.some(shift => shift.name === '' ||
       shift.startTime === shift.endTime ||
-      shift.startTime === 'Select start time' ||
-      shift.endTime === 'Select end time');
+      shift.startTime === 'Select start time' || shift.startTime === '' ||
+      shift.endTime === 'Select end time' || shift.endTime === '');
 
     if (hasError) {
       setError(true);
@@ -66,7 +66,7 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
 
     setShifts([
       ...shifts,
-      { id: shifts.length + 1, name: '', startTime: '', endTime: '', defaultStaffNumber: 0 }
+      {id: shifts.length + 1, name: '', startTime: '', endTime: '', defaultStaffNumber: 0}
     ]);
     setError(false);
     isFirstRender.current = true;
