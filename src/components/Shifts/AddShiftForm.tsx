@@ -125,6 +125,7 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
                       placeholder="Enter the shift name"
                       autoFocus
                       onChange={(e) => handleChange(shift.id, 'name', e.target.value)}
+                      inputProps={{ 'data-cy': 'shift-name-input' }}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -186,6 +187,7 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
                       fullWidth
                       value={shift.defaultStaffNumber}
                       onChange={(e) => handleChange(shift.id, 'defaultStaffNumber', parseInt(e.target.value, 10))}
+                      inputProps={{ 'data-cy': 'staff-number-input' }}
                     />
                   </Grid>
 
@@ -206,7 +208,8 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
               </Button>
             </Box>
             <Box sx={{"paddingTop": "10px"}}>
-              <Button variant="contained" color="primary" onClick={onContinue} disabled={error || isFirstRender.current}>
+              <Button variant="contained" color="primary" onClick={onContinue} disabled={error || isFirstRender.current}
+                      data-cy="shift-continue-button">
                 Continue
               </Button>
               {error && (

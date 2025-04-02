@@ -101,7 +101,8 @@ export const ConfirmShiftForms = ({
       }
       <Box sx={{paddingTop: '10px'}}>
         <Box sx={{paddingRight: '10px'}}>
-          <Button variant="contained" color="primary" onClick={() => confirmHandler(shifts)}>Confirm</Button>
+          <Button variant="contained" color="primary" data-cy="shift-confirm-button"
+                  onClick={() => confirmHandler(shifts)}>Confirm</Button>
         </Box>
       </Box>
     </Box>
