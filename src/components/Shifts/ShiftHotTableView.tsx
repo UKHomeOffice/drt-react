@@ -273,7 +273,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               data={rows}
               colHeaders={generateColumnHeaders(viewDate, dayRange, daysInMonth)}
               columns={generateColumns(dayRange, index, daysInMonth)}
-              style={{borderSpacing: '0', height: `${tableHeight}px`}}
+              style={{overflow: `hidden`, borderSpacing: '0', height: `${tableHeight}px`}}
               cells={(row, col) => ({
                 renderer: cellRenderer(isExpanded)
               })}
