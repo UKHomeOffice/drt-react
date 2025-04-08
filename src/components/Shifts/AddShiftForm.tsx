@@ -30,7 +30,7 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
   const [showConfirm, setShowConfirm] = useState(false);
   const [error, setError] = useState(false);
   const isFirstRender = useRef(true);
-
+  const timeOptionsForTheInterval = timeOptions(interval)
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
@@ -125,7 +125,7 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
                       placeholder="Enter the shift name"
                       autoFocus
                       onChange={(e) => handleChange(shift.id, 'name', e.target.value)}
-                      inputProps={{ 'data-cy': 'shift-name-input' }}
+                      inputProps={{'data-cy': 'shift-name-input'}}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -133,20 +133,21 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
                     <Box>
                       <Select
                         variant="outlined"
-                        value={timeOptions(interval).includes(shift.startTime) ? shift.startTime : "Select start time"}
+                        value={timeOptionsForTheInterval.includes(shift.startTime) ? shift.startTime : "Select start time"}
                         onChange={(e) => {
                           const [hour, minute] = (e.target.value as string).split(':').map(Number);
                           handleStartTimeChange(shift.id, hour, minute);
                         }}
                         fullWidth
-                        inputProps={{ role: 'start-time-select' }}
+                        inputProps={{role: 'start-time-select'}}
                         data-cy="start-time-select"
                       >
                         <MenuItem value="Select start time" disabled>
                           Select start time
                         </MenuItem>
-                        {timeOptions(interval).map(time => (
-                          <MenuItem key={time} value={time} data-cy={`select-start-time-option-${time.replace(':', '-')}`}>
+                        {timeOptionsForTheInterval.map(time => (
+                          <MenuItem key={time} value={time}
+                                    data-cy={`select-start-time-option-${time.replace(':', '-')}`}>
                             {time}
                           </MenuItem>
                         ))}
@@ -157,7 +158,7 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
                     <Typography sx={{fontSize: '16px', fontWeight: 'bold'}}>End time</Typography>
                     <Select
                       variant="outlined"
-                      value={timeOptions(interval).includes(shift.endTime) ? shift.endTime : "Select end time"}
+                      value={timeOptionsForTheInterval.includes(shift.endTime) ? shift.endTime : "Select end time"}
                       onChange={(e) => {
                         const [hour, minute] = e.target.value.split(':').map(Number);
                         handleEndTimeChange(shift.id, hour, minute);
@@ -187,7 +188,7 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
                       fullWidth
                       value={shift.defaultStaffNumber}
                       onChange={(e) => handleChange(shift.id, 'defaultStaffNumber', parseInt(e.target.value, 10))}
-                      inputProps={{ 'data-cy': 'staff-number-input' }}
+                      inputProps={{'data-cy': 'staff-number-input'}}
                     />
                   </Grid>
 
