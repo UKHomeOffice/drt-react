@@ -31,6 +31,8 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
   const [error, setError] = useState(false);
   const isFirstRender = useRef(true);
   const timeOptionsForTheInterval = timeOptions(interval)
+  const [touched, setTouched] = useState(false);
+
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
@@ -54,6 +56,7 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
   };
 
   const handleAddShift = () => {
+    setTouched(true);
     const hasError = shifts.some(shift => shift.name === '' ||
       shift.startTime === shift.endTime ||
       shift.startTime === 'Select start time' || shift.startTime === '' ||
@@ -72,13 +75,15 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
     isFirstRender.current = true;
   };
 
+  const handleChange = (id: number, field: keyof ShiftForm, value: any) => {
+    setTouched(true);
+    setShifts(shifts.map(shift => shift.id === id ? {...shift, [field]: value} : shift));
+  };
+
   const handleRemoveShift = (id: number) => {
     setShifts(shifts.filter(shift => shift.id !== id));
   };
 
-  const handleChange = (id: number, field: keyof ShiftForm, value: any) => {
-    setShifts(shifts.map(shift => shift.id === id ? {...shift, [field]: value} : shift));
-  };
 
   const handleStartTimeChange = (id: number, hour: number, minute: number) => {
     const newStartTime = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
@@ -101,16 +106,16 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
               <Box key={shift.id}
                    sx={{mb: 2, p: 2, border: '1px solid #ccc', width: '300px', backgroundColor: '#E6E9F1'}}>
                 <Typography variant="h2" sx={{paddingBottom: '10px', fontSize: '24px'}}>Shift #{shift.id}</Typography>
-                {error && (shift.name === '') && (
+                {touched && error && (shift.name === '') && (
                   <Typography color="error" variant="body2">Please add shift name</Typography>
                 )}
-                {error && (shift.startTime === 'Select start time' || shift.startTime === '') && (
+                {touched && error && (shift.startTime === 'Select start time' || shift.startTime === '') && (
                   <Typography color="error" variant="body2">Please select start time</Typography>
                 )}
-                {error && (shift.endTime === 'Select end time' || shift.endTime === '') && (
+                {touched && error && (shift.endTime === 'Select end time' || shift.endTime === '') && (
                   <Typography color="error" variant="body2">Please select end time</Typography>
                 )}
-                {error && shift.startTime === shift.endTime && (
+                {touched && error && shift.startTime === shift.endTime && (
                   <Typography color="error" variant="body2">Start time and end time cannot be the same</Typography>
                 )}
                 {shift.endTime < shift.startTime && (
@@ -201,7 +206,7 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
               </Box>
             ))}
             <Box>
-              <Button variant="outlined" color="primary" onClick={handleAddShift} sx={{gap: 0, paddingLeft: '0'}}>
+              <Button variant="outlined" color="primary" onClick={handleAddShift} sx={{gap: 0, paddingLeft: '0'}} disabled={error || isFirstRender.current}>
                 <IconButton color="primary" sx={{padding: '0'}}>
                   <AddIcon/>
                 </IconButton>
