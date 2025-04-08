@@ -41,3 +41,5 @@ export {ShiftSummaryView} from './Shifts'
 
 export type {ILocalDateProvider} from './Util/LocaleDateProvider'
 export {LocalDateProvider} from './Util/LocaleDateProvider'
+
+export type {IAnalyticsEvent} from './Util'
