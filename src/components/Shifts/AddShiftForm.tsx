@@ -24,26 +24,36 @@ export interface ShiftsFormProps {
 }
 
 export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandler}: ShiftsFormProps) => {
+  const [shiftCounter, setShiftCounter] = useState(1);
+
   const [shifts, setShifts] = useState<ShiftForm[]>(Array.from(shiftForms).length > 0 ? shiftForms : [
-    {id: 1, name: '', startTime: '', endTime: '', defaultStaffNumber: 0}
+    {id: shiftCounter, name: '', startTime: '', endTime: '', defaultStaffNumber: 0}
   ]);
   const [showConfirm, setShowConfirm] = useState(false);
   const [error, setError] = useState(false);
   const timeOptionsForTheInterval = timeOptions(interval)
   const [touched, setTouched] = useState(false);
 
+  const hasError = () => shifts.some(shift => shift.name === '' ||
+    shift.startTime === shift.endTime ||
+    shift.startTime === 'Select start time' || shift.startTime === '' ||
+    shift.endTime === 'Select end time' || shift.endTime === '');
+
   useEffect(() => {
-    if(!touched) {
+    if (!touched) {
       return;
     }
-    const hasError = shifts.some(shift => shift.name === '' ||
-      shift.startTime === shift.endTime ||
-      shift.startTime === 'Select start time' || shift.startTime === '' ||
-      shift.endTime === 'Select end time' || shift.endTime === '');
-    setError(hasError);
+
+    setError(hasError());
   }, [shifts]);
 
   const onContinue = () => {
+    setTouched(true);
+    if (hasError()) {
+      setError(true);
+      return;
+    }
+
     if (!error) {
       setShowConfirm(true);
     }
@@ -55,20 +65,16 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
 
   const handleAddShift = () => {
     setTouched(true);
-    const hasError = shifts.some(shift => shift.name === '' ||
-      shift.startTime === shift.endTime ||
-      shift.startTime === 'Select start time' || shift.startTime === '' ||
-      shift.endTime === 'Select end time' || shift.endTime === '');
-
-    if (hasError) {
+    if (hasError()) {
       setError(true);
       return;
     }
 
     setShifts([
-      ...shifts,
-      {id: shifts.length + 1, name: '', startTime: '', endTime: '', defaultStaffNumber: 0}
-    ]);
+                ...shifts,
+                {id: shiftCounter + 1, name: '', startTime: '', endTime: '', defaultStaffNumber: 0}
+              ]);
+    setShiftCounter(prevCounter => prevCounter + 1);
     setError(false);
     setTouched(false);
   };
@@ -100,10 +106,10 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
           <Box sx={{p: 2, minWidth: '500px'}}>
             <Typography sx={{fontSize: '20px'}}>Add staff to {port} {getAirportNameByCode(port)} {terminal}</Typography>
             <Typography variant="h1" sx={{paddingBottom: '10px'}}>Step 1 of 2 - Create your shift pattern</Typography>
-            {Array.from(shifts).map((shift) => (
+            {shifts.map((shift, index) => (
               <Box key={shift.id}
                    sx={{mb: 2, p: 2, border: '1px solid #ccc', width: '300px', backgroundColor: '#E6E9F1'}}>
-                <Typography variant="h2" sx={{paddingBottom: '10px', fontSize: '24px'}}>Shift #{shift.id}</Typography>
+                <Typography variant="h2" sx={{paddingBottom: '10px', fontSize: '24px'}}>Shift #{index + 1}</Typography>
                 {touched && error && (shift.name === '') && (
                   <Typography color="error" variant="body2">Please add shift name</Typography>
                 )}
@@ -204,7 +210,7 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
               </Box>
             ))}
             <Box>
-              <Button variant="outlined" color="primary" onClick={handleAddShift} sx={{gap: 0, paddingLeft: '0'}} disabled={error || !touched}>
+              <Button variant="outlined" color="primary" onClick={handleAddShift} sx={{gap: 0, paddingLeft: '0'}}>
                 <IconButton color="primary" sx={{padding: '0'}}>
                   <AddIcon/>
                 </IconButton>
@@ -212,7 +218,7 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
               </Button>
             </Box>
             <Box sx={{"paddingTop": "10px"}}>
-              <Button variant="contained" color="primary" onClick={onContinue} disabled={error || !touched}
+              <Button variant="contained" color="primary" onClick={onContinue}
                       data-cy="shift-continue-button">
                 Continue
               </Button>
