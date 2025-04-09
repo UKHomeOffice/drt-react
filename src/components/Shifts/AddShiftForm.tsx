@@ -29,13 +29,11 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
   ]);
   const [showConfirm, setShowConfirm] = useState(false);
   const [error, setError] = useState(false);
-  const isFirstRender = useRef(true);
   const timeOptionsForTheInterval = timeOptions(interval)
   const [touched, setTouched] = useState(false);
 
   useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
+    if(!touched) {
       return;
     }
     const hasError = shifts.some(shift => shift.name === '' ||
@@ -72,7 +70,7 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
       {id: shifts.length + 1, name: '', startTime: '', endTime: '', defaultStaffNumber: 0}
     ]);
     setError(false);
-    isFirstRender.current = true;
+    setTouched(false);
   };
 
   const handleChange = (id: number, field: keyof ShiftForm, value: any) => {
@@ -206,7 +204,7 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
               </Box>
             ))}
             <Box>
-              <Button variant="outlined" color="primary" onClick={handleAddShift} sx={{gap: 0, paddingLeft: '0'}} disabled={error || isFirstRender.current}>
+              <Button variant="outlined" color="primary" onClick={handleAddShift} sx={{gap: 0, paddingLeft: '0'}} disabled={error || !touched}>
                 <IconButton color="primary" sx={{padding: '0'}}>
                   <AddIcon/>
                 </IconButton>
@@ -214,7 +212,7 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
               </Button>
             </Box>
             <Box sx={{"paddingTop": "10px"}}>
-              <Button variant="contained" color="primary" onClick={onContinue} disabled={error || isFirstRender.current}
+              <Button variant="contained" color="primary" onClick={onContinue} disabled={error || !touched}
                       data-cy="shift-continue-button">
                 Continue
               </Button>
