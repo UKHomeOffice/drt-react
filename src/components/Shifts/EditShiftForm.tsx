@@ -24,7 +24,6 @@ export const EditShiftForm = ({formState, onUpdate, interval, removeShift, showS
     const newStartTime = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
     const updatedForm = {...formState, startTime: newStartTime};
     onUpdate(updatedForm);
-    console.log(`formstate: ${JSON.stringify(updatedForm, null, 2)}`)
     setTimeError(updatedForm.startTime !== '' && updatedForm.endTime !== '' && updatedForm.endTime == updatedForm.startTime)
     setStartTimeError(!startTimeOptions.includes(updatedForm.startTime))
   };
@@ -33,7 +32,6 @@ export const EditShiftForm = ({formState, onUpdate, interval, removeShift, showS
     const newEndTime = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
     const updatedForm = {...formState, endTime: newEndTime};
     onUpdate(updatedForm);
-    console.log(`formstate: ${JSON.stringify(updatedForm, null, 2)}`)
     setTimeError(updatedForm.startTime !== '' && updatedForm.endTime !== '' && updatedForm.endTime == updatedForm.startTime)
     setEndTimeError(!startTimeOptions.includes(updatedForm.endTime))
   };

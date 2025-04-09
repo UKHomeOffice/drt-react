@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Box, Button, IconButton, ThemeProvider, Typography} from '@mui/material';
 import {ConfirmShiftForms} from "./ConfirmShiftForms";
 import {drtTheme} from "../../index";
-import {getAirportNameByCode} from "../../aiports";
+import {getAirportNameByCode} from "../../airports";
 import AddIcon from '@mui/icons-material/Add';
 import {EditShiftForm} from "./EditShiftForm";
 
@@ -49,7 +49,6 @@ export const AddShiftsForm = ({port, terminal, interval, shiftForms, confirmHand
   }
 
   const shiftsHaveErrors = (shifts: ShiftForm[]) => shifts.some(shift => {
-    console.log(`shiftIsValid: ${shiftIsValid(shift)} ${JSON.stringify(shift, null, 2)}`)
     return !shiftIsValid(shift)
   })
 
