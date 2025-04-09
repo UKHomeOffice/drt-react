@@ -2,7 +2,7 @@ import React from 'react';
 import {Box, Typography, IconButton, Divider, Paper, Button} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
-import {ShiftForm} from "./AddShiftForm";
+import {ShiftForm} from "./AddShiftsForm";
 
 export interface ShiftsSummaryProps {
   port: string;
@@ -101,7 +101,8 @@ export const ConfirmShiftForms = ({
       }
       <Box sx={{paddingTop: '10px'}}>
         <Box sx={{paddingRight: '10px'}}>
-          <Button variant="contained" color="primary" onClick={() => confirmHandler(shifts)}>Confirm</Button>
+          <Button variant="contained" color="primary" data-cy="shift-confirm-button"
+                  onClick={() => confirmHandler(shifts)}>Confirm</Button>
         </Box>
       </Box>
     </Box>
