@@ -23,8 +23,10 @@ export interface ShiftsFormProps {
 }
 
 export const AddShiftsForm = ({port, terminal, interval, shiftForms, confirmHandler}: ShiftsFormProps) => {
+  const [shiftIdCounter, setShiftIdCounter] = useState(1);
+
   const [shifts, setShifts] = useState<ShiftForm[]>(Array.from(shiftForms).length > 0 ? shiftForms : [
-    {id: 1, name: '', startTime: '', endTime: '', defaultStaffNumber: 0}
+    {id: shiftIdCounter, name: '', startTime: '', endTime: '', defaultStaffNumber: 0}
   ]);
   const [showConfirm, setShowConfirm] = useState(false);
   const [showErrors, setShowErrors] = useState(false);
@@ -61,8 +63,9 @@ export const AddShiftsForm = ({port, terminal, interval, shiftForms, confirmHand
     setShowErrors(false);
     setShifts([
       ...shifts,
-      {id: shifts.length + 1, name: '', startTime: '', endTime: '', defaultStaffNumber: 0}
+      {id: shiftIdCounter + 1, name: '', startTime: '', endTime: '', defaultStaffNumber: 0}
     ]);
+    setShiftIdCounter(prevCounter => prevCounter + 1);
   };
 
   const handleRemoveShift = (id: number) => {
@@ -76,8 +79,9 @@ export const AddShiftsForm = ({port, terminal, interval, shiftForms, confirmHand
           <Box sx={{p: 2, minWidth: '500px'}}>
             <Typography sx={{fontSize: '20px'}}>Add staff to {port} {getAirportNameByCode(port)} {terminal}</Typography>
             <Typography variant="h1" sx={{paddingBottom: '10px'}}>Step 1 of 2 - Create your shift pattern</Typography>
-            {Array.from(shifts).map(form => {
-              return <EditShiftForm key={form.id}
+            {shifts.map((form, index) => {
+              return <EditShiftForm index={index}
+                                    key={form.id}
                                     formState={form}
                                     onUpdate={state => {
                                       const updatedShifts = shifts.map(shift => {

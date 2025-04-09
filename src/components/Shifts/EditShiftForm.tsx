@@ -4,7 +4,8 @@ import {intervalEndTimeOptions, intervalStartTimeOptions} from '../Util';
 import CloseIcon from "@mui/icons-material/Close";
 import {ShiftForm} from "./AddShiftsForm";
 
-export const EditShiftForm = ({formState, onUpdate, interval, removeShift, showSubmitErrors}: {
+export const EditShiftForm = ({index, formState, onUpdate, interval, removeShift, showSubmitErrors}: {
+  index: number,
   formState: ShiftForm,
   onUpdate: (state: ShiftForm) => void,
   interval: number,
@@ -40,7 +41,7 @@ export const EditShiftForm = ({formState, onUpdate, interval, removeShift, showS
 
   return <Box key={formState.id}
               sx={{mb: 2, p: 2, border: '1px solid #ccc', width: '300px', backgroundColor: '#E6E9F1'}}>
-    <Typography variant="h2" sx={{paddingBottom: '10px', fontSize: '24px'}}>Shift #{formState.id}</Typography>
+    <Typography variant="h2" sx={{paddingBottom: '10px', fontSize: '24px'}}>Shift #{index + 1}</Typography>
     {(nameError || (showSubmitErrors && formState.name === '')) && (
       <Typography color="error" variant="body2">Please add shift name</Typography>
     )}
