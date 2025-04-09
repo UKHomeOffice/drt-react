@@ -16,12 +16,10 @@ export const getAirportNameByCode = (portCode: string): string => {
   let airportName: string = '';
   Object.keys(airports).map((regionKey: string) => {
     let region = airports[regionKey];
-    console.log(`Checking ${region.code} against ${portCode}`)
     if (region.code == portCode) {
       airportName = region.name;
     } else {
       region.ports.map((port) => {
-        console.log(`-- Checking port ${port.code} against ${portCode}`)
         if (port.code == portCode) {
           airportName = `(${port.name})`
         }
@@ -35,12 +33,10 @@ export const getAirportByCode = (portCode: string): string => {
   let airportName: string = '';
   Object.keys(airports).map((regionKey: string) => {
     let region = airports[regionKey];
-    console.log(`Checking ${region.code} against ${portCode}`)
     if (region.code == portCode) {
       airportName = region.name;
     } else {
       region.ports.map((port) => {
-        console.log(`-- Checking port ${port.code} against ${portCode}`)
         if (port.code == portCode) {
           airportName = `${port.name} (${port.code})`
         }
@@ -51,7 +47,7 @@ export const getAirportByCode = (portCode: string): string => {
 }
 
 const airports : AirportIndex = {
-  'central': { 
+  'central': {
     name: 'Central region',
     code: 'central',
     ports: [
@@ -64,7 +60,7 @@ const airports : AirportIndex = {
       { name: 'Norwich', code: 'NWI'},
     ]
   },
-  'north': { 
+  'north': {
     name: 'North region',
     code: 'north',
     ports:  [
@@ -83,7 +79,7 @@ const airports : AirportIndex = {
       { name: 'Newcastle International', code: 'NCL'},
     ],
   },
-  'south': { 
+  'south': {
     name: 'South region',
     code: 'south',
     ports:  [
@@ -106,6 +102,6 @@ const airports : AirportIndex = {
       { name: 'Heathrow T5', code: 'LHR-T5'},
     ]
   },
-} 
+}
 
 export default airports;

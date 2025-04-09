@@ -8,7 +8,7 @@ function timesBy15Minutes(interval: number): string[] {
   return times;
 }
 
-export const timeOptions: (interval: number) => string[] = (interval: number) => timesBy15Minutes(interval);
+export const intervalStartTimeOptions: (interval: number) => string[] = (interval: number) => timesBy15Minutes(interval);
 
 function timesBy15MinutesWithEnd(interval: number): string[] {
   const times: string[] = [];
@@ -24,4 +24,4 @@ function timesBy15MinutesWithEnd(interval: number): string[] {
   return times;
 }
 
-export const endTimeOptions: (interval: number) => string[] = (interval: number) => timesBy15MinutesWithEnd(interval);
+export const intervalEndTimeOptions: (interval: number) => string[] = (interval: number) => timesBy15MinutesWithEnd(interval);

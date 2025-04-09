@@ -2,7 +2,7 @@ import React from 'react';
 import {Box, Typography, IconButton, Divider, Paper, Button} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
-import {ShiftForm} from "./AddShiftForm";
+import {ShiftForm} from "./AddShiftsForm";
 
 export interface ShiftsSummaryProps {
   port: string;
