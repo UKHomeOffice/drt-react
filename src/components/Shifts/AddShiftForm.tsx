@@ -1,6 +1,6 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {Box, Button, TextField, Typography, Grid, IconButton, Select, MenuItem, ThemeProvider} from '@mui/material';
-import {timeOptions, endTimeOptions} from '../Util';
+import React, {useState} from 'react';
+import {Box, Button, Grid, IconButton, MenuItem, Select, TextField, ThemeProvider, Typography} from '@mui/material';
+import {intervalEndTimeOptions, intervalStartTimeOptions} from '../Util';
 import {ConfirmShiftForms} from "./ConfirmShiftForms";
 import {drtTheme} from "../../index";
 import CloseIcon from "@mui/icons-material/Close";
@@ -28,42 +28,35 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
     {id: 1, name: '', startTime: '', endTime: '', defaultStaffNumber: 0}
   ]);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [error, setError] = useState(false);
-  const isFirstRender = useRef(true);
-  const timeOptionsForTheInterval = timeOptions(interval)
-  const [touched, setTouched] = useState(false);
-
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-    const hasError = shifts.some(shift => shift.name === '' ||
-      shift.startTime === shift.endTime ||
-      shift.startTime === 'Select start time' || shift.startTime === '' ||
-      shift.endTime === 'Select end time' || shift.endTime === '');
-    setError(hasError);
-  }, [shifts]);
+  const [showErrors, setShowErrors] = useState(false);
 
   const onContinue = () => {
-    if (!error) {
-      setShowConfirm(true);
+    if (shiftsHaveErrors(shifts)) {
+      setShowErrors(true);
+      return;
     }
+    setShowConfirm(true)
   };
 
   const onCancel = () => {
     setShowConfirm(false);
   };
 
-  const handleAddShift = () => {
-    setTouched(true);
-    const hasError = shifts.some(shift => shift.name === '' ||
-      shift.startTime === shift.endTime ||
-      shift.startTime === 'Select start time' || shift.startTime === '' ||
-      shift.endTime === 'Select end time' || shift.endTime === '');
+  const shiftIsValid = (shift: ShiftForm) => {
+    return shift.name !== '' &&
+      shift.startTime !== '' &&
+      shift.endTime !== '' &&
+      shift.startTime < shift.endTime
+  }
 
-    if (hasError) {
-      setError(true);
+  const shiftsHaveErrors = (shifts: ShiftForm[]) => shifts.some(shift => {
+    console.log(`shiftIsValid: ${shiftIsValid(shift)} ${JSON.stringify(shift, null, 2)}`)
+    return !shiftIsValid(shift)
+  })
+
+  const handleAddShift = () => {
+    if (shiftsHaveErrors(shifts)) {
+      setShowErrors(true);
       return;
     }
 
@@ -71,8 +64,7 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
       ...shifts,
       {id: shifts.length + 1, name: '', startTime: '', endTime: '', defaultStaffNumber: 0}
     ]);
-    setError(false);
-    isFirstRender.current = true;
+    setShowErrors(false);
   };
 
   const handleRemoveShift = (id: number) => {
@@ -86,11 +78,26 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
           <Box sx={{p: 2, minWidth: '500px'}}>
             <Typography sx={{fontSize: '20px'}}>Add staff to {port} {getAirportNameByCode(port)} {terminal}</Typography>
             <Typography variant="h1" sx={{paddingBottom: '10px'}}>Step 1 of 2 - Create your shift pattern</Typography>
-            {Array.from(shifts).map((shift) => (
-
-            ))}
+            {Array.from(shifts).map(form => {
+              return <EditShiftForm key={form.id}
+                                    formState={form}
+                                    onUpdate={state => {
+                                      const updatedShifts = shifts.map(shift => {
+                                        if (shift.id === state.id) {
+                                          return {...shift, ...state};
+                                        }
+                                        return shift;
+                                      });
+                                      setShifts(updatedShifts)
+                                      setShowErrors(shiftsHaveErrors(updatedShifts))
+                                    }}
+                                    interval={interval}
+                                    removeShift={handleRemoveShift}
+                                    showSubmitErrors={showErrors}
+              />
+            })}
             <Box>
-              <Button variant="outlined" color="primary" onClick={handleAddShift} sx={{gap: 0, paddingLeft: '0'}} disabled={error || isFirstRender.current}>
+              <Button variant="outlined" color="primary" onClick={handleAddShift} sx={{gap: 0, paddingLeft: '0'}}>
                 <IconButton color="primary" sx={{padding: '0'}}>
                   <AddIcon/>
                 </IconButton>
@@ -98,11 +105,10 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
               </Button>
             </Box>
             <Box sx={{"paddingTop": "10px"}}>
-              <Button variant="contained" color="primary" onClick={onContinue} disabled={error || isFirstRender.current}
-                      data-cy="shift-continue-button">
+              <Button variant="contained" color="primary" onClick={onContinue} data-cy="shift-continue-button">
                 Continue
               </Button>
-              {error && (
+              {showErrors && (
                 <Typography color="error" variant="body2">Please fix the errors before continuing</Typography>
               )}
             </Box>
@@ -119,50 +125,56 @@ export const AddShiftForm = ({port, terminal, interval, shiftForms, confirmHandl
   )
 };
 
-const EditShiftForm = (initialState: ShiftForm) => {
+const EditShiftForm = ({formState, onUpdate, interval, removeShift, showSubmitErrors}: {
+  formState: ShiftForm,
+  onUpdate: (state: ShiftForm) => void,
+  interval: number,
+  removeShift: (idx: number) => void,
+  showSubmitErrors: boolean,
+}) => {
 
-  const [formState, setFormState] = useState<ShiftForm>(initialState);
+  const [nameError, setNameError] = useState(false)
+  const [startTimeError, setStartTimeError] = useState(true)
+  const [endTimeError, setEndTimeError] = useState(true)
+  const [timeError, setTimeError] = useState(false)
 
-  const [errors, setErrors] = useState<string[]>([]);
+  const startTimeOptions = intervalStartTimeOptions(interval)
+  const endTimeOptions = intervalEndTimeOptions(interval);
 
   const handleStartTimeChange = (id: number, hour: number, minute: number) => {
     const newStartTime = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-    setFormState((prev) => ({
-      ...prev,
-      startTime: newStartTime,
-    }));
-    if (formState.endTime !== '' && formState.endTime <= newStartTime) {
-      setErrors((prev) => [...prev, 'start-before-end']);
-    }
-    else setErrors(prev => prev.filter(error => error !== 'start-before-end'));
+    const updatedForm = {...formState, startTime: newStartTime};
+    onUpdate(updatedForm);
+    console.log(`formstate: ${JSON.stringify(updatedForm, null, 2)}`)
+    setTimeError(updatedForm.startTime !== '' && updatedForm.endTime !== '' && updatedForm.endTime <= updatedForm.startTime)
+    setStartTimeError(!startTimeOptions.includes(updatedForm.startTime))
   };
 
   const handleEndTimeChange = (id: number, hour: number, minute: number) => {
     const newEndTime = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-    setFormState((prev) => ({
-      ...prev,
-      endTime: newEndTime,
-    }));
-    if (formState.startTime !== '' && formState.startTime >= newEndTime) {
-      setErrors((prev) => [...prev, 'start-before-end']);
-    }
-    else setErrors(prev => prev.filter(error => error !== 'start-before-end'));
+    const updatedForm = {...formState, endTime: newEndTime};
+    onUpdate(updatedForm);
+    console.log(`formstate: ${JSON.stringify(updatedForm, null, 2)}`)
+    setTimeError(updatedForm.startTime !== '' && updatedForm.endTime !== '' && updatedForm.endTime <= updatedForm.startTime)
+    setEndTimeError(!startTimeOptions.includes(updatedForm.endTime))
   };
+
+  console.log(`nameError: ${nameError}, showSubmitErrors: ${showSubmitErrors}, timeError: ${timeError}`)
 
   return <Box key={formState.id}
               sx={{mb: 2, p: 2, border: '1px solid #ccc', width: '300px', backgroundColor: '#E6E9F1'}}>
     <Typography variant="h2" sx={{paddingBottom: '10px', fontSize: '24px'}}>Shift #{formState.id}</Typography>
-    {errors.includes('name') && (
+    {(nameError || (showSubmitErrors && formState.name === '')) && (
       <Typography color="error" variant="body2">Please add shift name</Typography>
     )}
-    {errors.includes('start-time') && (
+    {showSubmitErrors && startTimeError && (
       <Typography color="error" variant="body2">Please select start time</Typography>
     )}
-    {errors.includes('end-time') && (
+    {showSubmitErrors && endTimeError && (
       <Typography color="error" variant="body2">Please select end time</Typography>
     )}
-    {errors.includes('start-before-end') && (
-      <Typography color="error" variant="body2">Start time and end time cannot be the same</Typography>
+    {timeError && (
+      <Typography color="error" variant="body2">Start time must be before the and end time</Typography>
     )}
     {formState.endTime < formState.startTime && (
       <Typography color="warning" variant="body2">This is a midnight shift spanning to the next day</Typography>
@@ -175,7 +187,11 @@ const EditShiftForm = (initialState: ShiftForm) => {
           value={formState.name}
           placeholder="Enter the shift name"
           autoFocus
-          onChange={(e) => setFormState(prev => ({...prev, name: e.target.value}))}
+          onChange={(e) => {
+            const updatedState = {...formState, name: e.target.value};
+            onUpdate(updatedState);
+            setNameError(updatedState.name === '')
+          }}
           inputProps={{'data-cy': 'shift-name-input'}}
         />
       </Grid>
@@ -184,7 +200,7 @@ const EditShiftForm = (initialState: ShiftForm) => {
         <Box>
           <Select
             variant="outlined"
-            value={timeOptionsForTheInterval.includes(formState.startTime) ? formState.startTime : "Select start time"}
+            value={startTimeOptions.includes(formState.startTime) ? formState.startTime : 'Select start time'}
             onChange={(e) => {
               const [hour, minute] = (e.target.value as string).split(':').map(Number);
               handleStartTimeChange(formState.id, hour, minute);
@@ -193,10 +209,10 @@ const EditShiftForm = (initialState: ShiftForm) => {
             inputProps={{role: 'start-time-select'}}
             data-cy="start-time-select"
           >
-            <MenuItem value="Select start time" disabled>
+            <MenuItem value={'Select start time'} disabled>
               Select start time
             </MenuItem>
-            {timeOptionsForTheInterval.map(time => (
+            {startTimeOptions.map(time => (
               <MenuItem key={time} value={time}
                         data-cy={`select-start-time-option-${time.replace(':', '-')}`}>
                 {time}
@@ -209,19 +225,19 @@ const EditShiftForm = (initialState: ShiftForm) => {
         <Typography sx={{fontSize: '16px', fontWeight: 'bold'}}>End time</Typography>
         <Select
           variant="outlined"
-          value={timeOptionsForTheInterval.includes(formState.endTime) ? formState.endTime : "Select end time"}
+          value={startTimeOptions.includes(formState.endTime) ? formState.endTime : 'Select end time'}
           onChange={(e) => {
-            const [hour, minute] = e.target.value.split(':').map(Number);
+            const [hour, minute] = (e.target.value as string).split(':').map(Number);
             handleEndTimeChange(formState.id, hour, minute);
           }}
           fullWidth
           inputProps={{role: 'end-time-select'}}
           data-cy="end-time-select"
         >
-          <MenuItem value="Select end time" disabled>
+          <MenuItem value={'Select end time'} disabled>
             Select end time
           </MenuItem>
-          {endTimeOptions(interval).map(time => (
+          {endTimeOptions.map(time => (
             <MenuItem key={time} value={time}
                       data-cy={`select-end-time-option-${time.replace(':', '-')}`}>{time}</MenuItem>
           ))}
@@ -238,13 +254,16 @@ const EditShiftForm = (initialState: ShiftForm) => {
           type="number"
           fullWidth
           value={formState.defaultStaffNumber}
-          onChange={(e) => handleChange(formState.id, 'defaultStaffNumber', parseInt(e.target.value, 10))}
+          onChange={(e) => {
+            const updatedState = {...formState, defaultStaffNumber: parseInt(e.target.value)};
+            onUpdate(updatedState);
+          }}
           inputProps={{'data-cy': 'staff-number-input'}}
         />
       </Grid>
 
       <Grid item xs={12}>
-        <IconButton color="secondary" onClick={() => handleRemoveShift(formState.id)}>
+        <IconButton color="secondary" onClick={() => removeShift(formState.id)}>
           <CloseIcon/> <Typography sx={{textDecoration: 'underline'}}>Remove shift</Typography>
         </IconButton>
       </Grid>
