@@ -223,7 +223,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
             </ToggleButtonGroup>
             <ToggleButtonGroup exclusive color='primary' size='medium' value={formState.time} onChange={handleChangeTime}>
               <ToggleButton value="now" disabled={formState.day !== PaxSearchFormDay.Today}><OfflineBoltTwoToneIcon className='live' />Live</ToggleButton>
-              <ToggleButton value="24hour">+24hr</ToggleButton>
+              <ToggleButton value="24hour">24hr</ToggleButton>
               <ToggleButton value="range">Custom</ToggleButton>
             </ToggleButtonGroup>
           </Stack>
