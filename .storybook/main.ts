@@ -15,6 +15,7 @@ const config: StorybookConfig = {
     '@storybook/addon-webpack5-compiler-babel',
     '@storybook/addon-a11y',
     '@kemuridama/storybook-addon-github',
+    '@chromatic-com/storybook'
   ],
 
   framework: {
