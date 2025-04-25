@@ -26,6 +26,6 @@ export const FlightFlagger: Story = {
         isLoading: false,
     },
     parameters: {
-        jest: ["FlightFlagger.test.tsx"],
+        jest: ["AccessibilityStatement.test.tsx"],
     }
 };
