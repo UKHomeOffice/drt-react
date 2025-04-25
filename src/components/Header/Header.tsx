@@ -57,7 +57,7 @@ const Header = ({
   const hasAdminMenuRoles = userRoles.filter(role => adminMenuRoles.includes(role)).length > 0;
 
   return (
-    <AppBar sx={{backgroundColor: '#fff'}} elevation={0} position={"sticky"}>
+    <AppBar sx={{backgroundColor: 'red', p: 5}} elevation={0} position={"sticky"}>
       <Box>
         <Grid container sx={{maxWidth, margin: '0 auto', padding: '12px'}} maxWidth={'none'}>
           <Grid item xs={8}>
