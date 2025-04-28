@@ -238,7 +238,7 @@ export const AccessibilityStatement = ({
             <Typography variant="h2" id="improve-accessibility">What we’re doing to improve accessibility</Typography>
             <Typography sx={{paddingTop: '10px'}}>
               We plan to address the above areas of non-compliance with accessibility regulations on this website
-              by <strong>April 2025</strong>.
+              by <strong>February 2026</strong>.
             </Typography>
           </Box>
           <Box sx={{paddingTop: '10px', paddingLeft: '10px'}}>
