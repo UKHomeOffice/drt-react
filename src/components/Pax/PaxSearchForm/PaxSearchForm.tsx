@@ -231,7 +231,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
         <Grid item flexGrow={1}>
           <Stack spacing={2}>
             <DatePicker
-              label="Arrival date"
+              label="Date"
               format="DD/MM/YYYY"
               value={formState.arrivalDate}
               showDaysOutsideCurrentMonth
