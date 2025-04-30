@@ -1,15 +1,32 @@
 import React from 'react';
 import {Card, CardContent, Grid, Link, Stack, Table, TableBody, TableCell, TableFooter, TableHead, TableRow, Typography, Box, Tab, List, ListItem, ListItemIcon, ListItemText} from "@mui/material";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartData } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export interface IPaxTerminalOverview {}
+export interface IPaxTerminalOverview {
+  desks:number,
+  staff: number,
+  flights: any[],
+  chartData: ChartData<'doughnut'>,
+  pressure: {
+    pressure: '+' | '-',
+    from: string
+    to: string
+  }[];
+  estimates: {
+    from: string
+    to: string
+    egate: number
+    eea: number
+    noneea: number
+  }[]
+}
 
-export const PaxTerminalOverview = ({}: IPaxTerminalOverview) => {
+export const PaxTerminalOverview = ({staff, desks, flights, chartData, pressure, estimates}: IPaxTerminalOverview) => {
   return (
     <Grid container spacing={2}>
       <Grid item sm={12}>
@@ -18,7 +35,7 @@ export const PaxTerminalOverview = ({}: IPaxTerminalOverview) => {
       <Grid item sm={2}>
         <Card variant='outlined' sx={{height: '100%', backgroundColor: '#82AA63'}}>
           <CardContent>
-            <Typography component={'h4'} variant={'h5'} mb={2} sx={{color: 'white'}}>39 flights</Typography>
+            <Typography component={'h4'} variant={'h5'} mb={2} sx={{color: 'white'}}>{flights.length} flights</Typography>
             <Table sx={{fontSize: '1.2em'}}>
               <TableHead>
                 <TableRow>
@@ -27,8 +44,8 @@ export const PaxTerminalOverview = ({}: IPaxTerminalOverview) => {
               </TableHead>
               <TableBody>
                 <TableRow>
-                  <TableCell align='center' sx={{backgroundColor: '#4A7E38', color: 'white', border: 'none', fontSize: '1.1em'}}><strong>Staff<br/>17</strong></TableCell>
-                  <TableCell align='center' sx={{backgroundColor: '#4A7E38', color: 'white', border: 'none', fontSize: '1.1em'}}><strong>Desks<br/>14</strong></TableCell>
+                  <TableCell align='center' sx={{backgroundColor: '#4A7E38', color: 'white', border: 'none', fontSize: '1.1em'}}><strong>Staff<br/>{staff}</strong></TableCell>
+                  <TableCell align='center' sx={{backgroundColor: '#4A7E38', color: 'white', border: 'none', fontSize: '1.1em'}}><strong>Desks<br/>{desks}</strong></TableCell>
                 </TableRow>
               </TableBody>
             </Table>
@@ -53,34 +70,26 @@ export const PaxTerminalOverview = ({}: IPaxTerminalOverview) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                <TableRow>
-                  <TableCell><strong>13:15 to 14:15</strong></TableCell>
-                  <TableCell align='right'>1,183</TableCell>
-                  <TableCell align='right'>725</TableCell>
-                  <TableCell align='right'>725</TableCell>
-                  <TableCell align='right'>725</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell><strong>14:15 to 15:15</strong></TableCell>
-                  <TableCell align='right'>1,183</TableCell>
-                  <TableCell align='right'>725</TableCell>
-                  <TableCell align='right'>725</TableCell>
-                  <TableCell align='right'>725</TableCell>
-                </TableRow>
-                <TableRow>
-                <TableCell><strong>15:15 to 16:15</strong></TableCell>
-                  <TableCell align='right'>1,183</TableCell>
-                  <TableCell align='right'>725</TableCell>
-                  <TableCell align='right'>725</TableCell>
-                  <TableCell align='right'>725</TableCell>
-                </TableRow>
+                {
+                  estimates.map((estimate) => {
+                    return (
+                      <TableRow>
+                        <TableCell><strong>{estimate.from} to {estimate.from}</strong></TableCell>
+                        <TableCell align='right'>{estimate.egate + estimate.eea + estimate.noneea}</TableCell>
+                        <TableCell align='right'>{estimate.egate}</TableCell>
+                        <TableCell align='right'>{estimate.eea}</TableCell>
+                        <TableCell align='right'>{estimate.noneea}</TableCell>
+                      </TableRow>
+                    )
+                  })
+                }
               </TableBody>
               <TableFooter>
                 <TableCell><strong>3 hour total</strong></TableCell>
-                <TableCell align='right'><strong>1,183</strong></TableCell>
-                <TableCell align='right'><strong>725</strong></TableCell>
-                <TableCell align='right'><strong>725</strong></TableCell>
-                <TableCell align='right'><strong>725</strong></TableCell>
+                <TableCell align='right'><strong>{estimates.reduce((total, estimate) => total + estimate.egate + estimate.eea + estimate.noneea, 0 )}</strong></TableCell>
+                <TableCell align='right'><strong>{estimates.reduce((total, estimate) => total + estimate.egate, 0 )}</strong></TableCell>
+                <TableCell align='right'><strong>{estimates.reduce((total, estimate) => total + estimate.eea, 0 )}</strong></TableCell>
+                <TableCell align='right'><strong>{estimates.reduce((total, estimate) => total + estimate.noneea, 0 )}</strong></TableCell>
               </TableFooter>
             </Table>
           </CardContent>
@@ -95,15 +104,8 @@ export const PaxTerminalOverview = ({}: IPaxTerminalOverview) => {
             </Stack>
             <Doughnut
               style={{maxHeight: '150px'}} 
-              data={{
-                labels: ['EEA', 'e-Gate', 'Non-EEA: Visa National', 'Non-EEA: Non-Visa National'],
-                datasets:[
-                  { 
-                    data: [50, 25, 15, 10],
-                    backgroundColor: ["#0E2560", "#334F96", "#CD5B82", "#547A00"],
-                  }
-                ]
-              }} options={{
+              data={chartData} 
+              options={{
                 plugins: {
                   legend: {
                     position: 'right',
@@ -130,18 +132,16 @@ export const PaxTerminalOverview = ({}: IPaxTerminalOverview) => {
               <Typography component={'h4'} variant={'h5'}>PCP Pressure</Typography>
             </Stack>
             <List disablePadding>
-              <ListItem disableGutters>
-                <ListItemIcon>
-                  <KeyboardArrowUpIcon />
-                </ListItemIcon>
-                <ListItemText>13:30 to 13:45</ListItemText>
-              </ListItem>
-              <ListItem disableGutters>
-                <ListItemIcon>
-                  <KeyboardArrowDownIcon />
-                </ListItemIcon>
-                <ListItemText>14:15 to 14:30</ListItemText>
-              </ListItem>
+              { pressure.map(item => {
+                return (
+                  <ListItem disableGutters disablePadding>
+                    <ListItemIcon>
+                      {item.pressure === '+' ? <KeyboardArrowUpIcon /> :  <KeyboardArrowDownIcon />}
+                    </ListItemIcon>
+                    <ListItemText>{item.from} to {item.from}</ListItemText>
+                  </ListItem>
+                )
+              })}
             </List>
           </CardContent>
         </Card>
