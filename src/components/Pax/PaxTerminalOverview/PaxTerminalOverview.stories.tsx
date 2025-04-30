@@ -8,6 +8,7 @@ import { Box } from '@mui/material';
 import { ChartData } from 'chart.js';
 
 interface PaxTerminalOverviewStoryControls {
+  currentTime: string,
   desks:number,
   staff: number,
   flights: any[];
@@ -43,6 +44,7 @@ type Story = StoryObj<typeof meta>;
 
 export const PaxTerminalOverview: Story = {
   args: {
+    currentTime: '17:15',
     desks: 14,
     staff: 16,
     flights: new Array(36),

@@ -23,10 +23,11 @@ export interface IPaxTerminalOverview {
     egate: number
     eea: number
     noneea: number
-  }[]
+  }[],
+  currentTime: string
 }
 
-export const PaxTerminalOverview = ({staff, desks, flights, chartData, pressure, estimates}: IPaxTerminalOverview) => {
+export const PaxTerminalOverview = ({staff, desks, flights, chartData, pressure, estimates, currentTime}: IPaxTerminalOverview) => {
   return (
     <Grid container spacing={2}>
       <Grid item sm={12}>
@@ -39,7 +40,7 @@ export const PaxTerminalOverview = ({staff, desks, flights, chartData, pressure,
             <Table sx={{fontSize: '1.2em'}}>
               <TableHead>
                 <TableRow>
-                  <TableCell align='center' colSpan={2} sx={{backgroundColor: '#2E4C25', border: 'none', fontSize: '1.1em'}}><strong>17:15</strong></TableCell>
+                  <TableCell align='center' colSpan={2} sx={{backgroundColor: '#2E4C25', border: 'none', fontSize: '1.1em'}}><strong>{currentTime}</strong></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
