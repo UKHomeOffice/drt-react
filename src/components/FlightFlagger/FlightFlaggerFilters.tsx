@@ -131,16 +131,16 @@ export const FlightFlaggerFilters = ({
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentFormState({
-                          ...currentFormState,
-                          [event.target.name]: event.target.checked
-                        })
+      ...currentFormState,
+      [event.target.name]: event.target.checked
+    })
   }
 
   const handleTextInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentFormState({
-                          ...currentFormState,
-                          [event.target.name]: event.target.value
-                        })
+      ...currentFormState,
+      [event.target.name]: event.target.value
+    })
     onChangeInput(event.target.value)
   }
 
@@ -151,11 +151,9 @@ export const FlightFlaggerFilters = ({
   }
 
   const toggleFilters = () => {
-    sendEvent({
-                category: terminal,
+    sendEvent({ category :terminal,
                 action: 'Select pax info to reveal',
-                label: (!currentFormState.showFilters).toString()
-              })
+                label: (!currentFormState.showFilters).toString()})
     setCurrentFormState({...currentFormState, showFilters: !currentFormState.showFilters})
   }
 
@@ -233,7 +231,7 @@ export const FlightFlaggerFilters = ({
           disableElevation
           variant="contained"
           sx={buttonStyles}
-          startIcon={<HighlightIcon/>}
+          startIcon={<HighlightIcon />}
           endIcon={<Chip
             color={someCriteriaSelected(appliedSearchFlags) ? "primary" : "primary"}
             size="small"
