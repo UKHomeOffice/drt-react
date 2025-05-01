@@ -131,16 +131,16 @@ export const FlightFlaggerFilters = ({
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentFormState({
-      ...currentFormState,
-      [event.target.name]: event.target.checked
-    })
+                          ...currentFormState,
+                          [event.target.name]: event.target.checked
+                        })
   }
 
   const handleTextInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentFormState({
-      ...currentFormState,
-      [event.target.name]: event.target.value
-    })
+                          ...currentFormState,
+                          [event.target.name]: event.target.value
+                        })
     onChangeInput(event.target.value)
   }
 
@@ -151,9 +151,11 @@ export const FlightFlaggerFilters = ({
   }
 
   const toggleFilters = () => {
-    sendEvent({ category :terminal,
+    sendEvent({
+                category: terminal,
                 action: 'Select pax info to reveal',
-                label: (!currentFormState.showFilters).toString()})
+                label: (!currentFormState.showFilters).toString()
+              })
     setCurrentFormState({...currentFormState, showFilters: !currentFormState.showFilters})
   }
 
@@ -202,7 +204,7 @@ export const FlightFlaggerFilters = ({
         <InputLabel htmlFor="flight-number" sx={{mb: 1}}><strong>Enter flight details</strong></InputLabel>
         <FormControl variant="outlined" sx={{minWidth: '365px'}}>
           <OutlinedInput
-            sx={{backgroundColor: '#fff'}}
+            sx={{backgroundColor: '#fff', height: `2.5em`}}
             size="small"
             id="flight-number"
             name="flightNumber"
@@ -231,7 +233,7 @@ export const FlightFlaggerFilters = ({
           disableElevation
           variant="contained"
           sx={buttonStyles}
-          startIcon={<HighlightIcon />}
+          startIcon={<HighlightIcon/>}
           endIcon={<Chip
             color={someCriteriaSelected(appliedSearchFlags) ? "primary" : "primary"}
             size="small"
