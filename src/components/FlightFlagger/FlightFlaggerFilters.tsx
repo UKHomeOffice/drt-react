@@ -203,7 +203,7 @@ export const FlightFlaggerFilters = ({
         <FormControl variant="outlined" sx={{minWidth: '365px'}}>
           <OutlinedInput
             sx={{backgroundColor: '#fff'}}
-            // size="small"
+            size="small"
             id="flight-number"
             name="flightNumber"
             onChange={handleTextInputChange}
