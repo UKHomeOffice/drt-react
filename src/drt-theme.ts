@@ -87,15 +87,21 @@ const drtTheme = createTheme({
     h1: {
       fontSize: '38px',
       fontWeight: 'bold',
-      color: '#233E82'
+      color: '#233E82',
+      paddingTop: '40px',
+      paddingBottom: '40px',
     },
     h2: {
       fontSize: '32px',
       fontWeight: 'bold',
+      paddingTop: '40px',
+      paddingBottom: '40px',
     },
     h3: {
       fontSize: "28px",
       fontWeight: "bold",
+      paddingTop: '40px',
+      paddingBottom: '40px',
     },
     h4: {
       fontSize: "24px",
