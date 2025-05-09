@@ -75,12 +75,30 @@ const defaultValues = createTheme({
 
 const drtTheme = createTheme({
   palette: {
-    primary: defaultValues.palette.primary,
+    primary: {
+      ...defaultValues.palette.primary,
+      50: "#E6E9F1",
+      100: "#C0C7DE",
+      300: "#7283B2",
+      400: "#5269A5",
+      500: "#334F96",
+      600: "#2B478D",
+      700: "#233E82",
+      900: "#0E2560",
+    },
     secondary: defaultValues.palette.secondary,
     error: defaultValues.palette.error,
     success: defaultValues.palette.success,
     warning: defaultValues.palette.warning,
     info: defaultValues.palette.info,
+    grey: {
+      100 : "#F3F5F9",
+      300 : "#B4B5BE",
+      400 : "#547A00",
+      500 : "#777A86",
+      700 : "#404252",
+      900 : "#111224"
+    }
   },
   typography: {
     fontFamily: '"Roboto","Helvetica","Arial",sans-serif',

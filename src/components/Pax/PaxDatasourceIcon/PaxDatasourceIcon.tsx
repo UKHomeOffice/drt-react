@@ -14,7 +14,7 @@ export const PaxDatasource = ({status}: IPaxDatasource) => {
 
   return (
     <Tooltip title={`${content.statusText}`} sx={{cursor: 'pointer'}}>
-      <Box sx={{maxWidth: '33px', maxHeight: '24px', position: 'relative', marginTop: '-1px' }}>
+      <Box sx={{maxWidth: '18px', maxHeight: '24px', position: 'relative', marginTop: '-1px' }}>
         <DatasourceIcon width={'20px'} />
         { content.iconBg && <Box sx={{position: 'absolute', top: 3, left: 10}}>
           { content.iconBg }
