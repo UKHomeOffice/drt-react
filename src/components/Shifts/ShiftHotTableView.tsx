@@ -9,7 +9,6 @@ import {registerAllModules} from 'handsontable/registry';
 import 'handsontable/dist/handsontable.full.min.css';
 import {LocalDate} from './LocalDate';
 import {drtTheme} from '../../index';
-import {ShiftSummaryView as ShiftSummaryComponent} from "./ShiftSummaryView";
 
 export interface ViewDate {
   year: number;
@@ -248,9 +247,6 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
 
   return (
     <ThemeProvider theme={drtTheme}>
-      <Box sx={{paddingBottom: 5}}>
-        <ShiftSummaryComponent shiftSummaries={shiftSummaries.map(s => s.shiftSummary)}/>
-      </Box>
       {shiftSummaries.map((shift, index) => {
         const isExpanded = expandedRows[shift.shiftSummary.name] || false;
         const {rows, rowHeaders} = generateRows(viewDate, dayRange, index, shift, interval, isExpanded);
@@ -261,27 +257,29 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
           <Box key={index} sx={{marginBottom: 4}}>
             <Box display="flex" alignItems="center">
               <Typography variant="h6" gutterBottom>
-                {shift.shiftSummary.name} {`[ ${shift.shiftSummary.startTime} to ${shift.shiftSummary.endTime} ]`}
+                {shift.shiftSummary.name}
               </Typography>
               <IconButton onClick={() => toggleRowExpansion(shift.shiftSummary.name)}>
                 {isExpanded ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
               </IconButton>
             </Box>
-            <Typography>Default Staff : {shift.shiftSummary.defaultStaffNumber}</Typography>
+            <Box display="flex" gap="20px" alignItems="center" paddingBottom="10px">
+              <Typography>{`Time covered: ${shift.shiftSummary.startTime} to ${shift.shiftSummary.endTime}`}</Typography>
+              <Typography>Default staff: {shift.shiftSummary.defaultStaffNumber}</Typography>
+            </Box>
             <HotTable
               id={`hot-table-${index}`}
               className={`shift-hot-table-${index}`}
               data={rows}
               colHeaders={generateColumnHeaders(viewDate, dayRange, daysInMonth)}
               columns={generateColumns(dayRange, index, daysInMonth)}
-              style={{borderSpacing: '0', height: `${tableHeight}px`}}
+              style={{overflow: `hidden`, borderSpacing: '0', height: `${tableHeight}px`}}
               cells={(row, col) => ({
                 renderer: cellRenderer(isExpanded)
               })}
               afterChange={handleAfterChange}
               bindRowsWithHeaders="strict"
               rowHeaders={rowHeaders}
-              // autoRowSize={true}
               rowHeaderWidth={100}
               licenseKey={'non-commercial-and-evaluation'}
             />

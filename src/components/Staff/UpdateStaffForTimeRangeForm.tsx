@@ -8,7 +8,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import {AdapterMoment} from "@mui/x-date-pickers/AdapterMoment";
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
-import { timeOptions, endTimeOptions } from '../Util';
+import { intervalStartTimeOptions, intervalEndTimeOptions } from '../Util';
 
 moment.updateLocale('en-gb', {
   week: {
@@ -67,7 +67,7 @@ export const UpdateStaffForTimeRangeForm = ({
 
   const handleEndTimeChange = (hour: number, minute: number) => {
     let newEndTime: Moment;
-    if (startTime.hour() === 0 && startTime.minute() === 0 && hour === 0 && minute === 0) {
+    if (hour === 0 && minute === 0) {
       newEndTime = moment(startTime).add(1, 'day').startOf('day');
     } else {
       newEndTime = moment(startTime).set({ hour: hour, minute: minute });
@@ -145,7 +145,7 @@ export const UpdateStaffForTimeRangeForm = ({
                 inputProps={{ role: 'start-time-select' }}
                 data-cy="start-time-select"
               >
-                {timeOptions(interval).map(time => (
+                {intervalStartTimeOptions(interval).map(time => (
                   <MenuItem key={time} value={time} data-cy={`select-start-time-option-${time.replace(':', '-')}`}>{time} </MenuItem>
                 ))}
               </Select>
@@ -164,7 +164,7 @@ export const UpdateStaffForTimeRangeForm = ({
               inputProps={{ role: 'end-time-select' }}
               data-cy="end-time-select"
             >
-              {endTimeOptions(interval).map(time => (
+              {intervalEndTimeOptions(interval).map(time => (
                 <MenuItem key={time} value={time} data-cy={`select-end-time-option-${time.replace(':', '-')}`}>{time}</MenuItem>
               ))}
             </Select>

@@ -26,7 +26,7 @@ import {
   IconButton
 } from '@mui/material';
 import * as React from 'react';
-import {endTimeOptions, timeOptions} from "../../Util";
+import {intervalEndTimeOptions, intervalStartTimeOptions} from "../../Util";
 
 export enum PaxSearchFormDay {
   Yesterday = "yesterday",
@@ -123,7 +123,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
           time = formState.time
           break;
       }
-  
+
       const newState = {
         ...formState,
         day: newValue,
@@ -223,7 +223,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
             </ToggleButtonGroup>
             <ToggleButtonGroup exclusive color='primary' size='medium' value={formState.time} onChange={handleChangeTime}>
               <ToggleButton value="now" disabled={formState.day !== PaxSearchFormDay.Today}><OfflineBoltTwoToneIcon className='live' />Live</ToggleButton>
-              <ToggleButton value="24hour">+24hr</ToggleButton>
+              <ToggleButton value="24hour">24hr</ToggleButton>
               <ToggleButton value="range">Custom</ToggleButton>
             </ToggleButtonGroup>
           </Stack>
@@ -231,7 +231,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
         <Grid item flexGrow={1}>
           <Stack spacing={2}>
             <DatePicker
-              label="Arrival date"
+              label="Date"
               format="DD/MM/YYYY"
               value={formState.arrivalDate}
               showDaysOutsideCurrentMonth
@@ -256,7 +256,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
                       handleTimeChange('fromDate', e.target.value);
                     }}
                   >
-                    {timeOptions(60).map(time => (
+                    {intervalStartTimeOptions(60).map(time => (
                       <MenuItem key={time} value={time}
                         data-cy={`select-start-time-option-${time.replace(':', '-')}`}>{time}
                       </MenuItem>
@@ -283,8 +283,8 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
                       Array.from(Array(36 - parseInt(formState.fromDate.substring(0,2)))).map((value, index) => {
                         let fromHour = parseInt(formState.fromDate.substring(0,2));
                         let time = moment().set('hours', fromHour).add(index + 1, 'hours');
-                        return <MenuItem 
-                          key={time.toISOString()} 
+                        return <MenuItem
+                          key={time.toISOString()}
                           value={index+1}
                           data-cy={`select-start-time-option-${time.format('HH-00')}`}>
                             {`${time.format('HH:00')} (+${index + 1} hours)`}
