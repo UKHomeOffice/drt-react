@@ -98,7 +98,6 @@
     "-": "^0.0.1",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
-    "@esbuild/darwin-x64": "^0.25.4",
     "@fontsource/material-icons": "^5.0.18",
     "@fontsource/roboto": "^5.0.13",
     "@handsontable/react": "^15.0.0",
