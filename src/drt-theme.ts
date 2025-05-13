@@ -1,8 +1,10 @@
 
 import { createTheme, darken, lighten } from "@mui/material";
 import type {} from '@mui/x-date-pickers/themeAugmentation';
+import { themePalette } from "./theme/palette";
 import React from "react";
 
+import { buttonTheme } from '../src/theme/buttons';
 declare module '@mui/material/styles' {
   interface PaperVariants {
     appbar: React.CSSProperties;
@@ -44,39 +46,10 @@ declare module "@mui/material/Typography" {
   }
 }
 
-const defaultValues = createTheme({
-  palette: {
-    primary: { 
-      main: '#005ea5',
-      light: lighten('#005ea5', 0.8)
-    },
-    secondary: { 
-      main: '#233E82',
-      light: '#E6E9F1'
-    },
-    error: { 
-      main: '#99001E',
-      light: '#FFEBEE',
-    },
-    success: { 
-      main: '#547A00',
-      light: '#F0F6DB'
-    },
-    warning: { 
-      main: '#C94900',
-      light: '#FFF2E1',
-    },
-    info: { 
-      main: '#404252',
-      light: lighten('#404252', 0.8)
-    },
-  }
-});
-
 const drtTheme = createTheme({
   palette: {
     primary: {
-      ...defaultValues.palette.primary,
+      ...themePalette.palette.primary,
       50: "#E6E9F1",
       100: "#C0C7DE",
       300: "#7283B2",
@@ -86,11 +59,11 @@ const drtTheme = createTheme({
       700: "#233E82",
       900: "#0E2560",
     },
-    secondary: defaultValues.palette.secondary,
-    error: defaultValues.palette.error,
-    success: defaultValues.palette.success,
-    warning: defaultValues.palette.warning,
-    info: defaultValues.palette.info,
+    secondary: themePalette.palette.secondary,
+    error: themePalette.palette.error,
+    success: themePalette.palette.success,
+    warning: themePalette.palette.warning,
+    info: themePalette.palette.info,
     grey: {
       100 : "#F3F5F9",
       300 : "#B4B5BE",
@@ -162,7 +135,7 @@ const drtTheme = createTheme({
     pageTitle: {
       fontSize: 18,
       fontWeight: 'lighter',
-      [defaultValues.breakpoints.up("sm")]: {
+      [themePalette.breakpoints.up("sm")]: {
         fontSize: 36
       }
     },
@@ -176,7 +149,7 @@ const drtTheme = createTheme({
         {
           props: { variant: 'appbar'},
           style: {
-            backgroundColor: defaultValues.palette.grey[100]
+            backgroundColor: themePalette.palette.grey[100]
           }
         }
       ]
@@ -184,21 +157,12 @@ const drtTheme = createTheme({
     MuiInputBase: {
       styleOverrides: {
         root: {
-          backgroundColor: defaultValues.palette.common.white
+          backgroundColor: themePalette.palette.common.white
         }
       }
     },
     MuiButton: {
-      styleOverrides: {
-        root: {
-          textTransform: 'none',
-          fontSize: '16px',
-          padding: '6px 12px',
-        },
-        outlined: {
-          backgroundColor: '#fff'
-        }
-      },
+      ...buttonTheme,
     },
     MuiToggleButtonGroup: {
       styleOverrides: {
@@ -211,30 +175,26 @@ const drtTheme = createTheme({
       styleOverrides: {
         root: {
           flexGrow: 1,
-          paddingRight: defaultValues.spacing(2),
-          paddingLeft: defaultValues.spacing(2),
+          paddingRight: themePalette.spacing(2),
+          paddingLeft: themePalette.spacing(2),
           '&.MuiToggleButton-primary': {
-            backgroundColor: defaultValues.palette.common.white,
-            color: defaultValues.palette.text.primary,
+            backgroundColor: themePalette.palette.common.white,
+            color: themePalette.palette.text.primary,
             '&:hover': {
-              color: defaultValues.palette.primary.main,
-              backgroundColor: defaultValues.palette.primary.light,
+              color: themePalette.palette.primary.main,
+              backgroundColor: themePalette.palette.primary.light,
             },
             '&.Mui-selected': {
-              backgroundColor: defaultValues.palette.primary.main,
-              color: defaultValues.palette.common.white,
+              backgroundColor: themePalette.palette.primary.main,
+              color: themePalette.palette.common.white,
               cursor: 'default',
               '.live': {
                 color: '#ffd700',
               }
             },
-            '&.Mui-disabled': {
-              backgroundColor: defaultValues.palette.grey[200],
-              color: defaultValues.palette.grey[600],
-            }
           },
           '> .MuiSvgIcon-root': {
-            marginRight: defaultValues.spacing(1),
+            marginRight: themePalette.spacing(1),
             opacity: 0.8,
             width: '0.8em',
           }
@@ -278,8 +238,8 @@ const drtTheme = createTheme({
           padding: 8,
         },
         head: {
-          backgroundColor: defaultValues.palette.info.main,
-          color: defaultValues.palette.common.white,
+          backgroundColor: themePalette.palette.info.main,
+          color: themePalette.palette.common.white,
           padding: 6,
         }
       }
@@ -288,10 +248,10 @@ const drtTheme = createTheme({
       styleOverrides: {
         root: {
           '&:nth-of-type(odd)': {
-            backgroundColor: defaultValues.palette.common.white,
+            backgroundColor: themePalette.palette.common.white,
           },
           '&:nth-of-type(even)': {
-            backgroundColor: defaultValues.palette.grey[100],
+            backgroundColor: themePalette.palette.grey[100],
           },
         }
       }
