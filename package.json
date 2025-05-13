@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "test:generate-output": "jest --json --outputFile=.jest-test-results.json || true",
-    "build": "rimraf dist && rollup -c",
+    "build": "rimraf dist && rollup -c  --configImportAttributesKey with",
     "dev": "rollup -c -w",
     "test": "DEBUG_PRINT_LIMIT=100000 jest -ci --verbose",
     "test-ci": "jest -ci",
