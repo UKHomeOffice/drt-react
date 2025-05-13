@@ -3,7 +3,7 @@ import {ShiftForm} from './AddShiftsForm';
 import {ConfirmShiftForms as ConfirmShiftFormsComponent} from "./ConfirmShiftForms";
 
 export default {
-  title: 'DRT Components/UI/ConfirmShiftFormsComponent',
+  title: 'DRT Components/Features/Shifts/ConfirmShiftForms',
   component: ConfirmShiftFormsComponent,
 } as Meta;
 
@@ -23,14 +23,14 @@ export const ConfirmShiftForms: Story = {
       },
       {
         id: 2,
-        name: 'afternoon shift',
+        name: 'Afternoon shift',
         startTime: '00:15',
         endTime: '00:30',
         defaultStaffNumber: 10
       },
       {
         id: 3,
-        name: 'evening shift',
+        name: 'Evening shift',
         startTime: '00:30',
         endTime: '00:45',
         defaultStaffNumber: 10

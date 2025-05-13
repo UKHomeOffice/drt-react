@@ -16,7 +16,7 @@ const HighlightWrapper = styled(Typography)(({color, bgColor} : {color: string, 
     display: 'block',
     height: '4px',
     width: '100%',
-    borderTop: `1px dotted ${color}`
+    borderTop: `1px dotted ${color}`,
   }
 }));
 
@@ -27,7 +27,7 @@ export interface IHighlight {
 }
 
 export const Highlight = ({color, text, tooltipText} : IHighlight) => {
-  const theme: Theme = useTheme()
+  const theme: Theme = useTheme();
   const bgColor = theme.palette[color].light;
   const textColor = theme.palette[color].dark;
 

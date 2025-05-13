@@ -17,6 +17,7 @@ import '@fontsource/material-icons';
 import results from '../.jest-test-results.json';
 
 import './preview-styles.css'
+import { CssBaseline } from '@mui/material';
 
 const preview: Preview = {
   decorators: [
@@ -32,6 +33,7 @@ const preview: Preview = {
     }),
     (Story) => (
       <LocalizationProvider dateAdapter={AdapterMoment}>
+        <CssBaseline />
         <Story />
       </LocalizationProvider>
     )
