@@ -74,8 +74,9 @@ const Header = ({
                 title="Border Force - Dynamic Response Tool"
                 href="https://drt.homeoffice.gov.uk/"
                 style={{
+                  width: '100%',
                   display: 'flex',
-                  textDecoration: 'none'
+                  textDecoration: 'none',
               }}>
                 <Crest data-testid="crest"/>
                 <Grid container sx={{
@@ -96,12 +97,18 @@ const Header = ({
                         sm: '2rem',
                       },
                       mr: 2,
+                      mb: 0,
                       color: '#000'
                     }}>
-                      Border Force
+                      Home Office
                     </Typography>
                   </Grid>
                   <Grid item sx={{
+                    textAlign: {
+                      xs: 'left',
+                      sm: 'center'
+                    },
+                    flexGrow: 1,
                     width: {
                       xs: '100%',
                       sm: 'auto',
@@ -111,13 +118,10 @@ const Header = ({
                       sx={{
                         flexGrow: 0,
                         color: '#404252',
+                        mb: 0,
                         fontSize: {
-                          xs: '0.7rem',
-                          sm: '1rem',
-                        },
-                        lineHeight: {
-                          xs: '1rem',
-                          sm: '2.1rem',
+                          xs: '14px',
+                          sm: '24px',
                         },
                       }}>
                         Dynamic Response Tool
@@ -130,7 +134,7 @@ const Header = ({
           <Grid item xs={4} sx={{padding: 2}} display={{xs: 'none', md: 'block'}}>
             <Box display="flex" ml={'auto'}>
               <Typography variant="body1" noWrap color={'#000'}
-                          sx={{flexGrow: 1, textAlign: 'right'}}><strong>Contact:</strong>&nbsp;<Link
+                          sx={{flexGrow: 1, textAlign: 'right', mb: 0}}><strong>Contact:</strong>&nbsp;<Link
                 href="mailto:drtpoiseteam@homeoffice.gov.uk">drtpoiseteam@homeoffice.gov.uk</Link></Typography>
             </Box>
           </Grid>
@@ -142,8 +146,7 @@ const Header = ({
 
               <Button
                 data-testid="mobile-admin-menu-trigger"
-                variant="outlined"
-                id="demo-positioned-button"
+                variant="contained"
                 aria-controls={adminMenuOpen ? 'demo-positioned-menu' : undefined}
                 aria-haspopup="true"
                 aria-expanded={adminMenuOpen ? 'true' : undefined}
@@ -189,7 +192,7 @@ const Header = ({
                 leftMenuItems && leftMenuItems.map((menuItem) => {
 
                   return (
-                    <Grid key={menuItem.link} item flexGrow={0} display={{xs: 'none', md: 'block'}}>
+                    <Grid key={menuItem.link} item flexGrow={0} display={{xs: 'none', md: 'flex'}}>
                       <Button
                         onClick={() => routingFunction(menuItem.link)}
                         data-testid={`left-menu-${menuItem.link}`}
@@ -203,27 +206,27 @@ const Header = ({
                   )
                 })
               }
-              {hasAdminMenuRoles &&
-                <Grid item sx={{marginLeft: 'auto'}} flexGrow={0} display={{xs: 'none', md: 'block'}}>
-                  <Button
-                    data-testid="desktop-admin-menu-trigger"
-                    variant="text"
-                    startIcon={<ManageAccountsIcon/>}
-                    endIcon={<ArrowDropDownIcon/>}
-                    id="demo-positioned-button"
-                    onClick={handleClick}
-                    sx={{...linkStyles, display: {xs: 'none', md: 'inline-flex'}}}
-                  >
-                    Admin
-                  </Button>
-                </Grid>}
-              <Grid item display={{xs: 'none', md: 'block'}}>
-                <Grid container>
+              <Grid item display={{xs: 'none', md: 'flex'}} flexGrow={1}></Grid>
+              <Grid item display={{xs: 'none', md: 'flex'}}>
+                <Grid container sx={{height: '100%'}} gap={4}>
+                  { hasAdminMenuRoles &&
+                    <Grid item sx={{marginLeft: 'auto'}} flexGrow={0} display={{xs: 'none', md: 'flex'}}>
+                      <Button
+                        data-testid="desktop-admin-menu-trigger"
+                        variant="text"
+                        startIcon={<ManageAccountsIcon/>}
+                        endIcon={<ArrowDropDownIcon/>}
+                        onClick={handleClick}
+                        sx={{...linkStyles, display: {xs: 'none', md: 'inline-flex'}}}
+                      >
+                        Admin
+                      </Button>
+                    </Grid> }
                   {
                     rightMenuItems && rightMenuItems.map((menuItem) => {
 
                       return (
-                        <Grid key={menuItem.link} item flexGrow={1} display={{xs: 'none', md: 'block'}}>
+                        <Grid key={menuItem.link} item flexGrow={1} display={{xs: 'none', md: 'flex'}}>
                           <Button
                             onClick={() => routingFunction(menuItem.link)}
                             data-testid={`right-menu-${menuItem.link}`}
@@ -236,7 +239,7 @@ const Header = ({
                       )
                     })
                   }
-                  <Grid item flexGrow={1} display={{xs: 'none', md: 'block'}} sx={{textAlign: 'right'}}>
+                  <Grid item flexGrow={1} display={{xs: 'none', md: 'flex'}} sx={{textAlign: 'right'}}>
                     <Button data-testid="logout" onClick={() => logoutLink()} variant="text" startIcon={<LogoutIcon/>}
                             sx={linkStyles}>Logout</Button>
                   </Grid>

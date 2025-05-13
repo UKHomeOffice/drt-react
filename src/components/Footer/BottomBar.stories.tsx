@@ -2,7 +2,7 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {BottomBar as BottomBarComponent} from './BottomBar';
 
 export default {
-  title: 'DRT Components/UI/BottomBarComponent',
+  title: 'DRT Components/UI/BottomBar',
   component: BottomBarComponent,
 } as Meta;
 

@@ -58,7 +58,7 @@ const HeaderArgs = {
   maxWidth: 'none',
   initialSelectedPortMenuItem: '',
   routingFunction: (string: string) => console.log(string),
-  logoutLink: () => {},
+  logoutLink: () => null,
 }
 
 export default meta;

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Box, Button, IconButton, ThemeProvider, Typography} from '@mui/material';
+import {Box, Button, Stack, Typography, IconButton} from '@mui/material';
 import {ConfirmShiftForms} from "./ConfirmShiftForms";
 import {drtTheme} from "../../index";
 import {getAirportNameByCode} from "../../airports";
@@ -93,9 +93,22 @@ export const AddShiftsForm = ({
     setShifts(shifts.filter(shift => shift.id !== id));
   };
 
+  const handleEditOnUpdate = (state: ShiftForm) => {
+    const updatedShifts = shifts.map(shift => {
+      if (shift.id === state.id) {
+        return {...shift, ...state};
+      }
+      return shift;
+    });
+    setShifts(updatedShifts)
+    if (showErrors) {
+      setShowErrors(shiftsHaveErrors(updatedShifts))
+    }
+  }
+
   return (
-    <ThemeProvider theme={drtTheme}>
-      <Box>
+    <>
+      <Stack direction={'row'} mb={2}>
         {!showConfirm ? (
           <Box sx={{p: 2, minWidth: '500px'}}>
             <Typography sx={{fontSize: '20px'}}>
@@ -155,7 +168,18 @@ export const AddShiftsForm = ({
                              isEditingPersistedShift={isEditingPersistedShift}
           />)
         }
-      </Box>
-    </ThemeProvider>
+      </Stack>
+      <Stack direction={'column'} spacing={2} alignItems='start'> 
+        <Button variant="outlined" color="primary" onClick={handleAddShift} startIcon={<AddIcon/>}>
+          Add a shift
+        </Button>
+        <Button variant="contained" color="primary" onClick={onContinue} data-cy="shift-continue-button">
+          Continue
+        </Button>
+        {showErrors && (
+          <Typography color="error" variant="body2">Please fix the errors before continuing</Typography>
+        )}
+      </Stack>
+    </>
   )
 };

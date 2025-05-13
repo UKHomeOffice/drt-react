@@ -17,7 +17,7 @@ interface PaxSearchFormStoryControls {
 }
 
 const meta: Meta<PaxSearchFormStoryControls>  = {
-  title: "DRT Components/Features/Pax/Pax Form Layout",
+  title: "DRT Components/Features/Pax/PaxFormLayout",
   argTypes: {
     timeMachine: {
       options: [true, false],

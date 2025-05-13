@@ -6,7 +6,6 @@ import { within } from '@testing-library/react';
 
 describe('AccessibilityStatement', () => {
   const mockProps = {
-    accessibilityStatementUrl: 'https://example.com/accessibility',
     teamEmail: 'team@example.com',
     sendReportProblemGaEvent: jest.fn(),
     scrollSection: '',
@@ -26,7 +25,7 @@ describe('AccessibilityStatement', () => {
     // Check for the "Introduction" link
     expect(screen.getByRole('link', {name: /Introduction/i})).toHaveAttribute(
       'href',
-      `${mockProps.accessibilityStatementUrl}/introduction`
+      `#introduction`
     );
 
     // Check for the email button

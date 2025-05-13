@@ -13,14 +13,14 @@ export default meta;
 type Story = StoryObj<typeof Highlight>;
 
 export const Info: Story = {
-  render: (storyContext) => {
+  render: () => {
       return <Stack spacing={2} display="inline-flex">
-          <Highlight color="primary" text="The quick brown fox..." tooltipText="...jumps over the lazy dog" />
-          <Highlight color="secondary" text="The quick brown fox..." tooltipText="...jumps over the lazy dog" />
-          <Highlight color="info" text="The quick brown fox..." tooltipText="...jumps over the lazy dog" />
-          <Highlight color="warning" text="The quick brown fox..." tooltipText="...jumps over the lazy dog" />
-          <Highlight color="error" text="The quick brown fox..." tooltipText="...jumps over the lazy dog" />
-          <Highlight color="success" text="The quick brown fox..." tooltipText="...jumps over the lazy dog" />
+          <Highlight color="primary" text="Sphinx of black quartz..." tooltipText="...hear my vow!" />
+          <Highlight color="secondary" text="Sphinx of black quartz..." tooltipText="...hear my vow!" />
+          <Highlight color="info" text="Sphinx of black quartz..." tooltipText="...hear my vow!" />
+          <Highlight color="warning" text="Sphinx of black quartz..." tooltipText="...hear my vow!" />
+          <Highlight color="error" text="Sphinx of black quartz..." tooltipText="...hear my vow!" />
+          <Highlight color="success" text="Sphinx of black quartz..." tooltipText="...hear my vow!" />
       </Stack>
   }
 };

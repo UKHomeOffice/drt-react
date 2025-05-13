@@ -1,6 +1,6 @@
 {
   "name": "@drt/drt-react",
-  "version": "1.7.24",
+  "version": "2.0.0",
   "description": "React components for DRT applications",
   "main": "dist/cjs/bundle.js",
   "module": "dist/esm/bundle.js",
@@ -124,6 +124,7 @@
     "postcss": "^8.4.38",
     "react-chartjs-2": "^5.3.0",
     "sass-loader": "^14.2.1",
+    "strip-ansi": "^7.1.0",
     "style-loader": "^4.0.0",
     "styled-components": "^6.1.13"
   }

@@ -3,7 +3,7 @@ import {ShiftForm} from './AddShiftsForm';
 import {ConfirmShiftForms as ConfirmShiftFormsComponent} from "./ConfirmShiftForms";
 
 export default {
-  title: 'DRT Components/UI/ConfirmShiftFormsComponent',
+  title: 'DRT Components/Features/Shifts/ConfirmShiftForms',
   component: ConfirmShiftFormsComponent,
 } as Meta;
 
