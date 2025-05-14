@@ -15,3 +15,6 @@ export { PlaneStatus, PlaneStatusLabel } from "./PlaneStatusLabel";
 export { PaxSearchForm } from "./PaxSearchForm";
 export type { PaxSearchFormDay, PaxSearchFormTime, IPaxSearchForm , PaxSearchFormPayload} from "./PaxSearchForm";
 
+
+export { PaxTerminalOverview } from "./PaxTerminalOverview";
+export type { IPaxTerminalOverview } from "./PaxTerminalOverview";
