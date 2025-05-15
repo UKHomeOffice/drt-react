@@ -30,9 +30,6 @@ export interface IPaxTerminalOverview {
 export const PaxTerminalOverview = ({staff, desks, flights, chartData, pressure, estimates, currentTime}: IPaxTerminalOverview) => {
   return (
     <Grid container spacing={2}>
-      <Grid item sm={12}>
-        <Typography component={'h3'} variant={'h3'}>Terminal 2</Typography>
-      </Grid>
       <Grid item sm={2}>
         <Card variant='outlined' sx={{height: '100%', backgroundColor: '#82AA63'}}>
           <CardContent>
