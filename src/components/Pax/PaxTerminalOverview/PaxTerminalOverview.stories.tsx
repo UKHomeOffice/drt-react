@@ -8,6 +8,7 @@ import { Box } from '@mui/material';
 import { ChartData } from 'chart.js';
 
 interface PaxTerminalOverviewStoryControls {
+  terminal: string,
   currentTime: string,
   desks:number,
   staff: number,
@@ -44,6 +45,7 @@ type Story = StoryObj<typeof meta>;
 
 export const PaxTerminalOverview: Story = {
   args: {
+    terminal: 'T1',
     currentTime: '17:15',
     desks: 14,
     staff: 16,
@@ -97,7 +99,7 @@ export const PaxTerminalOverview: Story = {
       const [args, updateArgs] = useArgs();
       return (
         <Box p={2}>
-          <PaxTerminalOverviewComponnet flights={args.flights} chartData={args.chartData} pressure={args.pressure} estimates={args.estimates} desks={args.desks} staff={args.staff} currentTime={args.currentTime} />
+          <PaxTerminalOverviewComponnet terminal={args.terminal} flights={args.flights} chartData={args.chartData} pressure={args.pressure} estimates={args.estimates} desks={args.desks} staff={args.staff} currentTime={args.currentTime} />
         </Box>
       )
   }

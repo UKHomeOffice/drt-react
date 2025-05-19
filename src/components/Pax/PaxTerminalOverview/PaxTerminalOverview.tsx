@@ -8,7 +8,8 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export interface IPaxTerminalOverview {
-  desks:number,
+  terminal: string,
+  desks: number,
   staff: number,
   flights: any[],
   chartData: ChartData<'doughnut'>,
@@ -27,7 +28,7 @@ export interface IPaxTerminalOverview {
   currentTime: string
 }
 
-export const PaxTerminalOverview = ({staff, desks, flights, chartData, pressure, estimates, currentTime}: IPaxTerminalOverview) => {
+export const PaxTerminalOverview = ({terminal ,staff, desks, flights, chartData, pressure, estimates, currentTime}: IPaxTerminalOverview) => {
   return (
     <Grid container spacing={2}>
       <Grid item sm={2}>
@@ -55,7 +56,10 @@ export const PaxTerminalOverview = ({staff, desks, flights, chartData, pressure,
           <CardContent>
             <Stack direction={'row'} spacing={2} alignItems={'baseline'} mb={2}>
               <Typography component={'h4'} variant={'h5'}>Estimated pax at PCP</Typography>
-              <Typography variant={'body1'}><Link>View live arrivals</Link></Typography>
+              <Typography variant={'body1'}> {
+                <Link href={`#terminal/${terminal}/current/arrivals/`}>View live arrivals</Link>
+              }
+              </Typography>
             </Stack>
             <Table>
               <TableHead>
@@ -134,7 +138,9 @@ export const PaxTerminalOverview = ({staff, desks, flights, chartData, pressure,
                 return (
                   <ListItem disableGutters disablePadding>
                     <ListItemIcon>
-                      {item.pressure === '+' ? <KeyboardArrowUpIcon /> :  <KeyboardArrowDownIcon />}
+                      {item.pressure === '+' ?
+                        <KeyboardArrowUpIcon sx={{ fontWeight: 'bold' }} /> : <KeyboardArrowDownIcon sx={{ fontWeight: 'bold' }} />
+                      }
                     </ListItemIcon>
                     <ListItemText>{item.from} to {item.from}</ListItemText>
                   </ListItem>
