@@ -76,7 +76,7 @@ export const PaxTerminalOverview = ({terminal ,staff, desks, flights, chartData,
                   estimates.map((estimate) => {
                     return (
                       <TableRow>
-                        <TableCell><strong>{estimate.from} to {estimate.from}</strong></TableCell>
+                        <TableCell><strong>{estimate.from} to {estimate.to}</strong></TableCell>
                         <TableCell align='right'>{estimate.egate + estimate.eea + estimate.noneea}</TableCell>
                         <TableCell align='right'>{estimate.egate}</TableCell>
                         <TableCell align='right'>{estimate.eea}</TableCell>
