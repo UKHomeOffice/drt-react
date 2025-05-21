@@ -9,6 +9,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 export interface IPaxTerminalOverview {
   terminal: string,
+  timeRange: number,
   desks: number,
   staff: number,
   flights: any[],
@@ -28,7 +29,7 @@ export interface IPaxTerminalOverview {
   currentTime: string
 }
 
-export const PaxTerminalOverview = ({terminal ,staff, desks, flights, chartData, pressure, estimates, currentTime}: IPaxTerminalOverview) => {
+export const PaxTerminalOverview = ({terminal ,timeRange,staff, desks, flights, chartData, pressure, estimates, currentTime}: IPaxTerminalOverview) => {
   return (
     <Grid container spacing={2}>
       <Grid item sm={2}>
@@ -87,7 +88,7 @@ export const PaxTerminalOverview = ({terminal ,staff, desks, flights, chartData,
                 }
               </TableBody>
               <TableFooter>
-                <TableCell><strong>3 hour total</strong></TableCell>
+                <TableCell><strong>{3 * timeRange} minutes total</strong></TableCell>
                 <TableCell align='right'><strong>{estimates.reduce((total, estimate) => total + estimate.egate + estimate.eea + estimate.noneea, 0 )}</strong></TableCell>
                 <TableCell align='right'><strong>{estimates.reduce((total, estimate) => total + estimate.egate, 0 )}</strong></TableCell>
                 <TableCell align='right'><strong>{estimates.reduce((total, estimate) => total + estimate.eea, 0 )}</strong></TableCell>
