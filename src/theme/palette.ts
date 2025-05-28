@@ -3,6 +3,9 @@ import { createTheme, darken, lighten } from "@mui/material";
 
 export const themePalette = createTheme({
   palette: {
+    background: {
+      default: '#f5f5f5'
+    },
     common: {
       black: '#0b0c0c',
     },

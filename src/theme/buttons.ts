@@ -85,13 +85,13 @@ export const buttonTheme = {
         },
       },
       sizeSmall: {
-        fontSize: '0.9em'
+        fontSize: '0.8125rem'
       },
       sizeMedium: {
-        fontSize: '1em'
+        fontSize: '1rem'
       }, 
       sizeLarge: {
-        fontSize: '1.5em',
+        fontSize: '1.1875rem',
       },
       outlined: {
         backgroundColor: '#fff',
