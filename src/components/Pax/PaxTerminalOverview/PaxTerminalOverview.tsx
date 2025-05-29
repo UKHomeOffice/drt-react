@@ -103,7 +103,7 @@ export const PaxTerminalOverview = ({terminal ,timeRange,staff, desks, flights, 
           <CardContent>
             <Stack direction={'column'} mb={2}>
               <Typography component={'h4'} variant={'h5'}>Pax splits</Typography>
-              <Typography variant={'body1'}>Pax splits</Typography>
+              {/*<Typography variant={'body1'}>Pax splits</Typography>*/}
             </Stack>
             <Doughnut
               style={{maxHeight: '150px'}} 
