@@ -143,7 +143,7 @@ export const PaxTerminalOverview = ({terminal ,timeRange,staff, desks, flights, 
                         <KeyboardArrowUpIcon sx={{ fontWeight: 'bold' }} /> : <KeyboardArrowDownIcon sx={{ fontWeight: 'bold' }} />
                       }
                     </ListItemIcon>
-                    <ListItemText>{item.from} to {item.from}</ListItemText>
+                    <ListItemText>{item.from} to {item.to}</ListItemText>
                   </ListItem>
                 )
               })}
