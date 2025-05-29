@@ -12,7 +12,15 @@ export const themePalette = createTheme({
     primary: { 
       main: '#00703c',
       light: lighten('#00703c', 0.8),
-      dark: '#002d18'
+      dark: '#002d18',
+      50: "#E6E9F1",
+      100: "#C0C7DE",
+      300: "#7283B2",
+      400: "#5269A5",
+      500: "#334F96",
+      600: "#2B478D",
+      700: "#233E82",
+      900: "#0E2560",
     },
     secondary: { 
       main: '#f3f2f1',
@@ -39,5 +47,13 @@ export const themePalette = createTheme({
       light: '#5694ca',
       dark: '#003078',
     },
+    grey: {
+      100 : "#F3F5F9",
+      300 : "#B4B5BE",
+      400 : "#547A00",
+      500 : "#777A86",
+      700 : "#404252",
+      900 : "#111224"
+    }
   }
 });

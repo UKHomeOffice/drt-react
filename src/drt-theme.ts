@@ -5,6 +5,10 @@ import { themePalette } from "./theme/palette";
 import React from "react";
 
 import { buttonTheme } from '../src/theme/buttons';
+import { inputBaseTheme, inputLabelTheme, formLabelTheme, outlinedInputTheme } from "./theme/input";
+import { nativeSelectTheme } from "./theme/select";
+import { autocompleteTheme } from "./theme/autocomplete";
+
 declare module '@mui/material/styles' {
   interface PaperVariants {
     appbar: React.CSSProperties;
@@ -47,32 +51,7 @@ declare module "@mui/material/Typography" {
 }
 
 const drtTheme = createTheme({
-  palette: {
-    primary: {
-      ...themePalette.palette.primary,
-      50: "#E6E9F1",
-      100: "#C0C7DE",
-      300: "#7283B2",
-      400: "#5269A5",
-      500: "#334F96",
-      600: "#2B478D",
-      700: "#233E82",
-      900: "#0E2560",
-    },
-    secondary: themePalette.palette.secondary,
-    error: themePalette.palette.error,
-    success: themePalette.palette.success,
-    warning: themePalette.palette.warning,
-    info: themePalette.palette.info,
-    grey: {
-      100 : "#F3F5F9",
-      300 : "#B4B5BE",
-      400 : "#547A00",
-      500 : "#777A86",
-      700 : "#404252",
-      900 : "#111224"
-    }
-  },
+  palette: themePalette.palette,
   typography: {
     fontFamily: '"Roboto","Helvetica","Arial",sans-serif',
     h1: {
@@ -155,14 +134,25 @@ const drtTheme = createTheme({
       ]
     },
     MuiInputBase: {
-      styleOverrides: {
-        root: {
-          backgroundColor: themePalette.palette.common.white
-        }
-      }
+      ...inputBaseTheme,
+    },
+    MuiInputLabel: {
+      ...inputLabelTheme as any,
+    },
+    MuiFormLabel: {
+      ...formLabelTheme as any,
+    },
+    MuiOutlinedInput: {
+      ...outlinedInputTheme
     },
     MuiButton: {
-      ...buttonTheme,
+      ...buttonTheme as any,
+    },
+    MuiAutocomplete: {
+      ...autocompleteTheme
+    },
+    MuiNativeSelect: {
+      ...nativeSelectTheme
     },
     MuiToggleButtonGroup: {
       styleOverrides: {

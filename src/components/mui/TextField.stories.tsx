@@ -14,5 +14,8 @@ type Story = StoryObj<typeof MuiTextField>;
 export const TextField: Story = {
   args: {
     label: 'Basic textfield',
+    InputLabelProps: {
+      shrink: true
+    }
   }
 };

@@ -143,7 +143,6 @@ const Header = ({
               <Button
                 data-testid="mobile-admin-menu-trigger"
                 variant="outlined"
-                id="demo-positioned-button"
                 aria-controls={adminMenuOpen ? 'demo-positioned-menu' : undefined}
                 aria-haspopup="true"
                 aria-expanded={adminMenuOpen ? 'true' : undefined}
@@ -203,22 +202,22 @@ const Header = ({
                   )
                 })
               }
-              {hasAdminMenuRoles &&
-                <Grid item sx={{marginLeft: 'auto'}} flexGrow={0} display={{xs: 'none', md: 'block'}}>
-                  <Button
-                    data-testid="desktop-admin-menu-trigger"
-                    variant="text"
-                    startIcon={<ManageAccountsIcon/>}
-                    endIcon={<ArrowDropDownIcon/>}
-                    id="demo-positioned-button"
-                    onClick={handleClick}
-                    sx={{...linkStyles, display: {xs: 'none', md: 'inline-flex'}}}
-                  >
-                    Admin
-                  </Button>
-                </Grid>}
+              <Grid item display={{xs: 'none', md: 'block'}} flexGrow={1}></Grid>
               <Grid item display={{xs: 'none', md: 'block'}}>
-                <Grid container>
+                <Grid container sx={{height: '100%'}} gap={4}>
+                  { hasAdminMenuRoles &&
+                    <Grid item sx={{marginLeft: 'auto'}} flexGrow={0} display={{xs: 'none', md: 'block'}}>
+                      <Button
+                        data-testid="desktop-admin-menu-trigger"
+                        variant="text"
+                        startIcon={<ManageAccountsIcon/>}
+                        endIcon={<ArrowDropDownIcon/>}
+                        onClick={handleClick}
+                        sx={{...linkStyles, display: {xs: 'none', md: 'inline-flex'}}}
+                      >
+                        Admin
+                      </Button>
+                    </Grid> }
                   {
                     rightMenuItems && rightMenuItems.map((menuItem) => {
 

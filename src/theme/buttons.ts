@@ -4,11 +4,14 @@ import { themePalette } from "./palette";
 export const buttonTheme = {
     styleOverrides: {
       root: {
+        display: 'flex',
+        justifyContent: 'center',
         textTransform: 'none',
         fontSize: '1.1875rem',
         padding: '8px 10pxn 7px',
         borderRadius: 0,
         fontWeight: 400,
+        height: '100%',
         '&:hover': {
           boxShadow: 'inherit'
         },
@@ -95,6 +98,10 @@ export const buttonTheme = {
       },
       outlined: {
         backgroundColor: '#fff',
+      },
+      startIcon: {
+        top: '2px',
+        position: 'relative'
       },
       text: {
         display: 'inline',
