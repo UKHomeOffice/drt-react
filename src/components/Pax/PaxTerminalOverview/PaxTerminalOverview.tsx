@@ -36,7 +36,7 @@ export const PaxTerminalOverview = ({terminal ,timeRange,staff, desks, flights, 
   const is_mobile = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
-    <Stack direction={is_mobile ? 'column' : 'row'} spacing={2}>
+    <Stack direction={is_mobile ? 'column' : 'row'} spacing={2} alignItems={'stretch'}>
       <Box>
         <Card variant='outlined' sx={{height: '100%', backgroundColor: '#82AA63'}}>
           <CardContent>
@@ -58,7 +58,7 @@ export const PaxTerminalOverview = ({terminal ,timeRange,staff, desks, flights, 
         </Card>
       </Box>
       <Box>
-        <Card variant='outlined'>
+        <Card variant='outlined' sx={{height: '100%'}}>
           <CardContent>
             <Stack direction={'row'} spacing={2} alignItems={'baseline'} mb={2}>
               <Typography component={'h4'} variant={'h5'}>Estimated pax at PCP</Typography>
@@ -103,12 +103,12 @@ export const PaxTerminalOverview = ({terminal ,timeRange,staff, desks, flights, 
           </CardContent>
         </Card>
       </Box>
-      <Box width={200 + Math.ceil(chartData.labels!.length / 7) * 300 }>
+      <Box width={200 + Math.ceil(chartData.labels!.length / 7) * 350 }>
         <Card variant='outlined' sx={{height:'100%'}}>
           <CardContent>
             <Stack direction={'column'} mb={2}>
               <Typography component={'h4'} variant={'h5'}>Pax splits</Typography>
-              {/*<Typography variant={'body1'}>Pax splits</Typography>*/}
+              <Typography>{estimates.reduce((total, estimate) => total + estimate.egate + estimate.eea + estimate.noneea, 0 )} total pax expected from {estimates[0].from} to {estimates[estimates.length -1].to}</Typography>  
             </Stack>
             <div>
             <Doughnut
