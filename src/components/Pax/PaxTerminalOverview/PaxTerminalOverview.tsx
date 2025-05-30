@@ -36,8 +36,8 @@ export const PaxTerminalOverview = ({terminal ,timeRange,staff, desks, flights, 
   const is_mobile = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12} sm={4} lg={2}>
+    <Stack direction={is_mobile ? 'column' : 'row'} spacing={2}>
+      <Box>
         <Card variant='outlined' sx={{height: '100%', backgroundColor: '#82AA63'}}>
           <CardContent>
             <Typography component={'h4'} variant={'h5'} mb={2} sx={{color: 'white'}}>{flights.length} flights</Typography>
@@ -56,8 +56,8 @@ export const PaxTerminalOverview = ({terminal ,timeRange,staff, desks, flights, 
             </Table>
           </CardContent>
         </Card>
-      </Grid>
-      <Grid item xs={12} sm={8} lg={3} sx={{height:'100%'}}>
+      </Box>
+      <Box>
         <Card variant='outlined'>
           <CardContent>
             <Stack direction={'row'} spacing={2} alignItems={'baseline'} mb={2}>
@@ -102,8 +102,8 @@ export const PaxTerminalOverview = ({terminal ,timeRange,staff, desks, flights, 
             </Table>
           </CardContent>
         </Card>
-      </Grid>
-      <Grid item xs={12} sm={9} lg={5}>
+      </Box>
+      <Box flexGrow={1}>
         <Card variant='outlined' sx={{height:'100%'}}>
           <CardContent>
             <Stack direction={'column'} mb={2}>
@@ -112,10 +112,10 @@ export const PaxTerminalOverview = ({terminal ,timeRange,staff, desks, flights, 
             </Stack>
             <div>
             <Doughnut
-              style={{maxHeight: is_mobile ? 'none' : '180px', maxWidth: ''}} 
+              style={{maxHeight: is_mobile ? 'auto' : '180px', maxWidth: '100%'}} 
               data={chartData} 
               options={{
-                maintainAspectRatio: false,
+                maintainAspectRatio: true,
                 plugins: {
                   legend: {
                     position: is_mobile ? 'bottom' : 'right',
@@ -136,8 +136,8 @@ export const PaxTerminalOverview = ({terminal ,timeRange,staff, desks, flights, 
             </div>
           </CardContent>
         </Card>
-      </Grid>
-      <Grid item xs={12} sm={3} md={3} lg={2}>
+      </Box>
+      <Box>
         <Card variant='outlined' sx={{height:'100%'}}>
           <CardContent>
             <Stack direction={'column'}>
@@ -149,7 +149,7 @@ export const PaxTerminalOverview = ({terminal ,timeRange,staff, desks, flights, 
                   <ListItem disableGutters disablePadding>
                     <ListItemIcon sx={{minWidth: '30px'}}>
                       {item.pressure === '+' ?
-                        <KeyboardArrowUpIcon sx={{ fontWeight: 'bold' }} /> : <KeyboardArrowDownIcon sx={{ fontWeight: 'bold' }} />
+                        <KeyboardArrowUpIcon sx={{ fill: 'black' }} /> : <KeyboardArrowDownIcon sx={{ fill: 'black' }} />
                       }
                     </ListItemIcon>
                     <ListItemText>{item.from} to {item.to}</ListItemText>
@@ -159,8 +159,8 @@ export const PaxTerminalOverview = ({terminal ,timeRange,staff, desks, flights, 
             </List>
           </CardContent>
         </Card>
-      </Grid>
-    </Grid>
+      </Box>
+    </Stack>
   );
 };
 
