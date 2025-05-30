@@ -53,11 +53,26 @@ export const PaxTerminalOverview: Story = {
     staff: 16,
     flights: new Array(36),
     chartData: {
-      labels: ['EEA', 'e-Gate', 'Non-EEA: Visa National', 'Non-EEA: Non-Visa National' , 'Something A:' , 'Something B:', 'Something C:', 'Something D:', 'Something E:', 'Something F:', 'Something G:', 'Something H:', 'Something I:', 'Something J:'],
+      labels: [
+        'GBR National to EEA',
+        'Non-Visa National to Non-EEA',
+        'EEA Child to EEA',
+        'B5J+ National to e-Gates',
+        'GB National Child to EEA',
+        'GBR National to e-Gates',
+        'Visa National to Non-EEA',
+        'Visa National to EEA',
+        'EEA Machine Readable to EEA',
+        'EEA Machine Readable to E-Gates',
+        'EEA Non-Machine Readable to EEA',
+        'B5j+ Child to EEA',
+        'B5J+ National to EEA',
+        'Non-Visa national to Non-EEA'
+      ],
       datasets:[
         { 
-          data: [50, 25, 15, 10 , 5 , 5 , 5, 5, 5, 5, 5, 5, 5 , 5],
-          backgroundColor: ["#0E2560", "#334F96", "#547A00", "#CD5B82", "#FFB300", "#FF6F20", "#00A99D", "#FF6F20", "#FFB300", "#CD5B82" , "#547A00", "#334F96", "#0E2560", "#0E2560"],
+          data: [530, 430, 604, 1455 , 199 , 560,3029 , 265, 735, 2344, 3453, 363, 345, 500],
+          backgroundColor: ["#0E2560", "#334F96", "#547A00", "#CD5B82", "#FF6F20", "#00A99D", "#A6A6A6", "#A3C2D9", "#E3D4A5","#7A7A7A","#F2994A", "#6FCF97", "#BB6BD9", "#EB5757"],
         }
       ]
     },
