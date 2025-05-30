@@ -271,6 +271,15 @@ const drtTheme = createTheme({
         }
       }
     },
+    MuiTable:{
+      styleOverrides: {
+        root: {
+          '& .nowrap': {
+            whiteSpace: 'nowrap'
+          }
+        },
+      }
+    },
     MuiTableCell:{
       styleOverrides: {
         root: {

@@ -1,4 +1,6 @@
 import React from 'react';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 import {Card, CardContent, Grid, Link, Stack, Table, TableBody, TableCell, TableFooter, TableHead, TableRow, Typography, Box, Tab, List, ListItem, ListItemIcon, ListItemText} from "@mui/material";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartData } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
@@ -30,9 +32,12 @@ export interface IPaxTerminalOverview {
 }
 
 export const PaxTerminalOverview = ({terminal ,timeRange,staff, desks, flights, chartData, pressure, estimates, currentTime}: IPaxTerminalOverview) => {
+  const theme = useTheme();
+  const is_mobile = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
     <Grid container spacing={2}>
-      <Grid item sm={2}>
+      <Grid item xs={12} sm={4} lg={2}>
         <Card variant='outlined' sx={{height: '100%', backgroundColor: '#82AA63'}}>
           <CardContent>
             <Typography component={'h4'} variant={'h5'} mb={2} sx={{color: 'white'}}>{flights.length} flights</Typography>
@@ -52,7 +57,7 @@ export const PaxTerminalOverview = ({terminal ,timeRange,staff, desks, flights, 
           </CardContent>
         </Card>
       </Grid>
-      <Grid item sm={4} sx={{height:'100%'}}>
+      <Grid item xs={12} sm={8} lg={3} sx={{height:'100%'}}>
         <Card variant='outlined'>
           <CardContent>
             <Stack direction={'row'} spacing={2} alignItems={'baseline'} mb={2}>
@@ -77,18 +82,18 @@ export const PaxTerminalOverview = ({terminal ,timeRange,staff, desks, flights, 
                   estimates.map((estimate) => {
                     return (
                       <TableRow>
-                        <TableCell><strong>{estimate.from} to {estimate.to}</strong></TableCell>
-                        <TableCell align='right'>{estimate.egate + estimate.eea + estimate.noneea}</TableCell>
-                        <TableCell align='right'>{estimate.egate}</TableCell>
-                        <TableCell align='right'>{estimate.eea}</TableCell>
-                        <TableCell align='right'>{estimate.noneea}</TableCell>
+                        <TableCell><strong className='nowrap'>{estimate.from} to {estimate.to}</strong></TableCell>
+                        <TableCell className='nowrap' align='right'>{estimate.egate + estimate.eea + estimate.noneea}</TableCell>
+                        <TableCell className='nowrap' align='right'>{estimate.egate}</TableCell>
+                        <TableCell className='nowrap' align='right'>{estimate.eea}</TableCell>
+                        <TableCell className='nowrap' align='right'>{estimate.noneea}</TableCell>
                       </TableRow>
                     )
                   })
                 }
               </TableBody>
               <TableFooter>
-                <TableCell><strong>{3 * timeRange} minutes total</strong></TableCell>
+                <TableCell><strong className='nowrap'>{3 * timeRange} minutes total</strong></TableCell>
                 <TableCell align='right'><strong>{estimates.reduce((total, estimate) => total + estimate.egate + estimate.eea + estimate.noneea, 0 )}</strong></TableCell>
                 <TableCell align='right'><strong>{estimates.reduce((total, estimate) => total + estimate.egate, 0 )}</strong></TableCell>
                 <TableCell align='right'><strong>{estimates.reduce((total, estimate) => total + estimate.eea, 0 )}</strong></TableCell>
@@ -98,20 +103,23 @@ export const PaxTerminalOverview = ({terminal ,timeRange,staff, desks, flights, 
           </CardContent>
         </Card>
       </Grid>
-      <Grid item sm={4}>
+      <Grid item xs={12} sm={9} lg={5}>
         <Card variant='outlined' sx={{height:'100%'}}>
           <CardContent>
             <Stack direction={'column'} mb={2}>
               <Typography component={'h4'} variant={'h5'}>Pax splits</Typography>
               {/*<Typography variant={'body1'}>Pax splits</Typography>*/}
             </Stack>
+            <div>
             <Doughnut
-              style={{maxHeight: '150px'}} 
+              style={{maxHeight: is_mobile ? 'none' : '180px', maxWidth: ''}} 
               data={chartData} 
               options={{
+                maintainAspectRatio: false,
                 plugins: {
                   legend: {
-                    position: 'right',
+                    position: is_mobile ? 'bottom' : 'right',
+                    maxWidth: 500,
                     labels: {
                       generateLabels: (chart) => {
                         const datasets = chart.data.datasets;
@@ -125,10 +133,11 @@ export const PaxTerminalOverview = ({terminal ,timeRange,staff, desks, flights, 
                   }
                 }
             }} />
+            </div>
           </CardContent>
         </Card>
       </Grid>
-      <Grid item sm={2}>
+      <Grid item xs={12} sm={3} md={3} lg={2}>
         <Card variant='outlined' sx={{height:'100%'}}>
           <CardContent>
             <Stack direction={'column'}>
@@ -138,7 +147,7 @@ export const PaxTerminalOverview = ({terminal ,timeRange,staff, desks, flights, 
               { pressure.map(item => {
                 return (
                   <ListItem disableGutters disablePadding>
-                    <ListItemIcon>
+                    <ListItemIcon sx={{minWidth: '30px'}}>
                       {item.pressure === '+' ?
                         <KeyboardArrowUpIcon sx={{ fontWeight: 'bold' }} /> : <KeyboardArrowDownIcon sx={{ fontWeight: 'bold' }} />
                       }

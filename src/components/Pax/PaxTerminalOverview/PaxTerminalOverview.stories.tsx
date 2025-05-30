@@ -53,7 +53,7 @@ export const PaxTerminalOverview: Story = {
     staff: 16,
     flights: new Array(36),
     chartData: {
-      labels: ['EEA', 'e-Gate', 'Non-EEA: Visa National', 'Non-EEA: Non-Visa National' , 'Other 1' , 'Other 2', 'Other 3', 'Other 4', 'Other 5', 'Other 6', 'Other 7', 'Other 8', 'Other 9', 'Other 10'],
+      labels: ['EEA', 'e-Gate', 'Non-EEA: Visa National', 'Non-EEA: Non-Visa National' , 'Something A:' , 'Something B:', 'Something C:', 'Something D:', 'Something E:', 'Something F:', 'Something G:', 'Something H:', 'Something I:', 'Something J:'],
       datasets:[
         { 
           data: [50, 25, 15, 10 , 5 , 5 , 5, 5, 5, 5, 5, 5, 5 , 5],
