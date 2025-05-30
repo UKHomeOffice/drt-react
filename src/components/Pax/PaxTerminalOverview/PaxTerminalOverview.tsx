@@ -103,7 +103,7 @@ export const PaxTerminalOverview = ({terminal ,timeRange,staff, desks, flights, 
           </CardContent>
         </Card>
       </Box>
-      <Box flexGrow={1}>
+      <Box width={200 + (chartData.labels!.length / 7) * 300 }>
         <Card variant='outlined' sx={{height:'100%'}}>
           <CardContent>
             <Stack direction={'column'} mb={2}>
@@ -119,7 +119,6 @@ export const PaxTerminalOverview = ({terminal ,timeRange,staff, desks, flights, 
                 plugins: {
                   legend: {
                     position: is_mobile ? 'bottom' : 'right',
-                    maxWidth: 500,
                     labels: {
                       generateLabels: (chart) => {
                         const datasets = chart.data.datasets;
