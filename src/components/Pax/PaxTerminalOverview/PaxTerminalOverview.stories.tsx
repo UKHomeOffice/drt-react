@@ -71,7 +71,7 @@ export const PaxTerminalOverview: Story = {
       ],
       datasets:[
         { 
-          data: [530, 430, 604, 1455 , 199 , 560,3029 , 265, 735, 2344, 3453, 363, 345, 500],
+          data: [15, 30, 45, 5, 20],
           backgroundColor: ["#0E2560", "#334F96", "#547A00", "#CD5B82", "#FF6F20", "#00A99D", "#A6A6A6", "#A3C2D9", "#E3D4A5","#7A7A7A","#F2994A", "#6FCF97", "#BB6BD9", "#EB5757"],
         }
       ]

@@ -123,7 +123,7 @@ export const PaxTerminalOverview = ({terminal ,timeRange,staff, desks, flights, 
                       generateLabels: (chart) => {
                         const datasets = chart.data.datasets;
                         return datasets[0].data.map((data, i) => ({
-                          text: `${chart.data.labels![i]} ${data}`,
+                          text: `${chart.data.labels![i]} ${data}%`,
                           fillStyle: datasets[0].backgroundColor![i],
                           index: i
                         }))
