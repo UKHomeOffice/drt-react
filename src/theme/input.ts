@@ -10,6 +10,8 @@ export const inputBaseTheme = {
         borderRadius: 0,
         padding: `5px !important`,
         lineHeight: 1.25,
+        minHeight: '40px',
+        boxSizing: 'border-box',
         '&:focus': {
           outline: `3px solid #fd0`,
           outlineOffset: 0,
@@ -17,6 +19,28 @@ export const inputBaseTheme = {
         },
       },
     }
+};
+
+export const inputAdornmentTheme = {
+  styleOverrides: {
+    positionEnd: {
+      borderWidth: '2px 2px 2px 0',
+      borderStyle: 'solid',
+      borderColor: themePalette.palette.common.black,
+      boxSizing: 'border-box',
+        minHeight: '40px',
+      height: '100%',
+      backgroundColor: themePalette.palette.grey[100],
+      marginLeft: 0,
+      '& > .MuiIconButton-root': {
+        marginRight: 0,
+        padding: '5px',
+      },
+      '& .MuiSvgIcon-root': {
+        fill: themePalette.palette.grey[500],
+      }
+    }
+  }
 };
 
 export const inputLabelTheme = {
@@ -28,17 +52,6 @@ export const inputLabelTheme = {
       marginBottom: '5px',
       '& +.MuiInputBase-root': {
         marginTop: '5px'
-      }
-    }
-  }
-};
-
-export const formLabelTheme = {
-  styleOverrides: {
-    root: {
-      color: themePalette.palette.common.black,
-      '&.MuiInputLabel-root.Mui-focused': {
-        color: themePalette.palette.common.black
       }
     }
   }

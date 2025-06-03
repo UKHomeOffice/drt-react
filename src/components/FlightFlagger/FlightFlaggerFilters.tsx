@@ -210,11 +210,6 @@ export const FlightFlaggerFilters = ({
             onKeyDown={handleInputSubmit}
             value={currentFormState.flightNumber}
             placeholder="Enter flight, origin or country"
-            startAdornment={
-              <InputAdornment position="start">
-                <SearchIcon/>
-              </InputAdornment>
-            }
           />
         </FormControl>
       </Grid>
@@ -237,8 +232,7 @@ export const FlightFlaggerFilters = ({
             size="small"
             label={`${getFilterCount(appliedSearchFlags)}`}
             sx={{fontSize: '0.8125rem !important'}}/>
-          }
-          size="large">
+          }>
           Select pax info to reveal
         </Button>
       </Grid>

@@ -126,18 +126,18 @@ export const ColorButtons: Story = {
 export const SizeButtons: Story = {
   tags: ['!dev'],
   render: (args) => {
-    return <>
+    return <Stack direction={'column'} spacing={2} sx={{alignItems: 'flex-start'}}>
       <MuiButton variant='contained' size="small">Small</MuiButton>
       <MuiButton variant='contained' size="medium">Medium</MuiButton>
-      <MuiButton variant='contained' size="large">Large</MuiButton>
-    </>
+      <MuiButton variant='contained' size="large">Large Button</MuiButton>
+    </Stack>
   }
 };
 
 export const ButtonGroups: Story = {
   tags: ['!dev'],
   render: (args) => {
-    return <MuiButtonGroup>
+    return <MuiButtonGroup variant='contained'>
       <MuiButton variant='contained'>Primary</MuiButton>
       <MuiButton variant='contained' size="medium" disabled>Disabled</MuiButton>
       <MuiButton variant='contained' color='error'>Error</MuiButton>

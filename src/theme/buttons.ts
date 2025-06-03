@@ -4,14 +4,11 @@ import { themePalette } from "./palette";
 export const buttonTheme = {
     styleOverrides: {
       root: {
-        display: 'flex',
+        display: 'inline-flex',
         justifyContent: 'center',
         textTransform: 'none',
-        fontSize: '1.1875rem',
-        padding: '8px 10pxn 7px',
         borderRadius: 0,
         fontWeight: 400,
-        height: '100%',
         '&:hover': {
           boxShadow: 'inherit'
         },
@@ -88,13 +85,16 @@ export const buttonTheme = {
         },
       },
       sizeSmall: {
-        fontSize: '0.8125rem'
+        fontSize: '16px',
+        lineHeight: '20px',
       },
       sizeMedium: {
-        fontSize: '1rem'
+        fontSize: '19px',
+        lineHeight: '25px',
       }, 
       sizeLarge: {
-        fontSize: '1.1875rem',
+        fontSize: "21px",
+        lineHeight: '25px',
       },
       outlined: {
         backgroundColor: '#fff',
@@ -117,7 +117,34 @@ export const buttonTheme = {
           backgroundColor: 'transparent',
           color: themePalette.palette.info.dark,
           textDecorationThickness: 'max(3px,.1875rem,.12em)',
-        }
+        },
+        '&.MuiButton-colorSuccess': {
+          color: themePalette.palette.success.main,
+          '&:hover': {
+            color: themePalette.palette.success.dark,
+          },
+          '&:disabled': {
+            color: themePalette.palette.secondary.dark,
+          }
+        },
+        '&.MuiButton-colorError': {
+          color: themePalette.palette.error.dark,
+          '&:hover': {
+            color: themePalette.palette.error.dark,
+          },
+          '&:disabled': {
+            color: themePalette.palette.secondary.dark,
+          }
+        },
+        '&.MuiButton-colorWarning': {
+          color: themePalette.palette.warning.dark,
+          '&:hover': {
+            color: themePalette.palette.warning.dark,
+          },
+          '&:disabled': {
+            color: themePalette.palette.secondary.dark,
+          }
+        },
       }
     }
 };

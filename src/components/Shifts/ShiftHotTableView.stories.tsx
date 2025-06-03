@@ -10,7 +10,7 @@ import React from 'react';
 import {generateShiftAssignments} from './GenerateShift';
 
 export default {
-  title: 'DRT Components/UI/ShiftHotTableViewComponent',
+  title: 'DRT Components/Features/Shifts/ShiftHotTableViewComponent',
   component: ShiftHotTableViewComponent,
 } as Meta;
 

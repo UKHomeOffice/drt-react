@@ -2,6 +2,7 @@
 import { createTheme, darken, lighten } from "@mui/material";
 
 export const themePalette = createTheme({
+  spacing: 5,
   palette: {
     background: {
       default: '#f5f5f5'
@@ -54,6 +55,13 @@ export const themePalette = createTheme({
       500 : "#777A86",
       700 : "#404252",
       900 : "#111224"
+    },
+    border: {
+      main: '#b1b4b6',
+      light: '#b1b4b6',
+      dark: '#0b0c0c',
+      contrastText: '#000',
+
     }
   }
 });

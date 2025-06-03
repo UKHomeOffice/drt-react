@@ -1,22 +1,30 @@
 
-import { createTheme, darken, lighten } from "@mui/material";
+import { alpha, createTheme, darken, lighten } from "@mui/material";
 import type {} from '@mui/x-date-pickers/themeAugmentation';
 import { themePalette } from "./theme/palette";
 import React from "react";
-
+import createPalette from "@mui/material/styles/createPalette";
 import { buttonTheme } from '../src/theme/buttons';
-import { inputBaseTheme, inputLabelTheme, formLabelTheme, outlinedInputTheme } from "./theme/input";
+import { inputBaseTheme, inputAdornmentTheme, inputLabelTheme, outlinedInputTheme } from "./theme/input";
+import { formControlLabelTheme, formLabelTheme, formHelperTextTheme } from "./theme/formControl";
 import { nativeSelectTheme } from "./theme/select";
 import { autocompleteTheme } from "./theme/autocomplete";
+import { listTheme } from "./theme/lists";
+import { typographyTheme, typographyComponentTheme, linkTheme } from "./theme/typography";
+import { tableRowTheme, tableTheme, tableCellTheme } from "./theme/table";
 
 declare module '@mui/material/styles' {
   interface PaperVariants {
     appbar: React.CSSProperties;
+    shiftForm: React.CSSProperties;
+    shiftCard: React.CSSProperties;
   }
 
   // allow configuration using `createTheme`
   interface PaperVariantsOptions {
     appbar?: React.CSSProperties;
+    shiftForm?: React.CSSProperties;
+    shiftCard?: React.CSSProperties;
   }
 
   interface TypographyVariants {
@@ -35,9 +43,21 @@ declare module '@mui/material/styles' {
   }
 }
 
+declare module '@mui/material/styles' {
+  interface Palette {
+    border: Palette['primary'];
+  }
+  interface PaletteOptions {
+    border: PaletteOptions['primary'];
+  }
+}
+
 declare module '@mui/material/Paper' {
   interface PaperPropsVariantOverrides {
     appbar: true;
+    shiftForm: true;
+    shiftCard: true;
+
   }
 }
 
@@ -52,75 +72,9 @@ declare module "@mui/material/Typography" {
 
 const drtTheme = createTheme({
   palette: themePalette.palette,
+  spacing: 5,
   typography: {
-    fontFamily: '"Roboto","Helvetica","Arial",sans-serif',
-    h1: {
-      fontSize: '38px',
-      fontWeight: 'bold',
-      color: '#233E82',
-      paddingTop: '40px',
-      paddingBottom: '40px',
-    },
-    h2: {
-      fontSize: '32px',
-      fontWeight: 'bold',
-      paddingTop: '40px',
-      paddingBottom: '40px',
-    },
-    h3: {
-      fontSize: "28px",
-      fontWeight: "bold",
-      paddingTop: '40px',
-      paddingBottom: '40px',
-    },
-    h4: {
-      fontSize: "24px",
-      fontWeight: "bold",
-    },
-    h5: {
-      fontSize: "18px",
-      fontWeight: "bold",
-    },
-    h6: {
-      fontSize: "16px",
-      fontWeight: "bold",
-    },
-    subtitle1: {
-      fontSize: "19px",
-      fontWeight: "bold",
-    },
-    subtitle2: {
-      fontSize: "16px",
-      fontWeight: "bold",
-    },
-    body1: {
-      fontSize: "16px",
-    },
-    body2: {
-      fontSize: "12px",
-    },
-    button: {
-      fontSize: '18px',
-      fontWeight: "bold",
-      textTransform: 'none',
-    },
-    portCode: {
-      fontSize: '0.7em',
-      letterSpacing: 1.2,
-      minWidth: '30px',
-      textAlign: 'center',
-      display: 'inline-block'
-    },
-    pageTitle: {
-      fontSize: 18,
-      fontWeight: 'lighter',
-      [themePalette.breakpoints.up("sm")]: {
-        fontSize: 36
-      }
-    },
-    logoTitle: {
-      fontSize: '1.6em'
-    },
+    ...typographyTheme as any
   },
   components: {
     MuiPaper: {
@@ -130,17 +84,46 @@ const drtTheme = createTheme({
           style: {
             backgroundColor: themePalette.palette.grey[100]
           }
+        },
+        {
+          props: { variant: 'shiftForm'},
+          style: {
+            backgroundColor: themePalette.palette.grey[100],
+            borderRadius: 0,
+            border: `1px solid ${themePalette.palette.grey[300]}`,
+            marginBottom: '1em',
+          }
+        },
+        {
+          props: { variant: 'shiftCard'},
+          style: {
+            borderRadius: 0,
+            border: `1px solid ${themePalette.palette.grey[300]}`,
+            marginBottom: '1em',
+          }
         }
       ]
     },
+    MuiTypography: {
+      ...typographyComponentTheme,
+    },
     MuiInputBase: {
-      ...inputBaseTheme,
+      ...inputBaseTheme as any,
+    },
+    MuiInputAdornment: {
+      ...inputAdornmentTheme as any,
     },
     MuiInputLabel: {
       ...inputLabelTheme as any,
     },
     MuiFormLabel: {
       ...formLabelTheme as any,
+    },
+    MuiFormControlLabel: {
+      ...formControlLabelTheme,
+    },
+    MuiFormHelperText: {
+      ...formHelperTextTheme
     },
     MuiOutlinedInput: {
       ...outlinedInputTheme
@@ -149,50 +132,16 @@ const drtTheme = createTheme({
       ...buttonTheme as any,
     },
     MuiAutocomplete: {
-      ...autocompleteTheme
+      ...autocompleteTheme as any,
     },
     MuiNativeSelect: {
       ...nativeSelectTheme
     },
-    MuiToggleButtonGroup: {
-      styleOverrides: {
-        root: {
-          width: '100%'
-        }
-      }
+    MuiList: {
+      ...listTheme
     },
-    MuiToggleButton: {
-      styleOverrides: {
-        root: {
-          flexGrow: 1,
-          paddingRight: themePalette.spacing(2),
-          paddingLeft: themePalette.spacing(2),
-          '&.MuiToggleButton-primary': {
-            backgroundColor: themePalette.palette.common.white,
-            color: themePalette.palette.text.primary,
-            '&:hover': {
-              color: themePalette.palette.primary.main,
-              backgroundColor: themePalette.palette.primary.light,
-            },
-            '&.Mui-selected': {
-              backgroundColor: themePalette.palette.primary.main,
-              color: themePalette.palette.common.white,
-              cursor: 'default',
-              '.live': {
-                color: '#ffd700',
-              }
-            },
-          },
-          '> .MuiSvgIcon-root': {
-            marginRight: themePalette.spacing(1),
-            opacity: 0.8,
-            width: '0.8em',
-          }
-        },
-        primary: {
-          
-        }
-      }
+    MuiLink: {
+      ...linkTheme
     },
     MuiAccordion: {
       styleOverrides: {
@@ -222,38 +171,13 @@ const drtTheme = createTheme({
       }
     },
     MuiTable:{
-      styleOverrides: {
-        root: {
-          '& .nowrap': {
-            whiteSpace: 'nowrap'
-          }
-        },
-      }
+      ...tableTheme,
     },
     MuiTableCell:{
-      styleOverrides: {
-        root: {
-          fontSize: '16px',
-          padding: 8,
-        },
-        head: {
-          backgroundColor: themePalette.palette.info.main,
-          color: themePalette.palette.common.white,
-          padding: 6,
-        }
-      }
+      ...tableCellTheme,
     },
     MuiTableRow: {
-      styleOverrides: {
-        root: {
-          '&:nth-of-type(odd)': {
-            backgroundColor: themePalette.palette.common.white,
-          },
-          '&:nth-of-type(even)': {
-            backgroundColor: themePalette.palette.grey[100],
-          },
-        }
-      }
+      ...tableRowTheme,
     },
     MuiPickersDay: {
       styleOverrides: {

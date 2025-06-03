@@ -10,7 +10,7 @@ export const AddShiftBar = ({
                               onClickGetStarted,
                             }: AddShiftBarProps) => {
   return (
-    <AppBar position="static">
+    <AppBar position="static" elevation={0}>
       <Toolbar>
         <EventRepeatIcon sx={{mr: 1}} />
         <Typography variant="h6">

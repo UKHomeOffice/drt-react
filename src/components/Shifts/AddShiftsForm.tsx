@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Box, Button, IconButton, ThemeProvider, Typography} from '@mui/material';
+import {Box, Button, IconButton, Stack, ThemeProvider, Typography} from '@mui/material';
 import {ConfirmShiftForms} from "./ConfirmShiftForms";
 import {drtTheme} from "../../index";
 import {getAirportNameByCode} from "../../airports";
@@ -72,58 +72,64 @@ export const AddShiftsForm = ({port, terminal, interval, shiftForms, confirmHand
     setShifts(shifts.filter(shift => shift.id !== id));
   };
 
+  const handleEditOnUpdate = (state: ShiftForm) => {
+    const updatedShifts = shifts.map(shift => {
+      if (shift.id === state.id) {
+        return {...shift, ...state};
+      }
+      return shift;
+    });
+    setShifts(updatedShifts)
+    if (showErrors) {
+      setShowErrors(shiftsHaveErrors(updatedShifts))
+    }
+  }
+
   return (
     <ThemeProvider theme={drtTheme}>
-      <Box>
+      <Stack direction={'row'}>
         {!showConfirm ? (
-          <Box sx={{p: 2, minWidth: '500px'}}>
-            <Typography sx={{fontSize: '20px'}}>Add staff to {port} {getAirportNameByCode(port)} {terminal}</Typography>
+          <Box>
+            <Typography variant='body1'>Add staff to {port} {getAirportNameByCode(port)} {terminal}</Typography>
             <Typography variant="h1" sx={{paddingBottom: '10px'}}>Step 1 of 2 - Create your shift pattern</Typography>
+            <Stack direction={'row'} spacing={2} mb={2}>
             {shifts.map((form, index) => {
-              return <EditShiftForm index={index}
-                                    key={form.id}
-                                    formState={form}
-                                    onUpdate={state => {
-                                      const updatedShifts = shifts.map(shift => {
-                                        if (shift.id === state.id) {
-                                          return {...shift, ...state};
-                                        }
-                                        return shift;
-                                      });
-                                      setShifts(updatedShifts)
-                                      if (showErrors) {
-                                        setShowErrors(shiftsHaveErrors(updatedShifts))
-                                      }
-                                    }}
-                                    interval={interval}
-                                    removeShift={handleRemoveShift}
-                                    showSubmitErrors={showErrors}
+              return <EditShiftForm 
+                index={index}
+                key={form.id}
+                formState={form}
+                onUpdate={handleEditOnUpdate}
+                interval={interval}
+                removeShift={handleRemoveShift}
+                showSubmitErrors={showErrors}
               />
             })}
-            <Box>
-              <Button variant="outlined" color="primary" onClick={handleAddShift} sx={{gap: 0, paddingLeft: '0'}}>
-                <IconButton color="primary" sx={{padding: '0'}}>
-                  <AddIcon/>
-                </IconButton>
-                Add a shift
-              </Button>
-            </Box>
-            <Box sx={{"paddingTop": "10px"}}>
-              <Button variant="contained" color="primary" onClick={onContinue} data-cy="shift-continue-button">
-                Continue
-              </Button>
-              {showErrors && (
-                <Typography color="error" variant="body2">Please fix the errors before continuing</Typography>
-              )}
-            </Box>
+            </Stack>
           </Box>) : (
-          <ConfirmShiftForms port={port}
-                             terminal={terminal}
-                             shifts={shifts}
-                             editShiftsHandler={onCancel}
-                             confirmHandler={confirmHandler}
-                             removeShiftHandler={handleRemoveShift}/>)
+          <ConfirmShiftForms 
+            port={port}
+            terminal={terminal}
+            shifts={shifts}
+            editShiftsHandler={onCancel}
+            confirmHandler={confirmHandler}
+            removeShiftHandler={handleRemoveShift}/>)
         }
+      </Stack>
+      <Box>
+        <Button variant="outlined" color="primary" onClick={handleAddShift} sx={{gap: 0, paddingLeft: '0'}}>
+          <IconButton color="primary" sx={{padding: '0'}}>
+            <AddIcon/>
+          </IconButton>
+          Add a shift
+        </Button>
+      </Box>
+      <Box sx={{"paddingTop": "10px"}}>
+        <Button variant="contained" color="primary" onClick={onContinue} data-cy="shift-continue-button">
+          Continue
+        </Button>
+        {showErrors && (
+          <Typography color="error" variant="body2">Please fix the errors before continuing</Typography>
+        )}
       </Box>
     </ThemeProvider>
   )
