@@ -1,5 +1,5 @@
 
-import { themePalette } from "./palette";
+import { themePrimatives } from "./primatives";
 
 export const typographyTheme = {
   fontFamily: '"Roboto","Helvetica","Arial",sans-serif',
@@ -48,7 +48,6 @@ export const typographyTheme = {
   body1: { //'govuk-body
     fontSize: "19px",
     lineHeight: '25px',
-    marginBottom: '1em',
   },
   body2: { //govuk-body-s
     fontSize: "16px",
@@ -74,7 +73,7 @@ export const typographyTheme = {
   pageTitle: {
     fontSize: 18,
     fontWeight: 'lighter',
-    [themePalette.breakpoints.up("sm")]: {
+    [themePrimatives.breakpoints.up("sm")]: {
       fontSize: 36
     }
   },
@@ -86,7 +85,7 @@ export const typographyTheme = {
 export const typographyComponentTheme = {
   styleOverrides: {
     root: {
-      // marginBottom: 0
+      marginBottom: 0
     }
   }
 }

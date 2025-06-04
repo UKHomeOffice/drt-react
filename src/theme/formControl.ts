@@ -1,11 +1,11 @@
 
 import { transform } from "@babel/core";
-import { themePalette } from "./palette";
+import { themePrimatives } from "./primatives";
 
 export const formControlTheme = {
   styleOverrides: {
     root: {
-      marginBottom: 0,
+      marginBottom: themePrimatives.spacing(0),
     }
   }
 };
@@ -13,7 +13,7 @@ export const formControlTheme = {
 export const formHelperTextTheme = {
   styleOverrides: {
     root: {
-      margin: '0 0 1em',
+      margin: `${themePrimatives.spacing(1)} 0 0`,
     }
   }
 }
@@ -22,7 +22,7 @@ export const formHelperTextTheme = {
 export const formControlLabelTheme = {
   styleOverrides: {
     label: {
-      marginBottom: 0,
+      marginBottom: themePrimatives.spacing(1),
     }
   }
 };
@@ -30,9 +30,9 @@ export const formControlLabelTheme = {
 export const formLabelTheme = {
   styleOverrides: {
     root: {
-      color: themePalette.palette.common.black,
+      color: themePrimatives.palette.common.black,
       '&.MuiInputLabel-root.Mui-focused': {
-        color: themePalette.palette.common.black
+        color: themePrimatives.palette.common.black
       }
     }
   }

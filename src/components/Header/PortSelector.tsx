@@ -18,7 +18,7 @@ const StyledSelect = styled(Select)<SelectProps>(({ theme }) => ({
     display: 'flex',
     padding: `5px 40px 5px 5px !important`,
     backgroundColor: 'transparent',
-    height: '1.25em !important',
+    height: '30px',
     '& >*': {
       display: 'flex',  
       alignItems: 'center',

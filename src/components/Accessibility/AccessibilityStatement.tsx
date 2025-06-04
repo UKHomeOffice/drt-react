@@ -50,9 +50,9 @@ export const AccessibilityStatement = ({
 
   return (
     <Box sx={{maxWidth: '70%'}}>
-      <Typography variant="h1">Accessibility statement for Dynamic Response Tool (DRT)</Typography>
+      <Typography variant="h1" mb={4}>Accessibility statement for Dynamic Response Tool (DRT)</Typography>
       <Section>
-        <Typography variant="h2">In this page:</Typography>
+        <Typography variant="h2" mb={2}>In this page:</Typography>
         <List className='inline-disc-items'>
           <ListItem><Link href={`#introduction`}>Introduction</Link></ListItem>
           <ListItem><Link href={`#how-accessible`}>How accessible this service is</Link></ListItem>
@@ -63,8 +63,8 @@ export const AccessibilityStatement = ({
         </List>
       </Section>
       <Section id="introduction">
-        <Typography variant="h2">Introduction</Typography>
-        <Typography variant="body1">This accessibility statement applies to <Link href="https://drt.homeoffice.gov.uk/" rel="noopener noreferrer">https://drt.homeoffice.gov.uk/</Link>. This website is run by Technology Delivery Centre, part of Home Office Digital, Data and Technology Directorate's Migration and Borders Technology Portfolio, on behalf of Border Force. We want as many people as possible to be able to use this website. For example, that means you should be able to:</Typography>
+        <Typography variant="h2" mb={2}>Introduction</Typography>
+        <Typography variant="body1" mb={2}>This accessibility statement applies to <Link href="https://drt.homeoffice.gov.uk/" rel="noopener noreferrer">https://drt.homeoffice.gov.uk/</Link>. This website is run by Technology Delivery Centre, part of Home Office Digital, Data and Technology Directorate's Migration and Borders Technology Portfolio, on behalf of Border Force. We want as many people as possible to be able to use this website. For example, that means you should be able to:</Typography>
         <List className='inline-disc-items'>
           <ListItem>change colours, contrast levels and fonts using browser or device settings"</ListItem>
           <ListItem>zoom in up to 400% without the text spilling off the screen"</ListItem>
@@ -75,8 +75,8 @@ export const AccessibilityStatement = ({
         <Typography variant="body1"><Link href="https://mcmw.abilitynet.org.uk/" rel="noopener noreferrer">AbilityNet</Link> has advice on making your device easier to use if you have a disability.</Typography>
       </Section>
       <Section id="how-accessible">
-        <Typography variant="h2">How accessible this service is</Typography>
-        <Typography variant="body1">We know some parts of this website are not fully accessible:</Typography>
+        <Typography variant="h2" mb={2}>How accessible this service is</Typography>
+        <Typography variant="body1" mb={2}>We know some parts of this website are not fully accessible:</Typography>
         <List className='inline-disc-items'>
           <ListItem>you cannot easily navigate content by tabbing through it on some pages
           </ListItem>
@@ -85,25 +85,25 @@ export const AccessibilityStatement = ({
         </List>
       </Section>
       <Section id="feedback">
-        <Typography variant="h2">Feedback and contact information</Typography>
-        <Typography variant='body1'>The Dynamic Response Tool (DRT) team, which works within Technology Delivery Centre, is responsible for the accessibility of this service. We're always looking to improve the accessibility of this website. If you find any problems not listed on this page or think we're not meeting other accessibility requirements, contact us:</Typography>
-        <Box><Button color="primary" variant="contained" href={`mailto:${teamEmail}`} onClick={sendReportProblemGaEvent}>Email us to report a problem</Button></Box>
+        <Typography variant="h2" mb={2}>Feedback and contact information</Typography>
+        <Typography variant='body1' mb={2}>The Dynamic Response Tool (DRT) team, which works within Technology Delivery Centre, is responsible for the accessibility of this service. We're always looking to improve the accessibility of this website. If you find any problems not listed on this page or think we're not meeting other accessibility requirements, contact us:</Typography>
+        <Button color="primary" variant="contained" href={`mailto:${teamEmail}`} onClick={sendReportProblemGaEvent}>Email us to report a problem</Button>
       </Section>
       <Section id="enforcement">
-        <Typography variant="h2">Enforcement procedure</Typography>
+        <Typography variant="h2" mb={2}>Enforcement procedure</Typography>
         <Typography variant='body1'>The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the 'accessibility regulations'). If you're not happy with how we respond to your complaint, contact the <Link href="https://www.equalityadvisoryservice.com/" rel="noopener noreferrer">Equality Advisory and Support Service (EASS)</Link>.</Typography>
       </Section>
       <Section id="technical-info">
-        <Typography variant="h2">Technical information about this website's accessibility</Typography>
+        <Typography variant="h2" mb={2}>Technical information about this website's accessibility</Typography>
         <Typography variant='body1'>Border Force is committed to making its websites accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.</Typography>
       </Section>
       <Section id="compliance-status">
-        <Typography variant="h3">Compliance status</Typography>
+        <Typography variant="h3" mb={2}>Compliance status</Typography>
         <Typography variant='body1'>The website has been tested against the Web Content Accessibility Guidelines (WCAG) 2.2 AA standard.</Typography>
         <Typography variant='body1'>This website is partially compliant with the Web Content Accessibility Guidelines (WCAG) 2.2 AA standard <Link href="https://www.w3.org/TR/WCAG22/" rel="noopener noreferrer" target="_blank"> (https://www.w3.org/TR/WCAG22/)</Link>. The non-compliances are listed below.</Typography>
       </Section>
       <Section id="non-compliant-content">
-        <Typography variant="h3">Non-compliant content within the accessibility regulations</Typography>
+        <Typography variant="h3" mb={2}>Non-compliant content within the accessibility regulations</Typography>
         <List className='inline-disc-items'>
           {nonCompliantContent.map((content: string, idx: number) => {
             return <ListItem key={idx}>
@@ -113,11 +113,11 @@ export const AccessibilityStatement = ({
         </List>
       </Section>
       <Section id="improve-accessibility">
-        <Typography variant="h2">What we're doing to improve accessibility</Typography>
+        <Typography variant="h2" mb={2}>What we're doing to improve accessibility</Typography>
         <Typography variant='body1'>We plan to address the above areas of non-compliance with accessibility regulations on this website by <strong>February 2026</strong>.</Typography>
       </Section>
       <Section>
-        <Typography variant="h2">Preparation of this accessibility statement</Typography>
+        <Typography variant="h2" mb={2}>Preparation of this accessibility statement</Typography>
         <Typography variant='body1'>This statement was prepared on 13 December 2024.</Typography>
       </Section>
     </Box>

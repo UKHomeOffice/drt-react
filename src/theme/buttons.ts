@@ -1,5 +1,5 @@
 
-import { themePalette } from "./palette";
+import { themePrimatives } from "./primatives";
 
 export const buttonTheme = {
     styleOverrides: {
@@ -19,69 +19,69 @@ export const buttonTheme = {
           opacity: `0.5 !important`,
         },
         '&.MuiButton-colorPrimary': {
-          boxShadow: `0 2px 0 ${themePalette.palette.primary.dark}`,
+          boxShadow: `0 2px 0 ${themePrimatives.palette.primary.dark}`,
           '&:hover': {
-            boxShadow: `0 2px 0 ${themePalette.palette.primary.dark}`,
+            boxShadow: `0 2px 0 ${themePrimatives.palette.primary.dark}`,
           },
           '&:disabled': {
-            boxShadow: `0 2px 0 ${themePalette.palette.primary.dark}`,
+            boxShadow: `0 2px 0 ${themePrimatives.palette.primary.dark}`,
           }
         },
         '&.MuiButton-colorSecondary': {
-          boxShadow: `0 2px 0 ${themePalette.palette.secondary.dark}`,
+          boxShadow: `0 2px 0 ${themePrimatives.palette.secondary.dark}`,
           '&:hover': {
             backgroundColor: '#dbdad9',
-            boxShadow: `0 2px 0 ${themePalette.palette.secondary.dark}`,
+            boxShadow: `0 2px 0 ${themePrimatives.palette.secondary.dark}`,
           },
           '&:disabled': {
-            boxShadow: `0 2px 0 ${themePalette.palette.secondary.dark}`,
+            boxShadow: `0 2px 0 ${themePrimatives.palette.secondary.dark}`,
           },
         },
         '&.MuiButton-colorSuccess': {
-          boxShadow: `0 2px 0 ${themePalette.palette.success.dark}`,
+          boxShadow: `0 2px 0 ${themePrimatives.palette.success.dark}`,
           '&:hover': {
-            boxShadow: `0 2px 0 ${themePalette.palette.success.dark}`,
+            boxShadow: `0 2px 0 ${themePrimatives.palette.success.dark}`,
           },
           '&:disabled': {
-            boxShadow: `0 2px 0 ${themePalette.palette.secondary.dark}`,
+            boxShadow: `0 2px 0 ${themePrimatives.palette.secondary.dark}`,
           }
         },
         '&.MuiButton-colorError': {
-          boxShadow: `0 2px 0 ${themePalette.palette.error.dark}`,
+          boxShadow: `0 2px 0 ${themePrimatives.palette.error.dark}`,
           '&:hover': {
-            boxShadow: `0 2px 0 ${themePalette.palette.error.dark}`,
+            boxShadow: `0 2px 0 ${themePrimatives.palette.error.dark}`,
           },
           '&:disabled': {
-            boxShadow: `0 2px 0 ${themePalette.palette.secondary.dark}`,
+            boxShadow: `0 2px 0 ${themePrimatives.palette.secondary.dark}`,
           }
         },
         '&.MuiButton-colorWarning': {
-          boxShadow: `0 2px 0 ${themePalette.palette.warning.dark}`,
+          boxShadow: `0 2px 0 ${themePrimatives.palette.warning.dark}`,
           '&:hover': {
-            boxShadow: `0 2px 0 ${themePalette.palette.warning.dark}`,
+            boxShadow: `0 2px 0 ${themePrimatives.palette.warning.dark}`,
           },
           '&:disabled': {
-            boxShadow: `0 2px 0 ${themePalette.palette.secondary.dark}`,
+            boxShadow: `0 2px 0 ${themePrimatives.palette.secondary.dark}`,
           }
         },
         '&.MuiButton-colorInfo': {
-          boxShadow: `0 2px 0 ${themePalette.palette.info.dark}`,
+          boxShadow: `0 2px 0 ${themePrimatives.palette.info.dark}`,
           '&:hover': {
-            boxShadow: `0 2px 0 ${themePalette.palette.info.dark}`,
+            boxShadow: `0 2px 0 ${themePrimatives.palette.info.dark}`,
           },
           '&:disabled': {
-            boxShadow: `0 2px 0 ${themePalette.palette.secondary.dark}`,
+            boxShadow: `0 2px 0 ${themePrimatives.palette.secondary.dark}`,
           }
         },
       },
       containedWarning: {
-        color: themePalette.palette.common.white,
+        color: themePrimatives.palette.common.white,
       },
       outlinedSecondary: {
-        color: themePalette.palette.common.black,
-        border: `1px solid ${themePalette.palette.secondary.dark}`,
+        color: themePrimatives.palette.common.black,
+        border: `1px solid ${themePrimatives.palette.secondary.dark}`,
         '&:hover': {
-          border: `1px solid ${themePalette.palette.secondary.dark}`,
+          border: `1px solid ${themePrimatives.palette.secondary.dark}`,
         },
       },
       sizeSmall: {
@@ -107,7 +107,7 @@ export const buttonTheme = {
         display: 'inline',
         padding: 0,
         textDecoration: 'underline',
-        color: themePalette.palette.info.main,
+        color: themePrimatives.palette.info.main,
         textDecorationThickness: 'max(1px,.0625rem)',
         textUnderlineOffset: '.1578em',
         boxShadow: 'none !important',
@@ -115,34 +115,34 @@ export const buttonTheme = {
         '&:hover': {
           textDecoration: 'underline',
           backgroundColor: 'transparent',
-          color: themePalette.palette.info.dark,
+          color: themePrimatives.palette.info.dark,
           textDecorationThickness: 'max(3px,.1875rem,.12em)',
         },
         '&.MuiButton-colorSuccess': {
-          color: themePalette.palette.success.main,
+          color: themePrimatives.palette.success.main,
           '&:hover': {
-            color: themePalette.palette.success.dark,
+            color: themePrimatives.palette.success.dark,
           },
           '&:disabled': {
-            color: themePalette.palette.secondary.dark,
+            color: themePrimatives.palette.secondary.dark,
           }
         },
         '&.MuiButton-colorError': {
-          color: themePalette.palette.error.dark,
+          color: themePrimatives.palette.error.dark,
           '&:hover': {
-            color: themePalette.palette.error.dark,
+            color: themePrimatives.palette.error.dark,
           },
           '&:disabled': {
-            color: themePalette.palette.secondary.dark,
+            color: themePrimatives.palette.secondary.dark,
           }
         },
         '&.MuiButton-colorWarning': {
-          color: themePalette.palette.warning.dark,
+          color: themePrimatives.palette.warning.dark,
           '&:hover': {
-            color: themePalette.palette.warning.dark,
+            color: themePrimatives.palette.warning.dark,
           },
           '&:disabled': {
-            color: themePalette.palette.secondary.dark,
+            color: themePrimatives.palette.secondary.dark,
           }
         },
       }

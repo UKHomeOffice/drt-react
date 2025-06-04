@@ -1,12 +1,12 @@
 
 import { transform } from "@babel/core";
-import { themePalette } from "./palette";
+import { themePrimatives } from "./primatives";
 
 export const inputBaseTheme = {
     styleOverrides: {
       input: {
         backgroundColor: '#fff',
-        border: `2px solid ${themePalette.palette.common.black}`,
+        border: `2px solid ${themePrimatives.palette.common.black}`,
         borderRadius: 0,
         padding: `5px !important`,
         lineHeight: 1.25,
@@ -16,7 +16,11 @@ export const inputBaseTheme = {
           outline: `3px solid #fd0`,
           outlineOffset: 0,
           boxShadow: `inset 0 0 0 2px`,
+          zIndex: 2,
         },
+        '&:focus + div.MuiInputAdornment-root': {
+          zIndex: 1,
+        }
       },
     }
 };
@@ -26,18 +30,18 @@ export const inputAdornmentTheme = {
     positionEnd: {
       borderWidth: '2px 2px 2px 0',
       borderStyle: 'solid',
-      borderColor: themePalette.palette.common.black,
+      borderColor: themePrimatives.palette.common.black,
       boxSizing: 'border-box',
         minHeight: '40px',
       height: '100%',
-      backgroundColor: themePalette.palette.grey[100],
+      backgroundColor: themePrimatives.palette.grey[100],
       marginLeft: 0,
       '& > .MuiIconButton-root': {
         marginRight: 0,
         padding: '5px',
       },
       '& .MuiSvgIcon-root': {
-        fill: themePalette.palette.grey[500],
+        fill: themePrimatives.palette.grey[500],
       }
     }
   }
@@ -49,9 +53,9 @@ export const inputLabelTheme = {
       position: 'unset',
       transform: 'none',
       maxWidth: 'none',
-      marginBottom: '5px',
-      '& +.MuiInputBase-root': {
-        marginTop: '5px'
+      marginBottom: themePrimatives.spacing(1),
+      '& + .MuiInputBase-root': {
+        marginTop: 0,
       }
     }
   }
@@ -67,3 +71,14 @@ export const outlinedInputTheme = {
     }
   }
 };
+
+export const radioTheme = {
+  styleOverrides:{
+    root: {
+      color: '#000',
+      "&.Mui-checked": {
+        color: '#000',
+      }
+    }
+  }
+}

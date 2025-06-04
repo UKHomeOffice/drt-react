@@ -1,30 +1,30 @@
 
-import { alpha, createTheme, darken, lighten } from "@mui/material";
+import { createTheme } from "@mui/material";
 import type {} from '@mui/x-date-pickers/themeAugmentation';
-import { themePalette } from "./theme/palette";
+import { themePrimatives } from "./theme/primatives";
 import React from "react";
-import createPalette from "@mui/material/styles/createPalette";
 import { buttonTheme } from '../src/theme/buttons';
-import { inputBaseTheme, inputAdornmentTheme, inputLabelTheme, outlinedInputTheme } from "./theme/input";
-import { formControlLabelTheme, formLabelTheme, formHelperTextTheme } from "./theme/formControl";
+import { inputBaseTheme, inputAdornmentTheme, inputLabelTheme, outlinedInputTheme, radioTheme } from "./theme/input";
+import { formControlLabelTheme, formLabelTheme, formHelperTextTheme, formControlTheme } from "./theme/formControl";
 import { nativeSelectTheme } from "./theme/select";
 import { autocompleteTheme } from "./theme/autocomplete";
 import { listTheme } from "./theme/lists";
 import { typographyTheme, typographyComponentTheme, linkTheme } from "./theme/typography";
 import { tableRowTheme, tableTheme, tableCellTheme } from "./theme/table";
+import { paperTheme, cardHeaderTheme, appbarTheme } from "./theme/paper";
 
 declare module '@mui/material/styles' {
   interface PaperVariants {
     appbar: React.CSSProperties;
-    shiftForm: React.CSSProperties;
-    shiftCard: React.CSSProperties;
+    header: React.CSSProperties;
+    lightGrey: React.CSSProperties;
   }
 
   // allow configuration using `createTheme`
   interface PaperVariantsOptions {
     appbar?: React.CSSProperties;
-    shiftForm?: React.CSSProperties;
-    shiftCard?: React.CSSProperties;
+    header?: React.CSSProperties;
+    lightGrey?: React.CSSProperties;
   }
 
   interface TypographyVariants {
@@ -55,8 +55,8 @@ declare module '@mui/material/styles' {
 declare module '@mui/material/Paper' {
   interface PaperPropsVariantOverrides {
     appbar: true;
-    shiftForm: true;
-    shiftCard: true;
+    header: true;
+    lightGrey: true;
 
   }
 }
@@ -71,38 +71,20 @@ declare module "@mui/material/Typography" {
 }
 
 const drtTheme = createTheme({
-  palette: themePalette.palette,
+  palette: themePrimatives.palette,
   spacing: 5,
   typography: {
     ...typographyTheme as any
   },
   components: {
+    MuiAppBar: {
+      ...appbarTheme,
+    },
     MuiPaper: {
-      variants: [
-        {
-          props: { variant: 'appbar'},
-          style: {
-            backgroundColor: themePalette.palette.grey[100]
-          }
-        },
-        {
-          props: { variant: 'shiftForm'},
-          style: {
-            backgroundColor: themePalette.palette.grey[100],
-            borderRadius: 0,
-            border: `1px solid ${themePalette.palette.grey[300]}`,
-            marginBottom: '1em',
-          }
-        },
-        {
-          props: { variant: 'shiftCard'},
-          style: {
-            borderRadius: 0,
-            border: `1px solid ${themePalette.palette.grey[300]}`,
-            marginBottom: '1em',
-          }
-        }
-      ]
+      ...paperTheme as any,
+    },
+    MuiCardHeader: {
+      ...cardHeaderTheme
     },
     MuiTypography: {
       ...typographyComponentTheme,
@@ -115,6 +97,9 @@ const drtTheme = createTheme({
     },
     MuiInputLabel: {
       ...inputLabelTheme as any,
+    },
+    MuiFormControl: {
+      ...formControlTheme
     },
     MuiFormLabel: {
       ...formLabelTheme as any,
@@ -160,15 +145,8 @@ const drtTheme = createTheme({
         }
       }
     },
-    MuiRadio:{
-      styleOverrides:{
-        root: {
-          color: '#000',
-          "&.Mui-checked": {
-            color: '#000',
-          }
-        }
-      }
+    MuiRadio: {
+      ...radioTheme as any,
     },
     MuiTable:{
       ...tableTheme,

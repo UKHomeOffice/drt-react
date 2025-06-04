@@ -86,13 +86,12 @@ export const AddShiftsForm = ({port, terminal, interval, shiftForms, confirmHand
   }
 
   return (
-    <ThemeProvider theme={drtTheme}>
-      <Stack direction={'row'}>
+    <>
+      <Stack direction={'row'} mb={2}>
         {!showConfirm ? (
           <Box>
-            <Typography variant='body1'>Add staff to {port} {getAirportNameByCode(port)} {terminal}</Typography>
-            <Typography variant="h1" sx={{paddingBottom: '10px'}}>Step 1 of 2 - Create your shift pattern</Typography>
-            <Stack direction={'row'} spacing={2} mb={2}>
+            <Typography variant='body1' mb={1}>Add staff to {port} {getAirportNameByCode(port)} {terminal}</Typography>
+            <Typography variant="h1" mb={4}>Step 1 of 2 - Create your shift pattern</Typography>
             {shifts.map((form, index) => {
               return <EditShiftForm 
                 index={index}
@@ -104,7 +103,6 @@ export const AddShiftsForm = ({port, terminal, interval, shiftForms, confirmHand
                 showSubmitErrors={showErrors}
               />
             })}
-            </Stack>
           </Box>) : (
           <ConfirmShiftForms 
             port={port}
@@ -115,22 +113,17 @@ export const AddShiftsForm = ({port, terminal, interval, shiftForms, confirmHand
             removeShiftHandler={handleRemoveShift}/>)
         }
       </Stack>
-      <Box>
-        <Button variant="outlined" color="primary" onClick={handleAddShift} sx={{gap: 0, paddingLeft: '0'}}>
-          <IconButton color="primary" sx={{padding: '0'}}>
-            <AddIcon/>
-          </IconButton>
+      <Stack direction={'column'} spacing={2} alignItems='start'> 
+        <Button variant="outlined" color="primary" onClick={handleAddShift} startIcon={<AddIcon/>}>
           Add a shift
         </Button>
-      </Box>
-      <Box sx={{"paddingTop": "10px"}}>
         <Button variant="contained" color="primary" onClick={onContinue} data-cy="shift-continue-button">
           Continue
         </Button>
         {showErrors && (
           <Typography color="error" variant="body2">Please fix the errors before continuing</Typography>
         )}
-      </Box>
-    </ThemeProvider>
+      </Stack>
+    </>
   )
 };

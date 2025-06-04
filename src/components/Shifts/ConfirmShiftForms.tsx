@@ -51,7 +51,7 @@ export const ConfirmShiftForms = ({
       <Typography variant="h2" mb={2}>Shifts</Typography>
       {
         shifts.map((shift) => (
-          <Card variant='shiftCard' key={shift.id} sx={{maxWidth: '500px', mb: 2}}>
+          <Card key={shift.id} sx={{maxWidth: '500px', mb: 2}} elevation={0}>
             <CardHeader title={shift.name} titleTypographyProps={{variant: 'h3'}} action={<>
               <Stack direction={'row'}>
                 <Tooltip title="Remove shift">

@@ -1,5 +1,5 @@
 
-import { themePalette } from "./palette";
+import { themePrimatives } from "./primatives";
 
 
 export const tableTheme = {
@@ -7,15 +7,13 @@ export const tableTheme = {
     root: {
       '&.striped .MuiTableRow-root': {
         '&:nth-of-type(odd)': {
-          backgroundColor: themePalette.palette.common.white,
+          backgroundColor: '#fff',
         },
-        '&:nth-of-type(even)': {
-          // backgroundColor: alpha(themePalette.palette.grey[100], 0.5),
-        },
+        '&:nth-of-type(even)': {},
       },
       '&.borderless .MuiTableCell-root': {
         borderBottom: 'none !important',
-        padding:`${themePalette.spacing(1)} ${themePalette.spacing(0)}`,
+        padding:`${themePrimatives.spacing(1)} ${themePrimatives.spacing(0)}`,
       }
     }
   }
@@ -33,11 +31,11 @@ export const tableCellTheme = {
   styleOverrides: {
     root: {
       fontSize: '19px',
-      padding:`${themePalette.spacing(2)} ${themePalette.spacing(0)}`,
-      borderBottom: `1px solid ${themePalette.palette.border.main}`
+      padding:`${themePrimatives.spacing(2)} ${themePrimatives.spacing(0)}`,
+      borderBottom: `1px solid ${themePrimatives.palette.border.main}`
     },
     head: {
-      padding:`${themePalette.spacing(2)} ${themePalette.spacing(0)}`,
+      padding:`${themePrimatives.spacing(2)} ${themePrimatives.spacing(0)}`,
       fontWeight: 'bolder'
     }
   }

@@ -281,7 +281,7 @@ export const FlightFlaggerFilters = ({
                     <TextField
                       {...params}
                       label="Nationalities"
-                      placeholder="Enter or select nationalities"
+                      placeholder={currentFormState.selectedNationalities.length > 0 ? "" : "Enter or select nationalities"}
                     />
                   )}
                 />
@@ -302,7 +302,7 @@ export const FlightFlaggerFilters = ({
                     <TextField
                       {...params}
                       label="Age groups"
-                      placeholder="Enter of select age groups"
+                      placeholder={currentFormState.selectedAgeGroups.length > 0 ? "" : "Enter or select age groups"}
                     />
                   )}
                 />
@@ -336,7 +336,8 @@ export const FlightFlaggerFilters = ({
               </Grid>
               <Grid item xs={12}>
                 <Button data-testid="flight-flagger-filter-cancel"
-                        variant='outlined'
+                        variant='contained'
+                        color="secondary"
                         onClick={() => setCurrentFormState({...appliedSearchFlags, showFilters: false})}
                         sx={{mr: 2}}>
                   Cancel

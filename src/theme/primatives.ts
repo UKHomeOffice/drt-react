@@ -1,7 +1,7 @@
 
 import { createTheme, darken, lighten } from "@mui/material";
 
-export const themePalette = createTheme({
+export const themePrimatives = createTheme({
   spacing: 5,
   palette: {
     background: {
@@ -49,19 +49,16 @@ export const themePalette = createTheme({
       dark: '#003078',
     },
     grey: {
-      100 : "#F3F5F9",
-      300 : "#B4B5BE",
+      100 : "#f3f2f1",
+      300 : "#b1b4b6",
       400 : "#547A00",
       500 : "#777A86",
-      700 : "#404252",
+      700 : "#505a5f",
       900 : "#111224"
     },
     border: {
       main: '#b1b4b6',
-      light: '#b1b4b6',
       dark: '#0b0c0c',
-      contrastText: '#000',
-
     }
   }
 });
