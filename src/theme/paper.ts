@@ -16,16 +16,16 @@ export const paperTheme = {
       }
     },
     {
-      props: { variant: 'header'},
+      props: { variant: 'white'},
       style: {
-        border: 'none',
+        border: `1px solid ${themePrimatives.palette.border.main}`,
+      backgroundColor: '#fff'
       }
-    },
+    }
   ],
   styleOverrides: {
     root: {
       borderRadius: 0,
-      border: `1px solid ${themePrimatives.palette.border.main}`,
       backgroundColor: '#fff'
     }
   }
@@ -41,12 +41,28 @@ export const cardHeaderTheme = {
   } 
 }
 
+export const cardContentTheme = {
+  styleOverrides: {
+    root: {
+      padding: themePrimatives.spacing(3),
+      '&:last-child': {
+        paddingBottom: themePrimatives.spacing(3)
+      }
+    }
+  }
+}
+
 export const appbarTheme = {
   styleOverrides: {
     root: {
       border: 'none',
+      '.MuiGrid-item': {
+        alignItems: 'center',
+      },
       '.MuiButton-text': {
         textDecoration: 'none !important',
+        display: 'flex',
+        flexWrap: 'nowrap',
       }
     }
   }

@@ -1,19 +1,32 @@
 import React from "react";
-import {AppBar, Button, Toolbar, Typography} from "@mui/material";
+import { styled, Theme } from '@mui/material/styles';
+import {Alert, AlertProps, Button, Card, CardContent, Toolbar, Typography} from "@mui/material";
 import EventRepeatIcon from '@mui/icons-material/EventRepeat';
 
 export interface AddShiftBarProps {
   onClickGetStarted: () => void;
 }
 
+const StyledAddShiftBar = styled(Alert)<AlertProps>(({theme}: {theme: Theme}) => ({
+  backgroundColor: theme.palette.primary.main,
+  border: 'none',
+  color: 'white',
+  '.MuiAlert-message': {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  '.MuiAlert-icon': {
+    color: 'white',
+    alignItems: 'center',
+  }
+}));
+
 export const AddShiftBar = ({
                               onClickGetStarted,
                             }: AddShiftBarProps) => {
   return (
-    <AppBar position="static" elevation={0}>
-      <Toolbar>
-        <EventRepeatIcon sx={{mr: 1}} />
-        <Typography variant="h6">
+    <StyledAddShiftBar icon={<EventRepeatIcon />}>
+        <Typography variant="h5">
           Save time: add staff to shifts
         </Typography>
         <Button variant="outlined"
@@ -25,7 +38,6 @@ export const AddShiftBar = ({
                     color: 'secondary.main'
                   }
                 }} onClick={onClickGetStarted}>Get started</Button>
-      </Toolbar>
-    </AppBar>
+    </StyledAddShiftBar>
   );
 }

@@ -8,7 +8,7 @@ export const inputBaseTheme = {
         backgroundColor: '#fff',
         border: `2px solid ${themePrimatives.palette.common.black}`,
         borderRadius: 0,
-        padding: `5px !important`,
+        padding: `5px`,
         lineHeight: 1.25,
         minHeight: '40px',
         boxSizing: 'border-box',

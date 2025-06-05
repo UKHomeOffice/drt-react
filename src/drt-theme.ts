@@ -6,25 +6,25 @@ import React from "react";
 import { buttonTheme } from '../src/theme/buttons';
 import { inputBaseTheme, inputAdornmentTheme, inputLabelTheme, outlinedInputTheme, radioTheme } from "./theme/input";
 import { formControlLabelTheme, formLabelTheme, formHelperTextTheme, formControlTheme } from "./theme/formControl";
-import { nativeSelectTheme } from "./theme/select";
+import { selectTheme, nativeSelectTheme } from "./theme/select";
 import { autocompleteTheme } from "./theme/autocomplete";
 import { listTheme } from "./theme/lists";
 import { typographyTheme, typographyComponentTheme, linkTheme } from "./theme/typography";
 import { tableRowTheme, tableTheme, tableCellTheme } from "./theme/table";
-import { paperTheme, cardHeaderTheme, appbarTheme } from "./theme/paper";
+import { paperTheme, cardHeaderTheme,cardContentTheme, appbarTheme } from "./theme/paper";
 
 declare module '@mui/material/styles' {
   interface PaperVariants {
     appbar: React.CSSProperties;
-    header: React.CSSProperties;
     lightGrey: React.CSSProperties;
+    white: React.CSSProperties;
   }
 
   // allow configuration using `createTheme`
   interface PaperVariantsOptions {
     appbar?: React.CSSProperties;
-    header?: React.CSSProperties;
     lightGrey?: React.CSSProperties;
+    white?: React.CSSProperties;
   }
 
   interface TypographyVariants {
@@ -55,8 +55,8 @@ declare module '@mui/material/styles' {
 declare module '@mui/material/Paper' {
   interface PaperPropsVariantOverrides {
     appbar: true;
-    header: true;
     lightGrey: true;
+    white?: true;
 
   }
 }
@@ -85,6 +85,9 @@ const drtTheme = createTheme({
     },
     MuiCardHeader: {
       ...cardHeaderTheme
+    },
+    MuiCardContent: {
+      ...cardContentTheme as any,
     },
     MuiTypography: {
       ...typographyComponentTheme,
@@ -118,6 +121,9 @@ const drtTheme = createTheme({
     },
     MuiAutocomplete: {
       ...autocompleteTheme as any,
+    },
+    MuiSelect: {
+      ...selectTheme
     },
     MuiNativeSelect: {
       ...nativeSelectTheme

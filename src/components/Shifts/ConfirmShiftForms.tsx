@@ -43,15 +43,17 @@ export const ConfirmShiftForms = ({
 
   return (
     <Box sx={{minWidth: '500px'}}>
-      <Typography variant='body1'>Add staff to {port} {terminal}</Typography>
+      <Typography variant='body1' mb={1}>Add staff to {port} {terminal}</Typography>
       <Typography variant="h1" mb={4}>Step 2 of 2 - Check your shifts</Typography>
-      <Typography variant="h2" mb={2}>Summary</Typography>
-      <Typography variant="body1">Total shifts: {shifts.length}</Typography>
-      <Typography variant="body1">Hours covered: {minStartTime} to {maxEndTime}</Typography>
-      <Typography variant="h2" mb={2}>Shifts</Typography>
+      <Stack direction='column' spacing={2} mb={4}>
+        <Typography variant="h2">Summary</Typography>
+        <Typography variant="body1">Total shifts: {shifts.length}</Typography>
+        <Typography variant="body1">Hours covered: {minStartTime} to {maxEndTime}</Typography>
+      </Stack>
+      <Typography variant="h2" mb={3}>Shifts</Typography>
       {
         shifts.map((shift) => (
-          <Card key={shift.id} sx={{maxWidth: '500px', mb: 2}} elevation={0}>
+          <Card key={shift.id} variant='white' sx={{maxWidth: '500px', mb: 2}} elevation={0}>
             <CardHeader title={shift.name} titleTypographyProps={{variant: 'h3'}} action={<>
               <Stack direction={'row'}>
                 <Tooltip title="Remove shift">
@@ -60,7 +62,7 @@ export const ConfirmShiftForms = ({
                   </IconButton>
                 </Tooltip>
                 <Tooltip title="Edit shift">
-                  <IconButton onClick={() => editShiftsHandler([shift])}>
+                  <IconButton  onClick={() => editShiftsHandler([shift])}>
                     <EditIcon />
                   </IconButton>
                 </Tooltip>

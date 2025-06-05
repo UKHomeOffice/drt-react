@@ -2,7 +2,7 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {AccessibilityStatement as AccessibilityStatementComponent} from './AccessibilityStatement';
 
 export default {
-  title: 'DRT Components/UI/AccessibilityStatementComponent',
+  title: 'DRT Components/UI/AccessibilityStatement',
   component: AccessibilityStatementComponent,
 } as Meta;
 

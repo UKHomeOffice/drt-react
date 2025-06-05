@@ -4,7 +4,7 @@ import {ShiftSummary} from "./ShiftHotTableView";
 import React from "react";
 
 export default {
-  title: 'DRT Components/Features/Shifts/ShiftSummaryComponent',
+  title: 'DRT Components/Features/Shifts/ShiftSummary',
   component: ShiftSummaryViewComponent,
 } as Meta;
 

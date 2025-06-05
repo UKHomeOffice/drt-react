@@ -2,6 +2,7 @@ import React, {useState} from "react"
 import {
   Autocomplete,
   Button,
+  Card,
   Checkbox,
   Chip,
   Collapse,
@@ -195,8 +196,8 @@ export const FlightFlaggerFilters = ({
     }
   }
 
-  return <>
-    <Grid container sx={{backgroundColor: '#F3F5F9', width: '100%', ml: 0, pt: 2, flexWrap: {xs: 'wrap', md: 'nowrap'}}}
+  return <Card variant="lightGrey">
+    <Grid container sx={{ml: 0, pt: 2, flexWrap: {xs: 'wrap', md: 'nowrap'}}}
           spacing={2}>
       <Grid item flexGrow={0}>
         <InputLabel htmlFor="flight-number" sx={{mb: 1}}><strong>Enter flight details</strong></InputLabel>
@@ -214,7 +215,6 @@ export const FlightFlaggerFilters = ({
         </FormControl>
       </Grid>
       <Grid item flexGrow={0} sx={{
-        borderLeft: {xs: 'none', md: '1px solid #ccc'},
         ml: {xs: 0, sm: 0, md: 2},
         px: {xs: 0, md: 4}
       }}>
@@ -361,6 +361,6 @@ export const FlightFlaggerFilters = ({
         </Link>
         </Typography>}
       </Grid>
-    </Grid></>
+    </Grid></Card>
 
 }

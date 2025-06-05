@@ -188,7 +188,7 @@ const Header = ({
                 leftMenuItems && leftMenuItems.map((menuItem) => {
 
                   return (
-                    <Grid key={menuItem.link} item flexGrow={0} display={{xs: 'none', md: 'block'}}>
+                    <Grid key={menuItem.link} item flexGrow={0} display={{xs: 'none', md: 'flex'}}>
                       <Button
                         onClick={() => routingFunction(menuItem.link)}
                         data-testid={`left-menu-${menuItem.link}`}
@@ -202,11 +202,11 @@ const Header = ({
                   )
                 })
               }
-              <Grid item display={{xs: 'none', md: 'block'}} flexGrow={1}></Grid>
-              <Grid item display={{xs: 'none', md: 'block'}}>
+              <Grid item display={{xs: 'none', md: 'flex'}} flexGrow={1}></Grid>
+              <Grid item display={{xs: 'none', md: 'flex'}}>
                 <Grid container sx={{height: '100%'}} gap={4}>
                   { hasAdminMenuRoles &&
-                    <Grid item sx={{marginLeft: 'auto'}} flexGrow={0} display={{xs: 'none', md: 'block'}}>
+                    <Grid item sx={{marginLeft: 'auto'}} flexGrow={0} display={{xs: 'none', md: 'flex'}}>
                       <Button
                         data-testid="desktop-admin-menu-trigger"
                         variant="text"
@@ -222,7 +222,7 @@ const Header = ({
                     rightMenuItems && rightMenuItems.map((menuItem) => {
 
                       return (
-                        <Grid key={menuItem.link} item flexGrow={1} display={{xs: 'none', md: 'block'}}>
+                        <Grid key={menuItem.link} item flexGrow={1} display={{xs: 'none', md: 'flex'}}>
                           <Button
                             onClick={() => routingFunction(menuItem.link)}
                             data-testid={`right-menu-${menuItem.link}`}
@@ -235,7 +235,7 @@ const Header = ({
                       )
                     })
                   }
-                  <Grid item flexGrow={1} display={{xs: 'none', md: 'block'}} sx={{textAlign: 'right'}}>
+                  <Grid item flexGrow={1} display={{xs: 'none', md: 'flex'}} sx={{textAlign: 'right'}}>
                     <Button data-testid="logout" onClick={() => logoutLink()} variant="text" startIcon={<LogoutIcon/>}
                             sx={linkStyles}>Logout</Button>
                   </Grid>

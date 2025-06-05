@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Box, Button, FormControl, IconButton, InputLabel, NativeSelect, Stack, TextField, Typography} from "@mui/material";
+import {Box, Button, Card, CardContent, CardHeader, FormControl, IconButton, InputLabel, List, ListItem, ListItemIcon, ListItemText, NativeSelect, Stack, TextField, Typography} from "@mui/material";
 import moment, {Moment} from "moment";
 import CloseIcon from "@mui/icons-material/Close";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
@@ -165,37 +165,33 @@ export const UpdateStaffForTimeRangeForm = ({ ustd, interval, handleSubmit, canc
         </Stack>
         <Stack spacing={2} mb={4}>
         {error && <Typography color="error" sx={{paddingTop: '10px'}}>{error}</Typography>}
-        <Box sx={{
-          paddingTop: '10px',
-          paddingBottom: '10px',
-          paddingLeft: '10px',
-          paddingRight: '20px',
-          backgroundColor: '#E6E9F1'
-        }}>
-          <Typography variant="h6">Summary of Selections:</Typography>
-          <Box sx={{paddingTop: '10px'}}>
-            <Box sx={{display: 'flex', alignItems: 'center'}}>
-              <CalendarTodayIcon sx={{marginRight: '5px'}}/>
-              <span
-                style={{fontWeight: 'bold'}}>{startDate.format(startDate.year() === endDate.year() ? 'DD MMM' : 'DD MMM YY')} to {endDate.format('DD MMM YYYY')}</span>
-            </Box>
-            <Typography sx={{paddingLeft: '32px'}}>{endDate.diff(startDate, 'days') + 1} days</Typography>
-          </Box>
-          <Box sx={{paddingTop: '10px'}}>
-            <Box sx={{display: 'flex', alignItems: 'center'}}>
-              <AccessTimeIcon sx={{marginRight: '5px'}}/>
-              <span style={{fontWeight: 'bold'}}>{startTime.format('HH:mm')} to {endTime.format('HH:mm')}</span>
-            </Box>
-            <Typography
-              sx={{paddingLeft: '32px'}}>{Math.floor(moment.duration(endTime.diff(startTime)).asHours())} hours {moment.duration(endTime.diff(startTime)).minutes()} minutes</Typography>
-          </Box>
-          <Box sx={{paddingTop: '10px'}}>
-            <Box sx={{display: 'flex', alignItems: 'center'}}>
-              <PeopleIcon sx={{marginRight: '5px'}}/>
-              <span style={{fontWeight: 'bold'}}>{staffNumber} Staff</span>
-            </Box>
-          </Box>
-        </Box>
+        <Card variant="lightGrey">
+          <CardHeader title="Selection summary" titleTypographyProps={{variant: 'h3'}} />
+          <CardContent>
+            <List>
+              <ListItem>
+                <ListItemIcon><CalendarTodayIcon/></ListItemIcon>
+                <ListItemText 
+                  primary={`${startDate.format(startDate.year() === endDate.year() ? 'DD MMM' : 'DD MMM YY')} to ${endDate.format('DD MMM YYYY')}`}
+                  secondary={`${endDate.diff(startDate, 'days') + 1} days`}
+                  />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon><AccessTimeIcon/></ListItemIcon>
+                <ListItemText 
+                  primary={`${startTime.format('HH:mm')} to ${endTime.format('HH:mm')}`}
+                  secondary={`${Math.floor(moment.duration(endTime.diff(startTime)).asHours())} hours ${moment.duration(endTime.diff(startTime)).minutes()} minutes`}
+                  />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon><PeopleIcon/></ListItemIcon>
+                <ListItemText 
+                  primary={`${staffNumber} staff`}
+                  />
+              </ListItem>
+            </List>
+          </CardContent>
+        </Card>
         <Box sx={{paddingTop: '10px'}}>
           <Button
             fullWidth
