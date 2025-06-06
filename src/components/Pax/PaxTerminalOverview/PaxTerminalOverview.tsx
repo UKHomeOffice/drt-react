@@ -156,7 +156,7 @@ export const PaxTerminalOverview = ({terminal ,timeRange, staff, desks, flights,
                   <ListItem disableGutters disablePadding>
                     <ListItemIcon sx={{minWidth: '30px'}}>
                       {item.pressure === '+' ?
-                        <KeyboardArrowUpIcon sx={{ fill: 'black' }} /> : <KeyboardArrowDownIcon sx={{ fill: 'black' }} />
+                        <KeyboardArrowUpIcon sx={{ fill: 'black' , fontSize: '36px'}} /> : <KeyboardArrowDownIcon sx={{ fill: 'black', fontSize: '36px' }} />
                       }
                     </ListItemIcon>
                     <ListItemText>{item.from} to {item.to}</ListItemText>
