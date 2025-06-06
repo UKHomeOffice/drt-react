@@ -92,7 +92,7 @@ export const PaxTerminalOverview: Story = {
       from: '13:15',
       to: '14:15',
       egate: 725,
-      eea: 346,
+      eea: 1346,
       noneea: 72,
     },
     {
@@ -100,12 +100,12 @@ export const PaxTerminalOverview: Story = {
       to: '15:15',
       egate: 67,
       eea: 89,
-      noneea: 392,
+      noneea: 1392,
     },
     {
       from: '15:15',
       to: '16:15',
-      egate: 132,
+      egate: 1132,
       eea: 256,
       noneea: 45,
     }

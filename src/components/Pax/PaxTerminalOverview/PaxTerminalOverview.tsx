@@ -34,7 +34,13 @@ export interface IPaxTerminalOverview {
 export const PaxTerminalOverview = ({terminal ,timeRange,staff, desks, flights, chartData, pressure, estimates, currentTime}: IPaxTerminalOverview) => {
   const theme = useTheme();
   const is_mobile = useMediaQuery(theme.breakpoints.down('md'));
-
+  const timeRangeMap = new Map<number, string>([
+                                                 [45, "45 minutes"],
+                                                 [90, "90 minutes"],
+                                                 [180, "3 hours"],
+                                                 [360, "6 hours"],
+                                                 [540, "9 hours"]
+                                               ]);
   return (
     <Stack direction={is_mobile ? 'column' : 'row'} spacing={2} alignItems={'stretch'}>
       <Box>
@@ -83,21 +89,21 @@ export const PaxTerminalOverview = ({terminal ,timeRange,staff, desks, flights, 
                     return (
                       <TableRow>
                         <TableCell><strong className='nowrap'>{estimate.from} to {estimate.to}</strong></TableCell>
-                        <TableCell className='nowrap' align='right'>{estimate.egate + estimate.eea + estimate.noneea}</TableCell>
-                        <TableCell className='nowrap' align='right'>{estimate.egate}</TableCell>
-                        <TableCell className='nowrap' align='right'>{estimate.eea}</TableCell>
-                        <TableCell className='nowrap' align='right'>{estimate.noneea}</TableCell>
+                        <TableCell className='nowrap' align='right'>{(estimate.egate + estimate.eea + estimate.noneea).toLocaleString()}</TableCell>
+                        <TableCell className='nowrap' align='right'>{estimate.egate.toLocaleString()}</TableCell>
+                        <TableCell className='nowrap' align='right'>{estimate.eea.toLocaleString()}</TableCell>
+                        <TableCell className='nowrap' align='right'>{estimate.noneea.toLocaleString()}</TableCell>
                       </TableRow>
                     )
                   })
                 }
               </TableBody>
               <TableFooter>
-                <TableCell><strong className='nowrap'>{3 * timeRange} minutes total</strong></TableCell>
-                <TableCell align='right'><strong>{estimates.reduce((total, estimate) => total + estimate.egate + estimate.eea + estimate.noneea, 0 )}</strong></TableCell>
-                <TableCell align='right'><strong>{estimates.reduce((total, estimate) => total + estimate.egate, 0 )}</strong></TableCell>
-                <TableCell align='right'><strong>{estimates.reduce((total, estimate) => total + estimate.eea, 0 )}</strong></TableCell>
-                <TableCell align='right'><strong>{estimates.reduce((total, estimate) => total + estimate.noneea, 0 )}</strong></TableCell>
+                <TableCell><strong className='nowrap'>{timeRangeMap.get(3 * timeRange)} total</strong></TableCell>
+                <TableCell align='right'><strong>{estimates.reduce((total, estimate) => total + estimate.egate + estimate.eea + estimate.noneea, 0 ).toLocaleString()}</strong></TableCell>
+                <TableCell align='right'><strong>{estimates.reduce((total, estimate) => total + estimate.egate, 0 ).toLocaleString()}</strong></TableCell>
+                <TableCell align='right'><strong>{estimates.reduce((total, estimate) => total + estimate.eea, 0 ).toLocaleString()}</strong></TableCell>
+                <TableCell align='right'><strong>{estimates.reduce((total, estimate) => total + estimate.noneea, 0 ).toLocaleString()}</strong></TableCell>
               </TableFooter>
             </Table>
           </CardContent>
@@ -108,7 +114,7 @@ export const PaxTerminalOverview = ({terminal ,timeRange,staff, desks, flights, 
           <CardContent>
             <Stack direction={'column'} mb={2}>
               <Typography component={'h4'} variant={'h5'}>Pax splits</Typography>
-              <Typography>{estimates.reduce((total, estimate) => total + estimate.egate + estimate.eea + estimate.noneea, 0 )} total pax expected from {estimates[0].from} to {estimates[estimates.length -1].to}</Typography>  
+              <Typography>{estimates.reduce((total, estimate) => total + estimate.egate + estimate.eea + estimate.noneea, 0 ).toLocaleString()} total pax expected from {estimates[0].from} to {estimates[estimates.length -1].to}</Typography>
             </Stack>
             <div>
             <Doughnut
