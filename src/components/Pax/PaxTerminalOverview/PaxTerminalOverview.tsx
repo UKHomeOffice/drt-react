@@ -101,11 +101,11 @@ export const PaxTerminalOverview = ({terminal ,timeRange, staff, desks, flights,
                 }
               </TableBody>
               <TableFooter>
-                <TableCell><strong className='nowrap'>{timeRangeMap.get(3 * timeRange)} total</strong></TableCell>
-                <TableCell align='right'><strong>{estimates.reduce((total, estimate) => total + estimate.egate + estimate.eea + estimate.noneea, 0 ).toLocaleString()}</strong></TableCell>
-                <TableCell align='right'><strong>{estimates.reduce((total, estimate) => total + estimate.egate, 0 ).toLocaleString()}</strong></TableCell>
-                <TableCell align='right'><strong>{estimates.reduce((total, estimate) => total + estimate.eea, 0 ).toLocaleString()}</strong></TableCell>
-                <TableCell align='right'><strong>{estimates.reduce((total, estimate) => total + estimate.noneea, 0 ).toLocaleString()}</strong></TableCell>
+                <TableCell sx={{ color: '#000000de'}}><strong className='nowrap'>{timeRangeMap.get(3 * timeRange)} total</strong></TableCell>
+                <TableCell align='right' sx={{ color: '#000000de'}}><strong>{estimates.reduce((total, estimate) => total + estimate.egate + estimate.eea + estimate.noneea, 0 ).toLocaleString()}</strong></TableCell>
+                <TableCell align='right' sx={{ color: '#000000de'}}><strong>{estimates.reduce((total, estimate) => total + estimate.egate, 0 ).toLocaleString()}</strong></TableCell>
+                <TableCell align='right' sx={{ color: '#000000de'}}><strong>{estimates.reduce((total, estimate) => total + estimate.eea, 0 ).toLocaleString()}</strong></TableCell>
+                <TableCell align='right' sx={{ color: '#000000de'}}><strong>{estimates.reduce((total, estimate) => total + estimate.noneea, 0 ).toLocaleString()}</strong></TableCell>
               </TableFooter>
             </Table>
           </CardContent>
@@ -156,7 +156,7 @@ export const PaxTerminalOverview = ({terminal ,timeRange, staff, desks, flights,
                   <ListItem disableGutters disablePadding>
                     <ListItemIcon sx={{minWidth: '30px'}}>
                       {item.pressure === '+' ?
-                        <KeyboardArrowUpIcon sx={{ fill: 'black' , fontSize: '36px'}} /> : <KeyboardArrowDownIcon sx={{ fill: 'black', fontSize: '36px' }} />
+                        <KeyboardArrowUpIcon sx={{ fill: 'black' , fontSize: '32px'}} /> : <KeyboardArrowDownIcon sx={{ fill: 'black', fontSize: '32px' }} />
                       }
                     </ListItemIcon>
                     <ListItemText>{item.from} to {item.to}</ListItemText>
