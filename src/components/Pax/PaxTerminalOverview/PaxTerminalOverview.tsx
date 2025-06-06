@@ -15,6 +15,7 @@ export interface IPaxTerminalOverview {
   desks: number,
   staff: number,
   flights: any[],
+  ragStatus: string,
   chartData: ChartData<'doughnut'>,
   pressure: {
     pressure: '+' | '-',
@@ -31,7 +32,7 @@ export interface IPaxTerminalOverview {
   currentTime: string
 }
 
-export const PaxTerminalOverview = ({terminal ,timeRange,staff, desks, flights, chartData, pressure, estimates, currentTime}: IPaxTerminalOverview) => {
+export const PaxTerminalOverview = ({terminal ,timeRange, staff, desks, flights, ragStatus, chartData, pressure, estimates, currentTime}: IPaxTerminalOverview) => {
   const theme = useTheme();
   const is_mobile = useMediaQuery(theme.breakpoints.down('md'));
   const timeRangeMap = new Map<number, string>([
@@ -44,7 +45,7 @@ export const PaxTerminalOverview = ({terminal ,timeRange,staff, desks, flights, 
   return (
     <Stack direction={is_mobile ? 'column' : 'row'} spacing={2} alignItems={'stretch'}>
       <Box>
-        <Card variant='outlined' sx={{height: '100%', backgroundColor: '#82AA63'}}>
+        <Card variant='outlined' sx={{height: '100%', backgroundColor: ragStatus}}>
           <CardContent>
             <Typography component={'h4'} variant={'h5'} mb={2} sx={{color: 'white'}}>{flights.length} flights</Typography>
             <Table sx={{fontSize: '1.2em'}}>
