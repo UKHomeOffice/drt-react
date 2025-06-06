@@ -6,6 +6,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartData } from 'chart.
 import { Doughnut } from 'react-chartjs-2';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { PaxRAGStatusCard } from './PaxRAGStatusCard';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -32,46 +33,6 @@ export interface IPaxTerminalOverview {
   currentTime: string
 }
 
-const RagCard = styled(Card)(({theme}) => ({
-  '.rag-card-time': {
-    color: '#fff',
-    fontSize: '1.1em',
-    border: 'none'
-  },
-  '.rag-card-staff-desks': {
-    color: '#fff',
-    fontSize: '1.1em',
-    border: 'none'
-  },
-  '&.green':{
-    backgroundColor: theme.palette.success.main,
-    '.rag-card-time': {
-      backgroundColor: theme.palette.success.dark,
-    },
-    '.rag-card-staff-desks': {
-      backgroundColor: lighten(theme.palette.success.dark, 0.1),
-    }
-  },
-  '&.red':{
-    backgroundColor: theme.palette.error.main,
-    '.rag-card-time': {
-      backgroundColor: theme.palette.error.dark,
-    },
-    '.rag-card-staff-desks': {
-      backgroundColor: lighten(theme.palette.error.dark, 0.2),
-    }
-  },
-  '&.amber':{
-    backgroundColor: theme.palette.warning.main,
-    '.rag-card-time': {
-      backgroundColor: theme.palette.warning.dark,
-    },
-    '.rag-card-staff-desks': {
-      backgroundColor: lighten(theme.palette.warning.dark, 0.2),
-    }
-  },
-}));
-
 export const PaxTerminalOverview = ({terminal ,timeRange, staff, desks, flights, ragStatus, chartData, pressure, estimates, currentTime}: IPaxTerminalOverview) => {
   const theme = useTheme();
   const is_mobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -85,7 +46,7 @@ export const PaxTerminalOverview = ({terminal ,timeRange, staff, desks, flights,
   return (
     <Stack direction={is_mobile ? 'column' : 'row'} spacing={2} alignItems={'stretch'}>
       <Box>
-        <RagCard className={ragStatus} variant='outlined' sx={{height: '100%',}}>
+        <PaxRAGStatusCard className={ragStatus} variant='outlined' sx={{height: '100%',}}>
           <CardContent>
             <Typography component={'h4'} variant={'h5'} mb={2} sx={{color: 'white'}}>{flights.length} flights</Typography>
             <Table sx={{fontSize: '1.2em'}}>
@@ -102,7 +63,7 @@ export const PaxTerminalOverview = ({terminal ,timeRange, staff, desks, flights,
               </TableBody>
             </Table>
           </CardContent>
-        </RagCard>
+        </PaxRAGStatusCard>
       </Box>
       <Box>
         <Card variant='outlined' sx={{height: '100%'}}>
