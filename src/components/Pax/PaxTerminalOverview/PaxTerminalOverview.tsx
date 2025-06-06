@@ -1,6 +1,6 @@
 import React from 'react';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
+import { lighten, styled, useTheme } from '@mui/material/styles';
 import {Card, CardContent, Grid, Link, Stack, Table, TableBody, TableCell, TableFooter, TableHead, TableRow, Typography, Box, Tab, List, ListItem, ListItemIcon, ListItemText} from "@mui/material";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartData } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
@@ -15,7 +15,7 @@ export interface IPaxTerminalOverview {
   desks: number,
   staff: number,
   flights: any[],
-  ragStatus: string,
+  ragStatus: 'green' | 'amber' | 'red',
   chartData: ChartData<'doughnut'>,
   pressure: {
     pressure: '+' | '-',
@@ -32,6 +32,46 @@ export interface IPaxTerminalOverview {
   currentTime: string
 }
 
+const RagCard = styled(Card)(({theme}) => ({
+  '.rag-card-time': {
+    color: '#fff',
+    fontSize: '1.1em',
+    border: 'none'
+  },
+  '.rag-card-staff-desks': {
+    color: '#fff',
+    fontSize: '1.1em',
+    border: 'none'
+  },
+  '&.green':{
+    backgroundColor: theme.palette.success.main,
+    '.rag-card-time': {
+      backgroundColor: theme.palette.success.dark,
+    },
+    '.rag-card-staff-desks': {
+      backgroundColor: lighten(theme.palette.success.dark, 0.1),
+    }
+  },
+  '&.red':{
+    backgroundColor: theme.palette.error.main,
+    '.rag-card-time': {
+      backgroundColor: theme.palette.error.dark,
+    },
+    '.rag-card-staff-desks': {
+      backgroundColor: lighten(theme.palette.error.dark, 0.2),
+    }
+  },
+  '&.amber':{
+    backgroundColor: theme.palette.warning.main,
+    '.rag-card-time': {
+      backgroundColor: theme.palette.warning.dark,
+    },
+    '.rag-card-staff-desks': {
+      backgroundColor: lighten(theme.palette.warning.dark, 0.2),
+    }
+  },
+}));
+
 export const PaxTerminalOverview = ({terminal ,timeRange, staff, desks, flights, ragStatus, chartData, pressure, estimates, currentTime}: IPaxTerminalOverview) => {
   const theme = useTheme();
   const is_mobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -45,24 +85,24 @@ export const PaxTerminalOverview = ({terminal ,timeRange, staff, desks, flights,
   return (
     <Stack direction={is_mobile ? 'column' : 'row'} spacing={2} alignItems={'stretch'}>
       <Box>
-        <Card variant='outlined' sx={{height: '100%', backgroundColor: ragStatus}}>
+        <RagCard className={ragStatus} variant='outlined' sx={{height: '100%',}}>
           <CardContent>
             <Typography component={'h4'} variant={'h5'} mb={2} sx={{color: 'white'}}>{flights.length} flights</Typography>
             <Table sx={{fontSize: '1.2em'}}>
               <TableHead>
                 <TableRow>
-                  <TableCell align='center' colSpan={2} sx={{backgroundColor: '#2E4C25', border: 'none', fontSize: '1.1em'}}><strong>{currentTime}</strong></TableCell>
+                  <TableCell className='rag-card-time' align='center' colSpan={2}><strong>{currentTime}</strong></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 <TableRow>
-                  <TableCell align='center' sx={{backgroundColor: '#4A7E38', color: 'white', border: 'none', fontSize: '1.1em'}}><strong>Staff<br/>{staff}</strong></TableCell>
-                  <TableCell align='center' sx={{backgroundColor: '#4A7E38', color: 'white', border: 'none', fontSize: '1.1em'}}><strong>Desks<br/>{desks}</strong></TableCell>
+                  <TableCell className='rag-card-staff-desks' align='center'><strong>Staff<br/>{staff}</strong></TableCell>
+                  <TableCell className='rag-card-staff-desks' align='center'><strong>Desks<br/>{desks}</strong></TableCell>
                 </TableRow>
               </TableBody>
             </Table>
           </CardContent>
-        </Card>
+        </RagCard>
       </Box>
       <Box>
         <Card variant='outlined' sx={{height: '100%'}}>
