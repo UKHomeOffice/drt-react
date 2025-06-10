@@ -53,7 +53,7 @@ export const formControlLabelTheme = {
 export const formLabelTheme = {
   styleOverrides: {
     root: {
-      color: themePrimatives.palette.common.black,
+      color: `${themePrimatives.palette.common.black} !important`,
       '&.MuiInputLabel-root.Mui-focused': {
         color: themePrimatives.palette.common.black
       }

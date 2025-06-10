@@ -35,7 +35,7 @@ export const autocompleteTheme = {
         position: 'relative',
         top: '4px',
         left: themePrimatives.spacing(1),
-        zIndex: 2,
+        zIndex: 3,
         '& + input': {
         }
       }

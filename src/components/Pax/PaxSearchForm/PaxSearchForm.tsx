@@ -297,7 +297,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
         <FormLabel htmlFor='time-machine' sx={{fontWeight: 'bold'}}>Time Machine</FormLabel>
         <InfoTooltip
           text='See what DRT was showing for this day on a specific date & time in the past. This can be useful to compare what DRT forecasted for a date compared to what ended up happening'/>
-        <Switch id="time-machine" checked={formState.timeMachine} onChange={handleChangeTimeMachine}/>
+        <Switch color='info' id="time-machine" checked={formState.timeMachine} onChange={handleChangeTimeMachine}/>
         <Typography variant='body1'>{formState.timeMachine ? 'On' : 'Off'}</Typography>
       </Stack>
     </PaxSearchFormWrapper>

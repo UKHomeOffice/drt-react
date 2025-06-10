@@ -221,7 +221,7 @@ export const FlightFlaggerFilters = ({
         <InputLabel sx={{mb: 1}}><strong>Highlight flights</strong></InputLabel>
         <Button
           data-testid="show-filters"
-          color="primary"
+          color="info"
           onClick={() => toggleFilters()}
           disableElevation
           variant="contained"
@@ -311,7 +311,7 @@ export const FlightFlaggerFilters = ({
                 <FormGroup>
                   <FormControlLabel
                     control={
-                      <Checkbox data-testid="show-visa-nationals-check"
+                      <Checkbox color='info' data-testid="show-visa-nationals-check"
                                 checked={currentFormState.showNumberOfVisaNationals}
                                 onChange={handleCheckboxChange}
                                 inputProps={{'aria-label': 'show visa nationals'}}
@@ -323,6 +323,7 @@ export const FlightFlaggerFilters = ({
                     <FormControlLabel
                       control={
                         <Checkbox
+                          color='info'
                           data-testid="require-all-selected-check"
                           disabled={!someCriteriaSelected(currentFormState)}
                           checked={currentFormState.requireAllSelected}
@@ -342,7 +343,7 @@ export const FlightFlaggerFilters = ({
                         sx={{mr: 2}}>
                   Cancel
                 </Button>
-                <Button data-testid="flight-flagger-filter-submit"
+                <Button color="info" data-testid="flight-flagger-filter-submit"
                         variant='contained'
                         onClick={handleApply(currentFormState)}
                         disabled={!formIsTouched(appliedSearchFlags, currentFormState)}>
