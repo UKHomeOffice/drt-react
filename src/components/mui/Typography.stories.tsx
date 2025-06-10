@@ -9,7 +9,7 @@ const meta: Meta<typeof MuiTypography> = {
     args: {
         variant: 'body1',
         color: 'textPrimary',
-        children: 'The quick brown fox jumps over the lazy dog',
+        children: 'Sphinx of black quartz, hear my vow!',
     },
     argTypes: {
         children: {

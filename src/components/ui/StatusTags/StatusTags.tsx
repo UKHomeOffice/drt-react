@@ -9,6 +9,7 @@ import ReportIcon from '@mui/icons-material/Report';
 const StyledAlert = styled(Alert)<AlertProps>(() => ({
   fontWeight: 'bold',
   color: '#fff',
+  alignItems: 'center',
   '& .MuiSvgIcon-root': {
     color: '#fff',
     width: '0.9em',
