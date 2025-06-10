@@ -12,6 +12,7 @@ export const inputBaseTheme = {
         lineHeight: 1.25,
         minHeight: '40px',
         boxSizing: 'border-box',
+        outline: `3px solid transparent`,
         '&:focus': {
           outline: `3px solid #fd0`,
           outlineOffset: 0,

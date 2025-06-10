@@ -3,7 +3,7 @@ import { themePrimatives } from "./primatives";
 
 export const typographyTheme = {
   fontFamily: '"Roboto","Helvetica","Arial",sans-serif',
-  fontSize: 16,
+  fontSize: 19,
   h1: { //govuk-heading-xl
     fontSize: '32px',
     lineHeight: '35px',

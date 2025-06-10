@@ -19,3 +19,14 @@ export const TextField: Story = {
     }
   }
 };
+
+export const InvalidTextField: Story = {
+  args: {
+    label: 'Invalid textfield',
+    error: true,
+    helperText: 'This field is invalid',
+    InputLabelProps: {
+      shrink: true,
+    }
+  }
+};

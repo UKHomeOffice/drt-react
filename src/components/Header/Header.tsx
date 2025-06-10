@@ -142,7 +142,7 @@ const Header = ({
 
               <Button
                 data-testid="mobile-admin-menu-trigger"
-                variant="outlined"
+                variant="contained"
                 aria-controls={adminMenuOpen ? 'demo-positioned-menu' : undefined}
                 aria-haspopup="true"
                 aria-expanded={adminMenuOpen ? 'true' : undefined}

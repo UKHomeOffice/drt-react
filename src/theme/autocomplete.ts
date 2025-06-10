@@ -11,7 +11,7 @@ export const autocompleteTheme = {
       },
       endAdornment: {
         zIndex: 2,
-        backgroundColor: '#fff',
+        backgroundColor: 'transparent',
         top: themePrimatives.spacing(4),
         right: 0,
       },

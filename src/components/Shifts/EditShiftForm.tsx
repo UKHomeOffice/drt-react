@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import {Box, Button, Card, CardContent, CardHeader, FormControl, FormHelperText, Grid, IconButton, InputLabel, MenuItem, Select, Stack, TextField, Tooltip, Typography} from '@mui/material';
+import {Alert, Box, Button, Card, CardContent, CardHeader, FormControl, FormHelperText, Grid, IconButton, InputLabel, MenuItem, Select, Stack, TextField, Tooltip, Typography} from '@mui/material';
 import {intervalEndTimeOptions, intervalStartTimeOptions} from '../Util';
 import CloseIcon from "@mui/icons-material/Close";
 import {ShiftForm} from "./AddShiftsForm";
+import { AccessTime } from '@mui/icons-material';
 
 export const EditShiftForm = ({index, formState, onUpdate, interval, removeShift, showSubmitErrors}: {
   index: number,
@@ -54,23 +55,13 @@ export const EditShiftForm = ({index, formState, onUpdate, interval, removeShift
       } />
     <CardContent>
       <Stack direction="column" spacing={3}>
-        {(nameError || (showSubmitErrors && formState.name === '')) && (
-          <Typography color="error" variant="body2">Please add shift name</Typography>
-        )}
-        {showSubmitErrors && startTimeError && (
-          <Typography color="error" variant="body2">Please select start time</Typography>
-        )}
-        {showSubmitErrors && endTimeError && (
-          <Typography color="error" variant="body2">Please select end time</Typography>
-        )}
-        {timeError && (
-          <Typography color="error" variant="body2">Start time and end time cannot be the same</Typography>
-        )}
         {formState.endTime && formState.startTime && formState.endTime < formState.startTime && (
           <Typography color="warning" variant="body2">This is a midnight shift spanning to the next day</Typography>
         )}
         <TextField
           label="Name of shift"
+          error={nameError || (showSubmitErrors && formState.name === '')}
+          helperText={nameError || (showSubmitErrors && formState.name === '') ? 'Please add shift name' : ''}
           fullWidth
           value={formState.name}
           placeholder="Enter the shift name"
@@ -84,7 +75,9 @@ export const EditShiftForm = ({index, formState, onUpdate, interval, removeShift
         />
         <FormControl fullWidth>
           <InputLabel>Start time</InputLabel>
+          {showSubmitErrors && startTimeError && <FormHelperText error={true}>Please select start time</FormHelperText>}
           <Select
+            error={showSubmitErrors && startTimeError}
             value={startTimeOptions.includes(formState.startTime) ? formState.startTime : 'Select start time'}
             onChange={(e) => {
               const [hour, minute] = (e.target.value as string).split(':').map(Number);
@@ -107,7 +100,10 @@ export const EditShiftForm = ({index, formState, onUpdate, interval, removeShift
         </FormControl>
         <FormControl sx={{width: '100%'}}>
           <InputLabel>End time</InputLabel>
+          {showSubmitErrors && endTimeError && <FormHelperText error={true}>Please select end time</FormHelperText>}
+          {timeError && <FormHelperText error={true}>Start time and end time cannot be the same</FormHelperText>}
           <Select
+            error={(showSubmitErrors && endTimeError) || timeError}
             variant="outlined"
             value={startTimeOptions.includes(formState.endTime) ? formState.endTime : 'Select end time'}
             onChange={(e) => {
@@ -128,6 +124,7 @@ export const EditShiftForm = ({index, formState, onUpdate, interval, removeShift
             ))}
           </Select>
         </FormControl>
+        {(formState.endTime && formState.startTime && formState.endTime < formState.startTime) && <Alert icon={<AccessTime />} color='info'>This is a midnight shift spanning to the next day</Alert>}
         <TextField
           label="Default staff number (optional)"
           helperText="For current season only (change this at any time). It will only overwrite zero staffing in DRT."
