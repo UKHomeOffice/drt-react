@@ -103,6 +103,13 @@ export const linkTheme = {
       },
       '&:active': {
         color: '#0b0c0c'
+      },
+      '&:focus': {
+        backgroundColor: '#fd0',
+        color: `${themePrimatives.palette.common.black} !important`,
+        textDecorationColor: `${themePrimatives.palette.common.black} !important`,
+        boxShadow: `0 -2px #fd0,0 4px #0b0c0c`,
+        textDecoration: 'none'
       }
     }
   }
