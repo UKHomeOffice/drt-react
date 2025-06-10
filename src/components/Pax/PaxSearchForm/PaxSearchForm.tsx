@@ -1,32 +1,12 @@
 import {DatePicker} from '@mui/x-date-pickers';
 import {InfoTooltip} from '../../ui/InfoTooltip';
-import BoltIcon from '@mui/icons-material/Bolt';
-import TimerIcon from '@mui/icons-material/Timer';
-import UpdateIcon from '@mui/icons-material/Update';
-import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
-import WatchLaterIcon from '@mui/icons-material/WatchLater';
-import BrowseGalleryIcon from '@mui/icons-material/BrowseGallery';
 import OfflineBoltTwoToneIcon from '@mui/icons-material/OfflineBoltTwoTone';
 
 import moment from 'moment';
-import {
-  Box,
-  Grid,
-  ToggleButton,
-  ToggleButtonGroup,
-  Stack,
-  Switch,
-  FormLabel,
-  Typography,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  breadcrumbsClasses,
-  IconButton
-} from '@mui/material';
+import { Box, Grid, ToggleButton, ToggleButtonGroup, Stack, Switch, FormLabel, Typography, Select, MenuItem, FormControl, InputLabel, Divider} from '@mui/material';
 import * as React from 'react';
-import {intervalEndTimeOptions, intervalStartTimeOptions} from "../../Util";
+import {intervalStartTimeOptions} from "../../Util";
+import { styled } from '@mui/material/styles';
 
 export enum PaxSearchFormDay {
   Yesterday = "yesterday",
@@ -62,6 +42,15 @@ export type PaxSearchFormPayload = {
 export type IPaxSearchForm = PaxSearchFormPayload & {
   onChange: (values: PaxSearchFormPayload) => void
 }
+
+const PaxSearchFormWrapper = styled(Box)(({ theme }) => ({
+  padding: theme.spacing(2), 
+  backgroundColor: theme.palette.secondary.light || theme.palette.grey[200],
+  '.MuiInputLabel-root': {
+    display: 'none',
+  }
+}));
+
 
 export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMachine, onChange}: IPaxSearchForm) => {
 
@@ -209,36 +198,41 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
   }
 
   return (
-    <Box sx={(theme) => ({
-      padding: 2,
-      backgroundColor: theme.palette.secondary.light || theme.palette.grey[200]
-    })}>
-      <Grid container spacing={2} flexWrap={'nowrap'}>
-        <Grid item>
+    <PaxSearchFormWrapper sx={(theme)=>({ padding: 2, backgroundColor: theme.palette.secondary.light || theme.palette.grey[200]})}>
+      <Grid container spacing={2} mb={3}>
+        <Grid item flexGrow={0}>
           <Stack spacing={2}>
-            <ToggleButtonGroup exclusive color='primary' size='medium' value={formState.day} onChange={handleChangeDay}>
+            <ToggleButtonGroup exclusive color='info' size='medium' value={formState.day} onChange={handleChangeDay}>
               <ToggleButton value="yesterday" defaultChecked>Yesterday</ToggleButton>
               <ToggleButton value="today">Today</ToggleButton>
               <ToggleButton value="tomorrow">Tomorrow</ToggleButton>
             </ToggleButtonGroup>
-            <ToggleButtonGroup exclusive color='primary' size='medium' value={formState.time} onChange={handleChangeTime}>
-              <ToggleButton value="now" disabled={formState.day !== PaxSearchFormDay.Today}><OfflineBoltTwoToneIcon className='live' />Live</ToggleButton>
-              <ToggleButton value="24hour">24hr</ToggleButton>
-              <ToggleButton value="range">Custom</ToggleButton>
-            </ToggleButtonGroup>
           </Stack>
         </Grid>
         <Grid item flexGrow={1}>
+          <DatePicker
+            sx={{width: '100%'}}
+            label="Date"
+            format="DD/MM/YYYY"
+            value={formState.arrivalDate}
+            showDaysOutsideCurrentMonth
+            minDate={moment().subtract(2, 'years')}
+            maxDate={moment().add(2, 'years')}
+            onChange={(value) => handleDatepickerChange('arrivalDate', value || moment())}
+          />
+        </Grid>
+      </Grid>
+      <Divider sx={{mb: 3}} />
+      <Grid container spacing={2}>
+        <Grid item>
+          <ToggleButtonGroup exclusive color='info' size='medium' value={formState.time} onChange={handleChangeTime}>
+            <ToggleButton value="now" disabled={formState.day !== PaxSearchFormDay.Today}><OfflineBoltTwoToneIcon sx={{fontSize: '0.8em', mr: 1}} />Live</ToggleButton>
+            <ToggleButton value="24hour">24hr</ToggleButton>
+            <ToggleButton value="range">Custom</ToggleButton>
+          </ToggleButtonGroup>
+        </Grid>
+        <Grid item flexGrow={1}>
           <Stack spacing={2}>
-            <DatePicker
-              label="Date"
-              format="DD/MM/YYYY"
-              value={formState.arrivalDate}
-              showDaysOutsideCurrentMonth
-              minDate={moment().subtract(2, 'years')}
-              maxDate={moment().add(2, 'years')}
-              onChange={(value) => handleDatepickerChange('arrivalDate', value || moment())}
-            />
             <Grid container >
               <Grid item xs={6} pr={0.5}>
                 <FormControl fullWidth>
@@ -251,6 +245,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
                     label="Age"
                     fullWidth
                     inputProps={{role: 'start-time-select'}}
+                    sx={{height: '42px'}}
                     onChange={(e) => {
                       // const [hour, minute] = e.target.value.split(':').map(Number);
                       handleTimeChange('fromDate', e.target.value);
@@ -281,8 +276,8 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
                   >
                     {
                       Array.from(Array(36 - parseInt(formState.fromDate.substring(0,2)))).map((value, index) => {
-                        let fromHour = parseInt(formState.fromDate.substring(0,2));
-                        let time = moment().set('hours', fromHour).add(index + 1, 'hours');
+                        const fromHour = parseInt(formState.fromDate.substring(0,2));
+                        const time = moment().set('hours', fromHour).add(index + 1, 'hours');
                         return <MenuItem
                           key={time.toISOString()}
                           value={index+1}
@@ -305,6 +300,6 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
         <Switch id="time-machine" checked={formState.timeMachine} onChange={handleChangeTimeMachine}/>
         <Typography variant='body1'>{formState.timeMachine ? 'On' : 'Off'}</Typography>
       </Stack>
-    </Box>
+    </PaxSearchFormWrapper>
   )
 }

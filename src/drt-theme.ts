@@ -3,7 +3,7 @@ import { createTheme } from "@mui/material";
 import type {} from '@mui/x-date-pickers/themeAugmentation';
 import { themePrimatives } from "./theme/primatives";
 import React from "react";
-import { buttonTheme, buttonGroupTheme } from '../src/theme/buttons';
+import { buttonTheme, buttonGroupTheme, toggleButtonGroupTheme, toggleButtonTheme } from '../src/theme/buttons';
 import { inputBaseTheme, inputAdornmentTheme, inputLabelTheme, outlinedInputTheme, radioTheme } from "./theme/input";
 import { formControlLabelTheme, formLabelTheme, formHelperTextTheme, formControlTheme } from "./theme/formControl";
 import { selectTheme, nativeSelectTheme } from "./theme/select";
@@ -165,6 +165,12 @@ const drtTheme = createTheme({
     },
     MuiTableRow: {
       ...tableRowTheme,
+    },
+    MuiToggleButton: {
+      ...toggleButtonTheme,
+    },
+    MuiToggleButtonGroup: {
+      ...toggleButtonGroupTheme,
     },
     MuiPickersDay: {
       styleOverrides: {

@@ -3,15 +3,13 @@ import { themePrimatives } from "./primatives";
 
 export const buttonTheme = {
   styleOverrides: {
-    colorPrimary: {
-
-    },
     root: {
       display: 'inline-flex',
       justifyContent: 'center',
       textTransform: 'none',
       borderRadius: 0,
       fontWeight: 400,
+      padding: '8px 10px 7px',
       '&:hover': {
         boxShadow: 'inherit'
       },
@@ -184,5 +182,85 @@ export const buttonGroupTheme = {
 }
 
 export const toggleButtonTheme = {
-  
+  styleOverrides: {
+    root: {
+      backgroundColor: '#fff',
+      fontWeight: 400,
+      padding: '8px 10px 7px',
+      borderRadius: 0,
+      '&.MuiToggleButton-primary': {
+        backgroundColor: '#fff',
+        boxShadow: `0 2px 0 ${themePrimatives.palette.primary.main}`,
+        color: themePrimatives.palette.primary.main,
+      },
+      '&.Mui-selected.MuiToggleButton-primary': {
+        backgroundColor: themePrimatives.palette.primary.main,
+        boxShadow: `0 2px 0 ${themePrimatives.palette.primary.dark}`,
+        color: '#fff',
+      },
+      '&.MuiToggleButton-secondary': {
+        backgroundColor: '#fff',
+        boxShadow: `0 2px 0 ${themePrimatives.palette.secondary.main}`,
+        color: themePrimatives.palette.secondary.main,
+      },
+      '&.Mui-selected.MuiToggleButton-secondary': {
+        backgroundColor: themePrimatives.palette.secondary.main,
+        boxShadow: `0 2px 0 ${themePrimatives.palette.secondary.dark}`,
+        color: '#fff',
+      },
+      '&.MuiToggleButton-info': {
+        backgroundColor: '#fff',
+        boxShadow: `0 2px 0 ${themePrimatives.palette.info.main}`,
+        color: themePrimatives.palette.info.main,
+      },
+      '&.Mui-selected.MuiToggleButton-info': {
+        backgroundColor: themePrimatives.palette.info.main,
+        boxShadow: `0 2px 0 ${themePrimatives.palette.info.dark}`,
+        color: '#fff',
+      },
+      '&.MuiToggleButton-success': {
+        backgroundColor: '#fff',
+        boxShadow: `0 2px 0 ${themePrimatives.palette.success.main}`,
+        color: themePrimatives.palette.success.main,
+      },
+      '&.Mui-selected.MuiToggleButton-success': {
+        backgroundColor: themePrimatives.palette.success.main,
+        boxShadow: `0 2px 0 ${themePrimatives.palette.success.dark}`,
+        color: '#fff',
+      },
+      '&.MuiToggleButton-error': {
+        backgroundColor: '#fff',
+        boxShadow: `0 2px 0 ${themePrimatives.palette.error.main}`,
+        color: themePrimatives.palette.error.main,
+      },
+      '&.Mui-selected.MuiToggleButton-error': {
+        backgroundColor: themePrimatives.palette.error.main,
+        boxShadow: `0 2px 0 ${themePrimatives.palette.error.dark}`,
+        color: '#fff',
+      },
+      '&.MuiToggleButton-warning': {
+        backgroundColor: '#fff',
+        boxShadow: `0 2px 0 ${themePrimatives.palette.warning.main}`,
+        color: themePrimatives.palette.warning.main,
+      },
+      '&.Mui-selected.MuiToggleButton-warning': {
+        backgroundColor: themePrimatives.palette.warning.main,
+        boxShadow: `0 2px 0 ${themePrimatives.palette.warning.dark}`,
+        color: '#fff',
+      },
+      '&:disabled': {
+        pointerEvents: 'auto',
+        cursor: 'not-allowed !important',
+        color: 'inherit',
+        opacity: `0.5 !important`,
+      },
+    },
+  }
+}
+
+export const toggleButtonGroupTheme = {
+  styleOverrides: {
+    root: {
+    },
+  }
 }
