@@ -12,7 +12,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 export interface IPaxTerminalOverview {
   terminal: string,
-  timeRange: number,
+  periodLengthMinutes: number,
   desks: number,
   staff: number,
   flights: any[],
@@ -23,7 +23,7 @@ export interface IPaxTerminalOverview {
     from: string
     to: string
   }[];
-  estimates: {
+  periodQueuePaxCounts: {
     from: string
     to: string
     egate: number
@@ -33,7 +33,7 @@ export interface IPaxTerminalOverview {
   currentTime: string
 }
 
-export const PaxTerminalOverview = ({terminal ,timeRange, staff, desks, flights, ragStatus, chartData, pressure, estimates, currentTime}: IPaxTerminalOverview) => {
+export const PaxTerminalOverview = ({terminal ,periodLengthMinutes, staff, desks, flights, ragStatus, chartData, pressure, periodQueuePaxCounts, currentTime}: IPaxTerminalOverview) => {
   const theme = useTheme();
   const is_mobile = useMediaQuery(theme.breakpoints.down('md'));
   const timeRangeMap = new Map<number, string>([
@@ -87,7 +87,7 @@ export const PaxTerminalOverview = ({terminal ,timeRange, staff, desks, flights,
               </TableHead>
               <TableBody>
                 {
-                  estimates.map((estimate) => {
+                  periodQueuePaxCounts.map((estimate) => {
                     return (
                       <TableRow>
                         <TableCell><strong className='nowrap'>{estimate.from} to {estimate.to}</strong></TableCell>
@@ -101,11 +101,11 @@ export const PaxTerminalOverview = ({terminal ,timeRange, staff, desks, flights,
                 }
               </TableBody>
               <TableFooter>
-                <TableCell sx={{ color: '#000000de'}}><strong className='nowrap'>{timeRangeMap.get(3 * timeRange)} total</strong></TableCell>
-                <TableCell align='right' sx={{ color: '#000000de'}}><strong>{estimates.reduce((total, estimate) => total + estimate.egate + estimate.eea + estimate.noneea, 0 ).toLocaleString()}</strong></TableCell>
-                <TableCell align='right' sx={{ color: '#000000de'}}><strong>{estimates.reduce((total, estimate) => total + estimate.egate, 0 ).toLocaleString()}</strong></TableCell>
-                <TableCell align='right' sx={{ color: '#000000de'}}><strong>{estimates.reduce((total, estimate) => total + estimate.eea, 0 ).toLocaleString()}</strong></TableCell>
-                <TableCell align='right' sx={{ color: '#000000de'}}><strong>{estimates.reduce((total, estimate) => total + estimate.noneea, 0 ).toLocaleString()}</strong></TableCell>
+                <TableCell sx={{ color: '#000000de'}}><strong className='nowrap'>{timeRangeMap.get(3 * periodLengthMinutes)} total</strong></TableCell>
+                <TableCell align='right' sx={{ color: '#000000de'}}><strong>{periodQueuePaxCounts.reduce((total, estimate) => total + estimate.egate + estimate.eea + estimate.noneea, 0 ).toLocaleString()}</strong></TableCell>
+                <TableCell align='right' sx={{ color: '#000000de'}}><strong>{periodQueuePaxCounts.reduce((total, estimate) => total + estimate.egate, 0 ).toLocaleString()}</strong></TableCell>
+                <TableCell align='right' sx={{ color: '#000000de'}}><strong>{periodQueuePaxCounts.reduce((total, estimate) => total + estimate.eea, 0 ).toLocaleString()}</strong></TableCell>
+                <TableCell align='right' sx={{ color: '#000000de'}}><strong>{periodQueuePaxCounts.reduce((total, estimate) => total + estimate.noneea, 0 ).toLocaleString()}</strong></TableCell>
               </TableFooter>
             </Table>
           </CardContent>
@@ -114,9 +114,9 @@ export const PaxTerminalOverview = ({terminal ,timeRange, staff, desks, flights,
       <Box width={200 + Math.ceil(chartData.labels!.length / 7) * 350 }>
         <Card variant='outlined' sx={{height:'100%'}}>
           <CardContent>
-            <Stack direction={'column'} mb={2}>
+            <Stack direction={'column'} spacing={2} mb={2}>
               <Typography component={'h4'} variant={'h5'}>Pax splits</Typography>
-              <Typography>{estimates.reduce((total, estimate) => total + estimate.egate + estimate.eea + estimate.noneea, 0 ).toLocaleString()} total pax expected from {estimates[0].from} to {estimates[estimates.length -1].to}</Typography>
+              <Typography>{periodQueuePaxCounts.reduce((total, estimate) => total + estimate.egate + estimate.eea + estimate.noneea, 0 ).toLocaleString()} total pax expected from {periodQueuePaxCounts[0].from} to {periodQueuePaxCounts[periodQueuePaxCounts.length -1].to}</Typography>
             </Stack>
             <div>
             <Doughnut
