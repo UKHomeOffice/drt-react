@@ -1,6 +1,6 @@
 import React from "react";
 import { styled, Theme } from '@mui/material/styles';
-import {Alert, AlertProps, Button, Card, CardContent, Toolbar, Typography} from "@mui/material";
+import {Alert, AlertProps, Button, Card, CardContent, Stack, Toolbar, Typography} from "@mui/material";
 import EventRepeatIcon from '@mui/icons-material/EventRepeat';
 
 export interface AddShiftBarProps {
@@ -8,7 +8,7 @@ export interface AddShiftBarProps {
 }
 
 const StyledAddShiftBar = styled(Alert)<AlertProps>(({theme}: {theme: Theme}) => ({
-  backgroundColor: theme.palette.primary.main,
+  backgroundColor: theme.palette.info.main,
   border: 'none',
   color: 'white',
   '.MuiAlert-message': {
@@ -26,18 +26,20 @@ export const AddShiftBar = ({
                             }: AddShiftBarProps) => {
   return (
     <StyledAddShiftBar icon={<EventRepeatIcon />}>
+      <Stack direction={'row'} spacing={2} alignItems={'center'}>
         <Typography variant="h5">
           Save time: add staff to shifts
         </Typography>
-        <Button variant="outlined"
-                sx={{
-                  ml: 2,
-                  backgroundColor: 'white',
-                  '&:hover': {
-                    backgroundColor: 'secondary.contrastText',
-                    color: 'secondary.main'
-                  }
-                }} onClick={onClickGetStarted}>Get started</Button>
+        <Button size="small" variant="outlined" color="info"
+          sx={{
+            backgroundColor: 'white',
+            '&:hover': {
+              backgroundColor: 'info.contrastText',
+              color: 'info.main'
+            }
+          }} onClick={onClickGetStarted}>Get started</Button>
+
+      </Stack>
     </StyledAddShiftBar>
   );
 }
