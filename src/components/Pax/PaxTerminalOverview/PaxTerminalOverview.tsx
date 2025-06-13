@@ -48,7 +48,7 @@ export const PaxTerminalOverview = ({terminal ,periodLengthMinutes, staff, desks
       <Box>
         <PaxRAGStatusCard className={ragStatus} variant='outlined' sx={{height: '100%',}}>
           <CardContent>
-            <Typography component={'h4'} variant={'h5'} mb={2} sx={{color: 'white'}}>{flights.length} flights</Typography>
+            <Typography data-cy={`terminal-flights`} component={'h4'} variant={'h5'} mb={2} sx={{color: 'white'}}>{flights.length} flights</Typography>
             <Table sx={{fontSize: '1.2em'}}>
               <TableHead>
                 <TableRow>
