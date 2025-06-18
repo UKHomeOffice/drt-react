@@ -5,6 +5,9 @@ import { themePrimatives } from "./primatives";
 export const tableTheme = {
   styleOverrides: {
     root: {
+      '& .nowrap': {
+        whiteSpace: 'nowrap'
+      },
       '&.striped .MuiTableRow-root': {
         '&:nth-of-type(odd)': {
           backgroundColor: '#fff',
