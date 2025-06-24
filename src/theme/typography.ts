@@ -20,7 +20,7 @@ export const typographyTheme = {
     fontWeight: "bold",
   },
   h4: { //govuk-heading-s
-    fontSize: "19px",
+    fontSize: "16px",
     lineHeight: '25px',
     fontWeight: "bold",
   },
@@ -35,7 +35,7 @@ export const typographyTheme = {
     fontWeight: "normal",
   },
   subtitle1: { //govuk-body-sized
-    fontSize: "19px",
+    fontSize: "16px",
     lineHeight: '25px',
     fontStyle: 'italic',
     fontWeight: 'normal'
@@ -47,7 +47,7 @@ export const typographyTheme = {
     fontWeight: 'normal'
   },
   body1: { //'govuk-body
-    fontSize: "19px",
+    fontSize: "16px",
     lineHeight: '25px',
   },
   body2: { //govuk-body-s
@@ -59,7 +59,7 @@ export const typographyTheme = {
     lineHeight: '20px',
   },
   button: {
-    fontSize: '19px',
+    fontSize: '16px',
     lineHeight: '25px',
     fontWeight: "bold",
     textTransform: 'none',

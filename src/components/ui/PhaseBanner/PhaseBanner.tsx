@@ -12,7 +12,7 @@ const PhaseBannerTag = styled(Typography)(({theme}) => ({
   backgroundColor: '#bbd4ea',
   display: 'inline-block',
   marginRight: theme.spacing(3),
-  fontSize: '19px',
+  fontSize: '16px',
 }));
 
 export interface IPhaseBanner {

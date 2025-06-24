@@ -12,7 +12,7 @@ export const selectTheme = {
     select: {
       padding: '5px 40px 5px 5px',
       '.MuiListItemText-root': {
-        fontSize: '19px',
+        fontSize: '16px',
       }
     }
   }

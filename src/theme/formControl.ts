@@ -15,7 +15,7 @@ export const formControlTheme = {
         '.MuiFormHelperText-root': { 
           order: 2, 
           fontWeight: 'bold', 
-          fontSize: '19px', 
+          fontSize: '16px', 
           margin: `0 0 ${themePrimatives.spacing(2)}`
         },
         '.MuiInputBase-root': {

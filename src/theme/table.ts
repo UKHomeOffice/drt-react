@@ -33,7 +33,7 @@ export const tableRowTheme = {
 export const tableCellTheme = {
   styleOverrides: {
     root: {
-      fontSize: '19px',
+      fontSize: '16px',
       padding:`${themePrimatives.spacing(2)} ${themePrimatives.spacing(0)}`,
       borderBottom: `1px solid ${themePrimatives.palette.border.main}`
     },

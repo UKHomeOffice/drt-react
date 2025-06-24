@@ -5,7 +5,7 @@ import { Link, Typography } from "@mui/material";
 const ErrorSummaryWrapper = styled(Box)(({theme}) => ({
   border: `${theme.spacing(1)} solid ${theme.palette.error.main}`,
   padding: theme.spacing(4),
-  fontSize: '19px'
+  fontSize: '16px'
 }));
 
 const ErrorSummarylist = styled('ul')(({theme}) => ({

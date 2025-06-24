@@ -90,7 +90,7 @@ export const buttonTheme = {
       lineHeight: '20px',
     },
     sizeMedium: {
-      fontSize: '19px',
+      fontSize: '16px',
       lineHeight: '25px',
     }, 
     sizeLarge: {
