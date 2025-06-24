@@ -232,9 +232,8 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
           </ToggleButtonGroup>
         </Grid>
         <Grid item flexGrow={1}>
-          <Stack spacing={2}>
-            <Grid container >
-              <Grid item xs={6} pr={0.5}>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
                 <FormControl fullWidth>
                   <InputLabel id="from-date-label">From</InputLabel>
                   <Select
@@ -245,7 +244,6 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
                     label="Age"
                     fullWidth
                     inputProps={{role: 'start-time-select'}}
-                    sx={{height: '42px'}}
                     onChange={(e) => {
                       // const [hour, minute] = e.target.value.split(':').map(Number);
                       handleTimeChange('fromDate', e.target.value);
@@ -259,7 +257,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={6} pl={0.5}>
+              <Grid item xs={6}>
                 <FormControl fullWidth>
                   <InputLabel id="to-date-label">To</InputLabel>
                   <Select
@@ -290,7 +288,6 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
                 </FormControl>
               </Grid>
             </Grid>
-          </Stack>
         </Grid>
       </Grid>
       <Stack direction="row" sx={{alignItems: 'center', mt: 1}}>
