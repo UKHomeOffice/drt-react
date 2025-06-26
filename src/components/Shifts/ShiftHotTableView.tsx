@@ -9,6 +9,7 @@ import {registerAllModules} from 'handsontable/registry';
 import 'handsontable/dist/handsontable.full.min.css';
 import {LocalDate} from './LocalDate';
 import {drtTheme} from '../../index';
+import EditIcon from '@mui/icons-material/Edit';
 
 export interface ViewDate {
   year: number;
@@ -179,6 +180,7 @@ export interface ShiftHotTableViewProps {
   viewDate: ViewDate;
   shiftSummaries: ShiftSummaryStaffing[];
   handleSaveChanges: (shifts: ShiftSummaryStaffing[], changedAssignments: StaffTableEntry[]) => void;
+  handleEditShift: (index:number ,shiftSummary: ShiftSummary) => void;
 }
 
 export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
@@ -186,7 +188,8 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
                                                                       dayRange,
                                                                       viewDate,
                                                                       shiftSummaries,
-                                                                      handleSaveChanges
+                                                                      handleSaveChanges,
+                                                                      handleEditShift
                                                                     }) => {
   registerAllModules();
 
@@ -266,6 +269,22 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
             <Box display="flex" gap="20px" alignItems="center" paddingBottom="10px">
               <Typography>{`Time covered: ${shift.shiftSummary.startTime} to ${shift.shiftSummary.endTime}`}</Typography>
               <Typography>Default staff: {shift.shiftSummary.defaultStaffNumber}</Typography>
+              <Box
+                sx={{
+                  cursor: 'pointer',
+                  color: 'primary.main',
+                  textDecoration: 'underline',
+                  display: 'flex',
+                  alignItems: 'center',
+                  '&:hover': {
+                    textDecoration: 'none',
+                  },
+                }}
+                onClick={() => handleEditShift(index ,shift.shiftSummary)}
+              >
+                <EditIcon sx={{ marginRight: '5px' }} />
+                <Typography>Edit Shift</Typography>
+              </Box>
             </Box>
             <HotTable
               id={`hot-table-${index}`}

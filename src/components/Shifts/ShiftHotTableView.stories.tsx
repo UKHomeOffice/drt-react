@@ -45,6 +45,11 @@ const ShiftHotTableViewStory: React.FC = () => {
       viewDate={{year: 2025, month: 1, day: 1}}
       shiftSummaries={initialDefaultShifts}
       handleSaveChanges={handleSaveChanges}
+      handleEditShift={(index: number, shiftSummary: ShiftSummary) => {
+        // Function to handle editing a shift
+        console.log(`Editing shift at index ${index}:`, shiftSummary);
+        // Add your edit logic here
+      }}
     />
   );
 };
