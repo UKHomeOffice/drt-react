@@ -4,14 +4,23 @@ import {intervalEndTimeOptions, intervalStartTimeOptions} from '../Util';
 import CloseIcon from "@mui/icons-material/Close";
 import {ShiftForm} from "./AddShiftsForm";
 
-export const EditShiftForm = ({index, formState, onUpdate, interval, removeShift, showSubmitErrors}: {
-  index: number,
-  formState: ShiftForm,
-  onUpdate: (state: ShiftForm) => void,
-  interval: number,
-  removeShift: (idx: number) => void,
-  showSubmitErrors: boolean,
-}) => {
+export interface EditShiftFormProps {
+  index: number;
+  formState: ShiftForm;
+  onUpdate: (state: ShiftForm) => void;
+  interval: number;
+  removeShift: (id: number) => void;
+  showSubmitErrors: boolean;
+}
+
+export const EditShiftForm = ({
+                                index,
+                                formState,
+                                onUpdate,
+                                interval,
+                                removeShift,
+                                showSubmitErrors
+                              }: EditShiftFormProps) => {
 
   const [nameError, setNameError] = useState(false)
   const [startTimeError, setStartTimeError] = useState(true)

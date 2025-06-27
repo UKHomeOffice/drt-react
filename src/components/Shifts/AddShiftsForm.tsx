@@ -20,9 +20,10 @@ export interface ShiftsFormProps {
   interval: number;
   shiftForms: ShiftForm[];
   confirmHandler: (shiftForms: ShiftForm[]) => void;
+  isEdit: boolean
 }
 
-export const AddShiftsForm = ({port, terminal, interval, shiftForms, confirmHandler}: ShiftsFormProps) => {
+export const AddShiftsForm = ({port, terminal, interval, shiftForms, confirmHandler, isEdit}: ShiftsFormProps) => {
   const [shiftIdCounter, setShiftIdCounter] = useState(1);
 
   const [shifts, setShifts] = useState<ShiftForm[]>(Array.from(shiftForms).length > 0 ? shiftForms : [
@@ -62,9 +63,9 @@ export const AddShiftsForm = ({port, terminal, interval, shiftForms, confirmHand
 
     setShowErrors(false);
     setShifts([
-      ...shifts,
-      {id: shiftIdCounter + 1, name: '', startTime: '', endTime: '', defaultStaffNumber: 0}
-    ]);
+                ...shifts,
+                {id: shiftIdCounter + 1, name: '', startTime: '', endTime: '', defaultStaffNumber: 0}
+              ]);
     setShiftIdCounter(prevCounter => prevCounter + 1);
   };
 
@@ -77,28 +78,34 @@ export const AddShiftsForm = ({port, terminal, interval, shiftForms, confirmHand
       <Box>
         {!showConfirm ? (
           <Box sx={{p: 2, minWidth: '500px'}}>
-            <Typography sx={{fontSize: '20px'}}>Add staff to {port} {getAirportNameByCode(port)} {terminal}</Typography>
-            <Typography variant="h1" sx={{paddingBottom: '10px'}}>Step 1 of 2 - Create your shift pattern</Typography>
+            <Typography sx={{fontSize: '20px'}}>
+              {isEdit ? "Edit staff" : "Add staff"} to {port} {getAirportNameByCode(port)} {terminal}
+            </Typography>
+            <Typography variant="h1" sx={{paddingBottom: '10px'}}>
+              Step 1 of 2 - {isEdit ? "Edit" : "Create"} your shift pattern
+            </Typography>
             {shifts.map((form, index) => {
-              return <EditShiftForm index={index}
-                                    key={form.id}
-                                    formState={form}
-                                    onUpdate={state => {
-                                      const updatedShifts = shifts.map(shift => {
-                                        if (shift.id === state.id) {
-                                          return {...shift, ...state};
-                                        }
-                                        return shift;
-                                      });
-                                      setShifts(updatedShifts)
-                                      if (showErrors) {
-                                        setShowErrors(shiftsHaveErrors(updatedShifts))
-                                      }
-                                    }}
-                                    interval={interval}
-                                    removeShift={handleRemoveShift}
-                                    showSubmitErrors={showErrors}
-              />
+              return <Box>
+                <Typography sx={{fontSize: '20px'}}> {shifts.length} shifts with shift names {shifts.map(a => a.name)}</Typography>
+                <EditShiftForm index={index}
+                               key={form.id}
+                               formState={form}
+                               onUpdate={state => {
+                                 const updatedShifts = shifts.map(shift => {
+                                   if (shift.id === state.id) {
+                                     return {...shift, ...state};
+                                   }
+                                   return shift;
+                                 });
+                                 setShifts(updatedShifts)
+                                 if (showErrors) {
+                                   setShowErrors(shiftsHaveErrors(updatedShifts))
+                                 }
+                               }}
+                               interval={interval}
+                               removeShift={handleRemoveShift}
+                               showSubmitErrors={showErrors}
+                /></Box>
             })}
             <Box>
               <Button variant="outlined" color="primary" onClick={handleAddShift} sx={{gap: 0, paddingLeft: '0'}}>
