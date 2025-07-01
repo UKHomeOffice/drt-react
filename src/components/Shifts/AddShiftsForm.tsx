@@ -5,13 +5,14 @@ import {drtTheme} from "../../index";
 import {getAirportNameByCode} from "../../airports";
 import AddIcon from '@mui/icons-material/Add';
 import {EditShiftForm} from "./EditShiftForm";
-
+import { Months } from '../Util';
 export interface ShiftForm {
   id: number;
   name: string;
   startTime: string;
   endTime: string;
   defaultStaffNumber: number;
+  startMonth: number;
 }
 
 export interface ShiftsFormProps {
@@ -23,15 +24,20 @@ export interface ShiftsFormProps {
   isEditingPersistedShift: boolean
 }
 
-export const AddShiftsForm = ({port, terminal, interval, shiftForms, confirmHandler, isEditingPersistedShift}: ShiftsFormProps) => {
+export const AddShiftsForm = ({
+                                port,
+                                terminal,
+                                interval,
+                                shiftForms,
+                                confirmHandler,
+                                isEditingPersistedShift
+                              }: ShiftsFormProps) => {
   const [shiftIdCounter, setShiftIdCounter] = useState(1);
-
   const [shifts, setShifts] = useState<ShiftForm[]>(Array.from(shiftForms).length > 0 ? shiftForms : [
-    {id: shiftIdCounter, name: '', startTime: '', endTime: '', defaultStaffNumber: 0}
+    {id: shiftIdCounter, name: '', startTime: '', endTime: '', defaultStaffNumber: 0 , startMonth: Months[new Date().getMonth()].value}
   ]);
   const [showConfirm, setShowConfirm] = useState(false);
   const [showErrors, setShowErrors] = useState(false);
-
   const onContinue = () => {
     if (shiftsHaveErrors(shifts)) {
       setShowErrors(true);
@@ -62,9 +68,8 @@ export const AddShiftsForm = ({port, terminal, interval, shiftForms, confirmHand
     }
 
     setShowErrors(false);
-    setShifts([
-                ...shifts,
-                {id: shiftIdCounter + 1, name: '', startTime: '', endTime: '', defaultStaffNumber: 0}
+    setShifts([...shifts,
+                {id: shiftIdCounter + 1, name: '', startTime: '', endTime: '', defaultStaffNumber: 0 , startMonth: Months[new Date().getMonth()].value}
               ]);
     setShiftIdCounter(prevCounter => prevCounter + 1);
   };
@@ -86,8 +91,7 @@ export const AddShiftsForm = ({port, terminal, interval, shiftForms, confirmHand
             </Typography>
             {shifts.map((form, index) => {
               return <Box>
-                <Typography sx={{fontSize: '20px'}}> {shifts.length} shifts with shift
-                  names {shifts.map(a => a.name)}</Typography>
+                <Typography sx={{fontSize: '20px'}}> {shifts.length} shifts with shift names {shifts.map(a => a.name)}</Typography>
                 <EditShiftForm index={index}
                                key={form.id}
                                formState={form}
@@ -134,7 +138,8 @@ export const AddShiftsForm = ({port, terminal, interval, shiftForms, confirmHand
                              editShiftsHandler={onCancel}
                              confirmHandler={confirmHandler}
                              removeShiftHandler={handleRemoveShift}
-                             isEditingPersistedShift={isEditingPersistedShift}/>)
+                             isEditingPersistedShift={isEditingPersistedShift}
+          />)
         }
       </Box>
     </ThemeProvider>

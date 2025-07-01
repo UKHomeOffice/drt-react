@@ -3,6 +3,7 @@ import {Box, Typography, IconButton, Divider, Paper, Button} from '@mui/material
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import {ShiftForm} from "./AddShiftsForm";
+import { Months } from '../Util';
 
 export interface ShiftsSummaryProps {
   port: string;
@@ -39,7 +40,7 @@ export const ConfirmShiftForms = ({
                                     editShiftsHandler,
                                     confirmHandler,
                                     removeShiftHandler,
-                                    isEditingPersistedShift
+                                    isEditingPersistedShift,
                                   }: ShiftsSummaryProps) => {
   const {minStartTime, maxEndTime} = findMinStartTimeAndMaxEndTime(shifts);
 
@@ -102,6 +103,10 @@ export const ConfirmShiftForms = ({
             <Box component="dl" sx={{display: 'flex', justifyContent: 'flex-start', padding: '10px'}}>
               <Box component="dt" sx={{fontWeight: 'bold', minWidth: '150px'}}>Default staff number</Box>
               <Box component="dd">{shift.defaultStaffNumber}</Box>
+            </Box>
+            <Box component="dl" sx={{display: 'flex', justifyContent: 'flex-start', padding: '10px'}}>
+              <Box component="dt" sx={{fontWeight: 'bold', minWidth: '150px'}}>Start Month</Box>
+              <Box component="dd">{Months[shift.startMonth].name}</Box>
             </Box>
           </Box>
         ))
