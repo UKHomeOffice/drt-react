@@ -21,18 +21,11 @@ export const AddShiftsForm: Story = {
         startTime: '08:00',
         endTime: '12:00',
         defaultStaffNumber: 5,
-      },
-      {
-        id: 2,
-        name: 'Afternoon Shift',
-        startTime: '12:00',
-        endTime: '16:00',
-        defaultStaffNumber: 5,
       }
     ],
     confirmHandler: (shifts: ShiftForm[]) => {
       console.log(shifts);
     },
-    isEdit: true
+    isEditingPersistedShift: true
   }
 };

@@ -11,6 +11,7 @@ export interface EditShiftFormProps {
   interval: number;
   removeShift: (id: number) => void;
   showSubmitErrors: boolean;
+  isEditingPersistedShift: boolean;
 }
 
 export const EditShiftForm = ({
@@ -19,7 +20,8 @@ export const EditShiftForm = ({
                                 onUpdate,
                                 interval,
                                 removeShift,
-                                showSubmitErrors
+                                showSubmitErrors,
+                                isEditingPersistedShift,
                               }: EditShiftFormProps) => {
 
   const [nameError, setNameError] = useState(false)
@@ -148,12 +150,13 @@ export const EditShiftForm = ({
           inputProps={{'data-cy': 'staff-number-input'}}
         />
       </Grid>
-
+      { isEditingPersistedShift ? "" :
       <Grid item xs={12}>
         <IconButton color="secondary" onClick={() => removeShift(formState.id)}>
           <CloseIcon/> <Typography sx={{textDecoration: 'underline'}}>Remove shift</Typography>
         </IconButton>
       </Grid>
+      }
     </Grid>
   </Box>
 }
