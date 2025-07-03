@@ -152,9 +152,9 @@ export const EditShiftForm = ({
       <Grid item xs={12}>
         {isEditingPersistedShift ?
           <Grid item xs={12}>
-              <Typography sx={{fontSize: '16px', fontWeight: 'bold'}}>Selected Month</Typography>
+              <Typography sx={{fontSize: '16px', fontWeight: 'bold'}}>Start Month</Typography>
               <Select
-                value={formState.startMonth}
+                value={formState.editStartMonth}
                 onChange={(e) => {/* handle month change here */
                   const updatedState = {...formState, startMonth: parseInt(e.target.value as string)};
                   onUpdate(updatedState);

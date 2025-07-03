@@ -106,7 +106,7 @@ export const ConfirmShiftForms = ({
             </Box>
             <Box component="dl" sx={{display: 'flex', justifyContent: 'flex-start', padding: '10px'}}>
               <Box component="dt" sx={{fontWeight: 'bold', minWidth: '150px'}}>Start Month</Box>
-              <Box component="dd">{Months[shift.startMonth].name}</Box>
+              <Box component="dd">{Months[shift.editStartMonth].name}</Box>
             </Box>
           </Box>
         ))

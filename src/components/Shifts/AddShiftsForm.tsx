@@ -6,13 +6,15 @@ import {getAirportNameByCode} from "../../airports";
 import AddIcon from '@mui/icons-material/Add';
 import {EditShiftForm} from "./EditShiftForm";
 import { Months } from '../Util';
+import {ViewDate} from "./ShiftHotTableView";
 export interface ShiftForm {
   id: number;
   name: string;
   startTime: string;
   endTime: string;
   defaultStaffNumber: number;
-  startMonth: number;
+  startDate: ViewDate;
+  editStartMonth: number;
 }
 
 export interface ShiftsFormProps {
@@ -33,8 +35,16 @@ export const AddShiftsForm = ({
                                 isEditingPersistedShift
                               }: ShiftsFormProps) => {
   const [shiftIdCounter, setShiftIdCounter] = useState(1);
+  const today = new Date();
   const [shifts, setShifts] = useState<ShiftForm[]>(Array.from(shiftForms).length > 0 ? shiftForms : [
-    {id: shiftIdCounter, name: '', startTime: '', endTime: '', defaultStaffNumber: 0 , startMonth: Months[new Date().getMonth()].value}
+    { id: shiftIdCounter,
+      name: '',
+      startTime: '',
+      endTime: '',
+      defaultStaffNumber: 0 ,
+      startDate:{ year:today.getFullYear(), month:today.getMonth(), day:today.getDay() },
+      editStartMonth: Months[today.getMonth()].value
+    }
   ]);
   const [showConfirm, setShowConfirm] = useState(false);
   const [showErrors, setShowErrors] = useState(false);
@@ -69,7 +79,10 @@ export const AddShiftsForm = ({
 
     setShowErrors(false);
     setShifts([...shifts,
-                {id: shiftIdCounter + 1, name: '', startTime: '', endTime: '', defaultStaffNumber: 0 , startMonth: Months[new Date().getMonth()].value}
+                { id: shiftIdCounter + 1, name: '', startTime: '', endTime: '', defaultStaffNumber: 0 ,
+                  startDate:{ year:today.getFullYear(), month:today.getMonth(), day:today.getDay() },
+                  editStartMonth: Months[today.getMonth()].value
+                }
               ]);
     setShiftIdCounter(prevCounter => prevCounter + 1);
   };
