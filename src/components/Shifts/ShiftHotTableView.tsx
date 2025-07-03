@@ -11,13 +11,13 @@ import {LocalDate} from './LocalDate';
 import {drtTheme} from '../../index';
 import EditIcon from '@mui/icons-material/Edit';
 
-export interface ViewDate {
+export interface ShiftDate {
   year: number;
   month: number;
   day: number;
 }
 
-export interface ShiftDate {
+export interface ShiftDateTime {
   year: number;
   month: number;
   day: number;
@@ -29,6 +29,7 @@ export interface ShiftSummary {
   name: string;
   startTime: string;
   endTime: string;
+  startDate: ShiftDate;
   defaultStaffNumber: number;
 }
 
@@ -37,8 +38,8 @@ export interface StaffTableEntry {
   row: number;
   name: string;
   staffNumber: number;
-  startTime: ShiftDate;
-  endTime: ShiftDate;
+  startTime: ShiftDateTime;
+  endTime: ShiftDateTime;
 }
 
 export interface ShiftSummaryStaffing {
@@ -47,7 +48,7 @@ export interface ShiftSummaryStaffing {
   staffTableEntries: StaffTableEntry[];
 }
 
-const getWeekFirstDate = (date: ViewDate) => {
+const getWeekFirstDate = (date: ShiftDate) => {
   const givenDate = moment({year: date.year, month: date.month - 1, day: date.day});
   const startOfWeek = givenDate.clone().startOf('week');
   return {
@@ -71,13 +72,13 @@ const numberOfDays = (dayRange: string, daysInMonth: number) => {
 }
 
 
-const generateColumnHeaders = (viewDate: ViewDate, dayRange: string, daysInMonth: number) => {
+const generateColumnHeaders = (shiftDate: ShiftDate, dayRange: string, daysInMonth: number) => {
   const headers: string[] = [];
-  const {firstDate} = getWeekFirstDate(viewDate);
+  const {firstDate} = getWeekFirstDate(shiftDate);
   const daysCount = numberOfDays(dayRange, daysInMonth);
   let nextDate = dayRange === 'weekly' ?
     new LocalDate(firstDate.year, firstDate.month, firstDate.day, 0, 0) : dayRange === 'daily' ?
-      new LocalDate(viewDate.year, viewDate.month, viewDate.day, 0, 0) : new LocalDate(viewDate.year, viewDate.month, 1, 0, 0);
+      new LocalDate(shiftDate.year, shiftDate.month, shiftDate.day, 0, 0) : new LocalDate(shiftDate.year, shiftDate.month, 1, 0, 0);
   for (let i = 1; i <= daysCount; i++) {
     const date = moment({year: nextDate.year, month: nextDate.month - 1, day: nextDate.day});
     const formattedDate = date.format('D');
@@ -99,15 +100,15 @@ const generateColumns = (dayRange: string, tableIndex: number, daysInMonth: numb
   return columns;
 };
 
-const generateRows = (viewDate: ViewDate, dayRange: string, tableIndex: number, shift: ShiftSummaryStaffing, interval: number, isExpanded: boolean) => {
+const generateRows = (shiftDate: ShiftDate, dayRange: string, tableIndex: number, shift: ShiftSummaryStaffing, interval: number, isExpanded: boolean) => {
   const rows: any[] = [];
   const rowHeaders: string[] = [];
-  const daysInMonth = moment().month(viewDate.month - 1).daysInMonth();
-  const {firstDate} = getWeekFirstDate(viewDate);
+  const daysInMonth = moment().month(shiftDate.month - 1).daysInMonth();
+  const {firstDate} = getWeekFirstDate(shiftDate);
   const daysCount = numberOfDays(dayRange, daysInMonth);
   const firstDay = dayRange === 'weekly' ?
     new LocalDate(firstDate.year, firstDate.month, firstDate.day, 0, 0) : dayRange === 'daily' ?
-      new LocalDate(viewDate.year, viewDate.month, viewDate.day, 0, 0) : new LocalDate(viewDate.year, viewDate.month, 1, 0, 0);
+      new LocalDate(shiftDate.year, shiftDate.month, shiftDate.day, 0, 0) : new LocalDate(shiftDate.year, shiftDate.month, 1, 0, 0);
 
   if (shift) {
     let displayEndTime = '';
@@ -177,7 +178,7 @@ const generateRows = (viewDate: ViewDate, dayRange: string, tableIndex: number, 
 export interface ShiftHotTableViewProps {
   interval: number;
   dayRange: string;
-  viewDate: ViewDate;
+  shiftDate: ShiftDate;
   shiftSummaries: ShiftSummaryStaffing[];
   handleSaveChanges: (shifts: ShiftSummaryStaffing[], changedAssignments: StaffTableEntry[]) => void;
   handleEditShift: (index:number ,shiftSummary: ShiftSummary) => void;
@@ -186,14 +187,14 @@ export interface ShiftHotTableViewProps {
 export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
                                                                       interval,
                                                                       dayRange,
-                                                                      viewDate,
+                                                                      shiftDate,
                                                                       shiftSummaries,
                                                                       handleSaveChanges,
                                                                       handleEditShift
                                                                     }) => {
   registerAllModules();
 
-  const daysInMonth = moment().month(viewDate.month - 1).daysInMonth();
+  const daysInMonth = moment().month(shiftDate.month - 1).daysInMonth();
   const [expandedRows, setExpandedRows] = useState<{ [key: string]: boolean }>({});
 
   const toggleRowExpansion = (shiftType: string) => {
@@ -252,7 +253,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
     <ThemeProvider theme={drtTheme}>
       {shiftSummaries.map((shift, index) => {
         const isExpanded = expandedRows[shift.shiftSummary.name] || false;
-        const {rows, rowHeaders} = generateRows(viewDate, dayRange, index, shift, interval, isExpanded);
+        const {rows, rowHeaders} = generateRows(shiftDate, dayRange, index, shift, interval, isExpanded);
         let tableHeight = 84;
         if (rows) tableHeight = isExpanded ? Math.min(rows.length * 24 + 60, 500) : 84;
 
@@ -290,7 +291,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               id={`hot-table-${index}`}
               className={`shift-hot-table-${index}`}
               data={rows}
-              colHeaders={generateColumnHeaders(viewDate, dayRange, daysInMonth)}
+              colHeaders={generateColumnHeaders(shiftDate, dayRange, daysInMonth)}
               columns={generateColumns(dayRange, index, daysInMonth)}
               style={{overflow: `hidden`, borderSpacing: '0', height: `${tableHeight}px`}}
               cells={(row, col) => ({

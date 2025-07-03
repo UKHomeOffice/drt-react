@@ -6,14 +6,14 @@ import {getAirportNameByCode} from "../../airports";
 import AddIcon from '@mui/icons-material/Add';
 import {EditShiftForm} from "./EditShiftForm";
 import { Months } from '../Util';
-import {ViewDate} from "./ShiftHotTableView";
+import {ShiftDate} from "./ShiftHotTableView";
 export interface ShiftForm {
   id: number;
   name: string;
   startTime: string;
   endTime: string;
   defaultStaffNumber: number;
-  startDate: ViewDate;
+  startDate: ShiftDate;
   editStartMonth: number;
 }
 
