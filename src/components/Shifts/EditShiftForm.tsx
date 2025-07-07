@@ -156,7 +156,7 @@ export const EditShiftForm = ({
               <Select
                 value={formState.editStartMonth}
                 onChange={(e) => {/* handle month change here */
-                  const updatedState = {...formState, startMonth: parseInt(e.target.value as string)};
+                  const updatedState = {...formState, editStartMonth: parseInt(e.target.value as string)};
                   onUpdate(updatedState);
                 }}
                 fullWidth
