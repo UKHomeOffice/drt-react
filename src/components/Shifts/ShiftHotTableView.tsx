@@ -194,7 +194,9 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
                                                                     }) => {
   registerAllModules();
 
-  const daysInMonth = moment().month(shiftDate.month - 1).daysInMonth();
+  // const daysInMonth = moment().month(shiftDate.month - 1).daysInMonth();
+  const monthIndex = (shiftDate.month ?? (new Date().getMonth() + 1)) - 1;
+  const daysInMonth = moment().month(monthIndex).daysInMonth();
   const [expandedRows, setExpandedRows] = useState<{ [key: string]: boolean }>({});
 
   const toggleRowExpansion = (shiftType: string) => {
