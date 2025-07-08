@@ -12,7 +12,7 @@ export const BottomBar = ({email, onClickAccessibilityStatement, accessibilitySt
   return (
     <Card variant='lightGrey'>
       <CardContent>
-        <Typography variant="body1">
+        <Typography variant="body1" mb={0}>
           <Stack direction={'row'} spacing={3}>
             <span>Support links:</span>
             <Link href={`mailto:${email}`} target="_blank" underline="always">Email us</Link>

@@ -10,6 +10,7 @@ const StyledSelect = styled(Select)<SelectProps>(({ theme }) => ({
   width: '100%',
   outline: 0,
   marginRight: theme.spacing(1),
+  marginBottom: 0,
   ':after, :before': {
     borderBottom: 'none !important'
   },

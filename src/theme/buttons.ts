@@ -1,6 +1,19 @@
 
 import { themePrimatives } from "./primatives";
 
+export const buttonBaseTheme = {
+  defaultProps: {
+    disableRipple: true,
+  },
+  styleOverrides: {
+    root: {
+      ".MuiTouchRipple-root": {
+        display: "none",
+      }
+    }
+  }
+}
+
 export const buttonTheme = {
   styleOverrides: {
     root: {
@@ -10,8 +23,13 @@ export const buttonTheme = {
       borderRadius: 0,
       fontWeight: 400,
       padding: '8px 10px 7px',
+      transition: 'none',
       '&:hover': {
         boxShadow: 'inherit'
+      },
+      '&:focus': {
+        backgroundColor: '#fd0 !important',
+        color: 'black !important',
       },
       '&:disabled': {
         pointerEvents: 'auto',
@@ -113,11 +131,20 @@ export const buttonTheme = {
       textUnderlineOffset: '.1578em',
       boxShadow: 'none !important',
       border: 'none !important',
+      minWidth: '0',
+      borderBottom: '4px solid transparent !important',
+      '&:focus': {
+        backgroundColor: '#fd0 !important',
+        color: `${themePrimatives.palette.common.black} !important`,
+        boxShadow: `0 -2px #fd0, 0 4px #0b0c0c !important`,
+        textDecoration: 'none !important',
+        transition: 'none !important',
+      },
       '&:hover': {
         textDecoration: 'underline',
         backgroundColor: 'transparent',
         color: themePrimatives.palette.info.dark,
-        textDecorationThickness: 'max(3px,.1875rem,.12em)',
+        textDecorationThickness: 'max(3px,.1875rem,.12em)'
       },
       '&.MuiButton-colorSuccess': {
         color: themePrimatives.palette.success.main,

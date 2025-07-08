@@ -96,6 +96,7 @@ const Header = ({
                         sm: '2rem',
                       },
                       mr: 2,
+                      mb: 0,
                       color: '#000'
                     }}>
                       Border Force
@@ -111,6 +112,7 @@ const Header = ({
                       sx={{
                         flexGrow: 0,
                         color: '#404252',
+                        mb: 0,
                         fontSize: {
                           xs: '0.7rem',
                           sm: '1rem',
@@ -130,7 +132,7 @@ const Header = ({
           <Grid item xs={4} sx={{padding: 2}} display={{xs: 'none', md: 'block'}}>
             <Box display="flex" ml={'auto'}>
               <Typography variant="body1" noWrap color={'#000'}
-                          sx={{flexGrow: 1, textAlign: 'right'}}><strong>Contact:</strong>&nbsp;<Link
+                          sx={{flexGrow: 1, textAlign: 'right', mb: 0}}><strong>Contact:</strong>&nbsp;<Link
                 href="mailto:drtpoiseteam@homeoffice.gov.uk">drtpoiseteam@homeoffice.gov.uk</Link></Typography>
             </Box>
           </Grid>

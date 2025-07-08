@@ -18,3 +18,22 @@ export const listTheme = {
       },
     }
 };
+
+export const listItemTheme = {
+    styleOverrides: {
+      root: {
+        paddingTop: 0,
+      }
+    }
+};
+
+export const listItemTextTheme = {
+    styleOverrides: {
+      primary: {
+        marginBottom: 0,
+      },
+      secondary: {
+        marginBottom: 0,
+      },
+    }
+};

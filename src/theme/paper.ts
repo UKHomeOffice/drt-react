@@ -37,6 +37,12 @@ export const cardHeaderTheme = {
       '& + .MuiCardContent-root': {
         paddingTop: 0,
       }
+    },
+    title: {
+      marginBottom: 0,
+    },
+    subheader: {
+      marginBottom: 0,
     }
   } 
 }

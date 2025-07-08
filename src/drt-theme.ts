@@ -3,15 +3,16 @@ import { createTheme } from "@mui/material";
 import type {} from '@mui/x-date-pickers/themeAugmentation';
 import { themePrimatives } from "./theme/primatives";
 import React from "react";
-import { buttonTheme, buttonGroupTheme, toggleButtonGroupTheme, toggleButtonTheme } from '../src/theme/buttons';
+import { buttonBaseTheme, buttonTheme, buttonGroupTheme, toggleButtonGroupTheme, toggleButtonTheme } from '../src/theme/buttons';
 import { inputBaseTheme, inputAdornmentTheme, inputLabelTheme, outlinedInputTheme, radioTheme } from "./theme/input";
 import { formControlLabelTheme, formLabelTheme, formHelperTextTheme, formControlTheme } from "./theme/formControl";
 import { selectTheme, nativeSelectTheme } from "./theme/select";
 import { autocompleteTheme } from "./theme/autocomplete";
-import { listTheme } from "./theme/lists";
+import { listTheme, listItemTheme, listItemTextTheme } from "./theme/lists";
 import { typographyTheme, typographyComponentTheme, linkTheme } from "./theme/typography";
 import { tableRowTheme, tableTheme, tableCellTheme } from "./theme/table";
 import { paperTheme, cardHeaderTheme,cardContentTheme, appbarTheme } from "./theme/paper";
+import { circularProgressTheme } from "./theme/progress";
 
 declare module '@mui/material/styles' {
   interface PaperVariants {
@@ -116,6 +117,9 @@ const drtTheme = createTheme({
     MuiOutlinedInput: {
       ...outlinedInputTheme
     },
+    MuiButtonBase: {
+      ...buttonBaseTheme
+    },
     MuiButton: {
       ...buttonTheme as any,
     },
@@ -133,6 +137,12 @@ const drtTheme = createTheme({
     },
     MuiList: {
       ...listTheme
+    },
+    MuiListItem: {
+      ...listItemTheme,
+    },
+    MuiListItemText:{
+      ...listItemTextTheme
     },
     MuiLink: {
       ...linkTheme
@@ -172,6 +182,9 @@ const drtTheme = createTheme({
     MuiToggleButtonGroup: {
       ...toggleButtonGroupTheme,
     },
+    MuiCircularProgress: {
+      ...circularProgressTheme
+    },
     MuiPickersDay: {
       styleOverrides: {
         root: {
@@ -185,7 +198,7 @@ const drtTheme = createTheme({
           fontSize: '12px'
         }
       }
-    }
+    },
   }
 })
 

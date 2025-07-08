@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Box, IconButton, ThemeProvider, Typography} from '@mui/material';
+import {Box, IconButton, Stack, ThemeProvider, Typography} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import Handsontable from 'handsontable';
@@ -256,17 +256,17 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
 
         return (
           <Box key={index} sx={{marginBottom: 4}}>
-            <Box display="flex" alignItems="center">
+            <Stack direction={'row'} spacing={1} alignItems="center">
               <Typography variant="h4" gutterBottom>
                 {shift.shiftSummary.name}
               </Typography>
-              <IconButton onClick={() => toggleRowExpansion(shift.shiftSummary.name)}>
+              <IconButton size='small' onClick={() => toggleRowExpansion(shift.shiftSummary.name)}>
                 {isExpanded ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
               </IconButton>
-            </Box>
+            </Stack>
             <Box display="flex" gap="20px" alignItems="center" paddingBottom="10px">
-              <Typography>{`Time covered: ${shift.shiftSummary.startTime} to ${shift.shiftSummary.endTime}`}</Typography>
-              <Typography>Default staff: {shift.shiftSummary.defaultStaffNumber}</Typography>
+              <Typography variant='body1' mb={0}>{`Time covered: ${shift.shiftSummary.startTime} to ${shift.shiftSummary.endTime}`}</Typography>
+              <Typography variant='body1' mb={0}>Default staff: {shift.shiftSummary.defaultStaffNumber}</Typography>
             </Box>
             <HotTable
               id={`hot-table-${index}`}
