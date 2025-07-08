@@ -104,7 +104,6 @@ export const AddShiftsForm = ({
             </Typography>
             {shifts.map((form, index) => {
               return <Box>
-                <Typography sx={{fontSize: '20px'}}> {shifts.length} shifts with shift names {shifts.map(a => a.name)}</Typography>
                 <EditShiftForm index={index}
                                key={form.id}
                                formState={form}
