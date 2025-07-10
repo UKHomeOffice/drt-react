@@ -54,7 +54,7 @@ export const ConfirmShiftForms = ({
       {
         shifts.map((shift) => (
           <Card key={shift.id} variant='white' sx={{maxWidth: '500px', mb: 2}} elevation={0}>
-            <CardHeader title={shift.name} titleTypographyProps={{variant: 'h3'}} action={<>
+            <CardHeader title={shift?.name} titleTypographyProps={{variant: 'h3'}} action={<>
               <Stack direction={'row'}>
                 <Tooltip title="Remove shift">
                   <IconButton onClick={() => removeShiftHandler(shift.id)}>
