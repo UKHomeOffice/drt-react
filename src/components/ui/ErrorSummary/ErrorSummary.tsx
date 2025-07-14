@@ -15,12 +15,14 @@ const ErrorSummarylist = styled('ul')(({theme}) => ({
 }));
 
 const ErrorSummaryLink = styled(Link)(({theme}) => ({
+  fontSize: '19px',
   fontWeight: 'bold',
   color: theme.palette.error.main,
   textDecorationColor: theme.palette.error.main,
   '&:hover': {
     color: theme.palette.error.dark,
     textDecorationColor: theme.palette.error.dark,
+    textDecorationThickness: 'max(3px,.1875rem,.12em)'
   },
   '&:visited': {
     color: theme.palette.error.main,
@@ -43,7 +45,7 @@ export interface IErrorSummary {
 
 export const ErrorSummary = ({errors} : IErrorSummary) => {
   return <ErrorSummaryWrapper>
-    <Typography variant="h3" component={'h2'} mb={2}>There is a problem</Typography>
+    <Typography variant="h3" component={'h2'} sx={{marginBottom: '10px !important'}}>There is a problem</Typography>
     <ErrorSummarylist>
      { errors.map((error, index) => <li key={index}><ErrorSummaryLink href={error.target}>{error.text}</ErrorSummaryLink></li>)}
     </ErrorSummarylist>

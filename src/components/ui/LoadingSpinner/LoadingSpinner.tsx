@@ -31,7 +31,7 @@ export const LoadingSpinner = ({loadingText} : IPhaseBanner) => {
         thickness={5}
       />
     </Box>
-    <Typography variant="h1" py={4}>{loadingText || 'Loading...'}</Typography>
+    <Typography component={'h1'} variant="h3" py={4}>{loadingText || 'Loading...'}</Typography>
     </Stack>
     )
 }

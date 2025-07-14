@@ -11,12 +11,14 @@ const NotificationBannerTitle = styled(Typography)(({theme, color}) => ({
   backgroundColor: theme.palette[`${color}`].main,
   padding: `2px ${theme.spacing(3)} ${theme.spacing(1)}`,
   color: '#fff',
-  marginBottom: 0,
+  marginBottom: `0px !important`,
+  fontSize: '19px !important',
 }));
 const NotificationBannerText = styled(Box)(({theme, color}) => ({
   padding: theme.spacing(3),
   fontWeight: 'bold',
   '> *': {
+    fontSize: '24px !important',
     display: 'inline',
     marginRight: '2px',
   }
