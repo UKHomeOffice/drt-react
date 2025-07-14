@@ -10,11 +10,11 @@ export interface BottomBarProps {
 
 export const BottomBar = ({email, onClickAccessibilityStatement, accessibilityStatementUrl ,feedbackUrl}: BottomBarProps) => {
   return (
-    <Card variant='lightGrey'>
+    <Card variant='footer'>
       <CardContent>
         <Typography variant="body1" mb={0}>
           <Stack direction={'row'} spacing={3}>
-            <span>Support links:</span>
+            <Typography variant='body1' flexGrow={1}>A Home Office Digital, Data and Technology service</Typography>
             <Link href={`mailto:${email}`} target="_blank" underline="always">Email us</Link>
             <Link underline="always" href={accessibilityStatementUrl} onClick={onClickAccessibilityStatement}>
               Accessibility statement

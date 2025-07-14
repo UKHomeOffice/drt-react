@@ -50,8 +50,9 @@ export const themePrimatives = createTheme({
     },
     grey: {
       100 : "#f3f2f1",
+      200: "#cbcbcb",
       300 : "#b1b4b6",
-      400 : "#547A00",
+      400 : "#88898a",
       500 : "#777A86",
       700 : "#505a5f",
       900 : "#111224"

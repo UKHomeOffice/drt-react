@@ -21,7 +21,16 @@ export const paperTheme = {
         border: `1px solid ${themePrimatives.palette.border.main}`,
       backgroundColor: '#fff'
       }
-    }
+    },
+    {
+      props: { variant: 'footer'},
+      style: {
+        borderTop: `11px solid ${themePrimatives.palette.grey[200]}`,
+        'a': {
+          color: themePrimatives.palette.common.black,
+        }
+      }
+    },
   ],
   styleOverrides: {
     root: {

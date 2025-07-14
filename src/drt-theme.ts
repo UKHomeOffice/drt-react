@@ -19,6 +19,7 @@ declare module '@mui/material/styles' {
     appbar: React.CSSProperties;
     lightGrey: React.CSSProperties;
     white: React.CSSProperties;
+    footer: React.CSSProperties;
   }
 
   // allow configuration using `createTheme`
@@ -26,6 +27,7 @@ declare module '@mui/material/styles' {
     appbar?: React.CSSProperties;
     lightGrey?: React.CSSProperties;
     white?: React.CSSProperties;
+    footer?: React.CSSProperties;
   }
 
   interface TypographyVariants {
@@ -57,7 +59,8 @@ declare module '@mui/material/Paper' {
   interface PaperPropsVariantOverrides {
     appbar: true;
     lightGrey: true;
-    white?: true;
+    white: true;
+    footer: true;
 
   }
 }
