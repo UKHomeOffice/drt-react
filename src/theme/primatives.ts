@@ -40,7 +40,7 @@ export const themePrimatives = createTheme({
     },
     warning: { 
       main: '#f47738',
-      light: lighten('#f47738', 0.8),
+      light: lighten('#f47738', 0.4),
       dark: darken('#f47738', 0.2),
     },
     info: { 

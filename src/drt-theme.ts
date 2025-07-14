@@ -13,6 +13,7 @@ import { typographyTheme, typographyComponentTheme, linkTheme } from "./theme/ty
 import { tableRowTheme, tableTheme, tableCellTheme } from "./theme/table";
 import { paperTheme, cardHeaderTheme,cardContentTheme, appbarTheme } from "./theme/paper";
 import { circularProgressTheme } from "./theme/progress";
+import { alertTheme } from "./theme/alert";
 
 declare module '@mui/material/styles' {
   interface PaperVariants {
@@ -92,6 +93,9 @@ const drtTheme = createTheme({
     ...typographyTheme as any
   },
   components: {
+    MuiAlert: {
+      ...alertTheme,
+    },
     MuiAppBar: {
       ...appbarTheme,
     },
