@@ -35,6 +35,10 @@ declare module '@mui/material/styles' {
     pageTitle: React.CSSProperties;
     logoTitle: React.CSSProperties;
     logoStrap: React.CSSProperties;
+    xlarge: React.CSSProperties;
+    large: React.CSSProperties;
+    medium: React.CSSProperties;
+    small: React.CSSProperties;
   }
 
   // allow configuration using `createTheme`
@@ -43,6 +47,10 @@ declare module '@mui/material/styles' {
     pageTitle?: React.CSSProperties;
     logoTitle?: React.CSSProperties;
     logoStrap?: React.CSSProperties;
+    xlarge?: React.CSSProperties;
+    large?: React.CSSProperties;
+    medium?: React.CSSProperties;
+    small?: React.CSSProperties;
   }
 }
 
@@ -61,7 +69,6 @@ declare module '@mui/material/Paper' {
     lightGrey: true;
     white: true;
     footer: true;
-
   }
 }
 
@@ -71,6 +78,10 @@ declare module "@mui/material/Typography" {
     pageTitle: true;
     logoTitle: true;
     logoStrap: true;
+    xlarge: true;
+    large: true;
+    medium: true;
+    small: true;
   }
 }
 

@@ -3,42 +3,57 @@ import { themePrimatives } from "./primatives";
 
 export const typographyTheme = {
   fontFamily: '"Roboto","Helvetica","Arial",sans-serif',
-  fontSize: 16,
+  fontSize: 19,
   h1: { //govuk-heading-xl
-    fontSize: '32px',
-    lineHeight: '35px',
     fontWeight: 'bold',
-    marginBottom: '1em',
+    fontSize: '32px',
+    lineHeight: themePrimatives.spacing(7),
+    marginBottom: themePrimatives.spacing(7),
+    [themePrimatives.breakpoints.up("md")]: {
+      fontSize: '48px',
+      lineHeight: themePrimatives.spacing(10),
+      marginBottom: themePrimatives.spacing(10),
+    }
   },
   h2: { //govuk-heading-l
-    fontSize: '27px',
-    lineHeight: '30px',
     fontWeight: 'bold',
-    marginBottom: '1em',
+    fontSize: '27px',
+    lineHeight: themePrimatives.spacing(6),
+    marginBottom: themePrimatives.spacing(6),
+    [themePrimatives.breakpoints.up("md")]: {
+      fontSize: '36px',
+      lineHeight: themePrimatives.spacing(8),
+      marginBottom: themePrimatives.spacing(8),
+    }
   },
   h3: { //govuk-heading-m
-    fontSize: "21px",
-    lineHeight: '25px',
-    fontWeight: "bold",
-    marginBottom: '1em',
+    fontWeight: 'bold',
+    fontSize: '21px',
+    lineHeight: themePrimatives.spacing(5),
+    marginBottom: themePrimatives.spacing(5),
+    [themePrimatives.breakpoints.up("md")]: {
+      fontSize: '24px',
+      lineHeight: themePrimatives.spacing(6),
+      marginBottom: themePrimatives.spacing(6),
+    }
   },
   h4: { //govuk-heading-s
-    fontSize: "16px",
-    lineHeight: '25px',
-    fontWeight: "bold",
-    marginBottom: '1em',
+    fontWeight: 'bold',
+    fontSize: '19px',
+    lineHeight: themePrimatives.spacing(5),
+    marginBottom: themePrimatives.spacing(5),
   },
-  h5: { // govuk-body-s sized
-    fontSize: "16px",
-    lineHeight: "20px",
+  h5: { // govuk-body-s
     fontWeight: "bold",
-    marginBottom: '1em',
+    fontSize: "16px",
+    lineHeight: themePrimatives.spacing(4),
+    marginBottom: themePrimatives.spacing(4),
   },
   h6: { //govuk-body-s sized no bold
-    fontSize: "16px",
-    lineHeight: "20px",
     fontWeight: "normal",
-    marginBottom: '1em',
+    fontSize: "16px",
+    lineHeight: themePrimatives.spacing(4),
+    marginBottom: themePrimatives.spacing(4),
   },
   subtitle1: { //govuk-body-sized
     fontSize: "16px",
@@ -47,27 +62,33 @@ export const typographyTheme = {
     fontWeight: 'normal'
   },
   subtitle2: { //govuk-body-s-sized
-    fontSize: "16px",
-    lineHeight: '20px',
     fontStyle: 'italic',
-    fontWeight: 'normal'
+    fontWeight: 'normal',
+    fontSize: "16px",
+    lineHeight: themePrimatives.spacing(5),
   },
   body1: { //'govuk-body
     fontSize: "16px",
-    lineHeight: '25px',
-    marginBottom: '1em',
+    lineHeight: themePrimatives.spacing(4),
+    marginBottom: themePrimatives.spacing(3),
+    [themePrimatives.breakpoints.up("md")]: {
+      fontSize: "19px",
+      lineHeight: themePrimatives.spacing(5),
+      marginBottom: themePrimatives.spacing(4),
+    }
   },
   body2: { //govuk-body-s
     fontSize: "16px",
-    lineHeight: '20px',
+    lineHeight: themePrimatives.spacing(4),
+    marginBottom: themePrimatives.spacing(3),
   },
   caption: {
     fontSize: "16px",
-    lineHeight: '20px',
+    lineHeight: themePrimatives.spacing(4),
   },
   button: {
     fontSize: '16px',
-    lineHeight: '25px',
+    lineHeight: themePrimatives.spacing(5),
     fontWeight: "bold",
     textTransform: 'none',
   },
@@ -88,6 +109,26 @@ export const typographyTheme = {
   logoTitle: {
     fontSize: '1.6em'
   },
+  xlarge: { //hods-xlarge
+    fontSize: '48px',
+    lineHeight: themePrimatives.spacing(10),
+    marginBottom: themePrimatives.spacing(6),
+  },
+  large: { //hods-large
+    fontSize: '46px',
+    lineHeight: themePrimatives.spacing(8),
+    marginBottom: themePrimatives.spacing(4),
+  },
+  medium: { //hods-mods
+    fontSize: '24px',
+    lineHeight: themePrimatives.spacing(6),
+    marginBottom: themePrimatives.spacing(3),
+  },
+  small: { //hods-mods
+    fontSize: '19px',
+    lineHeight: themePrimatives.spacing(5),
+    marginBottom: themePrimatives.spacing(3),
+  }
 };
 
 export const typographyComponentTheme = {
