@@ -74,8 +74,9 @@ const Header = ({
                 title="Border Force - Dynamic Response Tool"
                 href="https://drt.homeoffice.gov.uk/"
                 style={{
+                  width: '100%',
                   display: 'flex',
-                  textDecoration: 'none'
+                  textDecoration: 'none',
               }}>
                 <Crest data-testid="crest"/>
                 <Grid container sx={{
@@ -99,10 +100,15 @@ const Header = ({
                       mb: 0,
                       color: '#000'
                     }}>
-                      Border Force
+                      Home Office
                     </Typography>
                   </Grid>
                   <Grid item sx={{
+                    textAlign: {
+                      xs: 'left',
+                      sm: 'center'
+                    },
+                    flexGrow: 1,
                     width: {
                       xs: '100%',
                       sm: 'auto',
@@ -114,12 +120,8 @@ const Header = ({
                         color: '#404252',
                         mb: 0,
                         fontSize: {
-                          xs: '0.7rem',
-                          sm: '1rem',
-                        },
-                        lineHeight: {
-                          xs: '1rem',
-                          sm: '2.1rem',
+                          xs: '14px',
+                          sm: '24px',
                         },
                       }}>
                         Dynamic Response Tool

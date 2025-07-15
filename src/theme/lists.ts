@@ -12,7 +12,7 @@ export const listTheme = {
             display: 'list-item',
             paddingLeft: 0,
             ...typographyTheme.body1,
-            marginBottom: 0,
+            marginBottom: `0 !important`,
           },
         }
       },

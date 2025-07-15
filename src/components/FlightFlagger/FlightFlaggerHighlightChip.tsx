@@ -24,10 +24,11 @@ export const FlightHighlightChip = ({text}: IFlightHighlightChip) => {
             minHeight: '32px',
             height: 'auto',
             '> .MuiChip-label': {
+              paddingTop: '2px',
               paddingBottom: '2px',
               overflow: 'visible',
               textOverflow: 'inherit',
-              whiteSpace: 'normal',
+              whiteSpace: 'nowrap',
               fontSize: '16px !important',
             }
           }} />
