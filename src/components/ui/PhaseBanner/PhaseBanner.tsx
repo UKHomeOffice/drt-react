@@ -12,8 +12,13 @@ const PhaseBannerTag = styled(Typography)(({theme}) => ({
   backgroundColor: '#bbd4ea',
   display: 'inline-block',
   marginRight: theme.spacing(3),
-  marginBottom: 0,
+  marginBottom: `0 !important`,
   fontSize: '16px',
+}));
+const PhaseBannerContent = styled(Box)(({theme, color}) => ({
+  '> *': {
+    marginBottom: `0px !important`
+  }
 }));
 
 export interface IPhaseBanner {
@@ -24,8 +29,8 @@ export interface IPhaseBanner {
 export const PhaseBanner = ({tagText, content} : IPhaseBanner) => {
   return <PhaseBannerWrapper direction={'row'}>
     <PhaseBannerTag variant="body1">{tagText}</PhaseBannerTag>
-    <Box>
+    <PhaseBannerContent>
       {content}
-    </Box>
+    </PhaseBannerContent>
   </PhaseBannerWrapper>
 }

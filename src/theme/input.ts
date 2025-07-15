@@ -1,5 +1,4 @@
 
-import { transform } from "@babel/core";
 import { themePrimatives } from "./primatives";
 
 export const inputBaseTheme = {
@@ -13,6 +12,7 @@ export const inputBaseTheme = {
         minHeight: '40px',
         boxSizing: 'border-box',
         outline: `3px solid transparent`,
+        marginBottom: `0 !important`,
         '&:focus': {
           outline: `3px solid #fd0`,
           outlineOffset: 0,
@@ -66,6 +66,7 @@ export const outlinedInputTheme = {
   styleOverrides: {
     root: {
       padding: 0,
+        marginBottom: `0 !important`,
     },
     notchedOutline: {
       border: 'none'
