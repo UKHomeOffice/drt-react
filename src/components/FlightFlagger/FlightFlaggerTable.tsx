@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, TableCell, TableRow, Tooltip, TooltipProps, IconButton } from "@mui/material";
+import { Table, TableCell, TableHead, TableRow, Tooltip, TooltipProps, IconButton, TableBody } from "@mui/material";
 import { StyledTableHeader, StyledTableHeaderCell, StyledTableBody, RelativeTableCell, CellStatusHighlight } from "../ui/StyledTable";
 import { FlightHighlightChip } from "./FlightFlaggerHighlightChip";
 import { FlightArrival } from "./FlightArrival";
@@ -41,52 +41,52 @@ export interface IFlightFlaggerTable {
 export const FlightFlaggerTable = ({flights, ...others}: IFlightFlaggerTable) => {
   const hasHighlightedFlights = flights.some(flight => flight.highlights)
 
-  return <div style={{display:'grid'}}><Table data-testid="flight-flagger-results-table" size="small" {...others}>
-    <StyledTableHeader>
+  return <div><Table data-testid="flight-flagger-results-table" size="small" {...others}>
+    <TableHead>
       <TableRow>
-        <StyledTableHeaderCell>Flight</StyledTableHeaderCell>
-        { hasHighlightedFlights && <StyledTableHeaderCell>Pax info</StyledTableHeaderCell> }
-        <StyledTableHeaderCell align="center">Origin</StyledTableHeaderCell>
-        <StyledTableHeaderCell align="center">
+        <TableCell>Flight</TableCell>
+        { hasHighlightedFlights && <TableCell>Pax info</TableCell> }
+        <TableCell align="center">Origin</TableCell>
+        <TableCell align="center">
           Country
           <InfoTooltip text="Country of origin" />
-        </StyledTableHeaderCell>
-        <StyledTableHeaderCell align="center">Gate/Stand</StyledTableHeaderCell>
-        <StyledTableHeaderCell align="center">Status</StyledTableHeaderCell>
-        <StyledTableHeaderCell align="center">Scheduled</StyledTableHeaderCell>
-        <StyledTableHeaderCell align="center">
+        </TableCell>
+        <TableCell align="center">Gate/Stand</TableCell>
+        <TableCell align="center">Status</TableCell>
+        <TableCell align="center">Scheduled</TableCell>
+        <TableCell align="center">
           Expected
           <InfoTooltip text="Expected arrival" />
-        </StyledTableHeaderCell>
-        <StyledTableHeaderCell align="center">Exp PCP</StyledTableHeaderCell>
-        <StyledTableHeaderCell align="center">Exp PCP Pax</StyledTableHeaderCell>
-        <StyledTableHeaderCell align="center">
+        </TableCell>
+        <TableCell align="center">Exp PCP</TableCell>
+        <TableCell align="center">Exp PCP Pax</TableCell>
+        <TableCell align="center">
           e-Gate
           <StyledTooltip title="Expeced e-Gate pax">
             <IconButton>
               <InfoIcon />
             </IconButton>
           </StyledTooltip>
-        </StyledTableHeaderCell>
-        <StyledTableHeaderCell align="center">
+        </TableCell>
+        <TableCell align="center">
           EEA
           <StyledTooltip title="Expected EEA pax">
             <IconButton>
               <InfoIcon />
             </IconButton>
           </StyledTooltip>
-        </StyledTableHeaderCell>
-        <StyledTableHeaderCell align="center">
+        </TableCell>
+        <TableCell align="center">
           Non-EEA
           <StyledTooltip title="Expected Non-EEA pax">
             <IconButton>
               <InfoIcon />
             </IconButton>
           </StyledTooltip>
-        </StyledTableHeaderCell>
+        </TableCell>
       </TableRow>
-    </StyledTableHeader>
-    <StyledTableBody>
+    </TableHead>
+    <TableBody>
       {
         flights.map((flight, index) => {
           const [pcpPaxAlertType] =  getConfidenceAlert(flight.expPcpPax.confidence)
@@ -125,6 +125,6 @@ export const FlightFlaggerTable = ({flights, ...others}: IFlightFlaggerTable) =>
             </TableRow>
         })
       }
-    </StyledTableBody>
+    </TableBody>
   </Table></div>;
 };

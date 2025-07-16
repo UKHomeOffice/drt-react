@@ -8,7 +8,7 @@ const meta: Meta<typeof MuiTypography> = {
     title: "DRT Components/MUI Components/Typography",
     component: MuiTypography,
     args: {
-        children: 'The quick brown fox jumps over the lazy dog'
+        children: 'Sphinx of black quartz, hear my vow!'
     },
     argTypes: {
         variant: {
@@ -28,12 +28,12 @@ type Story = StoryObj<typeof MuiTypography>;
 export const Title: Story = {
     render: (args) => {
         return <>
-            <MuiTypography variant="h1" >H1. The quick brown fox jumps over the lazy dog</MuiTypography>
-            <MuiTypography variant="h2" >H2. The quick brown fox jumps over the lazy dog</MuiTypography>
-            <MuiTypography variant="h3" >H3. The quick brown fox jumps over the lazy dog</MuiTypography>
-            <MuiTypography variant="h4" >H4. The quick brown fox jumps over the lazy dog</MuiTypography>
-            <MuiTypography variant="h5" >H5. The quick brown fox jumps over the lazy dog</MuiTypography>
-            <MuiTypography variant="h6" >H6. The quick brown fox jumps over the lazy dog</MuiTypography>
+            <MuiTypography variant="h1" >H1. Sphinx of black quartz, hear my vow!</MuiTypography>
+            <MuiTypography variant="h2" >H2. Sphinx of black quartz, hear my vow!</MuiTypography>
+            <MuiTypography variant="h3" >H3. Sphinx of black quartz, hear my vow!</MuiTypography>
+            <MuiTypography variant="h4" >H4. Sphinx of black quartz, hear my vow!</MuiTypography>
+            <MuiTypography variant="h5" >H5. Sphinx of black quartz, hear my vow!</MuiTypography>
+            <MuiTypography variant="h6" >H6. Sphinx of black quartz, hear my vow!</MuiTypography>
         </>
     }
 };

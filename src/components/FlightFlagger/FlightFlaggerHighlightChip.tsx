@@ -14,9 +14,9 @@ const HighlightIcon = () => {
 export const FlightHighlightChip = ({text}: IFlightHighlightChip) => {
   return <Chip
           label={ text }
-          icon={<HighlightIcon/>}
           sx={{
-            backgroundColor: '#C2D9FF',
+            backgroundColor: '#ffe5cc',
+            borderBottom: '2px solid #ffb266',
             fontWeight: 'bold',
             color: '#111224',
             margin: '2px 2px 2px 0px',
@@ -24,12 +24,12 @@ export const FlightHighlightChip = ({text}: IFlightHighlightChip) => {
             minHeight: '32px',
             height: 'auto',
             '> .MuiChip-label': {
-              paddingLeft: '5px',
               paddingTop: '2px',
               paddingBottom: '2px',
               overflow: 'visible',
               textOverflow: 'inherit',
-              whiteSpace: 'normal',
+              whiteSpace: 'nowrap',
+              fontSize: '16px !important',
             }
           }} />
 

@@ -10,7 +10,7 @@ import React from 'react';
 import {generateShiftAssignments} from './GenerateShift';
 
 export default {
-  title: 'DRT Components/UI/ShiftHotTableViewComponent',
+  title: 'DRT Components/Features/Shifts/ShiftHotTable/View Monthly',
   component: ShiftHotTableViewComponent,
 } as Meta;
 
@@ -30,25 +30,17 @@ const initialDefaultShifts: ShiftSummaryStaffing[] = initialShift.map((defaultSh
 });
 
 const handleSaveChanges = (shifts: ShiftSummaryStaffing[], changedAssignments: StaffTableEntry[]) => {
-  // Function to handle saving changes
   console.log('Data to be saved:', shifts);
   console.log('Changed assignments:', changedAssignments);
-  // Add your data submission logic here
 };
 
-const ShiftHotTableViewStory: React.FC = () => {
-
-  return (
-    <ShiftHotTableViewComponent
-      interval={60}
-      dayRange={'monthly'}
-      viewDate={{year: 2025, month: 1, day: 1}}
-      shiftSummaries={initialDefaultShifts}
-      handleSaveChanges={handleSaveChanges}
-    />
-  );
-};
 
 export const ShiftHotTableView: Story = {
-  render: () => <ShiftHotTableViewStory/>
+  args: {
+    interval: 60,
+    dayRange: 'monthly',
+    viewDate: {year: 2025, month: 1, day: 1},
+    shiftSummaries: initialDefaultShifts,
+    handleSaveChanges: handleSaveChanges,
+  },
 };
