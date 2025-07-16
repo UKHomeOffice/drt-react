@@ -15,7 +15,12 @@ const ErrorSummarylist = styled('ul')(({theme}) => ({
 }));
 
 const ErrorSummaryLink = styled(Link)(({theme}) => ({
-  fontSize: '19px',
+  fontSize: '16px',
+  lineHeight: theme.spacing(4),
+  [theme.breakpoints.up("md")]: {
+    fontSize: "19px",
+    lineHeight: theme.spacing(5),
+  },
   fontWeight: 'bold',
   color: theme.palette.error.main,
   textDecorationColor: theme.palette.error.main,
