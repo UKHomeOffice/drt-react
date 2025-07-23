@@ -21,8 +21,8 @@ export const AddShiftsForm: Story = {
         startTime: '08:00',
         endTime: '12:00',
         defaultStaffNumber: 5,
-        startDate: { year: new Date().getFullYear(), month: new Date().getMonth(), day: new Date().getDate() },
-        editStartMonth: new Date().getMonth()
+        startDate: { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() },
+        editStartMonth: new Date().getMonth() + 1
       }
     ],
     confirmHandler: (shifts: ShiftForm[]) => {

@@ -15,9 +15,11 @@ export const EditShiftFormStory: Story = {
     formState: {
       id: 1,
       name: 'Morning Shift',
-      startTime: '08:00',
+      startTime: '09:00',
       endTime: '12:00',
       defaultStaffNumber: 5,
+      startDate: { year: 2024, month: 1, day: 1 },
+      editStartMonth: 1,
     },
     interval: 15,
     onUpdate: (updatedFormState) => {
