@@ -120,8 +120,8 @@ export const PaxTerminalOverview = ({terminal ,periodLengthMinutes, staff, desks
             </Stack>
             <div>
             <Doughnut
-              style={{maxHeight: is_mobile ? 'auto' : '180px', maxWidth: '100%'}} 
-              data={chartData} 
+              style={{maxHeight: is_mobile ? 'auto' : '180px', maxWidth: '100%'}}
+              data={chartData}
               options={{
                 maintainAspectRatio: true,
                 plugins: {
@@ -147,7 +147,7 @@ export const PaxTerminalOverview = ({terminal ,periodLengthMinutes, staff, desks
       <Box>
         <Card variant='outlined' sx={{height:'100%'}}>
           <CardContent>
-            <Stack direction={'column'}>
+            <Stack direction={'column'} mb={2}>
               <Typography component={'h4'} variant={'h5'}>PCP Pressure</Typography>
             </Stack>
             <List disablePadding>
