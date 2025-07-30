@@ -19,6 +19,8 @@ export const ConfirmShiftForms: Story = {
         name: 'Early shift',
         startTime: '00:00',
         endTime: '00:15',
+        startDate: {year: 2024, month: 1, day: 1},
+        editStartMonth: 2,
         defaultStaffNumber: 10
       },
       {
@@ -26,6 +28,8 @@ export const ConfirmShiftForms: Story = {
         name: 'afternoon shift',
         startTime: '00:15',
         endTime: '00:30',
+        startDate: {year: 2024, month: 1, day: 1},
+        editStartMonth: 2,
         defaultStaffNumber: 10
       },
       {
@@ -33,6 +37,8 @@ export const ConfirmShiftForms: Story = {
         name: 'evening shift',
         startTime: '00:30',
         endTime: '00:45',
+        startDate: {year: 2024, month: 1, day: 1},
+        editStartMonth: 2,
         defaultStaffNumber: 10
       }
     ] as ShiftForm[],
