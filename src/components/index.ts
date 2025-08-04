@@ -33,7 +33,7 @@ export {AddShiftBar} from './Shifts'
 export type {ShiftForm, ShiftsFormProps} from './Shifts'
 export {AddShiftsForm} from './Shifts'
 
-export type {ShiftDate, ShiftSummaryStaffing, ShiftSummary, StaffTableEntry, ShiftHotTableViewProps} from './Shifts'
+export type {ShiftDateTime, ShiftSummaryStaffing, ShiftSummary, StaffTableEntry, ShiftHotTableViewProps} from './Shifts'
 export {ShiftHotTableView} from './Shifts'
 
 export type {ShiftSummaryProps} from './Shifts'
