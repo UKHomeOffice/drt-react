@@ -1,10 +1,6 @@
 {
   "name": "@drt/drt-react",
-<<<<<<< HEAD
-  "version": "1.7.20",
-=======
   "version": "2.0.0",
->>>>>>> f10a1e7 (DPS-1823 - Button styles)
   "description": "React components for DRT applications",
   "main": "dist/cjs/bundle.js",
   "module": "dist/esm/bundle.js",
