@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Box, IconButton, ThemeProvider, Typography} from '@mui/material';
+import {Box, IconButton, Stack, ThemeProvider, Typography} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import Handsontable from 'handsontable';
@@ -81,7 +81,7 @@ const generateColumnHeaders = (viewDate: ViewDate, dayRange: string, daysInMonth
     const date = moment({year: nextDate.year, month: nextDate.month - 1, day: nextDate.day});
     const formattedDate = date.format('D');
     const day = date.format('ddd');
-    headers.push(`<div style="text-align: left; padding-left: 1px; margin: 0;">${formattedDate}<br>${day}</div>`);
+    headers.push(`<div style="text-align: left; padding-left: 1px; margin: 0;">${formattedDate}&nbsp;${day}</div>`);
     nextDate = nextDate.addDays(1);
   }
   return headers;
@@ -211,6 +211,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
       Handsontable.renderers.TextRenderer.apply(this, [instance, td, row, col, prop, value, cellProperties]);
       td.style.borderSpacing = '0';
       td.style.padding = '1';
+      td.style.textAlign = 'right'
 
       // Apply readOnly logic based on `isExpanded` and `col === 0`
       cellProperties.readOnly = !isExpanded && row === 0;
@@ -249,23 +250,23 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
     <ThemeProvider theme={drtTheme}>
       {shiftSummaries.map((shift, index) => {
         const isExpanded = expandedRows[shift.shiftSummary.name] || false;
-        const {rows, rowHeaders} = generateRows(viewDate, dayRange, index, shift, interval, isExpanded);
-        let tableHeight = 84;
-        if (rows) tableHeight = isExpanded ? Math.min(rows.length * 24 + 60, 500) : 84;
+        const {rows, rowHeaders} = generateRows(viewDate, dayRange, index, shift, interval, isExpanded)!;
+        let tableHeight = 4;
+        if (rows) tableHeight = isExpanded ? Math.min(rows.length * 24 + 35, 500) : 69;
 
         return (
           <Box key={index} sx={{marginBottom: 4}}>
-            <Box display="flex" alignItems="center">
-              <Typography variant="h6" gutterBottom>
+            <Stack direction={'row'} spacing={1} alignItems="center">
+              <Typography variant="h4" gutterBottom>
                 {shift.shiftSummary.name}
               </Typography>
-              <IconButton onClick={() => toggleRowExpansion(shift.shiftSummary.name)}>
+              <IconButton size='small' onClick={() => toggleRowExpansion(shift.shiftSummary.name)}>
                 {isExpanded ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
               </IconButton>
-            </Box>
+            </Stack>
             <Box display="flex" gap="20px" alignItems="center" paddingBottom="10px">
-              <Typography>{`Time covered: ${shift.shiftSummary.startTime} to ${shift.shiftSummary.endTime}`}</Typography>
-              <Typography>Default staff: {shift.shiftSummary.defaultStaffNumber}</Typography>
+              <Typography variant='body1' mb={0}>{`Time covered: ${shift.shiftSummary.startTime} to ${shift.shiftSummary.endTime}`}</Typography>
+              <Typography variant='body1' mb={0}>Default staff: {shift.shiftSummary.defaultStaffNumber}</Typography>
             </Box>
             <HotTable
               id={`hot-table-${index}`}

@@ -51,11 +51,7 @@ export const PaxCardGroup: Story = {
       <Stack 
         spacing={2} 
         direction={'row'} 
-        display="inline-flex"
-        sx={(theme) => ({
-          p:2,
-          backgroundColor: theme.palette.secondary.light || theme.palette.grey[200]
-        })}>
+        display="inline-flex">
           <PaxCardComponent 
             queues={queues}
             timeRange={PaxTimeRange.Next5Mins}

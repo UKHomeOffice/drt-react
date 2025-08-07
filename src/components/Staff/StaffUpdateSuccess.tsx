@@ -11,17 +11,21 @@ export interface IStaffUpdateSuccess {
 
 export const StaffUpdateSuccess = ({staffNumber, message, closeHandler}: IStaffUpdateSuccess) => {
   return <Box data-testid={`min-staff-form-success`} sx={{marginTop: '10px', backgroundColor: '#eeeff0'}}>
-    <Alert sx={{color: '#FFFFFF', backgroundColor: '#2E7D32'}} severity="success"
-           action={
-             <IconButton
-               aria-label="close"
-               color="inherit"
-               size="small"
-               onClick={closeHandler}
-             >
-               <CloseIcon fontSize="inherit"/>
-             </IconButton>
-           }
-           icon={<CheckCircleIcon style={{color: '#FFFFFF'}}/>}>{message} {staffNumber}</Alert>
+    <Alert 
+      color="success" 
+      severity="success"
+      action={
+        <IconButton
+          aria-label="close"
+          color="inherit"
+          size="small"
+          onClick={closeHandler}
+        >
+          <CloseIcon fontSize="inherit"/>
+        </IconButton>
+      }
+      icon={<CheckCircleIcon/>}>
+        {message} {staffNumber}
+      </Alert>
   </Box>
 }

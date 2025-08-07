@@ -1,5 +1,4 @@
-import {BorderBottom} from '@mui/icons-material';
-import {Paper, styled, Theme, Typography, Table, TableHead, TableRow, TableCell, TableBody} from '@mui/material';
+import {Table, TableHead, TableRow, TableCell, TableBody, Card, CardContent, CardHeader} from '@mui/material';
 import * as React from 'react';
 
 
@@ -21,25 +20,6 @@ export interface IPaxCard {
   endTime: Date,
 }
 
-const StyledPaxCard = styled(Paper)(({theme}: { theme: Theme }) => ({
-  display: 'inline-block',
-  padding: theme.spacing(2),
-  backgroundColor: theme.palette.grey[100],
-  '.MuiTableCell-root': {
-    backgroundColor: theme.palette.background.default,
-    color: theme.palette.common.black,
-    padding: `${theme.spacing(1)} ${theme.spacing(0)}`
-  },
-  '& .MuiTableRow-root :first-child': {
-    paddingRight: theme.spacing(1)
-  },
-  '& .MuiTableCell-head': {
-    borderBottom: `1px solid ${theme.palette.common.black}`,
-  },
-  '& .MuiTableBody-root .MuiTableCell-root': {
-    borderBottom: 'none !important',
-  }
-}));
 
 const formatTime = (datetime: Date) => {
   const hours = datetime.getHours().toString().padStart(2, '0');
@@ -51,16 +31,13 @@ export const PaxCard = ({queues, timeRange, startTime, endTime}: IPaxCard) => {
 
 
   return (
-    <StyledPaxCard elevation={0}>
-      <Typography variant='h5'>{timeRange}</Typography>
-      <Typography variant='body1'>
-        {`(${formatTime(startTime)} to ${formatTime(endTime)})`}
-      </Typography>
-      <Paper elevation={0} sx={{mt: 1, px: 1}}>
+    <Card elevation={0}>
+      <CardHeader title={timeRange} titleTypographyProps={{variant: 'h4'}} subheader={`(${formatTime(startTime)} to ${formatTime(endTime)})`} />
+      <CardContent>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Estimated pax:</TableCell>
+              <TableCell sx={{pr: 4}}>Estimated pax:</TableCell>
               <TableCell align='right'>{queues.reduce((sum, q) => sum + q.queueCount, 0)}</TableCell>
             </TableRow>
           </TableHead>
@@ -77,7 +54,7 @@ export const PaxCard = ({queues, timeRange, startTime, endTime}: IPaxCard) => {
             }
           </TableBody>
         </Table>
-      </Paper>
-    </StyledPaxCard>
+      </CardContent>
+    </Card>
   )
 }
