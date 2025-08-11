@@ -36,6 +36,7 @@ export const buttonTheme = {
         cursor: 'not-allowed !important',
         color: 'inherit',
         opacity: `0.5 !important`,
+        border: `1px solid ${themePrimatives.palette.common.black}`,
       },
       '&.MuiButton-colorPrimary': {
         boxShadow: `0 2px 0 ${themePrimatives.palette.primary.dark}`,
@@ -47,13 +48,14 @@ export const buttonTheme = {
         }
       },
       '&.MuiButton-colorSecondary': {
-        boxShadow: `0 2px 0 ${themePrimatives.palette.secondary.dark}`,
+        border: `1px solid ${themePrimatives.palette.common.black}`,
+        boxShadow: `0 2px 0 ${themePrimatives.palette.common.black}`,
         '&:hover': {
           backgroundColor: '#dbdad9',
-          boxShadow: `0 2px 0 ${themePrimatives.palette.secondary.dark}`,
+          boxShadow: `0 2px 0 ${themePrimatives.palette.common.black}`,
         },
         '&:disabled': {
-          boxShadow: `0 2px 0 ${themePrimatives.palette.secondary.dark}`,
+          boxShadow: `0 2px 0 ${themePrimatives.palette.common.black}`,
         },
       },
       '&.MuiButton-colorSuccess': {
