@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { Select as MuiSelect, MenuItem, FormControl, InputLabel } from "./storybookExports/FormFields.component";
+import { NativeSelect as MuiNativeSelect, MenuItem, FormControl, InputLabel } from "./storybookExports/FormFields.component";
 import { SelectChangeEvent } from "@mui/material";
 
 import { useArgs } from '@storybook/preview-api';
 import type {Meta, StoryObj} from '@storybook/react';
 
-const meta: Meta<typeof MuiSelect> = {
+const meta: Meta<typeof MuiNativeSelect> = {
     title: "DRT Components/MUI Components/Forms/Select",
-    component: MuiSelect,
+    component: MuiNativeSelect,
     args: {
       value: "Menu item 1"
     },
@@ -26,31 +26,22 @@ const options = [
 ]
 
 export default meta;
-type Story = StoryObj<typeof MuiSelect>;
+type Story = StoryObj<typeof MuiNativeSelect>;
 
 export const Select: Story = {
   render: (storyContext) => {
     const [args, updateArgs] = useArgs();
 
-    const handleSelect = (event: SelectChangeEvent<unknown>, child: React.ReactNode) => {
-      console.log('hello', event.target.value as string)
-      updateArgs({
-        ...args,
-        value: event.target.value as string
-      });
-    };
-
     return (
       <FormControl>
         <InputLabel>Basic select</InputLabel>
-        <MuiSelect 
+        <MuiNativeSelect 
           {...args}
-          value={args.value}
-          onChange={handleSelect}>
-          <MenuItem value="Menu item 1">Menu item 1</MenuItem>
-          <MenuItem value="Menu item 2">Menu item 2</MenuItem>
-          <MenuItem value="Menu item 3">Menu item 3</MenuItem>
-        </MuiSelect>
+          value={args.value}>
+          <option value="Menu item 1">Menu item 1</option>
+          <option value="Menu item 2">Menu item 2</option>
+          <option value="Menu item 3">Menu item 3</option>
+        </MuiNativeSelect>
       </FormControl>
     )
   }

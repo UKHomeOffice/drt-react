@@ -2,7 +2,7 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {AddShiftsForm as AddShiftsFormComponent, ShiftForm} from './AddShiftsForm';
 
 export default {
-  title: 'DRT Components/UI/AddShiftsFormComponent',
+  title: 'DRT Components/Features/Shifts/AddShiftsForm',
   component: AddShiftsFormComponent,
 } as Meta;
 

@@ -2,6 +2,7 @@ import React, {useState} from "react"
 import {
   Autocomplete,
   Button,
+  Card,
   Checkbox,
   Chip,
   Collapse,
@@ -195,8 +196,8 @@ export const FlightFlaggerFilters = ({
     }
   }
 
-  return <>
-    <Grid container sx={{backgroundColor: '#F3F5F9', width: '100%', ml: 0, pt: 2, flexWrap: {xs: 'wrap', md: 'nowrap'}}}
+  return <Card variant="lightGrey">
+    <Grid container sx={{ml: 0, pt: 2, flexWrap: {xs: 'wrap', md: 'nowrap'}}}
           spacing={2}>
       <Grid item flexGrow={0}>
         <InputLabel htmlFor="flight-number" sx={{mb: 1}}><strong>Enter flight details</strong></InputLabel>
@@ -210,23 +211,17 @@ export const FlightFlaggerFilters = ({
             onKeyDown={handleInputSubmit}
             value={currentFormState.flightNumber}
             placeholder="Enter flight, origin or country"
-            startAdornment={
-              <InputAdornment position="start">
-                <SearchIcon/>
-              </InputAdornment>
-            }
           />
         </FormControl>
       </Grid>
       <Grid item flexGrow={0} sx={{
-        borderLeft: {xs: 'none', md: '1px solid #ccc'},
         ml: {xs: 0, sm: 0, md: 2},
         px: {xs: 0, md: 4}
       }}>
         <InputLabel sx={{mb: 1}}><strong>Highlight flights</strong></InputLabel>
         <Button
           data-testid="show-filters"
-          color="primary"
+          color="secondary"
           onClick={() => toggleFilters()}
           disableElevation
           variant="contained"
@@ -237,8 +232,7 @@ export const FlightFlaggerFilters = ({
             size="small"
             label={`${getFilterCount(appliedSearchFlags)}`}
             sx={{fontSize: '0.8125rem !important'}}/>
-          }
-          size="large">
+          }>
           Select pax info to reveal
         </Button>
       </Grid>
@@ -287,7 +281,7 @@ export const FlightFlaggerFilters = ({
                     <TextField
                       {...params}
                       label="Nationalities"
-                      placeholder="Enter or select nationalities"
+                      placeholder={currentFormState.selectedNationalities.length > 0 ? "" : "Enter or select nationalities"}
                     />
                   )}
                 />
@@ -308,7 +302,7 @@ export const FlightFlaggerFilters = ({
                     <TextField
                       {...params}
                       label="Age groups"
-                      placeholder="Enter of select age groups"
+                      placeholder={currentFormState.selectedAgeGroups.length > 0 ? "" : "Enter or select age groups"}
                     />
                   )}
                 />
@@ -317,7 +311,7 @@ export const FlightFlaggerFilters = ({
                 <FormGroup>
                   <FormControlLabel
                     control={
-                      <Checkbox data-testid="show-visa-nationals-check"
+                      <Checkbox color='info' data-testid="show-visa-nationals-check"
                                 checked={currentFormState.showNumberOfVisaNationals}
                                 onChange={handleCheckboxChange}
                                 inputProps={{'aria-label': 'show visa nationals'}}
@@ -329,6 +323,7 @@ export const FlightFlaggerFilters = ({
                     <FormControlLabel
                       control={
                         <Checkbox
+                          color='info'
                           data-testid="require-all-selected-check"
                           disabled={!someCriteriaSelected(currentFormState)}
                           checked={currentFormState.requireAllSelected}
@@ -342,12 +337,13 @@ export const FlightFlaggerFilters = ({
               </Grid>
               <Grid item xs={12}>
                 <Button data-testid="flight-flagger-filter-cancel"
-                        variant='outlined'
+                        variant='contained'
+                        color="secondary"
                         onClick={() => setCurrentFormState({...appliedSearchFlags, showFilters: false})}
                         sx={{mr: 2}}>
                   Cancel
                 </Button>
-                <Button data-testid="flight-flagger-filter-submit"
+                <Button color="info" data-testid="flight-flagger-filter-submit"
                         variant='contained'
                         onClick={handleApply(currentFormState)}
                         disabled={!formIsTouched(appliedSearchFlags, currentFormState)}>
@@ -366,6 +362,6 @@ export const FlightFlaggerFilters = ({
         </Link>
         </Typography>}
       </Grid>
-    </Grid></>
+    </Grid></Card>
 
 }
