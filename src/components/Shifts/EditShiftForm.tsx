@@ -3,24 +3,34 @@ import {Box, Grid, IconButton, MenuItem, Select, TextField, Typography} from '@m
 import {intervalEndTimeOptions, intervalStartTimeOptions} from '../Util';
 import CloseIcon from "@mui/icons-material/Close";
 import {ShiftForm} from "./AddShiftsForm";
+import { Months } from '../Util';
 
-export const EditShiftForm = ({index, formState, onUpdate, interval, removeShift, showSubmitErrors}: {
-  index: number,
-  formState: ShiftForm,
-  onUpdate: (state: ShiftForm) => void,
-  interval: number,
-  removeShift: (idx: number) => void,
-  showSubmitErrors: boolean,
-}) => {
+export interface EditShiftFormProps {
+  index: number;
+  formState: ShiftForm;
+  onUpdate: (state: ShiftForm) => void;
+  interval: number;
+  removeShift: (id: number) => void;
+  showSubmitErrors: boolean;
+  isEditingPersistedShift: boolean;
+}
+
+export const EditShiftForm = ({
+                                index,
+                                formState,
+                                onUpdate,
+                                interval,
+                                removeShift,
+                                showSubmitErrors,
+                                isEditingPersistedShift
+                              }: EditShiftFormProps) => {
 
   const [nameError, setNameError] = useState(false)
   const [startTimeError, setStartTimeError] = useState(true)
   const [endTimeError, setEndTimeError] = useState(true)
   const [timeError, setTimeError] = useState(false)
-
   const startTimeOptions = intervalStartTimeOptions(interval)
   const endTimeOptions = intervalEndTimeOptions(interval);
-
   const handleStartTimeChange = (id: number, hour: number, minute: number) => {
     const newStartTime = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
     const updatedForm = {...formState, startTime: newStartTime};
@@ -139,12 +149,31 @@ export const EditShiftForm = ({index, formState, onUpdate, interval, removeShift
           inputProps={{'data-cy': 'staff-number-input'}}
         />
       </Grid>
-
       <Grid item xs={12}>
-        <IconButton color="secondary" onClick={() => removeShift(formState.id)}>
-          <CloseIcon/> <Typography sx={{textDecoration: 'underline'}}>Remove shift</Typography>
-        </IconButton>
+        {isEditingPersistedShift ?
+          <Grid item xs={12}>
+              <Typography sx={{fontSize: '16px', fontWeight: 'bold'}}>Start Month</Typography>
+              <Select
+                value={formState.editStartMonth}
+                onChange={(e) => {/* handle month change here */
+                  const updatedState = {...formState, editStartMonth: parseInt(e.target.value as string)};
+                  onUpdate(updatedState);
+                }}
+                fullWidth
+                sx={{fontSize: '16px', fontWeight: 'bold'}}
+              >
+                {Months.map(month => <MenuItem value={month.value}>{month.name}</MenuItem>)}
+              </Select>
+            </Grid>
+          :
+          <Grid item xs={12}>
+            <IconButton color="secondary" onClick={() => removeShift(formState.id)}>
+              <CloseIcon/> <Typography sx={{textDecoration: 'underline'}}>Remove shift</Typography>
+            </IconButton>
+          </Grid>
+        }
       </Grid>
+
     </Grid>
   </Box>
 }

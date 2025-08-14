@@ -5,13 +5,16 @@ import {drtTheme} from "../../index";
 import {getAirportNameByCode} from "../../airports";
 import AddIcon from '@mui/icons-material/Add';
 import {EditShiftForm} from "./EditShiftForm";
-
+import { Months } from '../Util';
+import {ShiftDate} from "./ShiftHotTableView";
 export interface ShiftForm {
   id: number;
   name: string;
   startTime: string;
   endTime: string;
   defaultStaffNumber: number;
+  startDate: ShiftDate;
+  editStartMonth: number;
 }
 
 export interface ShiftsFormProps {
@@ -20,17 +23,31 @@ export interface ShiftsFormProps {
   interval: number;
   shiftForms: ShiftForm[];
   confirmHandler: (shiftForms: ShiftForm[]) => void;
+  isEditingPersistedShift: boolean
 }
 
-export const AddShiftsForm = ({port, terminal, interval, shiftForms, confirmHandler}: ShiftsFormProps) => {
+export const AddShiftsForm = ({
+                                port,
+                                terminal,
+                                interval,
+                                shiftForms,
+                                confirmHandler,
+                                isEditingPersistedShift
+                              }: ShiftsFormProps) => {
   const [shiftIdCounter, setShiftIdCounter] = useState(1);
-
+  const today = new Date();
   const [shifts, setShifts] = useState<ShiftForm[]>(Array.from(shiftForms).length > 0 ? shiftForms : [
-    {id: shiftIdCounter, name: '', startTime: '', endTime: '', defaultStaffNumber: 0}
+    { id: shiftIdCounter,
+      name: '',
+      startTime: '',
+      endTime: '',
+      defaultStaffNumber: 0 ,
+      startDate:{ year:today.getFullYear(), month:today.getMonth(), day:today.getDay() },
+      editStartMonth: Months[today.getMonth()].value
+    }
   ]);
   const [showConfirm, setShowConfirm] = useState(false);
   const [showErrors, setShowErrors] = useState(false);
-
   const onContinue = () => {
     if (shiftsHaveErrors(shifts)) {
       setShowErrors(true);
@@ -61,10 +78,12 @@ export const AddShiftsForm = ({port, terminal, interval, shiftForms, confirmHand
     }
 
     setShowErrors(false);
-    setShifts([
-      ...shifts,
-      {id: shiftIdCounter + 1, name: '', startTime: '', endTime: '', defaultStaffNumber: 0}
-    ]);
+    setShifts([...shifts,
+                { id: shiftIdCounter + 1, name: '', startTime: '', endTime: '', defaultStaffNumber: 0 ,
+                  startDate:{ year:today.getFullYear(), month:today.getMonth(), day:today.getDay() },
+                  editStartMonth: Months[today.getMonth()].value
+                }
+              ]);
     setShiftIdCounter(prevCounter => prevCounter + 1);
   };
 
@@ -77,36 +96,44 @@ export const AddShiftsForm = ({port, terminal, interval, shiftForms, confirmHand
       <Box>
         {!showConfirm ? (
           <Box sx={{p: 2, minWidth: '500px'}}>
-            <Typography sx={{fontSize: '20px'}}>Add staff to {port} {getAirportNameByCode(port)} {terminal}</Typography>
-            <Typography variant="h1" sx={{paddingBottom: '10px'}}>Step 1 of 2 - Create your shift pattern</Typography>
+            <Typography sx={{fontSize: '20px'}}>
+              {isEditingPersistedShift ? "Edit staff" : "Add staff"} to {port} {getAirportNameByCode(port)} {terminal}
+            </Typography>
+            <Typography variant="h1" sx={{paddingBottom: '10px'}}>
+              Step 1 of 2 - {isEditingPersistedShift ? "Edit your shift" : "Create your shift pattern"}
+            </Typography>
             {shifts.map((form, index) => {
-              return <EditShiftForm index={index}
-                                    key={form.id}
-                                    formState={form}
-                                    onUpdate={state => {
-                                      const updatedShifts = shifts.map(shift => {
-                                        if (shift.id === state.id) {
-                                          return {...shift, ...state};
-                                        }
-                                        return shift;
-                                      });
-                                      setShifts(updatedShifts)
-                                      if (showErrors) {
-                                        setShowErrors(shiftsHaveErrors(updatedShifts))
-                                      }
-                                    }}
-                                    interval={interval}
-                                    removeShift={handleRemoveShift}
-                                    showSubmitErrors={showErrors}
-              />
+              return <Box>
+                <EditShiftForm index={index}
+                               key={form.id}
+                               formState={form}
+                               onUpdate={state => {
+                                 const updatedShifts = shifts.map(shift => {
+                                   if (shift.id === state.id) {
+                                     return {...shift, ...state};
+                                   }
+                                   return shift;
+                                 });
+                                 setShifts(updatedShifts)
+                                 if (showErrors) {
+                                   setShowErrors(shiftsHaveErrors(updatedShifts))
+                                 }
+                               }}
+                               interval={interval}
+                               removeShift={handleRemoveShift}
+                               showSubmitErrors={showErrors}
+                               isEditingPersistedShift={isEditingPersistedShift}
+                /></Box>
             })}
             <Box>
-              <Button variant="outlined" color="primary" onClick={handleAddShift} sx={{gap: 0, paddingLeft: '0'}}>
-                <IconButton color="primary" sx={{padding: '0'}}>
-                  <AddIcon/>
-                </IconButton>
-                Add a shift
-              </Button>
+              {!isEditingPersistedShift && (
+                <Button variant="outlined" color="primary" onClick={handleAddShift} sx={{gap: 0, paddingLeft: '0'}}>
+                  <IconButton color="primary" sx={{padding: '0'}}>
+                    <AddIcon/>
+                  </IconButton>
+                  Add a shift
+                </Button>
+              )}
             </Box>
             <Box sx={{"paddingTop": "10px"}}>
               <Button variant="contained" color="primary" onClick={onContinue} data-cy="shift-continue-button">
@@ -122,7 +149,9 @@ export const AddShiftsForm = ({port, terminal, interval, shiftForms, confirmHand
                              shifts={shifts}
                              editShiftsHandler={onCancel}
                              confirmHandler={confirmHandler}
-                             removeShiftHandler={handleRemoveShift}/>)
+                             removeShiftHandler={handleRemoveShift}
+                             isEditingPersistedShift={isEditingPersistedShift}
+          />)
         }
       </Box>
     </ThemeProvider>
