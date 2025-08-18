@@ -13,7 +13,7 @@ export const themePrimatives = createTheme({
     primary: { 
       main: '#00703c',
       light: lighten('#00703c', 0.8),
-      dark: '#002d18',
+      dark: '#005a30',
       50: "#E6E9F1",
       100: "#C0C7DE",
       300: "#7283B2",

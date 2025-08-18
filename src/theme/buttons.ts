@@ -1,4 +1,5 @@
 
+import { OutlinedInput } from "@mui/material";
 import { themePrimatives } from "./primatives";
 
 export const buttonBaseTheme = {
@@ -30,17 +31,20 @@ export const buttonTheme = {
       '&:focus': {
         backgroundColor: '#fd0 !important',
         color: 'black !important',
+        boxShadow: `0 2px 0 ${themePrimatives.palette.common.black} !important`,
       },
       '&:disabled': {
-        pointerEvents: 'auto',
+        pointerEvents: 'none',
         cursor: 'not-allowed !important',
         color: 'inherit',
         opacity: `0.5 !important`,
-        border: `1px solid ${themePrimatives.palette.common.black}`,
       },
       '&.MuiButton-colorPrimary': {
+        backgroundColor: themePrimatives.palette.primary.main,
+        color: themePrimatives.palette.common.white,
         boxShadow: `0 2px 0 ${themePrimatives.palette.primary.dark}`,
         '&:hover': {
+          backgroundColor: themePrimatives.palette.primary.dark,
           boxShadow: `0 2px 0 ${themePrimatives.palette.primary.dark}`,
         },
         '&:disabled': {
@@ -48,10 +52,12 @@ export const buttonTheme = {
         }
       },
       '&.MuiButton-colorSecondary': {
+        backgroundColor: themePrimatives.palette.secondary.main,
         border: `1px solid ${themePrimatives.palette.common.black}`,
         boxShadow: `0 2px 0 ${themePrimatives.palette.common.black}`,
         '&:hover': {
           backgroundColor: '#dbdad9',
+          border: `1px solid ${themePrimatives.palette.common.black}`,
           boxShadow: `0 2px 0 ${themePrimatives.palette.common.black}`,
         },
         '&:disabled': {
@@ -59,8 +65,11 @@ export const buttonTheme = {
         },
       },
       '&.MuiButton-colorSuccess': {
+        backgroundColor: themePrimatives.palette.success.main,
+        color: themePrimatives.palette.common.white,
         boxShadow: `0 2px 0 ${themePrimatives.palette.success.dark}`,
         '&:hover': {
+          backgroundColor: themePrimatives.palette.primary.dark,
           boxShadow: `0 2px 0 ${themePrimatives.palette.success.dark}`,
         },
         '&:disabled': {
@@ -68,8 +77,11 @@ export const buttonTheme = {
         }
       },
       '&.MuiButton-colorError': {
+        backgroundColor: themePrimatives.palette.error.main,
+        color: themePrimatives.palette.common.white,
         boxShadow: `0 2px 0 ${themePrimatives.palette.error.dark}`,
         '&:hover': {
+          backgroundColor: themePrimatives.palette.error.dark,
           boxShadow: `0 2px 0 ${themePrimatives.palette.error.dark}`,
         },
         '&:disabled': {
@@ -77,8 +89,11 @@ export const buttonTheme = {
         }
       },
       '&.MuiButton-colorWarning': {
+        backgroundColor: themePrimatives.palette.warning.main,
+        color: themePrimatives.palette.common.white,
         boxShadow: `0 2px 0 ${themePrimatives.palette.warning.dark}`,
         '&:hover': {
+          backgroundColor: themePrimatives.palette.warning.dark,
           boxShadow: `0 2px 0 ${themePrimatives.palette.warning.dark}`,
         },
         '&:disabled': {
@@ -86,8 +101,11 @@ export const buttonTheme = {
         }
       },
       '&.MuiButton-colorInfo': {
+        backgroundColor: themePrimatives.palette.info.main,
+        color: themePrimatives.palette.common.white,
         boxShadow: `0 2px 0 ${themePrimatives.palette.info.dark}`,
         '&:hover': {
+          backgroundColor: themePrimatives.palette.info.dark,
           boxShadow: `0 2px 0 ${themePrimatives.palette.info.dark}`,
         },
         '&:disabled': {
@@ -98,12 +116,53 @@ export const buttonTheme = {
     containedWarning: {
       color: themePrimatives.palette.common.white,
     },
+    outlinedPrimary: {
+      backgroundColor: themePrimatives.palette.primary.main,
+      color: themePrimatives.palette.common.white,
+      border: `none`,
+      boxShadow: `0 2px 0 ${themePrimatives.palette.primary.dark}`,
+      '&:focus':{ border: `none` },
+      '&:hover':{ border: `none` }
+    },
     outlinedSecondary: {
       color: themePrimatives.palette.common.black,
       border: `1px solid ${themePrimatives.palette.secondary.dark}`,
+      boxShadow: `0 2px 0 ${themePrimatives.palette.common.black}`,
       '&:hover': {
         border: `1px solid ${themePrimatives.palette.secondary.dark}`,
       },
+    },
+    outlinedSuccess: {
+      backgroundColor: themePrimatives.palette.success.main,
+      color: themePrimatives.palette.common.white,
+      boxShadow: `0 2px 0 ${themePrimatives.palette.success.dark}`,
+      border: `none`,
+      '&:focus':{ border: `none` },
+      '&:hover':{ border: `none` }
+    },
+    outlinedWarning: {
+      backgroundColor: themePrimatives.palette.warning.main,
+      color: themePrimatives.palette.common.white,
+      boxShadow: `0 2px 0 ${themePrimatives.palette.warning.dark}`,
+      border: `none`,
+      '&:focus':{ border: `none` },
+      '&:hover':{ border: `none` }
+    },
+    outlinedError: {
+      backgroundColor: themePrimatives.palette.error.main,
+      color: themePrimatives.palette.common.white,
+      boxShadow: `0 2px 0 ${themePrimatives.palette.error.dark}`,
+      border: `none`,
+      '&:focus':{ border: `none` },
+      '&:hover':{ border: `none` }
+    },
+    outlinedInfo: {
+      backgroundColor: themePrimatives.palette.info.main,
+      color: themePrimatives.palette.common.white,
+      boxShadow: `0 2px 0 ${themePrimatives.palette.info.dark}`,
+      border: `none`,
+      '&:focus':{ border: `none` },
+      '&:hover':{ border: `none` }
     },
     sizeSmall: {
       fontSize: '16px',
@@ -127,8 +186,9 @@ export const buttonTheme = {
     text: {
       display: 'inline',
       padding: 0,
+      backgroundColor: '#fff !important',
       textDecoration: 'underline',
-      color: themePrimatives.palette.info.main,
+      color: `${themePrimatives.palette.info.main} !important`,
       textDecorationThickness: 'max(1px,.0625rem)',
       textUnderlineOffset: '.1578em',
       boxShadow: 'none !important',

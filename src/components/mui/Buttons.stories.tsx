@@ -87,38 +87,6 @@ export const ColorButtons: Story = {
           Info
         </MuiButton>
       </Stack>
-      <Stack direction={'row'} spacing={2} my={2}>
-        <MuiButton variant="outlined" color="primary">Primary</MuiButton>
-        <MuiButton variant="outlined" color="secondary">Secondary</MuiButton>
-        <MuiButton variant="outlined" color="success">
-          Success
-        </MuiButton>
-        <MuiButton variant="outlined" color="error">
-          Error
-        </MuiButton>
-        <MuiButton variant="outlined" color="warning">
-          Warning
-        </MuiButton>
-        <MuiButton variant="outlined" color="info">
-          Info
-        </MuiButton>
-      </Stack>
-      <Stack direction={'row'} spacing={2}>
-        <MuiButton variant="text" color="primary">Primary</MuiButton>
-        <MuiButton variant="text" color="secondary">Secondary</MuiButton>
-        <MuiButton variant="text" color="success">
-          Success
-        </MuiButton>
-        <MuiButton variant="text" color="error">
-          Error
-        </MuiButton>
-        <MuiButton variant="text" color="warning">
-          Warning
-        </MuiButton>
-        <MuiButton variant="text" color="info">
-          Info
-        </MuiButton>
-      </Stack>
     </>
   }
 };
