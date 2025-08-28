@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import {Box, Grid, IconButton, MenuItem, Select, TextField, Typography} from '@mui/material';
-import {intervalEndTimeOptions, intervalStartTimeOptions} from '../Util';
+import {intervalEndTimeOptions, intervalStartTimeOptions, momentToShiftDate , shiftDateToMoment} from '../Util';
 import CloseIcon from "@mui/icons-material/Close";
 import {ShiftForm} from "./AddShiftsForm";
-import { Months } from '../Util';
+import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
+import {AdapterMoment} from "@mui/x-date-pickers/AdapterMoment";
+import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 
 export interface EditShiftFormProps {
   index: number;
@@ -150,28 +152,31 @@ export const EditShiftForm = ({
         />
       </Grid>
       <Grid item xs={12}>
-        {isEditingPersistedShift ?
           <Grid item xs={12}>
-              <Typography sx={{fontSize: '16px', fontWeight: 'bold'}}>Start Month</Typography>
-              <Select
-                value={formState.editStartMonth}
-                onChange={(e) => {/* handle month change here */
-                  const updatedState = {...formState, editStartMonth: parseInt(e.target.value as string)};
-                  onUpdate(updatedState);
-                }}
-                fullWidth
-                sx={{fontSize: '16px', fontWeight: 'bold'}}
-              >
-                {Months.map(month => <MenuItem value={month.value}>{month.name}</MenuItem>)}
-              </Select>
+              <Typography sx={{fontSize: '16px', fontWeight: 'bold'}}>Start Date</Typography>
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={'en-gb'}>
+                <DatePicker
+                  data-cy="start-date-picker"
+                  sx={{backgroundColor: '#FFFFFF', width: '100%'}}
+                  value={shiftDateToMoment(formState.startDate)}
+                  onChange={(date) => {
+                    const updatedState = {
+                      ...formState,
+                      startDate: date ? momentToShiftDate(date) : null // date is a moment object
+                    };
+                    onUpdate(updatedState);
+                  }}
+                  format="DD MMMM YYYY"
+                  slots={{ textField: (params) => <TextField {...params} data-cy="start-date-picker-text" /> }}
+                />
+              </LocalizationProvider>
             </Grid>
-          :
+
           <Grid item xs={12}>
             <IconButton color="secondary" onClick={() => removeShift(formState.id)}>
               <CloseIcon/> <Typography sx={{textDecoration: 'underline'}}>Remove shift</Typography>
             </IconButton>
           </Grid>
-        }
       </Grid>
 
     </Grid>
