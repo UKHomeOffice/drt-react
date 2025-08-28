@@ -18,6 +18,7 @@ export const Months = [
 
 
 export function shiftDateToMoment(shiftDate: ShiftDate): Moment {
+  console.log('shiftDate ' + shiftDate.year + '-' + shiftDate.month + '-' + shiftDate.day);
   return moment([shiftDate.year, shiftDate.month - 1, shiftDate.day]);
 }
 
