@@ -10,6 +10,7 @@ import 'handsontable/dist/handsontable.full.min.css';
 import {LocalDate} from './LocalDate';
 import {drtTheme} from '../../index';
 import EditIcon from '@mui/icons-material/Edit';
+import {shiftDateToString} from "../Util";
 
 export interface ShiftDate {
   year: number;
@@ -270,6 +271,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               </IconButton>
             </Box>
             <Box display="flex" gap="20px" alignItems="center" paddingBottom="10px">
+              <Typography>{`Start Date: ${shiftDateToString(shift.shiftSummary.startDate)}`}</Typography>
               <Typography>{`Time covered: ${shift.shiftSummary.startTime} to ${shift.shiftSummary.endTime}`}</Typography>
               <Typography>Default staff: {shift.shiftSummary.defaultStaffNumber}</Typography>
               <Box
