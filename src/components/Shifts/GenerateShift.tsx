@@ -5,8 +5,9 @@ import {ShiftSummary, StaffTableEntry} from "./ShiftHotTableView";
 export const generateShiftAssignments = (defaultShifts: ShiftSummary, interval: number, months: LocalDate[]): StaffTableEntry[] => {
   const assignments: StaffTableEntry[] = [];
   months.forEach(date => {
-    const daysInMonth = moment().month(date.month - 1).daysInMonth();
-    for (let day = 1; day <= daysInMonth; day++) {
+    const startDay = (date.month === defaultShifts.startDate.month && date.year === defaultShifts.startDate.year) ? defaultShifts.startDate.day : 1;
+    const daysInMonth = defaultShifts.endDate ? defaultShifts.endDate.day : moment().month(date.month - 1).daysInMonth();
+    for (let day = startDay; day <= daysInMonth; day++) {
       const [startHour, startMinute] = defaultShifts.startTime.split(':').map(Number);
       const [endHour, endMinute] = defaultShifts.endTime.split(':').map(Number);
       const start = new LocalDate(date.year, date.month, day, startHour, startMinute);
@@ -43,13 +44,13 @@ export const generateShiftAssignments = (defaultShifts: ShiftSummary, interval: 
         }
 
         assignments.push({
-          column: day,
-          row: rowId++,
-          name: defaultShifts.name,
-          staffNumber: defaultShifts.defaultStaffNumber + day,
-          startTime: current,
-          endTime: next
-        });
+                           column: day,
+                           row: rowId++,
+                           name: defaultShifts.name,
+                           staffNumber: defaultShifts.defaultStaffNumber + day,
+                           startTime: current,
+                           endTime: next
+                         });
         current = next;
       }
     }
