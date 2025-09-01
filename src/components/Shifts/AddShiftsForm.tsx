@@ -14,7 +14,7 @@ export interface ShiftForm {
   endTime: string;
   defaultStaffNumber: number;
   startDate: ShiftDate;
-  editStartMonth: number;
+  // editStartMonth: number;
 }
 
 export interface ShiftsFormProps {
@@ -43,7 +43,7 @@ export const AddShiftsForm = ({
       endTime: '',
       defaultStaffNumber: 0 ,
       startDate:{ year:today.getFullYear(), month:today.getMonth(), day:today.getDay() },
-      editStartMonth: Months[today.getMonth()].value
+      // editStartMonth: Months[today.getMonth()].value
     }
   ]);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -81,7 +81,7 @@ export const AddShiftsForm = ({
     setShifts([...shifts,
                 { id: shiftIdCounter + 1, name: '', startTime: '', endTime: '', defaultStaffNumber: 0 ,
                   startDate:{ year:today.getFullYear(), month:today.getMonth(), day:today.getDay() },
-                  editStartMonth: Months[today.getMonth()].value
+                  // editStartMonth: Months[today.getMonth()].value
                 }
               ]);
     setShiftIdCounter(prevCounter => prevCounter + 1);

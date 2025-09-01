@@ -271,9 +271,9 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               </IconButton>
             </Box>
             <Box display="flex" gap="20px" alignItems="center" paddingBottom="10px">
-              <Typography>{`Start Date: ${shiftDateToString(shift.shiftSummary.startDate)}`}</Typography>
               <Typography>{`Time covered: ${shift.shiftSummary.startTime} to ${shift.shiftSummary.endTime}`}</Typography>
               <Typography>Default staff: {shift.shiftSummary.defaultStaffNumber}</Typography>
+              <Typography>{`Start Date: ${shiftDateToString(shift.shiftSummary.startDate)}`}</Typography>
               <Box
                 sx={{
                   cursor: 'pointer',
