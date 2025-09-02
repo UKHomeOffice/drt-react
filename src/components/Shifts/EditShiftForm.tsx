@@ -171,12 +171,13 @@ export const EditShiftForm = ({
                 />
               </LocalizationProvider>
             </Grid>
-
+        {!isEditingPersistedShift && (
           <Grid item xs={12}>
             <IconButton color="secondary" onClick={() => removeShift(formState.id)}>
               <CloseIcon/> <Typography sx={{textDecoration: 'underline'}}>Remove shift</Typography>
             </IconButton>
           </Grid>
+        )}
       </Grid>
 
     </Grid>

@@ -18,8 +18,7 @@ export const EditShiftFormStory: Story = {
       startTime: '09:00',
       endTime: '12:00',
       defaultStaffNumber: 7,
-      startDate: { year: 2025, month: 8, day: 10 },
-      editStartMonth: 1,
+      startDate: { year: 2025, month: 8, day: 10 }
     },
     interval: 15,
     onUpdate: (updatedFormState) => {
@@ -29,5 +28,6 @@ export const EditShiftFormStory: Story = {
       console.log('Remove Shift with ID:', shiftId);
     },
     showSubmitErrors: false,
+    isEditingPersistedShift : true
   },
 };
