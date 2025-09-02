@@ -18,7 +18,7 @@ type Story = StoryObj<typeof ShiftHotTableViewComponent>;
 
 const initialShift: ShiftSummary[] = [
   {name: 'Early shift', defaultStaffNumber: 0, startTime: '06:30', endTime: '16:30' ,startDate : {year: 2025, month: 1, day: 1}, endDate : {year: 2025, month: 1, day: 14}},
-  {name: 'Early shift 1', defaultStaffNumber: 0, startTime: '06:30', endTime: '16:30' ,startDate : {year: 2025, month: 1, day: 15}},
+  {name: 'Early shift 1', defaultStaffNumber: 0, startTime: '06:30', endTime: '16:30' ,startDate : {year: 2025, month: 1, day: 16}},
   {name: 'Mid shift', defaultStaffNumber: 0, startTime: '12:30', endTime: '22:30', startDate : {year: 2025, month: 1, day: 1} },
   {name: 'Late shift', defaultStaffNumber: 0, startTime: '13:00', endTime: '23:00', startDate : {year: 2025, month: 1, day: 1}},
   {name: 'Night shift', defaultStaffNumber: 0, startTime: '23:30', endTime: '01:00', startDate : {year: 2025, month: 1, day: 1}}

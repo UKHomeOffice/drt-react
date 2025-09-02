@@ -11,6 +11,7 @@ import {LocalDate} from './LocalDate';
 import {drtTheme} from '../../index';
 import EditIcon from '@mui/icons-material/Edit';
 import {shiftDateToString} from "../Util";
+import Alert from '@mui/material/Alert';
 
 export interface ShiftDate {
   year: number;
@@ -190,6 +191,16 @@ export interface ShiftHotTableViewProps {
   handleEditShift: (index: number, shiftSummary: ShiftSummary) => void;
 }
 
+const showAlert = (shift: ShiftSummaryStaffing, shiftDate: ShiftDate) => {
+  const momentStartDate = moment({
+                                   year: shift.shiftSummary.startDate.year,
+                                   month: shift.shiftSummary.startDate.month,
+                                   day: shift.shiftSummary.startDate.day
+                                 })
+  const momentShiftDate = moment({year: shiftDate.year, month: shiftDate.month, day: shiftDate.day});
+  return momentStartDate.isAfter(momentShiftDate) && momentStartDate.isBefore(momentShiftDate.add(1, 'month'));
+};
+
 export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
                                                                       interval,
                                                                       dayRange,
@@ -257,6 +268,14 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
     }
   };
 
+  const [open, setOpen] = useState(true);
+  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
+
   return (
     <ThemeProvider theme={drtTheme}>
       {shiftSummaries.map((shift, index) => {
@@ -296,6 +315,13 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
                 <EditIcon sx={{marginRight: '5px'}}/>
                 <Typography>Edit Shift</Typography>
               </Box>
+            </Box>
+            <Box>{open &&
+              showAlert(shift, shiftDate) && (
+                <Alert sx={{maxWidth: '25%'}} onClose={handleClose} severity="info">
+                  {"Upcoming changes from " + shiftDateToString(shift.shiftSummary.startDate)}
+                </Alert>
+              )}
             </Box>
             <HotTable
               id={`hot-table-${index}`}
