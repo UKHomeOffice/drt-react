@@ -15,23 +15,50 @@ export interface ShiftsSummaryProps {
   isEditingPersistedShift?: boolean;
 }
 
+function parseHour(time: string): number {
+  const [hour] = time.split(":").map(Number);
+  return hour === 24 ? 0 : hour;
+}
+
+function getHourDifference(startTime: string, endTime: string, hasOvernight: boolean): number {
+  const startHour = parseHour(startTime);
+  const endHour = parseHour(endTime);
+  return hasOvernight ? (endHour + 24) - startHour : endHour - startHour;
+}
+
 const findMinStartTimeAndMaxEndTime = (shifts: ShiftForm[]) => {
-  if (shifts.length === 0) return {minStartTime: null, maxEndTime: null};
+  if (shifts.length === 0) return {minStartTime: null, maxEndTime: null, hasOvernight: false, hourDifference: 0};
 
   let minStartTime = shifts[0].startTime;
   let maxEndTime = shifts[0].endTime;
+  let hasOvernight = false;
+  let parsedMaxEndHour = parseHour(maxEndTime);
 
   shifts.forEach(shift => {
     if (shift.startTime < minStartTime) {
       minStartTime = shift.startTime;
     }
-    if (shift.endTime > maxEndTime || shift.endTime < shift.startTime) {
-      maxEndTime = shift.endTime;
+    // Check for overnight shift
+    if (parseHour(shift.endTime) < parseHour(shift.startTime)) {
+      // For maxEndTime, consider overnight shifts as next day
+      const endHour = parseHour(shift.endTime) + 24;
+      if (endHour > parsedMaxEndHour) {
+        maxEndTime = shift.endTime;
+        parsedMaxEndHour = endHour;
+        hasOvernight = true;
+      }
+    } else {
+      if (parseHour(shift.endTime) > parsedMaxEndHour) {
+        hasOvernight = false;
+        parsedMaxEndHour = parseHour(shift.endTime);
+        maxEndTime = shift.endTime;
+      }
     }
   });
 
-  return {minStartTime, maxEndTime};
-};
+  const hourDifference = getHourDifference(minStartTime, maxEndTime, hasOvernight);
+  return {minStartTime, maxEndTime, hasOvernight, hourDifference};
+}
 
 export const ConfirmShiftForms = ({
                                     port,
@@ -42,16 +69,19 @@ export const ConfirmShiftForms = ({
                                     removeShiftHandler,
                                     isEditingPersistedShift,
                                   }: ShiftsSummaryProps) => {
-  const {minStartTime, maxEndTime} = findMinStartTimeAndMaxEndTime(shifts);
-
+  const {minStartTime, maxEndTime, hasOvernight, hourDifference} = findMinStartTimeAndMaxEndTime(shifts);
   return (
     <Box sx={{p: 2, minWidth: '500px'}}>
-      <Typography sx={{fontSize: '20px'}}>{isEditingPersistedShift ? "Edit" : "Add"} staff to {port} {terminal}</Typography>
+      <Typography sx={{fontSize: '20px'}}>{isEditingPersistedShift ? "Edit" : "Add"} staff
+        to {port} {terminal}</Typography>
       <Typography variant="h1" sx={{paddingBottom: '10px'}}>Step 2 of 2 - Check your shifts</Typography>
       <Typography variant="h2" sx={{paddingBottom: '10px', fontSize: '24px'}}>Summary</Typography>
       <Typography variant="body1">Total shifts: {shifts.length}</Typography>
-      <Typography variant="body1" sx={{paddingTop: '10px'}}>Hours covered: {minStartTime} to {maxEndTime}</Typography>
-      {!isEditingPersistedShift && (<Typography variant="h2" sx={{paddingTop: '10px', fontSize: '24px'}}>Shifts</Typography>)}
+      <Typography variant="body1" sx={{paddingTop: '10px'}}>Hours
+        covered: {minStartTime} to {maxEndTime} {hasOvernight ? " spanning to the next day " : ""} {hourDifference >= 24 ? " (over 24 hours)" : ""}
+      </Typography>
+      {!isEditingPersistedShift && (
+        <Typography variant="h2" sx={{paddingTop: '10px', fontSize: '24px'}}>Shifts</Typography>)}
       {
         shifts.map((shift) => (
           <Box key={shift.id}
