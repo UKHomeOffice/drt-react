@@ -22,6 +22,7 @@ export interface ShiftsFormProps {
   interval: number;
   shiftForms: ShiftForm[];
   confirmHandler: (shiftForms: ShiftForm[]) => void;
+  shiftStatusHandler: (shiftForm: ShiftForm) => string;
   isEditingPersistedShift: boolean
 }
 
@@ -31,6 +32,7 @@ export const AddShiftsForm = ({
                                 interval,
                                 shiftForms,
                                 confirmHandler,
+                                shiftStatusHandler,
                                 isEditingPersistedShift
                               }: ShiftsFormProps) => {
   const [shiftIdCounter, setShiftIdCounter] = useState(1);
@@ -149,6 +151,7 @@ export const AddShiftsForm = ({
                              editShiftsHandler={onCancel}
                              confirmHandler={confirmHandler}
                              removeShiftHandler={handleRemoveShift}
+                             shiftStatusHandler={shiftStatusHandler}
                              isEditingPersistedShift={isEditingPersistedShift}
           />)
         }
