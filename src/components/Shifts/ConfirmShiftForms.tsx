@@ -72,13 +72,14 @@ export const ConfirmShiftForms = ({
                                     isEditingPersistedShift,
                                   }: ShiftsSummaryProps) => {
   const {minStartTime, maxEndTime, hasOvernight, hourDifference} = findMinStartTimeAndMaxEndTime(shifts);
-  const shiftStatus = isEditingPersistedShift && shifts.length > 0 ? shiftStatusHandler(shifts[0]) : "No shifts"
+  const getShiftStatus = () => isEditingPersistedShift && shifts?.length > 0 ? shiftStatusHandler(shifts[0]) : "No shifts";
+
   return (
     <Box sx={{p: 2, minWidth: '500px'}}>
       <Typography sx={{fontSize: '20px'}}>{isEditingPersistedShift ? "Edit" : "Add"} staff
         to {port} {terminal}</Typography>
       <Typography variant="h1" sx={{paddingBottom: '10px'}}>Step 2 of 2 - Check your shifts</Typography>
-      {isEditingPersistedShift && shiftStatus === 'true' && (
+      {isEditingPersistedShift && getShiftStatus() === 'true' && (
         <Typography variant="h2" sx={{fontSize: '24px' ,color : 'orange'}}>This will be overriding future shifts</Typography>
       )}
       <Typography variant="h2" sx={{paddingBottom: '10px', fontSize: '24px'}}>Summary</Typography>
