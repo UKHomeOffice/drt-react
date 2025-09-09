@@ -22,7 +22,6 @@ export interface ShiftsFormProps {
   interval: number;
   shiftForms: ShiftForm[];
   confirmHandler: (shiftForms: ShiftForm[]) => void;
-  shiftStatusHandler: (shiftForm: ShiftForm) => string;
   isEditingPersistedShift: boolean
 }
 
@@ -32,11 +31,11 @@ export const AddShiftsForm = ({
                                 interval,
                                 shiftForms,
                                 confirmHandler,
-                                shiftStatusHandler,
                                 isEditingPersistedShift
                               }: ShiftsFormProps) => {
   const [shiftIdCounter, setShiftIdCounter] = useState(1);
   const today = new Date();
+  const defaultStartDay = isEditingPersistedShift ? today.getDate() : 1;
   const [shifts, setShifts] = useState<ShiftForm[]>(Array.from(shiftForms).length > 0 ? shiftForms : [
     {
       id: shiftIdCounter,
@@ -44,7 +43,7 @@ export const AddShiftsForm = ({
       startTime: '',
       endTime: '',
       defaultStaffNumber: 0,
-      startDate: {year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDay()}
+      startDate: {year: today.getFullYear(), month: today.getMonth() + 1, day: defaultStartDay}
     }
   ]);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -82,7 +81,7 @@ export const AddShiftsForm = ({
     setShifts([...shifts,
                 {
                   id: shiftIdCounter + 1, name: '', startTime: '', endTime: '', defaultStaffNumber: 0,
-                  startDate: {year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDay()}
+                  startDate: {year: today.getFullYear(), month: today.getMonth() + 1, day: defaultStartDay}
                 }
               ]);
     setShiftIdCounter(prevCounter => prevCounter + 1);
@@ -151,7 +150,6 @@ export const AddShiftsForm = ({
                              editShiftsHandler={onCancel}
                              confirmHandler={confirmHandler}
                              removeShiftHandler={handleRemoveShift}
-                             shiftStatusHandler={shiftStatusHandler}
                              isEditingPersistedShift={isEditingPersistedShift}
           />)
         }
