@@ -37,6 +37,18 @@ const handleSaveChanges = (shifts: ShiftSummaryStaffing[], changedAssignments: S
   // Add your data submission logic here
 };
 
+const sortedInitialDefaultShifts = initialDefaultShifts.slice().sort((a, b) => {
+  const timeA = a.shiftSummary.startTime;
+  const timeB = b.shiftSummary.startTime;
+  if (timeA !== timeB) {
+    return timeA.localeCompare(timeB);
+  }
+  const dateA = new Date(a.shiftSummary.startDate.year, a.shiftSummary.startDate.month - 1, a.shiftSummary.startDate.day);
+  const dateB = new Date(b.shiftSummary.startDate.year, b.shiftSummary.startDate.month - 1, b.shiftSummary.startDate.day);
+  return dateA.getTime() - dateB.getTime();
+});
+
+
 const ShiftHotTableViewStory: React.FC = () => {
 
   return (
@@ -44,7 +56,7 @@ const ShiftHotTableViewStory: React.FC = () => {
       interval={60}
       dayRange={'monthly'}
       shiftDate={{year: 2025, month: 1, day: 1}}
-      shiftSummaries={initialDefaultShifts}
+      shiftSummaries={sortedInitialDefaultShifts}
       handleSaveChanges={handleSaveChanges}
       handleEditShift={(index: number, shiftSummary: ShiftSummary) => {
         // Function to handle editing a shift
