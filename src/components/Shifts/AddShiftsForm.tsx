@@ -36,6 +36,8 @@ export const AddShiftsForm = ({
   const [shiftIdCounter, setShiftIdCounter] = useState(1);
   const today = new Date();
   const defaultStartDay = isEditingPersistedShift ? today.getDate() : 1;
+  const monthNumberIn1To12Format = today.getMonth() + 1;
+
   const [shifts, setShifts] = useState<ShiftForm[]>(Array.from(shiftForms).length > 0 ? shiftForms : [
     {
       id: shiftIdCounter,
@@ -43,7 +45,7 @@ export const AddShiftsForm = ({
       startTime: '',
       endTime: '',
       defaultStaffNumber: 0,
-      startDate: {year: today.getFullYear(), month: today.getMonth() + 1, day: defaultStartDay}
+      startDate: {year: today.getFullYear(), month: monthNumberIn1To12Format, day: defaultStartDay}
     }
   ]);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -81,7 +83,7 @@ export const AddShiftsForm = ({
     setShifts([...shifts,
                 {
                   id: shiftIdCounter + 1, name: '', startTime: '', endTime: '', defaultStaffNumber: 0,
-                  startDate: {year: today.getFullYear(), month: today.getMonth() + 1, day: defaultStartDay}
+                  startDate: {year: today.getFullYear(), month: monthNumberIn1To12Format, day: defaultStartDay}
                 }
               ]);
     setShiftIdCounter(prevCounter => prevCounter + 1);

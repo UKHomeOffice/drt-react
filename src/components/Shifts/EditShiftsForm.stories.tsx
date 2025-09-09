@@ -27,10 +27,6 @@ export const AddShiftsForm: Story = {
     confirmHandler: (shifts: ShiftForm[]) => {
       console.log(shifts);
     },
-    shiftStatusHandler: (shiftForm: ShiftForm) => {
-      console.log(shiftForm);
-      return 'true';
-    },
     isEditingPersistedShift: true
   }
 };
