@@ -28,7 +28,7 @@ export function momentToShiftDate(momentDate: Moment): ShiftDate {
 }
 
 // Moment to ShiftDate (as string, e.g. 'YYYY-MM-DD')
-export function momentToShiftDateString(momentDate: Moment): string {
+export function momentToISOString(momentDate: Moment): string {
   return momentDate.format('YYYY-MM-DD');
 }
 

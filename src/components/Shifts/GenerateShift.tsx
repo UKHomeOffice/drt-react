@@ -2,14 +2,14 @@ import {LocalDate} from "./LocalDate";
 import moment from "moment/moment";
 import {ShiftSummary, StaffTableEntry} from "./ShiftHotTableView";
 
-export const generateShiftAssignments = (defaultShifts: ShiftSummary, interval: number, months: LocalDate[]): StaffTableEntry[] => {
+export const generateShiftAssignments = (shiftSummary: ShiftSummary, interval: number, months: LocalDate[]): StaffTableEntry[] => {
   const assignments: StaffTableEntry[] = [];
   months.forEach(date => {
-    const startDay = (date.month === defaultShifts.startDate.month && date.year === defaultShifts.startDate.year) ? defaultShifts.startDate.day : 1;
-    const daysInMonth = defaultShifts.endDate ? defaultShifts.endDate.day : moment().month(date.month - 1).daysInMonth();
+    const startDay = (date.month === shiftSummary.startDate.month && date.year === shiftSummary.startDate.year) ? shiftSummary.startDate.day : 1;
+    const daysInMonth = shiftSummary.endDate ? shiftSummary.endDate.day : moment().month(date.month - 1).daysInMonth();
     for (let day = startDay; day <= daysInMonth; day++) {
-      const [startHour, startMinute] = defaultShifts.startTime.split(':').map(Number);
-      const [endHour, endMinute] = defaultShifts.endTime.split(':').map(Number);
+      const [startHour, startMinute] = shiftSummary.startTime.split(':').map(Number);
+      const [endHour, endMinute] = shiftSummary.endTime.split(':').map(Number);
       const start = new LocalDate(date.year, date.month, day, startHour, startMinute);
       const isShiftEndAfterMidNight = endHour < startHour || (endHour === startHour && endMinute < startMinute);
       let endDate = new LocalDate(date.year, date.month, day, endHour, endMinute);
@@ -46,8 +46,8 @@ export const generateShiftAssignments = (defaultShifts: ShiftSummary, interval: 
         assignments.push({
                            column: day,
                            row: rowId++,
-                           name: defaultShifts.name,
-                           staffNumber: defaultShifts.defaultStaffNumber + day,
+                           name: shiftSummary.name,
+                           staffNumber: shiftSummary.defaultStaffNumber + day,
                            startTime: current,
                            endTime: next
                          });
