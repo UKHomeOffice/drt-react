@@ -14,10 +14,13 @@ export const AddShiftsForm: Story = {
     port: 'BHX',
     terminal: 'T2',
     interval: 15,
-    shiftForms: [
-    ],
+    shiftForms: [],
     confirmHandler: (shifts: ShiftForm[]) => {
       console.log(shifts);
+    },
+    shiftStatusHandler: (shiftForm: ShiftForm) => {
+      console.log(shiftForm);
+      return '';
     },
     isEditingPersistedShift: false
   }

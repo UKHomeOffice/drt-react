@@ -17,9 +17,8 @@ export const EditShiftFormStory: Story = {
       name: 'Morning Shift',
       startTime: '09:00',
       endTime: '12:00',
-      defaultStaffNumber: 5,
-      startDate: { year: 2024, month: 1, day: 1 },
-      editStartMonth: 1,
+      defaultStaffNumber: 7,
+      startDate: { year: 2025, month: 8, day: 10 }
     },
     interval: 15,
     onUpdate: (updatedFormState) => {
@@ -29,5 +28,6 @@ export const EditShiftFormStory: Story = {
       console.log('Remove Shift with ID:', shiftId);
     },
     showSubmitErrors: false,
+    isEditingPersistedShift : true
   },
 };

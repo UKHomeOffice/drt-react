@@ -3,7 +3,7 @@ import {Box, Typography, IconButton, Divider, Paper, Button} from '@mui/material
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import {ShiftForm} from "./AddShiftsForm";
-import { Months } from '../Util';
+import {shiftDateToString} from "../Util";
 
 export interface ShiftsSummaryProps {
   port: string;
@@ -15,24 +15,6 @@ export interface ShiftsSummaryProps {
   isEditingPersistedShift?: boolean;
 }
 
-const findMinStartTimeAndMaxEndTime = (shifts: ShiftForm[]) => {
-  if (shifts.length === 0) return {minStartTime: null, maxEndTime: null};
-
-  let minStartTime = shifts[0].startTime;
-  let maxEndTime = shifts[0].endTime;
-
-  shifts.forEach(shift => {
-    if (shift.startTime < minStartTime) {
-      minStartTime = shift.startTime;
-    }
-    if (shift.endTime > maxEndTime || shift.endTime < shift.startTime) {
-      maxEndTime = shift.endTime;
-    }
-  });
-
-  return {minStartTime, maxEndTime};
-};
-
 export const ConfirmShiftForms = ({
                                     port,
                                     terminal,
@@ -42,16 +24,16 @@ export const ConfirmShiftForms = ({
                                     removeShiftHandler,
                                     isEditingPersistedShift,
                                   }: ShiftsSummaryProps) => {
-  const {minStartTime, maxEndTime} = findMinStartTimeAndMaxEndTime(shifts);
 
   return (
     <Box sx={{p: 2, minWidth: '500px'}}>
-      <Typography sx={{fontSize: '20px'}}>{isEditingPersistedShift ? "Edit" : "Add"} staff to {port} {terminal}</Typography>
+      <Typography sx={{fontSize: '20px'}}>{isEditingPersistedShift ? "Edit" : "Add"} staff
+        to {port} {terminal}</Typography>
       <Typography variant="h1" sx={{paddingBottom: '10px'}}>Step 2 of 2 - Check your shifts</Typography>
       <Typography variant="h2" sx={{paddingBottom: '10px', fontSize: '24px'}}>Summary</Typography>
       <Typography variant="body1">Total shifts: {shifts.length}</Typography>
-      <Typography variant="body1" sx={{paddingTop: '10px'}}>Hours covered: {minStartTime} to {maxEndTime}</Typography>
-      {!isEditingPersistedShift && (<Typography variant="h2" sx={{paddingTop: '10px', fontSize: '24px'}}>Shifts</Typography>)}
+      {!isEditingPersistedShift && (
+        <Typography variant="h2" sx={{paddingTop: '10px', fontSize: '24px'}}>Shifts</Typography>)}
       {
         shifts.map((shift) => (
           <Box key={shift.id}
@@ -105,8 +87,8 @@ export const ConfirmShiftForms = ({
               <Box component="dd">{shift.defaultStaffNumber}</Box>
             </Box>
             <Box component="dl" sx={{display: 'flex', justifyContent: 'flex-start', padding: '10px'}}>
-              <Box component="dt" sx={{fontWeight: 'bold', minWidth: '150px'}}>Start Month</Box>
-              <Box component="dd">{Months[shift.editStartMonth-1].name}</Box>
+              <Box component="dt" sx={{fontWeight: 'bold', minWidth: '150px'}}>Start Date</Box>
+              <Box component="dd">{shiftDateToString(shift.startDate)}</Box>
             </Box>
           </Box>
         ))

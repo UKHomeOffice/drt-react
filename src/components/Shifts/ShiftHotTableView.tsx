@@ -10,6 +10,8 @@ import 'handsontable/dist/handsontable.full.min.css';
 import {LocalDate} from './LocalDate';
 import {drtTheme} from '../../index';
 import EditIcon from '@mui/icons-material/Edit';
+import {shiftDateToString} from "../Util";
+import Alert from '@mui/material/Alert';
 
 export interface ShiftDate {
   year: number;
@@ -30,6 +32,7 @@ export interface ShiftSummary {
   startTime: string;
   endTime: string;
   startDate: ShiftDate;
+  endDate?: ShiftDate;
   defaultStaffNumber: number;
 }
 
@@ -149,7 +152,7 @@ const generateRows = (shiftDate: ShiftDate, dayRange: string, tableIndex: number
         for (let day = 1; day <= daysCount; day++) {
           const dayAssignments = shift.staffTableEntries.filter(assignment => assignment.startTime.year === nextDay.year && assignment.startTime.month === nextDay.month
             && assignment.startTime.day === nextDay.day && assignment.startTime.hour === currentTime.hour && assignment.startTime.minute === currentTime.minute);
-          row[`${tableIndex}-${day}`] = dayAssignments.length > 0 ? dayAssignments[0].staffNumber : '';
+          row[`${tableIndex}-${day}`] = dayAssignments.length > 0 ? dayAssignments[0].staffNumber : '-';
           nextDay = nextDay.addDays(1);
         }
         rows.push(row);
@@ -163,9 +166,13 @@ const generateRows = (shiftDate: ShiftDate, dayRange: string, tableIndex: number
       for (let day = 1; day <= daysCount; day++) {
         const dayAssignments = shift.staffTableEntries.filter(assignment => assignment.startTime.day === nextDate.day && assignment.startTime.year === nextDate.year && assignment.startTime.month === nextDate.month);
         const staffNumbers = dayAssignments.map(assignment => assignment.staffNumber);
-        const minStaffNumber = Math.min(...staffNumbers);
-        const maxStaffNumber = Math.max(...staffNumbers);
-        headerRow[`${tableIndex}-${day}`] = (minStaffNumber === maxStaffNumber) ? `${minStaffNumber}` : `${minStaffNumber} to ${maxStaffNumber}`;
+        if (staffNumbers.length === 0) {
+          headerRow[`${tableIndex}-${day}`] = 'N/A';
+        } else {
+          const minStaffNumber = Math.min(...staffNumbers);
+          const maxStaffNumber = Math.max(...staffNumbers);
+          headerRow[`${tableIndex}-${day}`] = (minStaffNumber === maxStaffNumber) ? `${minStaffNumber}` : `${minStaffNumber} to ${maxStaffNumber}`;
+        }
         nextDate = nextDate.addDays(1);
       }
       rows.push(headerRow);
@@ -181,8 +188,18 @@ export interface ShiftHotTableViewProps {
   shiftDate: ShiftDate;
   shiftSummaries: ShiftSummaryStaffing[];
   handleSaveChanges: (shifts: ShiftSummaryStaffing[], changedAssignments: StaffTableEntry[]) => void;
-  handleEditShift: (index:number ,shiftSummary: ShiftSummary) => void;
+  handleEditShift: (index: number, shiftSummary: ShiftSummary) => void;
 }
+
+const showAlert = (shift: ShiftSummaryStaffing, shiftDate: ShiftDate) => {
+  const momentStartDate = moment({
+                                   year: shift.shiftSummary.startDate.year,
+                                   month: shift.shiftSummary.startDate.month,
+                                   day: shift.shiftSummary.startDate.day
+                                 })
+  const momentShiftDate = moment({year: shiftDate.year, month: shiftDate.month, day: shiftDate.day});
+  return momentStartDate.isAfter(momentShiftDate) && momentStartDate.isBefore(momentShiftDate.add(1, 'month'));
+};
 
 export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
                                                                       interval,
@@ -251,6 +268,14 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
     }
   };
 
+  const [open, setOpen] = useState(true);
+  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
+
   return (
     <ThemeProvider theme={drtTheme}>
       {shiftSummaries.map((shift, index) => {
@@ -272,6 +297,8 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
             <Box display="flex" gap="20px" alignItems="center" paddingBottom="10px">
               <Typography>{`Time covered: ${shift.shiftSummary.startTime} to ${shift.shiftSummary.endTime}`}</Typography>
               <Typography>Default staff: {shift.shiftSummary.defaultStaffNumber}</Typography>
+              <Typography>{`Start Date: ${shiftDateToString(shift.shiftSummary.startDate)}`}</Typography>
+              <Typography>{shift.shiftSummary.endDate ? `End Date: ${shiftDateToString(shift.shiftSummary.endDate)}` : ''}</Typography>
               <Box
                 sx={{
                   cursor: 'pointer',
@@ -283,11 +310,18 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
                     textDecoration: 'none',
                   },
                 }}
-                onClick={() => handleEditShift(index ,shift.shiftSummary)}
+                onClick={() => handleEditShift(index, shift.shiftSummary)}
               >
-                <EditIcon sx={{ marginRight: '5px' }} />
+                <EditIcon sx={{marginRight: '5px'}}/>
                 <Typography>Edit Shift</Typography>
               </Box>
+            </Box>
+            <Box>{open &&
+              showAlert(shift, shiftDate) && (
+                <Alert sx={{maxWidth: '25%'}} onClose={handleClose} severity="info">
+                  {"Upcoming changes from " + shiftDateToString(shift.shiftSummary.startDate)}
+                </Alert>
+              )}
             </Box>
             <HotTable
               id={`hot-table-${index}`}

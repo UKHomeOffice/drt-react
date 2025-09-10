@@ -18,7 +18,7 @@ type Story = StoryObj<typeof ShiftHotTableViewComponent>;
 
 const shiftSummary: ShiftSummary[] = [
   {name: 'Early shift', defaultStaffNumber: 0, startTime: '06:30', endTime: '16:30',startDate : {year: 2025, month: 1, day: 1}},
-  {name: 'Mid shift', defaultStaffNumber: 0, startTime: '12:00', endTime: '22:30',startDate : {year: 2025, month: 1, day: 1}},
+  {name: 'Mid shift', defaultStaffNumber: 0, startTime: '12:00', endTime: '22:30',startDate : {year: 2025, month: 1, day: 15}},
   {name: 'Late shift', defaultStaffNumber: 0, startTime: '13:00', endTime: '23:00',startDate : {year: 2025, month: 1, day: 1}},
   {name: 'Night shift', defaultStaffNumber: 0, startTime: '21:30', endTime: '02:00',startDate : {year: 2025, month: 1, day: 1}}
 ];
@@ -47,7 +47,7 @@ const ShiftHotTableViewStory: React.FC = () => {
     <ShiftHotTableViewComponent
       interval={30}
       dayRange={'weekly'}
-      shiftDate={{year: 2025, month: 1, day: 1}}
+      shiftDate={{year: 2025, month: 1, day: 14}}
       shiftSummaries={initialDefaultShifts}
       handleSaveChanges={handleSaveChanges}
       handleEditShift={handleEditShift}
