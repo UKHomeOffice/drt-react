@@ -1,6 +1,7 @@
 import React, {useState} from "react"
 import {
   Autocomplete,
+  Box,
   Button,
   Card,
   Checkbox,
@@ -187,16 +188,7 @@ export const FlightFlaggerFilters = ({
     clearFiltersCallback(emptyState)
   }
 
-  const buttonStyles = {
-    '& .MuiButton-startIcon': {
-      fill: '#ffffff',
-    },
-    '& .MuiChip-root': {
-      backgroundColor: 'rgba(0,0,0,0.2)'
-    }
-  }
-
-  return <Card variant="lightGrey">
+  return <Box>
     <Grid container sx={{ml: 0, pt: 2, flexWrap: {xs: 'wrap', md: 'nowrap'}}}
           spacing={2}>
       <Grid item flexGrow={0}>
@@ -224,15 +216,7 @@ export const FlightFlaggerFilters = ({
           color="secondary"
           onClick={() => toggleFilters()}
           disableElevation
-          variant="contained"
-          sx={buttonStyles}
-          startIcon={<HighlightIcon />}
-          endIcon={<Chip
-            color={someCriteriaSelected(appliedSearchFlags) ? "primary" : "primary"}
-            size="small"
-            label={`${getFilterCount(appliedSearchFlags)}`}
-            sx={{fontSize: '0.8125rem !important'}}/>
-          }>
+          variant="contained">
           Select pax info to reveal
         </Button>
       </Grid>
@@ -255,7 +239,7 @@ export const FlightFlaggerFilters = ({
         </FormControl>
       </Grid>}
     </Grid>
-    <Grid container sx={{backgroundColor: '#F3F5F9', width: '100%', ml: 0}} spacing={2}>
+    <Grid container sx={{swidth: '100%', ml: 0}} spacing={2}>
       <Grid item xs={12} sx={{px: 2, pb: 2}}>
         <Collapse in={currentFormState.showFilters} data-testid="flight-flagger-filters">
           <Paper elevation={0} sx={{backgroundColor: '#fff', p: 2, mt: 2}}>
@@ -343,7 +327,7 @@ export const FlightFlaggerFilters = ({
                         sx={{mr: 2}}>
                   Cancel
                 </Button>
-                <Button color="info" data-testid="flight-flagger-filter-submit"
+                <Button color="primary" data-testid="flight-flagger-filter-submit"
                         variant='contained'
                         onClick={handleApply(currentFormState)}
                         disabled={!formIsTouched(appliedSearchFlags, currentFormState)}>
@@ -362,6 +346,6 @@ export const FlightFlaggerFilters = ({
         </Link>
         </Typography>}
       </Grid>
-    </Grid></Card>
-
+    </Grid>
+  </Box>
 }

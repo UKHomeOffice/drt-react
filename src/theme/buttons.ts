@@ -1,5 +1,4 @@
 
-import { OutlinedInput } from "@mui/material";
 import { themePrimatives } from "./primatives";
 
 export const buttonBaseTheme = {
@@ -170,10 +169,16 @@ export const buttonTheme = {
     },
     sizeMedium: {
       fontSize: '16px',
+      [themePrimatives.breakpoints.up("md")]: {
+        fontSize: '19px',
+      },
       lineHeight: '25px',
     }, 
     sizeLarge: {
-      fontSize: "21px",
+      fontSize: "19px",
+      [themePrimatives.breakpoints.up("md")]: {
+        fontSize: '21px',
+      },
       lineHeight: '25px',
     },
     outlined: {
@@ -275,6 +280,10 @@ export const toggleButtonTheme = {
     root: {
       backgroundColor: '#fff',
       fontWeight: 400,
+      fontSize: '16px',
+      [themePrimatives.breakpoints.up("md")]: {
+        fontSize: '19px',
+      },
       padding: '8px 10px 7px',
       borderRadius: 0,
       '&.MuiToggleButton-primary': {
@@ -350,6 +359,7 @@ export const toggleButtonTheme = {
 export const toggleButtonGroupTheme = {
   styleOverrides: {
     root: {
+      
     },
   }
 }

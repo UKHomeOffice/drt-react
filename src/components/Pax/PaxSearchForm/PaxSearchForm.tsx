@@ -44,11 +44,6 @@ export type IPaxSearchForm = PaxSearchFormPayload & {
   onChange: (values: PaxSearchFormPayload) => void
 }
 
-const PaxSearchFormWrapper = styled(Box)(({ theme }) => ({
-  padding: theme.spacing(2), 
-  backgroundColor: theme.palette.secondary.light || theme.palette.grey[200],
-}));
-
 
 export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMachine, onChange}: IPaxSearchForm) => {
 
@@ -196,12 +191,12 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
   }
 
   return (
-    <PaxSearchFormWrapper sx={(theme)=>({ padding: 2, backgroundColor: theme.palette.secondary.light || theme.palette.grey[200]})}>
+    <Box>
       <Grid container spacing={2} mb={3}>
         <Grid item flexGrow={0}>
           <Stack spacing={0}>
             <InputLabel>Day</InputLabel>
-            <ToggleButtonGroup sx={{mt: 0}} exclusive color='info' size='medium' value={formState.day} onChange={handleChangeDay}>
+            <ToggleButtonGroup sx={{mt: 0}} exclusive color='primary' size='medium' value={formState.day} onChange={handleChangeDay}>
               <ToggleButton value="yesterday" defaultChecked>Yesterday</ToggleButton>
               <ToggleButton value="today">Today</ToggleButton>
               <ToggleButton value="tomorrow">Tomorrow</ToggleButton>
@@ -225,7 +220,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
       <Grid container spacing={2}>
         <Grid item>
           <InputLabel>Range</InputLabel>
-          <ToggleButtonGroup exclusive color='info' size='medium' value={formState.time} onChange={handleChangeTime}>
+          <ToggleButtonGroup exclusive color='primary' size='medium' value={formState.time} onChange={handleChangeTime}>
             <ToggleButton value="now" disabled={formState.day !== PaxSearchFormDay.Today}><OfflineBoltTwoToneIcon sx={{fontSize: '0.8em', mr: 1}} />Live</ToggleButton>
             <ToggleButton value="24hour">24hr</ToggleButton>
             <ToggleButton value="range">Custom</ToggleButton>
@@ -297,6 +292,6 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
         <Switch color='info' id="time-machine" checked={formState.timeMachine} onChange={handleChangeTimeMachine}/>
         <Typography variant='body1'>{formState.timeMachine ? 'On' : 'Off'}</Typography>
       </Stack>
-    </PaxSearchFormWrapper>
+    </Box>
   )
 }

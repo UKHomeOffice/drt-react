@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Chip  } from "@mui/material";
 import TungstenIcon from '@mui/icons-material/Tungsten';
 import CustomHighlightIcon from './icon-highlight-pax.svg'
+import { themePrimatives } from "../../theme/primatives";
 
 export interface IFlightHighlightChip {
   text: string
@@ -29,7 +30,10 @@ export const FlightHighlightChip = ({text}: IFlightHighlightChip) => {
               overflow: 'visible',
               textOverflow: 'inherit',
               whiteSpace: 'nowrap',
-              fontSize: '16px !important',
+              fontSize: '16px',
+              [themePrimatives.breakpoints.up("md")]: {
+                fontSize: '19px',
+              },
             }
           }} />
 

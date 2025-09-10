@@ -47,6 +47,6 @@ export const PlaneStatusLabel = ({status}: IPlaneStatusLabel) => {
   } 
   
   return (
-    <Stack direction={'row'} spacing={1} display={'inline-flex'}>{ icon } <Typography color={color}>{ status }</Typography></Stack>
+    <Stack direction={'row'} spacing={1} display={'inline-flex'} alignItems={'center'}>{ icon } <Typography color={color}>{ status }</Typography></Stack>
   )
 }

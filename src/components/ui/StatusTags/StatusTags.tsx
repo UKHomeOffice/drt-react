@@ -5,6 +5,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import InfoIcon from '@mui/icons-material/Info';
 import ErrorIcon from '@mui/icons-material/Error';
 import ReportIcon from '@mui/icons-material/Report';
+import { themePrimatives } from "../../../theme/primatives";
 
 const StyledAlert = styled(Alert)<AlertProps>(() => ({
   fontWeight: 'bold',
@@ -13,7 +14,11 @@ const StyledAlert = styled(Alert)<AlertProps>(() => ({
   '& .MuiSvgIcon-root': {
     width: '0.9em',
     height: '0.9em',
-  }
+  },
+  fontSize: '16px',
+  [themePrimatives.breakpoints.up("md")]: {
+    fontSize: '19px',
+  },
 }));
 
 export interface IStatusTag {
