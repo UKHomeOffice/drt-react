@@ -295,7 +295,7 @@ export const FlightFlaggerFilters = ({
                 <FormGroup>
                   <FormControlLabel
                     control={
-                      <Checkbox color='info' data-testid="show-visa-nationals-check"
+                      <Checkbox color='primary' data-testid="show-visa-nationals-check"
                                 checked={currentFormState.showNumberOfVisaNationals}
                                 onChange={handleCheckboxChange}
                                 inputProps={{'aria-label': 'show visa nationals'}}
@@ -307,7 +307,7 @@ export const FlightFlaggerFilters = ({
                     <FormControlLabel
                       control={
                         <Checkbox
-                          color='info'
+                          color='primary'
                           data-testid="require-all-selected-check"
                           disabled={!someCriteriaSelected(currentFormState)}
                           checked={currentFormState.requireAllSelected}

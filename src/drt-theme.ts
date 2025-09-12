@@ -4,7 +4,7 @@ import type {} from '@mui/x-date-pickers/themeAugmentation';
 import { themePrimatives } from "./theme/primatives";
 import React from "react";
 import { buttonBaseTheme, buttonTheme, buttonGroupTheme, toggleButtonGroupTheme, toggleButtonTheme } from '../src/theme/buttons';
-import { inputBaseTheme, inputAdornmentTheme, inputLabelTheme, outlinedInputTheme, radioTheme } from "./theme/input";
+import { inputBaseTheme, inputAdornmentTheme, inputLabelTheme, outlinedInputTheme, radioTheme, checkboxTheme } from "./theme/input";
 import { formControlLabelTheme, formLabelTheme, formHelperTextTheme, formControlTheme } from "./theme/formControl";
 import { selectTheme, nativeSelectTheme } from "./theme/select";
 import { autocompleteTheme } from "./theme/autocomplete";
@@ -184,6 +184,9 @@ const drtTheme = createTheme({
     },
     MuiRadio: {
       ...radioTheme as any,
+    },
+    MuiCheckbox: {
+      ...checkboxTheme,
     },
     MuiTable:{
       ...tableTheme,

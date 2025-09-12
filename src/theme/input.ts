@@ -84,3 +84,12 @@ export const radioTheme = {
     }
   }
 }
+
+
+export const checkboxTheme = {
+  styleOverrides:{
+    root: {
+      marginBottom: themePrimatives.spacing(1),
+    }
+  }
+}
