@@ -90,7 +90,7 @@ export const PaxTerminalOverview = ({terminal ,periodLengthMinutes, staff, desks
                   periodQueuePaxCounts.map((estimate) => {
                     return (
                       <TableRow>
-                        <TableCell><strong className='nowrap'>{estimate.from} to {estimate.to}</strong></TableCell>
+                        <TableCell><span className='nowrap'>{estimate.from} to {estimate.to}</span></TableCell>
                         <TableCell className='nowrap' align='right'>{(estimate.egate + estimate.eea + estimate.noneea).toLocaleString()}</TableCell>
                         <TableCell className='nowrap' align='right'>{estimate.egate.toLocaleString()}</TableCell>
                         <TableCell className='nowrap' align='right'>{estimate.eea.toLocaleString()}</TableCell>
@@ -101,7 +101,7 @@ export const PaxTerminalOverview = ({terminal ,periodLengthMinutes, staff, desks
                 }
               </TableBody>
               <TableFooter>
-                <TableCell sx={{ color: '#000000de'}}><strong className='nowrap'>{timeRangeMap.get(3 * periodLengthMinutes)} total</strong></TableCell>
+                <TableCell sx={{ color: '#000000de'}}><strong className='nowrap'>{periodQueuePaxCounts[0].from} to {periodQueuePaxCounts[2].to}</strong></TableCell>
                 <TableCell align='right' sx={{ color: '#000000de'}}><strong>{periodQueuePaxCounts.reduce((total, estimate) => total + estimate.egate + estimate.eea + estimate.noneea, 0 ).toLocaleString()}</strong></TableCell>
                 <TableCell align='right' sx={{ color: '#000000de'}}><strong>{periodQueuePaxCounts.reduce((total, estimate) => total + estimate.egate, 0 ).toLocaleString()}</strong></TableCell>
                 <TableCell align='right' sx={{ color: '#000000de'}}><strong>{periodQueuePaxCounts.reduce((total, estimate) => total + estimate.eea, 0 ).toLocaleString()}</strong></TableCell>
