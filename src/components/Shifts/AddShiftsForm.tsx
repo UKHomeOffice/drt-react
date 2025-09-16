@@ -114,7 +114,7 @@ export const AddShiftsForm = ({
             <Typography sx={{fontSize: '20px'}}>
               {isEditingPersistedShift ? "Edit staff" : "Add staff"} to {port} {getAirportNameByCode(port)} {terminal}
             </Typography>
-            <Typography variant="h1" sx={{paddingBottom: '10px'}}>
+            <Typography variant="h1">
               Step 1 of 2 - {isEditingPersistedShift ? "Edit your shift" : "Create your shift pattern"}
             </Typography>
             {shifts.map((form, index) => {
@@ -142,10 +142,7 @@ export const AddShiftsForm = ({
             })}
             <Box>
               {!isEditingPersistedShift && (
-                <Button variant="outlined" color="primary" onClick={handleAddShift} sx={{gap: 0, paddingLeft: '0'}}>
-                  <IconButton color="primary" sx={{padding: '0'}}>
-                    <AddIcon/>
-                  </IconButton>
+                <Button variant="outlined" color="primary" onClick={handleAddShift}>
                   Add a shift
                 </Button>
               )}
@@ -155,7 +152,7 @@ export const AddShiftsForm = ({
                 Continue
               </Button>
               {showErrors && (
-                <Typography color="error" variant="body2">Please fix the errors before continuing</Typography>
+                <Typography color="error" variant="body1">Please fix the errors before continuing</Typography>
               )}
             </Box>
           </Box>) : (
@@ -168,17 +165,6 @@ export const AddShiftsForm = ({
                              isEditingPersistedShift={isEditingPersistedShift}
           />)
         }
-      </Stack>
-      <Stack direction={'column'} spacing={2} alignItems='start'> 
-        <Button variant="outlined" color="primary" onClick={handleAddShift} startIcon={<AddIcon/>}>
-          Add a shift
-        </Button>
-        <Button variant="contained" color="primary" onClick={onContinue} data-cy="shift-continue-button">
-          Continue
-        </Button>
-        {showErrors && (
-          <Typography color="error" variant="body2">Please fix the errors before continuing</Typography>
-        )}
       </Stack>
     </>
   )

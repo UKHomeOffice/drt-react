@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Box, IconButton, ThemeProvider, Typography} from '@mui/material';
+import {Box, Button, IconButton, ThemeProvider, Typography} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import Handsontable from 'handsontable';
@@ -299,22 +299,9 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               <Typography>Default staff: {shift.shiftSummary.defaultStaffNumber}</Typography>
               <Typography>{`Start Date: ${shiftDateToString(shift.shiftSummary.startDate)}`}</Typography>
               <Typography>{shift.shiftSummary.endDate ? `End Date: ${shiftDateToString(shift.shiftSummary.endDate)}` : ''}</Typography>
-              <Box
-                sx={{
-                  cursor: 'pointer',
-                  color: 'primary.main',
-                  textDecoration: 'underline',
-                  display: 'flex',
-                  alignItems: 'center',
-                  '&:hover': {
-                    textDecoration: 'none',
-                  },
-                }}
-                onClick={() => handleEditShift(index, shift.shiftSummary)}
-              >
-                <EditIcon sx={{marginRight: '5px'}}/>
-                <Typography>Edit Shift</Typography>
-              </Box>
+              <Button variant="outlined" color="primary" onClick={() => handleEditShift(index, shift.shiftSummary)}>
+                Edit Shift
+              </Button>
             </Box>
             <Box>{open &&
               showAlert(shift, shiftDate) && (
