@@ -5,15 +5,20 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import InfoIcon from '@mui/icons-material/Info';
 import ErrorIcon from '@mui/icons-material/Error';
 import ReportIcon from '@mui/icons-material/Report';
+import { themePrimatives } from "../../../theme/primatives";
 
 const StyledAlert = styled(Alert)<AlertProps>(() => ({
   fontWeight: 'bold',
-  color: '#fff',
+  alignItems: 'center',
+  padding: '3px !important',
   '& .MuiSvgIcon-root': {
-    color: '#fff',
     width: '0.9em',
     height: '0.9em',
-  }
+  },
+  fontSize: '16px',
+  [themePrimatives.breakpoints.up("md")]: {
+    fontSize: '19px',
+  },
 }));
 
 export interface IStatusTag {
@@ -32,7 +37,7 @@ export const StatusTag = ({type, text}: IStatusTag) => {
       icon = <CheckCircleIcon />
       break;
     case 'warning':
-      bgColor = theme.palette.warning.main
+      bgColor = theme.palette.warning.light
       severity = 'warning'
       icon = <ErrorIcon />
       break;

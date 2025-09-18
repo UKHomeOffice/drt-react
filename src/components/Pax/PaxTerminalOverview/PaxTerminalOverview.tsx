@@ -111,7 +111,7 @@ export const PaxTerminalOverview = ({terminal ,periodLengthMinutes, staff, desks
           </CardContent>
         </Card>
       </Box>
-      <Box width={200 + Math.ceil(chartData.labels!.length / 7) * 350 }>
+      <Box width={200 + Math.ceil(chartData.labels!.length / 7) * 250 }>
         <Card variant='outlined' sx={{height:'100%'}}>
           <CardContent>
             <Stack direction={'column'} spacing={2} mb={2}>

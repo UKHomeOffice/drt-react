@@ -1,16 +1,34 @@
 
-import { createTheme, darken, lighten } from "@mui/material";
+import { createTheme } from "@mui/material";
 import type {} from '@mui/x-date-pickers/themeAugmentation';
+import { themePrimatives } from "./theme/primatives";
 import React from "react";
+import { buttonBaseTheme, buttonTheme, buttonGroupTheme, toggleButtonGroupTheme, toggleButtonTheme } from '../src/theme/buttons';
+import { inputBaseTheme, inputAdornmentTheme, inputLabelTheme, outlinedInputTheme, radioTheme, checkboxTheme } from "./theme/input";
+import { formControlLabelTheme, formLabelTheme, formHelperTextTheme, formControlTheme } from "./theme/formControl";
+import { selectTheme, nativeSelectTheme } from "./theme/select";
+import { autocompleteTheme } from "./theme/autocomplete";
+import { listTheme, listItemTheme, listItemTextTheme } from "./theme/lists";
+import { typographyTheme, typographyComponentTheme, linkTheme } from "./theme/typography";
+import { tableRowTheme, tableTheme, tableCellTheme } from "./theme/table";
+import { paperTheme, cardHeaderTheme,cardContentTheme, appbarTheme } from "./theme/paper";
+import { circularProgressTheme } from "./theme/progress";
+import { alertTheme } from "./theme/alert";
 
 declare module '@mui/material/styles' {
   interface PaperVariants {
     appbar: React.CSSProperties;
+    lightGrey: React.CSSProperties;
+    white: React.CSSProperties;
+    footer: React.CSSProperties;
   }
 
   // allow configuration using `createTheme`
   interface PaperVariantsOptions {
     appbar?: React.CSSProperties;
+    lightGrey?: React.CSSProperties;
+    white?: React.CSSProperties;
+    footer?: React.CSSProperties;
   }
 
   interface TypographyVariants {
@@ -18,6 +36,10 @@ declare module '@mui/material/styles' {
     pageTitle: React.CSSProperties;
     logoTitle: React.CSSProperties;
     logoStrap: React.CSSProperties;
+    xlarge: React.CSSProperties;
+    large: React.CSSProperties;
+    medium: React.CSSProperties;
+    small: React.CSSProperties;
   }
 
   // allow configuration using `createTheme`
@@ -26,12 +48,28 @@ declare module '@mui/material/styles' {
     pageTitle?: React.CSSProperties;
     logoTitle?: React.CSSProperties;
     logoStrap?: React.CSSProperties;
+    xlarge?: React.CSSProperties;
+    large?: React.CSSProperties;
+    medium?: React.CSSProperties;
+    small?: React.CSSProperties;
+  }
+}
+
+declare module '@mui/material/styles' {
+  interface Palette {
+    border: Palette['primary'];
+  }
+  interface PaletteOptions {
+    border: PaletteOptions['primary'];
   }
 }
 
 declare module '@mui/material/Paper' {
   interface PaperPropsVariantOverrides {
     appbar: true;
+    lightGrey: true;
+    white: true;
+    footer: true;
   }
 }
 
@@ -41,208 +79,91 @@ declare module "@mui/material/Typography" {
     pageTitle: true;
     logoTitle: true;
     logoStrap: true;
+    xlarge: true;
+    large: true;
+    medium: true;
+    small: true;
   }
 }
 
-const defaultValues = createTheme({
-  palette: {
-    primary: { 
-      main: '#005ea5',
-      light: lighten('#005ea5', 0.8)
-    },
-    secondary: { 
-      main: '#233E82',
-      light: '#E6E9F1'
-    },
-    error: { 
-      main: '#99001E',
-      light: '#FFEBEE',
-    },
-    success: { 
-      main: '#547A00',
-      light: '#F0F6DB'
-    },
-    warning: { 
-      main: '#C94900',
-      light: '#FFF2E1',
-    },
-    info: { 
-      main: '#404252',
-      light: lighten('#404252', 0.8)
-    },
-  }
-});
-
 const drtTheme = createTheme({
-  palette: {
-    primary: {
-      ...defaultValues.palette.primary,
-      50: "#E6E9F1",
-      100: "#C0C7DE",
-      300: "#7283B2",
-      400: "#5269A5",
-      500: "#334F96",
-      600: "#2B478D",
-      700: "#233E82",
-      900: "#0E2560",
-    },
-    secondary: defaultValues.palette.secondary,
-    error: defaultValues.palette.error,
-    success: defaultValues.palette.success,
-    warning: defaultValues.palette.warning,
-    info: defaultValues.palette.info,
-    grey: {
-      100 : "#F3F5F9",
-      300 : "#B4B5BE",
-      400 : "#547A00",
-      500 : "#777A86",
-      700 : "#404252",
-      900 : "#111224"
-    }
-  },
+  palette: themePrimatives.palette,
+  spacing: 5,
   typography: {
-    fontFamily: '"Roboto","Helvetica","Arial",sans-serif',
-    h1: {
-      fontSize: '38px',
-      fontWeight: 'bold',
-      color: '#233E82',
-      paddingTop: '20px',
-      paddingBottom: '20px',
-    },
-    h2: {
-      fontSize: '32px',
-      fontWeight: 'bold',
-      paddingTop: '20px',
-      paddingBottom: '20px',
-    },
-    h3: {
-      fontSize: "28px",
-      fontWeight: "bold",
-      paddingTop: '20px',
-      paddingBottom: '20px',
-    },
-    h4: {
-      fontSize: "24px",
-      fontWeight: "bold",
-    },
-    h5: {
-      fontSize: "18px",
-      fontWeight: "bold",
-    },
-    h6: {
-      fontSize: "16px",
-      fontWeight: "bold",
-    },
-    subtitle1: {
-      fontSize: "19px",
-      fontWeight: "bold",
-    },
-    subtitle2: {
-      fontSize: "16px",
-      fontWeight: "bold",
-    },
-    body1: {
-      fontSize: "16px",
-    },
-    body2: {
-      fontSize: "12px",
-    },
-    button: {
-      fontSize: '18px',
-      fontWeight: "bold",
-      textTransform: 'none',
-    },
-    portCode: {
-      fontSize: '0.7em',
-      letterSpacing: 1.2,
-      minWidth: '30px',
-      textAlign: 'center',
-      display: 'inline-block'
-    },
-    pageTitle: {
-      fontSize: 18,
-      fontWeight: 'lighter',
-      [defaultValues.breakpoints.up("sm")]: {
-        fontSize: 36
-      }
-    },
-    logoTitle: {
-      fontSize: '1.6em'
-    },
+    ...typographyTheme as any
   },
   components: {
+    MuiAlert: {
+      ...alertTheme,
+    },
+    MuiAppBar: {
+      ...appbarTheme,
+    },
     MuiPaper: {
-      variants: [
-        {
-          props: { variant: 'appbar'},
-          style: {
-            backgroundColor: defaultValues.palette.grey[100]
-          }
-        }
-      ]
+      ...paperTheme as any,
+    },
+    MuiCardHeader: {
+      ...cardHeaderTheme
+    },
+    MuiCardContent: {
+      ...cardContentTheme as any,
+    },
+    MuiTypography: {
+      ...typographyComponentTheme,
     },
     MuiInputBase: {
-      styleOverrides: {
-        root: {
-          backgroundColor: defaultValues.palette.common.white
-        }
-      }
+      ...inputBaseTheme as any,
+    },
+    MuiInputAdornment: {
+      ...inputAdornmentTheme as any,
+    },
+    MuiInputLabel: {
+      ...inputLabelTheme as any,
+    },
+    MuiFormControl: {
+      ...formControlTheme
+    },
+    MuiFormLabel: {
+      ...formLabelTheme as any,
+    },
+    MuiFormControlLabel: {
+      ...formControlLabelTheme,
+    },
+    MuiFormHelperText: {
+      ...formHelperTextTheme
+    },
+    MuiOutlinedInput: {
+      ...outlinedInputTheme
+    },
+    MuiButtonBase: {
+      ...buttonBaseTheme
     },
     MuiButton: {
-      styleOverrides: {
-        root: {
-          textTransform: 'none',
-          fontSize: '16px',
-          padding: '6px 12px',
-        },
-        outlined: {
-          backgroundColor: '#fff'
-        }
-      },
+      ...buttonTheme as any,
     },
-    MuiToggleButtonGroup: {
-      styleOverrides: {
-        root: {
-          width: '100%'
-        }
-      }
+    MuiButtonGroup: {
+      ...buttonGroupTheme as any,
     },
-    MuiToggleButton: {
-      styleOverrides: {
-        root: {
-          flexGrow: 1,
-          paddingRight: defaultValues.spacing(2),
-          paddingLeft: defaultValues.spacing(2),
-          '&.MuiToggleButton-primary': {
-            backgroundColor: defaultValues.palette.common.white,
-            color: defaultValues.palette.text.primary,
-            '&:hover': {
-              color: defaultValues.palette.primary.main,
-              backgroundColor: defaultValues.palette.primary.light,
-            },
-            '&.Mui-selected': {
-              backgroundColor: defaultValues.palette.primary.main,
-              color: defaultValues.palette.common.white,
-              cursor: 'default',
-              '.live': {
-                color: '#ffd700',
-              }
-            },
-            '&.Mui-disabled': {
-              backgroundColor: defaultValues.palette.grey[200],
-              color: defaultValues.palette.grey[600],
-            }
-          },
-          '> .MuiSvgIcon-root': {
-            marginRight: defaultValues.spacing(1),
-            opacity: 0.8,
-            width: '0.8em',
-          }
-        },
-        primary: {
-          
-        }
-      }
+    MuiAutocomplete: {
+      ...autocompleteTheme as any,
+    },
+    MuiSelect: {
+      ...selectTheme
+    },
+    MuiNativeSelect: {
+      ...nativeSelectTheme
+    },
+    MuiList: {
+      ...listTheme
+    },
+    MuiListItem: {
+      ...listItemTheme,
+    },
+    MuiListItemText:{
+      ...listItemTextTheme
+    },
+    MuiLink: {
+      ...linkTheme
     },
     MuiAccordion: {
       styleOverrides: {
@@ -261,49 +182,29 @@ const drtTheme = createTheme({
         }
       }
     },
-    MuiRadio:{
-      styleOverrides:{
-        root: {
-          color: '#000',
-          "&.Mui-checked": {
-            color: '#000',
-          }
-        }
-      }
+    MuiRadio: {
+      ...radioTheme as any,
+    },
+    MuiCheckbox: {
+      ...checkboxTheme,
     },
     MuiTable:{
-      styleOverrides: {
-        root: {
-          '& .nowrap': {
-            whiteSpace: 'nowrap'
-          }
-        },
-      }
+      ...tableTheme,
     },
     MuiTableCell:{
-      styleOverrides: {
-        root: {
-          fontSize: '16px',
-          padding: 8,
-        },
-        head: {
-          backgroundColor: defaultValues.palette.info.main,
-          color: defaultValues.palette.common.white,
-          padding: 6,
-        }
-      }
+      ...tableCellTheme,
     },
     MuiTableRow: {
-      styleOverrides: {
-        root: {
-          '&:nth-of-type(odd)': {
-            backgroundColor: defaultValues.palette.common.white,
-          },
-          '&:nth-of-type(even)': {
-            backgroundColor: defaultValues.palette.grey[100],
-          },
-        }
-      }
+      ...tableRowTheme,
+    },
+    MuiToggleButton: {
+      ...toggleButtonTheme,
+    },
+    MuiToggleButtonGroup: {
+      ...toggleButtonGroupTheme,
+    },
+    MuiCircularProgress: {
+      ...circularProgressTheme
     },
     MuiPickersDay: {
       styleOverrides: {
@@ -318,7 +219,7 @@ const drtTheme = createTheme({
           fontSize: '12px'
         }
       }
-    }
+    },
   }
 })
 

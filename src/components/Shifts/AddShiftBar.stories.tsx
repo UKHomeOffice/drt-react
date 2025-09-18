@@ -2,7 +2,7 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {AddShiftBar as AddShiftBarComponent} from './AddShiftBar';
 
 export default {
-  title: 'DRT Components/UI/AddStaffBarComponent',
+  title: 'DRT Components/Features/Shifts/AddStaffBar',
   component: AddShiftBarComponent,
 } as Meta;
 
