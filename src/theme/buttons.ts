@@ -22,7 +22,7 @@ export const buttonTheme = {
       textTransform: 'none',
       borderRadius: 0,
       fontWeight: 400,
-      padding: '8px 10px 7px',
+      padding: '8px 10px',
       transition: 'none',
       '&:hover': {
         boxShadow: 'inherit'
@@ -184,10 +184,6 @@ export const buttonTheme = {
     outlined: {
       backgroundColor: '#fff',
     },
-    startIcon: {
-      top: '2px',
-      position: 'relative'
-    },
     text: {
       display: 'inline',
       padding: 0,
@@ -284,7 +280,7 @@ export const toggleButtonTheme = {
       [themePrimatives.breakpoints.up("md")]: {
         fontSize: '19px',
       },
-      padding: '8px 10px 7px',
+      padding: '8px 10px 8px',
       borderRadius: 0,
       '&.MuiToggleButton-primary': {
         backgroundColor: '#fff',
