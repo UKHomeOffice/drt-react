@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Box, Grid, IconButton, MenuItem, Select, TextField, Typography} from '@mui/material';
+import {Box, Button, Grid, IconButton, MenuItem, Select, TextField, Typography} from '@mui/material';
 import {intervalEndTimeOptions, intervalStartTimeOptions, momentToShiftDate, shiftDateToMoment} from '../Util';
 import CloseIcon from "@mui/icons-material/Close";
 import {ShiftForm} from "./AddShiftsForm";
@@ -172,6 +172,11 @@ export const EditShiftForm = ({
               />
             </LocalizationProvider>
           </Grid>)}
+          {!isEditingPersistedShift && (
+            <Grid item xs={12}>
+              <Button variant='text' startIcon={<CloseIcon />} onClick={() => removeShift(formState.id)}>Remove shift</Button>
+            </Grid>
+          )}
       </Grid>
 
     </Grid>

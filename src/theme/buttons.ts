@@ -185,9 +185,10 @@ export const buttonTheme = {
       backgroundColor: '#fff',
     },
     text: {
-      display: 'inline',
+      display: 'inline-flex',
+      gap: 2,
       padding: 0,
-      backgroundColor: '#fff !important',
+      backgroundColor: 'transparent !important',
       textDecoration: 'underline',
       color: `${themePrimatives.palette.info.main} !important`,
       textDecorationThickness: 'max(1px,.0625rem)',

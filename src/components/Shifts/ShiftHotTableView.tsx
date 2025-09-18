@@ -300,6 +300,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               <Typography sx={{mb: `0 !important`}}>{`Start Date: ${shiftDateToString(shift.shiftSummary.startDate)}`}</Typography>
               <Typography sx={{mb: `0 !important`}}>{shift.shiftSummary.endDate ? `End Date: ${shiftDateToString(shift.shiftSummary.endDate)}` : ''}</Typography>
               <Button 
+                variant='text'
                 onClick={() => handleEditShift(index, shift.shiftSummary)}
                 startIcon={<EditIcon />}
               >

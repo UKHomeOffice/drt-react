@@ -46,16 +46,16 @@ export const ConfirmShiftForms = ({
               padding: '10px',
               marginTop: '0px'
             }}>
-              <Box component="dt" sx={{flex: '1', color: 'black', alignItems: 'center'}}>
+              <Box component="dt" sx={{whiteSpace: 'nowwrap', color: 'black', alignItems: 'center'}}>
                 <Typography variant="h3" sx={{fontSize: '20px', mb:'0 !important'}}>{shift.name}</Typography>
               </Box>
-              <Box component="dd" sx={{flex: '1', display: 'flex', justifyContent: 'flex-end', color: 'black'}}>
+              <Box component="dd" sx={{flex: '1', display: 'flex', justifyContent: 'flex-end', flexGrow: 1, color: 'black'}}>
                 {!isEditingPersistedShift && (
-                  <Button variant='contained' color='secondary' startIcon={<CloseIcon />}>
+                  <Button variant='text' color='secondary' startIcon={<CloseIcon />}>
                     Remove shift
                   </Button>
                 )}
-                <Button variant='contained' color="secondary" onClick={() => editShiftsHandler([shift])} startIcon={ <EditIcon />} sx={{gap: '8px', paddingLeft: '20px'}}>
+                <Button variant='text' color="secondary" onClick={() => editShiftsHandler([shift])} startIcon={ <EditIcon />} sx={{gap: '8px', paddingLeft: '20px'}}>
                   Edit
                 </Button>
               </Box>
