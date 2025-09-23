@@ -76,7 +76,7 @@ export const ConfirmShiftForms = ({
                 </Box>
               )}
             </Box>
-            <Box component="dl" sx={{display: 'flex', justifyContent: 'flex-start', padding: '10px'}}>
+            <Box component="dl" sx={{display: 'flex', justifyContent: 'flex-start', gap: '10px', padding: '10px'}}>
               <Box component="dt" sx={{fontWeight: 'bold', minWidth: '150px'}}>Default staff number</Box>
               <Box component="dd">{shift.defaultStaffNumber}</Box>
             </Box>
