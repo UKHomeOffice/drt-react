@@ -14,6 +14,8 @@ import {
   TextFieldProps as MuiTextFieldProps,
   Select as MuiSelect, 
   SelectProps as MuiSelectProps,
+  NativeSelect as MuiNativeSelect, 
+  NativeSelectProps as MuiNativeSelectProps,
   MenuItem as MuiMenuItem, 
   MenuItemProps as MuiMenuItemProps,
   Autocomplete as MuiAutocomplete,
@@ -42,6 +44,7 @@ export type InputLabelProps = {} & MuiInputLabelProps;
 export type FormLabelProps = {} & MuiFormLabelProps;
 export type TextFieldProps = {} & MuiTextFieldProps;
 export type SelectProps = {} & MuiSelectProps;
+export type NativeSelectProps = {} & MuiNativeSelectProps;
 export type MenuItemProps = {} & MuiMenuItemProps;
 export type DatePickerProps = {} & MuiDatePickerProps<Date>;
 export type TimePickerProps = {} & MuiTimePickerProps<Date>;
@@ -58,6 +61,7 @@ export const InputLabel = ({ children, ...rest }: InputLabelProps) => <MuiInputL
 export const FormLabel = ({ children, ...rest }: FormLabelProps) => <MuiFormLabel {...rest}>{ children }</MuiFormLabel>;
 export const TextField = ({ ...rest }: TextFieldProps) => <MuiTextField {...rest}></MuiTextField>;
 export const Select = ({ ...rest }: SelectProps) => <MuiSelect {...rest}></MuiSelect>;
+export const NativeSelect = ({ ...rest }: NativeSelectProps) => <MuiNativeSelect {...rest}></MuiNativeSelect>;
 export const MenuItem = ({ value, children }: MenuItemProps) => <MuiMenuItem value={value}>{ children }</MuiMenuItem>;
 export const DatePicker = ({ ...rest }: DatePickerProps) => <MuiDatepicker {...rest} />;
 export const TimePicker = ({ ...rest }: TimePickerProps) => <MuiTimePicker {...rest} />;

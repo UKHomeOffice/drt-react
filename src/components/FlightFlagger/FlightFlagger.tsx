@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Country, FlightFlaggerFilters, FormState} from "./FlightFlaggerFilters";
+import {Country, FlightFlaggerFilters, FormState, IFlightFlaggerFilters} from "./FlightFlaggerFilters";
 import { FlightFlaggerResults } from "./FlightFlaggerResults";
 import { SearchFilterPayload } from "./FlightFlaggerFilters";
 import {CircularProgress} from "@mui/material";
@@ -7,15 +7,10 @@ import { FlightArrival } from "./FlightArrival";
 import {IAnalyticsEvent} from '../Util';
 
 
-export interface IFlightFlagger {
-  terminal: string,
-  nationalities: Country[],
-  ageGroups: string[],
-  submitCallback: (payload:SearchFilterPayload) => void,
+export interface IFlightFlagger extends IFlightFlaggerFilters {
   flights: FlightArrival[],
   isLoading: boolean,
   maybeInitialFilterFormState?: FormState
-  sendEvent: (event: IAnalyticsEvent) => void
 }
 
 const FlightFlagger = ({terminal, nationalities, ageGroups, submitCallback, flights, isLoading, maybeInitialFilterFormState, sendEvent}: IFlightFlagger) => {

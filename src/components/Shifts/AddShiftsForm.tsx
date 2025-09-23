@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Box, Button, IconButton, ThemeProvider, Typography} from '@mui/material';
+import {Box, Button, Stack, Typography, IconButton} from '@mui/material';
 import {ConfirmShiftForms} from "./ConfirmShiftForms";
 import {drtTheme} from "../../index";
 import {getAirportNameByCode} from "../../airports";
@@ -93,15 +93,28 @@ export const AddShiftsForm = ({
     setShifts(shifts.filter(shift => shift.id !== id));
   };
 
+  const handleEditOnUpdate = (state: ShiftForm) => {
+    const updatedShifts = shifts.map(shift => {
+      if (shift.id === state.id) {
+        return {...shift, ...state};
+      }
+      return shift;
+    });
+    setShifts(updatedShifts)
+    if (showErrors) {
+      setShowErrors(shiftsHaveErrors(updatedShifts))
+    }
+  }
+
   return (
-    <ThemeProvider theme={drtTheme}>
-      <Box>
+    <>
+      <Stack direction={'row'} mb={2}>
         {!showConfirm ? (
           <Box sx={{p: 2, minWidth: '500px'}}>
             <Typography sx={{fontSize: '20px'}}>
               {isEditingPersistedShift ? "Edit staff" : "Add staff"} to {port} {getAirportNameByCode(port)} {terminal}
             </Typography>
-            <Typography variant="h1" sx={{paddingBottom: '10px'}}>
+            <Typography variant="h1">
               Step 1 of 2 - {isEditingPersistedShift ? "Edit your shift" : "Create your shift pattern"}
             </Typography>
             {shifts.map((form, index) => {
@@ -129,10 +142,7 @@ export const AddShiftsForm = ({
             })}
             <Box>
               {!isEditingPersistedShift && (
-                <Button variant="outlined" color="primary" onClick={handleAddShift} sx={{gap: 0, paddingLeft: '0'}}>
-                  <IconButton color="primary" sx={{padding: '0'}}>
-                    <AddIcon/>
-                  </IconButton>
+                <Button variant="outlined" color="primary" onClick={handleAddShift}>
                   Add a shift
                 </Button>
               )}
@@ -142,7 +152,7 @@ export const AddShiftsForm = ({
                 Continue
               </Button>
               {showErrors && (
-                <Typography color="error" variant="body2">Please fix the errors before continuing</Typography>
+                <Typography color="error" variant="body1">Please fix the errors before continuing</Typography>
               )}
             </Box>
           </Box>) : (
@@ -155,7 +165,7 @@ export const AddShiftsForm = ({
                              isEditingPersistedShift={isEditingPersistedShift}
           />)
         }
-      </Box>
-    </ThemeProvider>
+      </Stack>
+    </>
   )
 };

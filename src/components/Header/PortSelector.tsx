@@ -10,6 +10,7 @@ const StyledSelect = styled(Select)<SelectProps>(({ theme }) => ({
   width: '100%',
   outline: 0,
   marginRight: theme.spacing(1),
+  marginBottom: `0 !important`,
   ':after, :before': {
     borderBottom: 'none !important'
   },
@@ -18,7 +19,7 @@ const StyledSelect = styled(Select)<SelectProps>(({ theme }) => ({
     display: 'flex',
     padding: `5px 40px 5px 5px !important`,
     backgroundColor: 'transparent',
-    height: '1.25em !important',
+    height: '30px',
     '& >*': {
       display: 'flex',  
       alignItems: 'center',
@@ -33,13 +34,11 @@ const StyledSelect = styled(Select)<SelectProps>(({ theme }) => ({
     }
   },
   '& .MuiListItemText-root': {
-    fontSize: '0.875rem !important',
     marginTop: '6px !important',
   },
   '& .MuiTypography-root': {
     marginTop: 0,
     fontWeight: 'bold !important',
-    fontSize: '16px',
   }
 }));
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, Typography, IconButton, Divider, Paper, Button} from '@mui/material';
+import {Box, Typography, IconButton, Divider, Paper, Button, Table, TableRow, TableBody, TableCell, Stack, Tooltip, ButtonGroup, Grid, Card, CardContent, CardHeader} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import {ShiftForm} from "./AddShiftsForm";
@@ -46,24 +46,18 @@ export const ConfirmShiftForms = ({
               padding: '10px',
               marginTop: '0px'
             }}>
-              <Box component="dt" sx={{flex: '1', color: 'black'}}>
-                <Typography variant="h3" sx={{fontSize: '20px'}}>{shift.name}</Typography>
+              <Box component="dt" sx={{whiteSpace: 'nowwrap', color: 'black', alignItems: 'center'}}>
+                <Typography variant="h3" sx={{fontSize: '20px', mb:'0 !important'}}>{shift.name}</Typography>
               </Box>
-              <Box component="dd" sx={{flex: '1', display: 'flex', justifyContent: 'flex-end', color: 'black'}}>
+              <Box component="dd" sx={{flex: '1', display: 'flex', justifyContent: 'flex-end', flexGrow: 1, color: 'black'}}>
                 {!isEditingPersistedShift && (
-                  <>
-                    <IconButton color="secondary" onClick={() => removeShiftHandler(shift.id)} sx={{gap: '8px'}}>
-                      <CloseIcon sx={{height: '24px', width: '24px'}}/>
-                      <Typography sx={{textDecoration: 'underline'}}>Remove shift</Typography>
-                    </IconButton>
-                    <Divider orientation="vertical" flexItem sx={{mx: 1, paddingRight: '20px'}}/>
-                  </>
+                  <Button variant='text' color='secondary' startIcon={<CloseIcon />}>
+                    Remove shift
+                  </Button>
                 )}
-                <IconButton color="secondary" onClick={() => editShiftsHandler([shift])}
-                            sx={{gap: '8px', paddingLeft: '20px'}}>
-                  <EditIcon sx={{height: '24px', width: '24px'}}/> <Typography sx={{textDecoration: 'underline'}}>Edit
-                  shift</Typography>
-                </IconButton>
+                <Button variant='text' color="secondary" onClick={() => editShiftsHandler([shift])} startIcon={ <EditIcon />} sx={{gap: '8px', paddingLeft: '20px'}}>
+                  Edit
+                </Button>
               </Box>
             </Box>
             <Box component="dl" sx={{display: 'flex', justifyContent: 'flex-start', padding: '10px'}}>
@@ -82,7 +76,7 @@ export const ConfirmShiftForms = ({
                 </Box>
               )}
             </Box>
-            <Box component="dl" sx={{display: 'flex', justifyContent: 'flex-start', padding: '10px'}}>
+            <Box component="dl" sx={{display: 'flex', justifyContent: 'flex-start', gap: '10px', padding: '10px'}}>
               <Box component="dt" sx={{fontWeight: 'bold', minWidth: '150px'}}>Default staff number</Box>
               <Box component="dd">{shift.defaultStaffNumber}</Box>
             </Box>
@@ -93,12 +87,8 @@ export const ConfirmShiftForms = ({
           </Box>
         ))
       }
-      <Box sx={{paddingTop: '10px'}}>
-        <Box sx={{paddingRight: '10px'}}>
-          <Button variant="contained" color="primary" data-cy="shift-confirm-button"
-                  onClick={() => confirmHandler(shifts)}>Confirm</Button>
-        </Box>
-      </Box>
+      <Button variant="contained" color="primary" data-cy="shift-confirm-button"
+              onClick={() => confirmHandler(shifts)}>Confirm</Button>
     </Box>
   )
     ;

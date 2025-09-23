@@ -87,38 +87,6 @@ export const ColorButtons: Story = {
           Info
         </MuiButton>
       </Stack>
-      <Stack direction={'row'} spacing={2} my={2}>
-        <MuiButton variant="outlined" color="primary">Primary</MuiButton>
-        <MuiButton variant="outlined" color="secondary">Secondary</MuiButton>
-        <MuiButton variant="outlined" color="success">
-          Success
-        </MuiButton>
-        <MuiButton variant="outlined" color="error">
-          Error
-        </MuiButton>
-        <MuiButton variant="outlined" color="warning">
-          Warning
-        </MuiButton>
-        <MuiButton variant="outlined" color="info">
-          Info
-        </MuiButton>
-      </Stack>
-      <Stack direction={'row'} spacing={2}>
-        <MuiButton variant="text" color="primary">Primary</MuiButton>
-        <MuiButton variant="text" color="secondary">Secondary</MuiButton>
-        <MuiButton variant="text" color="success">
-          Success
-        </MuiButton>
-        <MuiButton variant="text" color="error">
-          Error
-        </MuiButton>
-        <MuiButton variant="text" color="warning">
-          Warning
-        </MuiButton>
-        <MuiButton variant="text" color="info">
-          Info
-        </MuiButton>
-      </Stack>
     </>
   }
 };
@@ -126,44 +94,22 @@ export const ColorButtons: Story = {
 export const SizeButtons: Story = {
   tags: ['!dev'],
   render: (args) => {
-    return <>
-    <Stack direction={'row'} spacing={2}>
-      <MuiButton size="small">Small</MuiButton>
-      <MuiButton size="medium">Medium</MuiButton>
-      <MuiButton size="large">Large</MuiButton>
-    </Stack>
-    <Stack direction={'row'} spacing={2} my={2}>
-      <MuiButton variant='outlined' size="small">Small</MuiButton>
-      <MuiButton variant='outlined' size="medium">Medium</MuiButton>
-      <MuiButton variant='outlined' size="large">Large</MuiButton>
-    </Stack>
-    <Stack direction={'row'} spacing={2}>
+    return <Stack direction={'column'} spacing={2} sx={{alignItems: 'flex-start'}}>
       <MuiButton variant='contained' size="small">Small</MuiButton>
       <MuiButton variant='contained' size="medium">Medium</MuiButton>
-      <MuiButton variant='contained' size="large">Large</MuiButton>
+      <MuiButton variant='contained' size="large">Large Button</MuiButton>
     </Stack>
-  </>
   }
 };
 
 export const ButtonGroups: Story = {
   tags: ['!dev'],
   render: (args) => {
-    return <MuiButtonGroup>
-      <MuiButton variant='contained' size="small">One</MuiButton>
+    return <MuiButtonGroup variant='contained'>
+      <MuiButton variant='contained'>Primary</MuiButton>
       <MuiButton variant='contained' size="medium" disabled>Disabled</MuiButton>
-      <MuiButton variant='contained' size="large">Large</MuiButton>
+      <MuiButton variant='contained' color='error'>Error</MuiButton>
     </MuiButtonGroup>
   }
 };
 
-export const ToggleButtonGroups: Story = {
-  tags: ['!dev'],
-  render: (args) => {
-    return <MuiToggleButtonGroup >
-      <MuiButton variant='outlined'>Small</MuiButton>
-      <MuiButton variant='outlined'>Medium</MuiButton>
-      <MuiButton variant='outlined'>Large</MuiButton>
-    </MuiToggleButtonGroup>
-  }
-};

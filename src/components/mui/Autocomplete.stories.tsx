@@ -25,6 +25,7 @@ export const Autocomplete: Story = {
     noOptionsText: 'No airports found',
     options: options,
     sx: {width: 300},
+    onHighlightChange: () => null,
     renderInput: (params) => <TextField {...params} label="Airport" />,
     disabled: false,
   }
