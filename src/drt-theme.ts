@@ -14,6 +14,7 @@ import { tableRowTheme, tableTheme, tableCellTheme } from "./theme/table";
 import { paperTheme, cardHeaderTheme,cardContentTheme, appbarTheme } from "./theme/paper";
 import { circularProgressTheme } from "./theme/progress";
 import { alertTheme } from "./theme/alert";
+import { breadcrumbsTheme } from "./theme/breadcrumbs";
 
 declare module '@mui/material/styles' {
   interface PaperVariants {
@@ -98,6 +99,9 @@ export const drtThemeValues = {
     },
     MuiAppBar: {
       ...appbarTheme,
+    },
+    MuiBreadcrumbs: {
+      ...breadcrumbsTheme as any,
     },
     MuiPaper: {
       ...paperTheme as any,
