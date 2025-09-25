@@ -86,7 +86,7 @@ declare module "@mui/material/Typography" {
   }
 }
 
-const drtTheme = createTheme({
+export const drtThemeValues = {
   palette: themePrimatives.palette,
   spacing: 5,
   typography: {
@@ -221,6 +221,6 @@ const drtTheme = createTheme({
       }
     },
   }
-})
-
+};
+const drtTheme = createTheme(drtThemeValues);
 export default drtTheme

@@ -1,3 +1,3 @@
 export * from './components';
 
-export {default as drtTheme } from './drt-theme';
+export {default as drtTheme, drtThemeValues } from './drt-theme';
