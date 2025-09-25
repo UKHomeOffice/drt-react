@@ -1,5 +1,5 @@
 
-import { createTheme } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
 import type {} from '@mui/x-date-pickers/themeAugmentation';
 import { themePrimatives } from "./theme/primatives";
 import React from "react";
