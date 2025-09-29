@@ -45,9 +45,9 @@ type PaxSearchFormState = {
 export type PaxSearchFormPayload = {
   day?: PaxSearchFormDay,
   time?: PaxSearchFormTime,
-  arrivalDate: moment.Moment,
-  fromDate: moment.Moment,
-  toDate: moment.Moment,
+  arrivalDate: Date,
+  fromDate: Date,
+  toDate: Date,
   timeMachine?: boolean
 }
 
@@ -62,8 +62,8 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
     day: day || PaxSearchFormDay.Yesterday,
     time: time || PaxSearchFormTime.Now,
     arrivalDate: moment(arrivalDate) || moment(),
-    fromDate: fromDate,
-    toDate: toDate,
+    fromDate: moment(fromDate),
+    toDate: moment(toDate),
     timeMachine: timeMachine || false,
   });
 
@@ -71,9 +71,9 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
     const formValues: PaxSearchFormPayload = {
       day: payload.day ? payload.day : formState.day,
       time: payload.time ? payload.time : formState.time,
-      arrivalDate: payload.arrivalDate ? payload.arrivalDate : formState.arrivalDate,
-      fromDate: payload.fromDate ? payload.fromDate.set('milliseconds', 0) : formState.fromDate,
-      toDate: payload.toDate ? payload.toDate.set('milliseconds', 0) : formState.toDate,
+      arrivalDate: (payload.arrivalDate ? payload.arrivalDate : formState.arrivalDate).toDate(),
+      fromDate: (payload.fromDate ? payload.fromDate.set('milliseconds', 0) : formState.fromDate).toDate(),
+      toDate: (payload.toDate ? payload.toDate.set('milliseconds', 0) : formState.toDate).toDate(),
       timeMachine: payload.hasOwnProperty('timeMachine') ? payload.timeMachine : formState.timeMachine,
     }
     onChange && onChange(formValues);
@@ -158,11 +158,14 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
       ...formState,
       arrivalDate: value,
     }
-    if (value.toISOString() === moment().toISOString()) {
+
+    const todayMidnight = lastMidnight(moment());
+
+    if (value.toISOString() === todayMidnight.toISOString()) {
       newState.day = PaxSearchFormDay.Today;
-    } else if (value.toISOString() === moment().add(1, 'day').toISOString()) {
+    } else if (value.toISOString() === todayMidnight.clone().add(1, 'day').toISOString()) {
       newState.day = PaxSearchFormDay.Tomorrow;
-    } else if (value.toISOString() === moment().subtract(1, 'day').toISOString()) {
+    } else if (value.toISOString() === todayMidnight.clone().subtract(1, 'day').toISOString()) {
       newState.day = PaxSearchFormDay.Yesterday;
     } else {
       newState.day = PaxSearchFormDay.Other;
@@ -176,7 +179,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
       newState.fromDate = lastMidnight(value.clone()).add(formState.fromDate.hours(), 'hours');
       newState.toDate = newState.fromDate.clone().add(hoursDiff, 'hours');
     }
-    console.log(`new date: ${value.toISOString()}, new fromDate: ${newState.fromDate.toISOString()}, new toDate: ${newState.toDate.toISOString()}`);
+
     setFormState(newState);
     handleOnChangeCallback(newState);
   }
