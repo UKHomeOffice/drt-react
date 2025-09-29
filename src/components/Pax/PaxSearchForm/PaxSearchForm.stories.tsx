@@ -58,14 +58,16 @@ const meta: Meta<PaxSearchFormStoryControls>  = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const getLastMidnight = () => moment().set('hours', 0).set('minutes', 0).set('seconds', 0).set('milliseconds', 0);
+
 export const PaxFormLayout: Story = {
   args: {
     timeMachine: false,
     day: "today",
     time: "24hour",
-    arrivalDate: new Date(),
-    fromDate: '00:00',
-    toDate:  "00:00 +1",
+    arrivalDate: moment(),
+    fromDate: getLastMidnight(),
+    toDate:  getLastMidnight().add(1, 'day')
   },
 
   render: () => {
@@ -81,10 +83,10 @@ export const PaxFormLayout: Story = {
       }
       return (
         <Box sx={{maxWidth: '800px'}}>
-          <PaxSearchForm 
+          <PaxSearchForm
             onChange={onChange}
-            timeMachine={args.timeMachine} 
-            day={args.day} 
+            timeMachine={args.timeMachine}
+            day={args.day}
             time={args.time}
             arrivalDate={args.arrivalDate}
             fromDate={args.fromDate}
