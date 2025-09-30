@@ -72,8 +72,8 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
       day: payload.day ? payload.day : formState.day,
       time: payload.time ? payload.time : formState.time,
       arrivalDate: (payload.arrivalDate ? payload.arrivalDate : formState.arrivalDate).toDate(),
-      fromDate: (payload.fromDate ? payload.fromDate.set('milliseconds', 0) : formState.fromDate).toDate(),
-      toDate: (payload.toDate ? payload.toDate.set('milliseconds', 0) : formState.toDate).toDate(),
+      fromDate: (payload.fromDate ? payload.fromDate : formState.fromDate).toDate(),
+      toDate: (payload.toDate ? payload.toDate : formState.toDate).toDate(),
       timeMachine: payload.hasOwnProperty('timeMachine') ? payload.timeMachine : formState.timeMachine,
     }
     onChange && onChange(formValues);
@@ -170,7 +170,10 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
     } else {
       newState.day = PaxSearchFormDay.Other;
     }
-    if (formState.day === PaxSearchFormDay.Today) {
+
+    const changingFromToday = formState.day === PaxSearchFormDay.Today && newState.day !== PaxSearchFormDay.Today;
+
+    if (changingFromToday) {
       newState.time = PaxSearchFormTime.Day;
       newState.fromDate = lastMidnight(value.clone());
       newState.toDate = newState.fromDate.clone().add(1, 'day');
@@ -185,12 +188,11 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
   }
 
   const handleTimeChange = (field: string, value: moment.Moment) => {
-
     const newState = {
       ...formState,
       [field]: value,
     }
-    if (field == 'fromDate' && formState.time === PaxSearchFormTime.Range) {
+    if (field == 'fromDate' && formState.time === PaxSearchFormTime.Range && value.valueOf() >= formState.toDate.valueOf()) {
       newState.toDate = newState.fromDate.clone().add(1, 'hour');
     }
     setFormState(newState);
