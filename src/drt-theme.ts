@@ -1,5 +1,5 @@
 
-import { createTheme } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
 import type {} from '@mui/x-date-pickers/themeAugmentation';
 import { themePrimatives } from "./theme/primatives";
 import React from "react";
@@ -14,6 +14,7 @@ import { tableRowTheme, tableTheme, tableCellTheme } from "./theme/table";
 import { paperTheme, cardHeaderTheme,cardContentTheme, appbarTheme } from "./theme/paper";
 import { circularProgressTheme } from "./theme/progress";
 import { alertTheme } from "./theme/alert";
+import { breadcrumbsTheme } from "./theme/breadcrumbs";
 
 declare module '@mui/material/styles' {
   interface PaperVariants {
@@ -86,7 +87,7 @@ declare module "@mui/material/Typography" {
   }
 }
 
-const drtTheme = createTheme({
+export const drtThemeValues = {
   palette: themePrimatives.palette,
   spacing: 5,
   typography: {
@@ -98,6 +99,9 @@ const drtTheme = createTheme({
     },
     MuiAppBar: {
       ...appbarTheme,
+    },
+    MuiBreadcrumbs: {
+      ...breadcrumbsTheme as any,
     },
     MuiPaper: {
       ...paperTheme as any,
@@ -221,6 +225,6 @@ const drtTheme = createTheme({
       }
     },
   }
-})
-
+};
+const drtTheme = createTheme(drtThemeValues);
 export default drtTheme
