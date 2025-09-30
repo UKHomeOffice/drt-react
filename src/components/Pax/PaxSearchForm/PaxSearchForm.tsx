@@ -256,13 +256,13 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
                   {
                     Array.from(Array(24).keys()).map(hour => {
                       const time = lastMidnight(formState.arrivalDate).clone().set('hours', hour);
-                      const timeInHH00 = time.format('HH:00');
+                      const hh00 = time.format('HH:00');
                       return <MenuItem
                         key={time.toISOString()}
                         value={time.valueOf()}
-                        data-cy={`select-start-time-option-${time.format('HH:00')}`}
+                        data-cy={`select-start-time-option-${hh00}`}
                       >
-                        {timeInHH00}
+                        {hh00}
                       </MenuItem>
                     })
                   }
@@ -290,7 +290,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
                       return <MenuItem
                         key={time.toISOString()}
                         value={time.valueOf()}
-                        data-cy={`select-end-time-option-${time.format('HH-00')}`}
+                        data-cy={`select-end-time-option-${hh00}`}
                       >
                         {`${hh00} (+${index + 1} hours)`}
                       </MenuItem>
