@@ -85,6 +85,16 @@ export const radioTheme = {
   }
 }
 
+export const radioGroupTheme = {
+  styleOverrides:{
+    root: {
+      '& .MuiTypography-root': {
+        marginBottom: '0px'
+      }
+    }
+  }
+}
+
 
 export const checkboxTheme = {
   styleOverrides:{
