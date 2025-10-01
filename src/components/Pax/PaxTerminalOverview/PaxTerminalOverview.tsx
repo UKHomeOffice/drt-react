@@ -79,10 +79,10 @@ export const PaxTerminalOverview = ({terminal ,periodLengthMinutes, staff, desks
               <TableHead>
                 <TableRow>
                   <TableCell>Time</TableCell>
-                  <TableCell align='right'>Total pax</TableCell>
-                  <TableCell align='right'>e-gate</TableCell>
-                  <TableCell align='right'>EEA</TableCell>
-                  <TableCell align='right'>Non-EEA</TableCell>
+                  <TableCell align='right' sx={{px:2}}>Total pax</TableCell>
+                  <TableCell align='right' sx={{px:2}}>e-gate</TableCell>
+                  <TableCell align='right' sx={{px:2}}>EEA</TableCell>
+                  <TableCell align='right' sx={{px:2}}>Non-EEA</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
