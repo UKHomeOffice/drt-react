@@ -49,7 +49,7 @@ export const ConfirmShiftForms = ({
               <Box component="dt" sx={{whiteSpace: 'nowwrap', color: 'black', alignItems: 'center'}}>
                 <Typography variant="h3" sx={{fontSize: '20px', mb:'0 !important'}}>{shift.name}</Typography>
               </Box>
-              <Box component="dd" sx={{flex: '1', display: 'flex', justifyContent: 'flex-end', flexGrow: 1, color: 'black'}}>
+              <Box component="dd" sx={{flex: '1', display: 'flex', justifyContent: 'flex-end', gap: '20px', flexGrow: 1, color: 'black'}}>
                 {!isEditingPersistedShift && (
                   <Button variant='text' color='secondary' sx={{fontSize: '19px'}}>
                     Remove shift
