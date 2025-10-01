@@ -142,6 +142,7 @@ export const linkTheme = {
   styleOverrides: {
     root: {
       color: '#1d70b8',
+      textDecorationColor: `${themePrimatives.palette.common.black} !important`,
       '&:hover': {
         color: '#003078'
       },
