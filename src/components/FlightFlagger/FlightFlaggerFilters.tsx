@@ -189,8 +189,7 @@ export const FlightFlaggerFilters = ({
   }
 
   return <Box>
-    <Grid container sx={{ml: 0, pt: 2, flexWrap: {xs: 'wrap', md: 'nowrap'}}}
-          spacing={2}>
+    <Grid container sx={{ml: 0, pt: 2, flexWrap: {xs: 'wrap', md: 'nowrap'}}}>
       <Grid item flexGrow={0}>
         <InputLabel htmlFor="flight-number" sx={{mb: 1}}><strong>Enter flight details</strong></InputLabel>
         <FormControl variant="outlined" sx={{minWidth: '365px'}}>
@@ -242,7 +241,7 @@ export const FlightFlaggerFilters = ({
     <Grid container sx={{ml: 0}} spacing={2}>
       <Grid item xs={12} sx={{px: 2, pb: 2}}>
         <Collapse in={currentFormState.showFilters} data-testid="flight-flagger-filters">
-          <Paper elevation={0} sx={{backgroundColor: '#fff', p: 2, mt: 2}}>
+          <Paper elevation={0} sx={{backgroundColor: '#fff', p: 0, mt: 2}}>
             <Grid container columnSpacing={2}>
               <Grid item xs={12}>
                 <Typography sx={{mb: 1}}><strong>Select pax info to reveal</strong></Typography>
