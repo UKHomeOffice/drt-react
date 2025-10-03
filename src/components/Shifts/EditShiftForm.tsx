@@ -70,8 +70,8 @@ export const EditShiftForm = ({
       <Typography color="warning" variant="body2">This is a midnight shift spanning to the next day</Typography>
     )}
     <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <Typography sx={{fontSize: '16px', fontWeight: 'bold'}}>Name of shift</Typography>
+      <Grid item xs={12} mb={2}>
+        <Typography variant='labelbold'>Name of shift</Typography>
         <TextField
           fullWidth
           value={formState.name}
@@ -85,8 +85,8 @@ export const EditShiftForm = ({
           inputProps={{'data-cy': 'shift-name-input'}}
         />
       </Grid>
-      <Grid item xs={12}>
-        <Typography sx={{fontSize: '16px', fontWeight: 'bold'}}>Start time</Typography>
+      <Grid item xs={12} mb={2}>
+        <Typography variant='labelbold'>Start time</Typography>
         <Box>
           <Select
             variant="outlined"
@@ -111,8 +111,8 @@ export const EditShiftForm = ({
           </Select>
         </Box>
       </Grid>
-      <Grid item xs={12}>
-        <Typography sx={{fontSize: '16px', fontWeight: 'bold'}}>End time</Typography>
+      <Grid item xs={12} mb={2}>
+        <Typography variant='labelbold'>End time</Typography>
         <Select
           variant="outlined"
           value={startTimeOptions.includes(formState.endTime) ? formState.endTime : 'Select end time'}
@@ -133,14 +133,15 @@ export const EditShiftForm = ({
           ))}
         </Select>
       </Grid>
-      <Grid item xs={12}>
-        <Typography sx={{fontSize: '16px', fontWeight: 'bold'}}>Default staff number (optional)</Typography>
+      <Grid item xs={12} mb={2}>
+        <Typography variant='labelbold'>Default staff number (optional)</Typography>
         <Grid item xs={12}>
           <Typography variant="body2" sx={{fontSize: '14px'}}>
             For current season only (change this at any time). It will only overwrite zero staffing in DRT.
           </Typography>
         </Grid>
         <TextField
+          label=""
           type="number"
           fullWidth
           value={formState.defaultStaffNumber}
@@ -151,10 +152,10 @@ export const EditShiftForm = ({
           inputProps={{'data-cy': 'staff-number-input'}}
         />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} mb={2}>
         {isEditingPersistedShift && (
           <Grid item xs={12}>
-            <Typography sx={{fontSize: '16px', fontWeight: 'bold'}}>Start Date</Typography>
+            <Typography variant='labelbold'>Start Date</Typography>
             <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={'en-gb'}>
               <DatePicker
                 data-cy="start-date-picker"

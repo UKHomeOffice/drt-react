@@ -82,6 +82,25 @@ export const typographyTheme = {
     lineHeight: themePrimatives.spacing(4),
     marginBottom: themePrimatives.spacing(3),
   },
+  label: { //'govuk-body
+    fontSize: "16px",
+    lineHeight: themePrimatives.spacing(4),
+    marginBottom: 0,
+    [themePrimatives.breakpoints.up("md")]: {
+      fontSize: "19px",
+      lineHeight: themePrimatives.spacing(5),
+    }
+  },
+  labelbold: { //'govuk-body
+    fontSize: "16px",
+    lineHeight: themePrimatives.spacing(4),
+    marginBottom: 0,
+    fontWeight: 'bold',
+    [themePrimatives.breakpoints.up("md")]: {
+      fontSize: "19px",
+      lineHeight: themePrimatives.spacing(5),
+    }
+  },
   caption: {
     fontSize: "16px",
     lineHeight: themePrimatives.spacing(4),
@@ -142,6 +161,7 @@ export const linkTheme = {
   styleOverrides: {
     root: {
       color: '#1d70b8',
+      textDecorationColor: `${themePrimatives.palette.common.black} !important`,
       '&:hover': {
         color: '#003078'
       },

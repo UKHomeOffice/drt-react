@@ -17,6 +17,7 @@ export const autocompleteTheme = {
       },
       inputRoot: {
         padding: `0 !important`,
+        flexDirection: 'row-reverse'
       },
       hasClearIcon: {
         padding: `0 !important`,
@@ -34,7 +35,7 @@ export const autocompleteTheme = {
         maxHeight: themePrimatives.spacing(5),
         position: 'relative',
         top: '4px',
-        left: themePrimatives.spacing(1),
+        right: '75px',
         zIndex: 3,
         '& + input': {
         }
