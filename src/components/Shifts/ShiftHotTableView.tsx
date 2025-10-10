@@ -290,19 +290,16 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               <Typography variant="h4" gutterBottom>
                 {shift.shiftSummary.name}
               </Typography>
-              <IconButton onClick={() => toggleRowExpansion(shift.shiftSummary.name)}>
-                {isExpanded ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
-              </IconButton>
             </Box>
             <Box display="flex" gap="20px" alignItems="center" paddingBottom="10px">
               <Typography sx={{mb: `0 !important`}} data-cy={`shift-time-${index}`}>{`Time covered: ${shift.shiftSummary.startTime} to ${shift.shiftSummary.endTime}`}</Typography>
               <Typography sx={{mb: `0 !important`}} data-cy={`shift-staff-number-${index}`}>Default staff: {shift.shiftSummary.defaultStaffNumber}</Typography>
               <Typography sx={{mb: `0 !important`}} data-cy={`shift-start-date-${index}`}>{`Start Date: ${shiftDateToString(shift.shiftSummary.startDate)}`}</Typography>
               <Typography sx={{mb: `0 !important`}} data-cy={`shift-end-date-${index}`}>{shift.shiftSummary.endDate ? `End Date: ${shiftDateToString(shift.shiftSummary.endDate)}` : ''}</Typography>
-              <Button 
+              <Button
                 variant='text'
                 onClick={() => handleEditShift(index, shift.shiftSummary)}
-                startIcon={<EditIcon />}
+                startIcon={<EditIcon/>}
               >
                 Edit Shift
               </Button>
@@ -330,6 +327,14 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               rowHeaderWidth={100}
               licenseKey={'non-commercial-and-evaluation'}
             />
+            <Button
+              variant="contained"
+              color="secondary"
+              disableElevation
+              onClick={() => toggleRowExpansion(shift.shiftSummary.name)}
+              >
+              {isExpanded ? "Hide Breakdown" : "Show Breakdown"}
+            </Button>
           </Box>
         );
       })}
