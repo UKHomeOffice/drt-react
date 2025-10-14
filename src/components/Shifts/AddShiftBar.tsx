@@ -17,7 +17,7 @@ export const AddShiftBar = ({
         No shift patterns added.
       </Typography>
       <Stack direction={'row'} spacing={2} alignItems={'center'}>
-        <Button size="small" variant="contained" color="primary" onClick={onClickGetStarted}>Create Shift pattern</Button>
+        <Button size="small" variant="contained" color="primary" onClick={onClickGetStarted}>Create shift pattern</Button>
         <Button size="small" variant="contained" color="secondary" onClick={onViewStaffing}>View staffing</Button>
       </Stack>
     </Box>

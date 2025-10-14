@@ -333,7 +333,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               disableElevation
               onClick={() => toggleRowExpansion(shift.shiftSummary.name)}
               >
-              {isExpanded ? "Hide Breakdown" : "Show Breakdown"}
+              {isExpanded ? "Hide time breakdown" : "Show time breakdown"}
             </Button>
           </Box>
         );
