@@ -23,6 +23,7 @@ export interface ShiftsFormProps {
   shiftForms: ShiftForm[];
   confirmHandler: (shiftForms: ShiftForm[]) => void;
   isEditingPersistedShift: boolean
+  addSingleShift: boolean
 }
 
 export const AddShiftsForm = ({
@@ -31,7 +32,8 @@ export const AddShiftsForm = ({
                                 interval,
                                 shiftForms,
                                 confirmHandler,
-                                isEditingPersistedShift
+                                isEditingPersistedShift,
+                                addSingleShift
                               }: ShiftsFormProps) => {
   const [shiftIdCounter, setShiftIdCounter] = useState(1);
   const today = new Date();
@@ -141,7 +143,7 @@ export const AddShiftsForm = ({
                 /></Box>
             })}
             <Box>
-              {!isEditingPersistedShift && (
+              {!isEditingPersistedShift && !addSingleShift && (
                 <Button variant="outlined" color="primary" onClick={handleAddShift}>
                   Add a shift
                 </Button>
