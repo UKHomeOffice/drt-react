@@ -37,36 +37,36 @@ export const ConfirmShiftForms = ({
       {
         shifts.map((shift) => (
           <Box key={shift.id}
-               sx={{maxWidth: '500px', backgroundColor: 'transparent', border: '1px solid #ddd', marginTop: '10px'}}>
+               sx={{maxWidth: '500px', backgroundColor: 'transparent', border: '1px solid #ddd', marginTop: '10px', marginBottom: '10px',}}>
             <Box component="dl" sx={{
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
               backgroundColor: '#F3F5F9',
               padding: '10px',
-              marginTop: '0px'
+              marginTop: '0px',
             }}>
-              <Box component="dt" sx={{whiteSpace: 'nowwrap', color: 'black', alignItems: 'center'}}>
+              <Box component="dt" sx={{whiteSpace: 'nowwrap', color: 'black', alignItems: 'center', marginTop: '10px'}}>
                 <Typography variant="h3" sx={{fontSize: '20px', mb:'0 !important'}}>{shift.name}</Typography>
               </Box>
-              <Box component="dd" sx={{flex: '1', display: 'flex', justifyContent: 'flex-end', flexGrow: 1, color: 'black'}}>
+              <Box component="dd" sx={{flex: '1', display: 'flex', justifyContent: 'flex-end', gap: '20px', flexGrow: 1, color: 'black'}}>
                 {!isEditingPersistedShift && (
-                  <Button variant='text' color='secondary' startIcon={<CloseIcon />}>
+                  <Button variant='text' color='secondary' sx={{fontSize: '19px'}}>
                     Remove shift
                   </Button>
                 )}
-                <Button variant='text' color="secondary" onClick={() => editShiftsHandler([shift])} startIcon={ <EditIcon />} sx={{gap: '8px', paddingLeft: '20px'}}>
+                <Button variant='text' color="secondary" onClick={() => editShiftsHandler([shift])} sx={{fontSize: '19px'}}>
                   Edit
                 </Button>
               </Box>
             </Box>
-            <Box component="dl" sx={{display: 'flex', justifyContent: 'flex-start', padding: '10px'}}>
-              <Box component="dt" sx={{fontWeight: 'bold', minWidth: '150px'}}>Start time</Box>
+            <Box component="dl" sx={{display: 'flex', justifyContent: 'flex-start', paddingX: '10px', margin:'0 10px 10px 10px', borderBottom: '1px solid #ddd', fontSize: '19px'}}>
+              <Box component="dt" sx={{fontWeight: 'bold', width: '30%', marginBottom: '5px'}}>Start time</Box>
               <Box component="dd">{shift.startTime}</Box>
             </Box>
             <Box>
-              <Box component="dl" sx={{display: 'flex', justifyContent: 'flex-start', padding: '10px'}}>
-                <Box component="dt" sx={{fontWeight: 'bold', minWidth: '150px'}}>End time</Box>
+              <Box component="dl" sx={{display: 'flex', justifyContent: 'flex-start', paddingX: '10px', margin:'0 10px 10px 10px', borderBottom: '1px solid #ddd', fontSize: '19px'}}>
+                <Box component="dt" sx={{fontWeight: 'bold', width: '30%', marginBottom: '5px'}}>End time</Box>
                 <Box component="dd">{shift.endTime}</Box>
               </Box>
               {shift.endTime < shift.startTime && (
@@ -76,12 +76,12 @@ export const ConfirmShiftForms = ({
                 </Box>
               )}
             </Box>
-            <Box component="dl" sx={{display: 'flex', justifyContent: 'flex-start', gap: '10px', padding: '10px'}}>
-              <Box component="dt" sx={{fontWeight: 'bold', minWidth: '150px'}}>Default staff number</Box>
+            <Box component="dl" sx={{display: 'flex', justifyContent: 'flex-start', paddingX: '10px', margin:'0 10px 10px 10px', borderBottom: '1px solid #ddd', fontSize: '19px'}}>
+              <Box component="dt" sx={{fontWeight: 'bold', width: '30%', marginBottom: '5px'}}>Default staff number</Box>
               <Box component="dd">{shift.defaultStaffNumber}</Box>
             </Box>
-            <Box component="dl" sx={{display: 'flex', justifyContent: 'flex-start', padding: '10px'}}>
-              <Box component="dt" sx={{fontWeight: 'bold', minWidth: '150px'}}>Start Date</Box>
+            <Box component="dl" sx={{display: 'flex', justifyContent: 'flex-start', paddingX: '10px', margin:'0 10px 20px 10px', fontSize: '19px'}}>
+              <Box component="dt" sx={{fontWeight: 'bold', width: '30%', marginBottom: '5px'}}>Start Date</Box>
               <Box component="dd">{shiftDateToString(shift.startDate)}</Box>
             </Box>
           </Box>

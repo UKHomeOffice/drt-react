@@ -92,7 +92,7 @@ export const UpdateStaffForTimeRangeForm = ({ ustd, interval, handleSubmit, canc
 
   return (
     <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={'en-gb'}>
-      <Box data-cy={`shift-staff-form`} sx={{width: '400px'}}>
+      <Box data-cy={`shift-staff-form`} sx={{width: '400px', p:2}}>
         <Box sx={{display: 'flex', justifyContent: 'space-between', mb: 4}}>
           <Typography variant="h2" component="h2" fontWeight={"bold"} mb={0}>Edit staff</Typography>
           <IconButton aria-label="close" color="inherit" size="small" onClick={cancelHandler}>

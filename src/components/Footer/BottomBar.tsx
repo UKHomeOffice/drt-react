@@ -12,16 +12,15 @@ export const BottomBar = ({email, onClickAccessibilityStatement, accessibilitySt
   return (
     <Card variant='footer'>
       <CardContent>
-        <Typography variant="body1" mb={0}>
+       
           <Stack direction={'row'} spacing={3}>
             <Typography variant='body1' flexGrow={1}>A Home Office Digital, Data and Technology service</Typography>
-            <Link href={`mailto:${email}`} target="_blank" underline="always">Email us</Link>
-            <Link underline="always" href={accessibilityStatementUrl} onClick={onClickAccessibilityStatement}>
+            <Typography variant="body1" mb={0}><Link href={`mailto:${email}`} target="_blank" underline="always">Email us</Link></Typography>
+            <Typography variant="body1" mb={0}><Link underline="always" href={accessibilityStatementUrl} onClick={onClickAccessibilityStatement}>
               Accessibility statement
-            </Link>
-            <Link href={`${feedbackUrl}`} target="_blank" underline="always">Give feedback</Link>
+            </Link></Typography>
+            <Typography variant="body1" mb={0}><Link href={`${feedbackUrl}`} target="_blank" underline="always">Give feedback</Link></Typography>
           </Stack>
-        </Typography>
       </CardContent>
     </Card>
   );
