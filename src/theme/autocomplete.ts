@@ -15,6 +15,9 @@ export const autocompleteTheme = {
         top: themePrimatives.spacing(4),
         right: 0,
       },
+      input: {
+        height: 'auto !important'
+      },
       inputRoot: {
         padding: `0 !important`,
         flexDirection: 'row-reverse'
@@ -34,7 +37,7 @@ export const autocompleteTheme = {
       tag: {
         maxHeight: themePrimatives.spacing(5),
         position: 'relative',
-        top: '4px',
+        top: '2px',
         right: '75px',
         zIndex: 3,
         '& + input': {
