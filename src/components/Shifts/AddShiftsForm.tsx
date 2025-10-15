@@ -142,7 +142,7 @@ export const AddShiftsForm = ({
             })}
             <Box>
               {!isEditingPersistedShift && (
-                <Button variant="outlined" color="primary" onClick={handleAddShift}>
+                <Button variant="contained" color="secondary" onClick={handleAddShift}>
                   Add a shift
                 </Button>
               )}
