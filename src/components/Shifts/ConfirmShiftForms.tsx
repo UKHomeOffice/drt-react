@@ -46,7 +46,7 @@ export const ConfirmShiftForms = ({
               padding: '10px',
               marginTop: '0px',
             }}>
-              <Box component="dt" sx={{whiteSpace: 'nowwrap', color: 'black', alignItems: 'center'}}>
+              <Box component="dt" sx={{whiteSpace: 'nowwrap', color: 'black', alignItems: 'center', marginTop: '10px'}}>
                 <Typography variant="h3" sx={{fontSize: '20px', mb:'0 !important'}}>{shift.name}</Typography>
               </Box>
               <Box component="dd" sx={{flex: '1', display: 'flex', justifyContent: 'flex-end', gap: '20px', flexGrow: 1, color: 'black'}}>
