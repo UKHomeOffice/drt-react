@@ -8,6 +8,7 @@ import {
 import {LocalDate} from './LocalDate';
 import React from 'react';
 import {generateShiftAssignments} from './GenerateShift';
+import {IAnalyticsEvent} from "../Util";
 
 export default {
   title: 'DRT Components/UI/ShiftHotTableViewComponent2',
@@ -41,6 +42,10 @@ const handleSaveChanges = (shifts: ShiftSummaryStaffing[], changedAssignments: S
   // Add your data submission logic here
 };
 
+ const sendEvent = (event: IAnalyticsEvent) => {
+  console.log(event);
+};
+
 const ShiftHotTableViewStory: React.FC = () => {
 
   return (
@@ -51,6 +56,7 @@ const ShiftHotTableViewStory: React.FC = () => {
       shiftSummaries={initialDefaultShifts}
       handleSaveChanges={handleSaveChanges}
       handleEditShift={handleEditShift}
+      sendAnalyticsEvent={sendEvent}
     />
   );
 };

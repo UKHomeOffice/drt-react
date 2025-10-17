@@ -1,34 +1,25 @@
 import React from "react";
-import { styled, Theme } from '@mui/material/styles';
-import {Alert, AlertProps, Button, Card, CardContent, Stack, Toolbar, Typography} from "@mui/material";
-import EventRepeatIcon from '@mui/icons-material/EventRepeat';
+import {Box, Button, Stack, Typography} from "@mui/material";
 
 export interface AddShiftBarProps {
   onClickGetStarted: () => void;
+  onClickViewStaffing: () => void;
 }
 
-const StyledAddShiftBar = styled(Alert)<AlertProps>(({theme}: {theme: Theme}) => ({
-  backgroundColor: theme.palette.info.main,
-  border: 'none',
-  '.MuiAlert-message': {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  '.MuiAlert-icon': {
-    color: 'white',
-    alignItems: 'center',
-  }
-}));
 
 export const AddShiftBar = ({
                               onClickGetStarted,
+                              onClickViewStaffing
                             }: AddShiftBarProps) => {
   return (
+    <Box>
+      <Typography variant="h5" sx={{"paddingLeft":"10px"}}>
+        No shift patterns added.
+      </Typography>
       <Stack direction={'row'} spacing={2} alignItems={'center'}>
-        <Typography variant="h5">
-          Save time: add staff to shifts
-        </Typography>
-        <Button size="small" variant="outlined" color="primary" onClick={onClickGetStarted}>Get started</Button>
+        <Button variant="contained" color="primary" onClick={onClickGetStarted}>Create shift pattern</Button>
+        <Button variant="contained" color="secondary" onClick={onClickViewStaffing}>View staffing</Button>
       </Stack>
+    </Box>
   );
 }

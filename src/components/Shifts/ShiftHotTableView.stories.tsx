@@ -8,6 +8,7 @@ import {
 import {LocalDate} from './LocalDate';
 import React from 'react';
 import {generateShiftAssignments} from './GenerateShift';
+import {IAnalyticsEvent} from "../Util";
 
 export default {
   title: 'DRT Components/UI/ShiftHotTableViewComponent',
@@ -17,13 +18,47 @@ export default {
 type Story = StoryObj<typeof ShiftHotTableViewComponent>;
 
 const initialShift: ShiftSummary[] = [
-  {name: 'Early shift', defaultStaffNumber: 0, startTime: '06:30', endTime: '16:30' ,startDate : {year: 2025, month: 1, day: 1}, endDate : {year: 2025, month: 1, day: 14}},
-  {name: 'Early shift 1', defaultStaffNumber: 0, startTime: '06:30', endTime: '16:30' ,startDate : {year: 2025, month: 1, day: 16}},
-  {name: 'Mid shift', defaultStaffNumber: 0, startTime: '12:30', endTime: '22:30', startDate : {year: 2025, month: 1, day: 1} },
-  {name: 'Late shift', defaultStaffNumber: 0, startTime: '13:00', endTime: '23:00', startDate : {year: 2025, month: 1, day: 1}},
-  {name: 'Night shift', defaultStaffNumber: 0, startTime: '23:30', endTime: '01:00', startDate : {year: 2025, month: 1, day: 1}}
+  {
+    name: 'Early shift',
+    defaultStaffNumber: 0,
+    startTime: '06:30',
+    endTime: '16:30',
+    startDate: {year: 2025, month: 1, day: 1},
+    endDate: {year: 2025, month: 1, day: 14}
+  },
+  {
+    name: 'Early shift 1',
+    defaultStaffNumber: 0,
+    startTime: '06:30',
+    endTime: '16:30',
+    startDate: {year: 2025, month: 1, day: 16}
+  },
+  {
+    name: 'Mid shift',
+    defaultStaffNumber: 0,
+    startTime: '12:30',
+    endTime: '22:30',
+    startDate: {year: 2025, month: 1, day: 1}
+  },
+  {
+    name: 'Late shift',
+    defaultStaffNumber: 0,
+    startTime: '13:00',
+    endTime: '23:00',
+    startDate: {year: 2025, month: 1, day: 1}
+  },
+  {
+    name: 'Night shift',
+    defaultStaffNumber: 0,
+    startTime: '23:30',
+    endTime: '01:00',
+    startDate: {year: 2025, month: 1, day: 1}
+  }
 ];
 
+const sendEvent = (event: IAnalyticsEvent) => {
+  console.log(event);
+};
 
 const initialDefaultShifts: ShiftSummaryStaffing[] = initialShift.map((defaultShift, index) => {
   const assignments = generateShiftAssignments(defaultShift, 60, [new LocalDate(2025, 1, 1, 0, 0)]);
@@ -63,6 +98,7 @@ const ShiftHotTableViewStory: React.FC = () => {
         console.log(`Editing shift at index ${index}:`, shiftSummary);
         // Add your edit logic here
       }}
+      sendAnalyticsEvent={sendEvent}
     />
   );
 };
