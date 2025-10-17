@@ -98,7 +98,7 @@ const ShiftHotTableViewStory: React.FC = () => {
         console.log(`Editing shift at index ${index}:`, shiftSummary);
         // Add your edit logic here
       }}
-      sendEvent={sendEvent}
+      sendAnalyticsEvent={sendEvent}
     />
   );
 };

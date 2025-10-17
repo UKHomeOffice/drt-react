@@ -187,7 +187,7 @@ export interface ShiftHotTableViewProps {
   shiftSummaries: ShiftSummaryStaffing[];
   handleSaveChanges: (shifts: ShiftSummaryStaffing[], changedAssignments: StaffTableEntry[]) => void;
   handleEditShift: (index: number, shiftSummary: ShiftSummary) => void;
-  sendEvent: (event: IAnalyticsEvent) => void
+  sendAnalyticsEvent: (event: IAnalyticsEvent) => void
 }
 
 const showAlert = (shift: ShiftSummaryStaffing, shiftDate: ShiftDate) => {
@@ -207,7 +207,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
                                                                       shiftSummaries,
                                                                       handleSaveChanges,
                                                                       handleEditShift,
-                                                                      sendEvent
+                                                                      sendAnalyticsEvent
                                                                     }) => {
   registerAllModules();
 
@@ -217,7 +217,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
   const [expandedRows, setExpandedRows] = useState<{ [key: string]: boolean }>({});
 
   const toggleRowExpansion = (shiftType: string, label:string) => {
-    sendEvent(
+    sendAnalyticsEvent(
       { category : 'shifts',
         action: shiftType,
         label: label

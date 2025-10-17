@@ -56,7 +56,7 @@ const ShiftHotTableViewStory: React.FC = () => {
       shiftSummaries={initialDefaultShifts}
       handleSaveChanges={handleSaveChanges}
       handleEditShift={handleEditShift}
-      sendEvent={sendEvent}
+      sendAnalyticsEvent={sendEvent}
     />
   );
 };
