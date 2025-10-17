@@ -3,13 +3,13 @@ import {Box, Button, Stack, Typography} from "@mui/material";
 
 export interface AddShiftBarProps {
   onClickGetStarted: () => void;
-  onViewStaffing: () => void;
+  onClickViewStaffing: () => void;
 }
 
 
 export const AddShiftBar = ({
                               onClickGetStarted,
-                              onViewStaffing
+                              onClickViewStaffing
                             }: AddShiftBarProps) => {
   return (
     <Box>
@@ -18,7 +18,7 @@ export const AddShiftBar = ({
       </Typography>
       <Stack direction={'row'} spacing={2} alignItems={'center'}>
         <Button variant="contained" color="primary" onClick={onClickGetStarted}>Create shift pattern</Button>
-        <Button variant="contained" color="secondary" onClick={onViewStaffing}>View staffing</Button>
+        <Button variant="contained" color="secondary" onClick={onClickViewStaffing}>View staffing</Button>
       </Stack>
     </Box>
   );

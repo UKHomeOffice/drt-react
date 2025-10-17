@@ -1,5 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import {AddShiftsForm as AddShiftsFormComponent, ShiftForm} from './AddShiftsForm';
+import {ShiftsForm as AddShiftsFormComponent, ShiftForm} from './ShiftsForm';
 
 export default {
   title: 'DRT Components/UI/EditShiftsFormComponent',
@@ -27,6 +27,6 @@ export const AddShiftsForm: Story = {
     confirmHandler: (shifts: ShiftForm[]) => {
       console.log(shifts);
     },
-    isEditingPersistedShift: true
+    formMode: 'edit'
   }
 };

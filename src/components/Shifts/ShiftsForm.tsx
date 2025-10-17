@@ -22,22 +22,22 @@ export interface ShiftsFormProps {
   interval: number;
   shiftForms: ShiftForm[];
   confirmHandler: (shiftForms: ShiftForm[]) => void;
-  isEditingPersistedShift: boolean
-  addSingleShift: boolean
+  formMode: string
+  disableAdd: boolean
 }
 
-export const AddShiftsForm = ({
+export const ShiftsForm = ({
                                 port,
                                 terminal,
                                 interval,
                                 shiftForms,
                                 confirmHandler,
-                                isEditingPersistedShift,
-                                addSingleShift
+                                formMode,
+                                disableAdd
                               }: ShiftsFormProps) => {
   const [shiftIdCounter, setShiftIdCounter] = useState(1);
   const today = new Date();
-  const defaultStartDay = isEditingPersistedShift ? today.getDate() : 1;
+  const defaultStartDay = formMode === 'edit' ? today.getDate() : 1;
   const monthNumberIn1To12Format = today.getMonth() + 1;
 
   const [shifts, setShifts] = useState<ShiftForm[]>(Array.from(shiftForms).length > 0 ? shiftForms : [
@@ -114,10 +114,10 @@ export const AddShiftsForm = ({
         {!showConfirm ? (
           <Box sx={{p: 2, minWidth: '500px'}}>
             <Typography sx={{fontSize: '20px'}}>
-              {isEditingPersistedShift ? "Edit staff" : "Add staff"} to {port} {getAirportNameByCode(port)} {terminal}
+              {formMode === 'edit' ? "Edit staff" : "Add staff"} to {port} {getAirportNameByCode(port)} {terminal}
             </Typography>
             <Typography variant="h1">
-              Step 1 of 2 - {isEditingPersistedShift ? "Edit your shift" : "Create your shift pattern"}
+              Step 1 of 2 - {formMode === 'edit' ? "Edit your shift" : "Create your shift pattern"}
             </Typography>
             {shifts.map((form, index) => {
               return <Box>
@@ -139,11 +139,11 @@ export const AddShiftsForm = ({
                                interval={interval}
                                removeShift={handleRemoveShift}
                                showSubmitErrors={showErrors}
-                               isEditingPersistedShift={isEditingPersistedShift}
+                               isEditingPersistedShift={formMode === 'edit'}
                 /></Box>
             })}
             <Box>
-              {!isEditingPersistedShift && !addSingleShift && (
+              {formMode === 'add'  && !disableAdd && (
                 <Button variant="contained" color="secondary" onClick={handleAddShift}>
                   Add a shift
                 </Button>
@@ -164,7 +164,7 @@ export const AddShiftsForm = ({
                              editShiftsHandler={onCancel}
                              confirmHandler={confirmHandler}
                              removeShiftHandler={handleRemoveShift}
-                             isEditingPersistedShift={isEditingPersistedShift}
+                             isEditingPersistedShift={formMode === 'edit'}
           />)
         }
       </Stack>
