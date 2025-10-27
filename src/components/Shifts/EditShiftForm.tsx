@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Box, Button, Grid, IconButton, MenuItem, Select, TextField, Typography} from '@mui/material';
 import {intervalEndTimeOptions, intervalStartTimeOptions, momentToShiftDate, shiftDateToMoment} from '../Util';
 import CloseIcon from "@mui/icons-material/Close";
-import {ShiftForm} from "./AddShiftsForm";
+import {ShiftForm} from "./ShiftsForm";
 import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import {AdapterMoment} from "@mui/x-date-pickers/AdapterMoment";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";

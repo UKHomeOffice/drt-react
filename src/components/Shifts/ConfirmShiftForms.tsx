@@ -1,8 +1,6 @@
 import React from 'react';
-import {Box, Typography, IconButton, Divider, Paper, Button, Table, TableRow, TableBody, TableCell, Stack, Tooltip, ButtonGroup, Grid, Card, CardContent, CardHeader} from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import EditIcon from '@mui/icons-material/Edit';
-import {ShiftForm} from "./AddShiftsForm";
+import {Box, Typography, Button} from '@mui/material';
+import {ShiftForm} from "./ShiftsForm";
 import {shiftDateToString} from "../Util";
 
 export interface ShiftsSummaryProps {

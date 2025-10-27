@@ -1,5 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import {ShiftForm} from './AddShiftsForm';
+import {ShiftForm} from './ShiftsForm';
 import {ConfirmShiftForms as ConfirmShiftFormsComponent} from "./ConfirmShiftForms";
 
 export default {
