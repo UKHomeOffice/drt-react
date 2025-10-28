@@ -1,13 +1,24 @@
 import {DatePicker} from '@mui/x-date-pickers';
-import {InfoTooltip} from '../../ui/InfoTooltip';
+import {InfoTooltip} from '../../ui';
 import OfflineBoltTwoToneIcon from '@mui/icons-material/OfflineBoltTwoTone';
 
 import moment from 'moment';
-import { Box, Grid, ToggleButton, ToggleButtonGroup, Stack, Switch, FormLabel, Typography, Select, MenuItem, FormControl, InputLabel, Divider} from '@mui/material';
+import {
+  Box,
+  Divider,
+  FormControl,
+  FormLabel,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+  Switch,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography
+} from '@mui/material';
 import * as React from 'react';
-import {intervalStartTimeOptions} from "../../Util";
-import { styled } from '@mui/material/styles';
-import { Label } from '@mui/icons-material';
 
 export enum PaxSearchFormDay {
   Yesterday = "yesterday",
@@ -26,8 +37,8 @@ type PaxSearchFormState = {
   day?: PaxSearchFormDay,
   time?: PaxSearchFormTime,
   arrivalDate: moment.Moment,
-  fromDate: string,
-  toDate: string,
+  fromDate: moment.Moment,
+  toDate: moment.Moment,
   timeMachine?: boolean
 }
 
@@ -35,8 +46,8 @@ export type PaxSearchFormPayload = {
   day?: PaxSearchFormDay,
   time?: PaxSearchFormTime,
   arrivalDate: Date,
-  fromDate: string,
-  toDate: string,
+  fromDate: Date,
+  toDate: Date,
   timeMachine?: boolean
 }
 
@@ -47,42 +58,22 @@ export type IPaxSearchForm = PaxSearchFormPayload & {
 
 export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMachine, onChange}: IPaxSearchForm) => {
 
-  const convertHourToOffset = (hour:string, startTime: string) => {
-    const isNextDay = hour.includes('+');
-    const startMoment = moment().set('hours', parseInt(startTime.substring(0,2)));
-    const endMoment = startMoment.clone().set('hours', parseInt(hour.substring(0,2)));
-    if (isNextDay) {
-      endMoment.add(1, 'day');
-    }
-    const momentDuration = moment.duration(endMoment.diff(startMoment));
-    return `${momentDuration.asHours()}`;
-  }
-
-  const convertOffsetToHour = (offset:string, startTime: string) => {
-    const parsedOffset = parseInt(offset);
-    const offsetTime = moment().set('hours', parseInt(startTime.substring(0,2)));
-    offsetTime.add(parsedOffset, 'hours');
-    return `${offsetTime.format('HH:00')}${parsedOffset > (24 - parseInt(startTime.substring(0, 2))) ? ' +1' : ''}`;
-  }
-
   const [formState, setFormState] = React.useState<PaxSearchFormState>({
     day: day || PaxSearchFormDay.Yesterday,
     time: time || PaxSearchFormTime.Now,
     arrivalDate: moment(arrivalDate) || moment(),
-    fromDate: fromDate,
-    toDate: convertHourToOffset(toDate, fromDate),
+    fromDate: moment(fromDate),
+    toDate: moment(toDate),
     timeMachine: timeMachine || false,
   });
 
   const handleOnChangeCallback = (payload: PaxSearchFormState) => {
-    const latestFromDate = payload.fromDate ? payload.fromDate : formState.fromDate;
-
     const formValues: PaxSearchFormPayload = {
       day: payload.day ? payload.day : formState.day,
       time: payload.time ? payload.time : formState.time,
-      arrivalDate: payload.arrivalDate ? payload.arrivalDate.toDate() : formState.arrivalDate.toDate(),
-      fromDate: payload.fromDate ? payload.fromDate : formState.fromDate,
-      toDate: payload.toDate ? convertOffsetToHour(payload.toDate, latestFromDate) : convertOffsetToHour(payload.toDate, latestFromDate),
+      arrivalDate: (payload.arrivalDate ? payload.arrivalDate : formState.arrivalDate).toDate(),
+      fromDate: (payload.fromDate ? payload.fromDate : formState.fromDate).toDate(),
+      toDate: (payload.toDate ? payload.toDate : formState.toDate).toDate(),
       timeMachine: payload.hasOwnProperty('timeMachine') ? payload.timeMachine : formState.timeMachine,
     }
     onChange && onChange(formValues);
@@ -112,26 +103,34 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
         arrivalDate,
         time,
       }
+
+      const hoursDiff = formState.toDate.diff(formState.fromDate, 'hours');
+      newState.fromDate = lastMidnight(arrivalDate).add(formState.fromDate.hours(), 'hours');
+      newState.toDate = newState.fromDate.clone().add(hoursDiff, 'hours');
+
       setFormState(newState);
       handleOnChangeCallback(newState);
     }
   };
+
+  const lastMidnight = (date: moment.Moment) => date.set('hours', 0).set('minutes', 0).set('seconds', 0).set('milliseconds', 0);
+  const todayMidnight = lastMidnight(moment());
 
   const handleChangeTime = (event: React.MouseEvent<HTMLElement>, newValue: PaxSearchFormTime) => {
     if (newValue) {
       let toDate, fromDate;
       switch (newValue) {
         case PaxSearchFormTime.Day:
-          toDate = '24';
-          fromDate = '00:00';
+          fromDate = lastMidnight(formState.arrivalDate.clone()).clone();
+          toDate = fromDate.clone().add(1, 'day');
           break;
         case PaxSearchFormTime.Range:
-          toDate = '1';
-          fromDate = formState.fromDate;
+          fromDate = formState.fromDate.clone();
+          toDate = formState.toDate.clone();
           break;
         default:
-          fromDate = moment().subtract(1, 'hour').format('HH:00');
-          toDate = '4';
+          fromDate = todayMidnight.clone().add(moment().hour() - 1, 'hours');
+          toDate = fromDate.clone().add(4, 'hours');
           break;
       }
       const newState = {
@@ -154,37 +153,47 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
     handleOnChangeCallback(newState);
   };
 
-  const handleDatepickerChange = (field: string, value: moment.Moment) => {
+  const handleDatepickerChange = (value: moment.Moment) => {
     const newState = {
       ...formState,
-      [field]: value,
+      arrivalDate: value,
     }
-    if (value.toISOString() === moment().toISOString()) {
+
+    const todayMidnight = lastMidnight(moment());
+
+    if (value.toISOString() === todayMidnight.toISOString()) {
       newState.day = PaxSearchFormDay.Today;
-    } else if (value.toISOString() === moment().add(1, 'day').toISOString()) {
+    } else if (value.toISOString() === todayMidnight.clone().add(1, 'day').toISOString()) {
       newState.day = PaxSearchFormDay.Tomorrow;
-    } else if (value.toISOString() === moment().subtract(1, 'day').toISOString()) {
+    } else if (value.toISOString() === todayMidnight.clone().subtract(1, 'day').toISOString()) {
       newState.day = PaxSearchFormDay.Yesterday;
     } else {
       newState.day = PaxSearchFormDay.Other;
     }
+
+    const changingFromToday = formState.day === PaxSearchFormDay.Today && newState.day !== PaxSearchFormDay.Today;
+
+    if (changingFromToday) {
+      newState.time = PaxSearchFormTime.Day;
+      newState.fromDate = lastMidnight(value.clone());
+      newState.toDate = newState.fromDate.clone().add(1, 'day');
+    } else {
+      const hoursDiff = formState.toDate.diff(formState.fromDate, 'hours');
+      newState.fromDate = lastMidnight(value.clone()).add(formState.fromDate.hours(), 'hours');
+      newState.toDate = newState.fromDate.clone().add(hoursDiff, 'hours');
+    }
+
     setFormState(newState);
     handleOnChangeCallback(newState);
   }
 
-  const handleTimeChange = (field: string, value:string) => {
-
+  const handleTimeChange = (field: string, value: moment.Moment) => {
     const newState = {
       ...formState,
-      toDate: formState.time === PaxSearchFormTime.Day ? '24' : formState.toDate,
       [field]: value,
     }
-    if (field == 'fromDate' && formState.time === PaxSearchFormTime.Range) {
-      const fromHour = parseInt(value.substring(0,2));
-      const toOffset = parseInt(formState.toDate)
-      if (toOffset > (36 - fromHour)) {
-        newState.toDate = `${36 - fromHour}`;
-      }
+    if (field == 'fromDate' && formState.time === PaxSearchFormTime.Range && value.valueOf() >= formState.toDate.valueOf()) {
+      newState.toDate = newState.fromDate.clone().add(1, 'hour');
     }
     setFormState(newState);
     handleOnChangeCallback(newState);
@@ -196,7 +205,8 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
         <Grid item flexGrow={0}>
           <Stack spacing={0}>
             <InputLabel>Day</InputLabel>
-            <ToggleButtonGroup sx={{mt: 0}} exclusive color='primary' size='medium' value={formState.day} onChange={handleChangeDay}>
+            <ToggleButtonGroup sx={{mt: 0}} exclusive color='primary' size='medium' value={formState.day}
+                               onChange={handleChangeDay}>
               <ToggleButton value="yesterday" defaultChecked>Yesterday</ToggleButton>
               <ToggleButton value="today">Today</ToggleButton>
               <ToggleButton value="tomorrow">Tomorrow</ToggleButton>
@@ -210,79 +220,88 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
             format="DD/MM/YYYY"
             value={formState.arrivalDate}
             showDaysOutsideCurrentMonth
-            minDate={moment().subtract(2, 'years')}
-            maxDate={moment().add(2, 'years')}
-            onChange={(value) => handleDatepickerChange('arrivalDate', value || moment())}
+            minDate={moment().subtract(5, 'years')}
+            maxDate={moment().add(1, 'years')}
+            onChange={(value) => handleDatepickerChange(value || moment())}
           />
         </Grid>
       </Grid>
-      <Divider sx={{mb: 3}} />
+      <Divider sx={{mb: 3}}/>
       <Grid container spacing={2}>
         <Grid item>
           <InputLabel>Range</InputLabel>
           <ToggleButtonGroup exclusive color='primary' size='medium' value={formState.time} onChange={handleChangeTime}>
-            <ToggleButton value="now" disabled={formState.day !== PaxSearchFormDay.Today}><OfflineBoltTwoToneIcon sx={{fontSize: '0.8em', mr: 1}} />Live</ToggleButton>
+            <ToggleButton value="now" disabled={formState.day !== PaxSearchFormDay.Today}><OfflineBoltTwoToneIcon
+              sx={{fontSize: '0.8em', mr: 1}}/>Live</ToggleButton>
             <ToggleButton value="24hour">24hr</ToggleButton>
             <ToggleButton value="range">Custom</ToggleButton>
           </ToggleButtonGroup>
         </Grid>
         <Grid item flexGrow={1}>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <FormControl fullWidth>
-                  <InputLabel id="from-date-label">From</InputLabel>
-                  <Select
-                    disabled={formState.time != PaxSearchFormTime.Range}
-                    labelId="from-date-label"
-                    id="from-date"
-                    value={formState.fromDate}
-                    label="Age"
-                    fullWidth
-                    inputProps={{role: 'start-time-select'}}
-                    onChange={(e) => {
-                      // const [hour, minute] = e.target.value.split(':').map(Number);
-                      handleTimeChange('fromDate', e.target.value);
-                    }}
-                  >
-                    {intervalStartTimeOptions(60).map(time => (
-                      <MenuItem key={time} value={time}
-                        data-cy={`select-start-time-option-${time.replace(':', '-')}`}>{time}
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <FormControl fullWidth>
+                <InputLabel id="from-date-label">From</InputLabel>
+                <Select
+                  disabled={formState.time != PaxSearchFormTime.Range}
+                  labelId="from-date-label"
+                  id="from-date"
+                  value={formState.fromDate.valueOf()}
+                  fullWidth
+                  inputProps={{role: 'start-time-select'}}
+                  onChange={(e) => {
+                    handleTimeChange('fromDate', moment(e.target.value));
+                  }}
+                >
+                  {
+                    Array.from(Array(24).keys()).map(hour => {
+                      const time = lastMidnight(formState.arrivalDate).clone().set('hours', hour);
+                      const yyyyddmmhhmm = time.format('YYYY-MM-DD_HH:mm');
+                      const hh00 = time.format('HH:00');
+                      return <MenuItem
+                        key={time.toISOString()}
+                        value={time.valueOf()}
+                        data-cy={`select-start-time-option-${yyyyddmmhhmm}`}
+                      >
+                        {hh00}
                       </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={6}>
-                <FormControl fullWidth>
-                  <InputLabel id="to-date-label">To</InputLabel>
-                  <Select
-                    disabled={formState.time != PaxSearchFormTime.Range}
-                    labelId="to-date-label"
-                    id="to-date"
-                    value={formState.toDate}
-                    label="Age"
-                    fullWidth
-                    inputProps={{role: 'end-time-select'}}
-                    onChange={(e) => {
-                      handleTimeChange('toDate', e.target.value);
-                    }}
-                  >
-                    {
-                      Array.from(Array(36 - parseInt(formState.fromDate.substring(0,2)))).map((value, index) => {
-                        const fromHour = parseInt(formState.fromDate.substring(0,2));
-                        const time = moment().set('hours', fromHour).add(index + 1, 'hours');
-                        return <MenuItem
-                          key={time.toISOString()}
-                          value={index+1}
-                          data-cy={`select-start-time-option-${time.format('HH-00')}`}>
-                            {`${time.format('HH:00')} (+${index + 1} hours)`}
-                        </MenuItem>
-                      })
-                    }
-                  </Select>
-                </FormControl>
-              </Grid>
+                    })
+                  }
+                </Select>
+              </FormControl>
             </Grid>
+            <Grid item xs={6}>
+              <FormControl fullWidth>
+                <InputLabel id="to-date-label">To</InputLabel>
+                <Select
+                  disabled={formState.time != PaxSearchFormTime.Range}
+                  labelId="to-date-label"
+                  id="to-date"
+                  value={formState.toDate.valueOf()}
+                  fullWidth
+                  inputProps={{role: 'end-time-select'}}
+                  onChange={(e) => {
+                    handleTimeChange('toDate', moment(e.target.value));
+                  }}
+                >
+                  {
+                    Array.from(Array(36 - formState.fromDate.hour()).keys()).map(index => {
+                      const time = formState.fromDate.clone().add(index + 1, 'hours');
+                      const yyyyddmmhhmm = time.format('YYYY-MM-DD_HH:mm');
+                      const hh00 = time.format('HH:00');
+                      return <MenuItem
+                        key={time.toISOString()}
+                        value={time.valueOf()}
+                        data-cy={`select-end-time-option-${yyyyddmmhhmm}`}
+                      >
+                        {`${hh00} (+${index + 1} hours)`}
+                      </MenuItem>
+                    })
+                  }
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
       <Stack direction="row" sx={{alignItems: 'center', mt: 1}}>
