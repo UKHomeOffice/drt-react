@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
-import {Box, Button, IconButton, ThemeProvider, Typography} from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import {Box, Button, ThemeProvider, Typography} from '@mui/material';
 import Handsontable from 'handsontable';
 import {HotTable} from '@handsontable/react';
 import moment from 'moment';
@@ -12,6 +10,7 @@ import {drtTheme} from '../../index';
 import EditIcon from '@mui/icons-material/Edit';
 import {shiftDateToString} from "../Util";
 import Alert from '@mui/material/Alert';
+import { textRenderer, registerRenderer } from 'handsontable/renderers';
 
 export interface ShiftDate {
   year: number;
@@ -65,22 +64,22 @@ const getWeekFirstDate = (date: ShiftDate) => {
   };
 };
 
-const numberOfDays = (dayRange: string, daysInMonth: number) => {
-  if (dayRange === 'weekly')
+const numberOfDays = (viewLevel: string, daysInMonth: number) => {
+  if (viewLevel === 'weekly')
     return 7;
-  else if (dayRange === 'daily')
+  else if (viewLevel === 'daily')
     return 1;
   else
     return daysInMonth;
 }
 
 
-const generateColumnHeaders = (shiftDate: ShiftDate, dayRange: string, daysInMonth: number) => {
+const generateColumnHeaders = (shiftDate: ShiftDate, viewLevel: string, daysInMonth: number) => {
   const headers: string[] = [];
   const {firstDate} = getWeekFirstDate(shiftDate);
-  const daysCount = numberOfDays(dayRange, daysInMonth);
-  let nextDate = dayRange === 'weekly' ?
-    new LocalDate(firstDate.year, firstDate.month, firstDate.day, 0, 0) : dayRange === 'daily' ?
+  const daysCount = numberOfDays(viewLevel, daysInMonth);
+  let nextDate = viewLevel === 'weekly' ?
+    new LocalDate(firstDate.year, firstDate.month, firstDate.day, 0, 0) : viewLevel === 'daily' ?
       new LocalDate(shiftDate.year, shiftDate.month, shiftDate.day, 0, 0) : new LocalDate(shiftDate.year, shiftDate.month, 1, 0, 0);
   for (let i = 1; i <= daysCount; i++) {
     const date = moment({year: nextDate.year, month: nextDate.month - 1, day: nextDate.day});
@@ -92,10 +91,10 @@ const generateColumnHeaders = (shiftDate: ShiftDate, dayRange: string, daysInMon
   return headers;
 };
 
-const generateColumns = (dayRange: string, tableIndex: number, daysInMonth: number) => {
+const generateColumns = (viewLevel: string, tableIndex: number, daysInMonth: number) => {
   const columns: Handsontable.ColumnSettings[] = [];//[{data: 'time', title: 'Time', width: 100, readOnly: true}];
   const columnWidth = Math.max(55, Math.floor(1200 / daysInMonth));
-  const daysCount = numberOfDays(dayRange, daysInMonth);
+  const daysCount = numberOfDays(viewLevel, daysInMonth);
 
   for (let day = 1; day <= daysCount; day++) {
     columns.push({data: `${tableIndex}-${day}`, title: ``, width: columnWidth, readOnly: false});
@@ -103,88 +102,89 @@ const generateColumns = (dayRange: string, tableIndex: number, daysInMonth: numb
   return columns;
 };
 
-const generateRows = (shiftDate: ShiftDate, dayRange: string, tableIndex: number, shift: ShiftSummaryStaffing, interval: number, isExpanded: boolean) => {
+const generateRows: (shiftDate: ShiftDate, viewLevel: string, tableIndex: number, shift: ShiftSummaryStaffing, interval: number, isExpanded: boolean) => {
+  rows: any[];
+  rowHeaders: string[]
+} = (shiftDate: ShiftDate, viewLevel: string, tableIndex: number, shift: ShiftSummaryStaffing, interval: number, isExpanded: boolean) => {
   const rows: any[] = [];
   const rowHeaders: string[] = [];
   const daysInMonth = moment().month(shiftDate.month - 1).daysInMonth();
   const {firstDate} = getWeekFirstDate(shiftDate);
-  const daysCount = numberOfDays(dayRange, daysInMonth);
-  const firstDay = dayRange === 'weekly' ?
-    new LocalDate(firstDate.year, firstDate.month, firstDate.day, 0, 0) : dayRange === 'daily' ?
+  const daysCount = numberOfDays(viewLevel, daysInMonth);
+  const firstDay = viewLevel === 'weekly' ?
+    new LocalDate(firstDate.year, firstDate.month, firstDate.day, 0, 0) : viewLevel === 'daily' ?
       new LocalDate(shiftDate.year, shiftDate.month, shiftDate.day, 0, 0) : new LocalDate(shiftDate.year, shiftDate.month, 1, 0, 0);
 
-  if (shift) {
-    let displayEndTime = '';
-    if (shift.shiftSummary.endTime === '24:00')
-      displayEndTime = '00:00'
-    else
-      displayEndTime = shift.shiftSummary.endTime
+  let displayEndTime = '';
+  if (shift.shiftSummary.endTime === '24:00')
+    displayEndTime = '00:00'
+  else
+    displayEndTime = shift.shiftSummary.endTime
 
-    if (isExpanded) {
-      const [startHour, startMinute] = shift.shiftSummary.startTime.split(':').map(Number);
-      const [endHour, endMinute] = shift.shiftSummary.endTime.split(':').map(Number);
-      const startTime: LocalDate = new LocalDate(firstDay.year, firstDay.month, firstDay.day, startHour, startMinute);
+  if (isExpanded) {
+    const [startHour, startMinute] = shift.shiftSummary.startTime.split(':').map(Number);
+    const [endHour, endMinute] = shift.shiftSummary.endTime.split(':').map(Number);
+    const startTime: LocalDate = new LocalDate(firstDay.year, firstDay.month, firstDay.day, startHour, startMinute);
 
-      const isShiftEndAfterMidNight = endHour < startHour || (endHour == startHour && endMinute < startMinute)
-      let endDate = new LocalDate(firstDay.year, firstDay.month, firstDay.day, endHour, endMinute);
-      if (isShiftEndAfterMidNight) {
-        endDate = endDate.addDays(1)
-        console.log('new end date', endDate.addDays(1), 'end date', endDate, 'start date', startTime)
-      }
-
-      const endTime: LocalDate = endDate;
-
-      let currentTime = startTime;
-      while (currentTime.isBefore(endTime)) {
-        let nextTime
-        if ((currentTime.minute === 30 && interval === 60) || (currentTime.hour === endTime.hour && interval === 60 && endTime.minute === 30)) {
-          nextTime = currentTime.addMinutes(30);
-        } else {
-          nextTime = currentTime.addMinutes(interval);
-        }
-        let nextTimeHourDisplay = 0;
-        if (nextTime.hour === 24)
-          nextTimeHourDisplay = 0
-        else
-          nextTimeHourDisplay = nextTime.hour
-        const row: any = {}
-        let nextDay = firstDay;
-        for (let day = 1; day <= daysCount; day++) {
-          const dayAssignments = shift.staffTableEntries.filter(assignment => assignment.startTime.year === nextDay.year && assignment.startTime.month === nextDay.month
-            && assignment.startTime.day === nextDay.day && assignment.startTime.hour === currentTime.hour && assignment.startTime.minute === currentTime.minute);
-          row[`${tableIndex}-${day}`] = dayAssignments.length > 0 ? dayAssignments[0].staffNumber : '-';
-          nextDay = nextDay.addDays(1);
-        }
-        rows.push(row);
-        rowHeaders.push(`${currentTime.hour.toString().padStart(2, '0')}:${currentTime.minute.toString().padStart(2, '0')} to ${nextTimeHourDisplay.toString().padStart(2, '0')}:${nextTime.minute.toString().padStart(2, '0')}`);
-        currentTime = nextTime;
-      }
-    } else {
-      const headerRow: any = {};
-      let nextDate = firstDay;
-
-      for (let day = 1; day <= daysCount; day++) {
-        const dayAssignments = shift.staffTableEntries.filter(assignment => assignment.startTime.day === nextDate.day && assignment.startTime.year === nextDate.year && assignment.startTime.month === nextDate.month);
-        const staffNumbers = dayAssignments.map(assignment => assignment.staffNumber);
-        if (staffNumbers.length === 0) {
-          headerRow[`${tableIndex}-${day}`] = 'N/A';
-        } else {
-          const minStaffNumber = Math.min(...staffNumbers);
-          const maxStaffNumber = Math.max(...staffNumbers);
-          headerRow[`${tableIndex}-${day}`] = (minStaffNumber === maxStaffNumber) ? `${minStaffNumber}` : `${minStaffNumber} to ${maxStaffNumber}`;
-        }
-        nextDate = nextDate.addDays(1);
-      }
-      rows.push(headerRow);
-      rowHeaders.push(`${shift.shiftSummary.startTime} to ${displayEndTime}`);
+    const shiftEndsAfterMidnight = endHour < startHour || (endHour == startHour && endMinute < startMinute)
+    let endDate = new LocalDate(firstDay.year, firstDay.month, firstDay.day, endHour, endMinute);
+    if (shiftEndsAfterMidnight) {
+      endDate = endDate.addDays(1)
+      console.log('new end date', endDate.addDays(1), 'end date', endDate, 'start date', startTime)
     }
-    return {rows, rowHeaders};
+
+    const endTime: LocalDate = endDate;
+
+    let currentTime = startTime;
+    while (currentTime.isBefore(endTime)) {
+      let nextTime
+      if ((currentTime.minute === 30 && interval === 60) || (currentTime.hour === endTime.hour && interval === 60 && endTime.minute === 30)) {
+        nextTime = currentTime.addMinutes(30);
+      } else {
+        nextTime = currentTime.addMinutes(interval);
+      }
+      let nextTimeHourDisplay = 0;
+      if (nextTime.hour === 24)
+        nextTimeHourDisplay = 0
+      else
+        nextTimeHourDisplay = nextTime.hour
+      const row: any = {}
+      let nextDay = firstDay;
+      for (let day = 1; day <= daysCount; day++) {
+        const dayAssignments = shift.staffTableEntries.filter(assignment => assignment.startTime.year === nextDay.year && assignment.startTime.month === nextDay.month
+          && assignment.startTime.day === nextDay.day && assignment.startTime.hour === currentTime.hour && assignment.startTime.minute === currentTime.minute);
+        row[`${tableIndex}-${day}`] = dayAssignments.length > 0 ? dayAssignments[0].staffNumber : '-';
+        nextDay = nextDay.addDays(1);
+      }
+      rows.push(row);
+      rowHeaders.push(`${currentTime.hour.toString().padStart(2, '0')}:${currentTime.minute.toString().padStart(2, '0')} to ${nextTimeHourDisplay.toString().padStart(2, '0')}:${nextTime.minute.toString().padStart(2, '0')}`);
+      currentTime = nextTime;
+    }
+  } else {
+    const headerRow: any = {};
+    let nextDate = firstDay;
+
+    for (let day = 1; day <= daysCount; day++) {
+      const dayAssignments = shift.staffTableEntries.filter(assignment => assignment.startTime.day === nextDate.day && assignment.startTime.year === nextDate.year && assignment.startTime.month === nextDate.month);
+      const staffNumbers = dayAssignments.map(assignment => assignment.staffNumber);
+      if (staffNumbers.length === 0) {
+        headerRow[`${tableIndex}-${day}`] = 'N/A';
+      } else {
+        const minStaffNumber = Math.min(...staffNumbers);
+        const maxStaffNumber = Math.max(...staffNumbers);
+        headerRow[`${tableIndex}-${day}`] = (minStaffNumber === maxStaffNumber) ? `${minStaffNumber}` : `${minStaffNumber} to ${maxStaffNumber}`;
+      }
+      nextDate = nextDate.addDays(1);
+    }
+    rows.push(headerRow);
+    rowHeaders.push(`${shift.shiftSummary.startTime} to ${displayEndTime}`);
   }
+  return {rows, rowHeaders};
 }
 
 export interface ShiftHotTableViewProps {
   interval: number;
-  dayRange: string;
+  viewLevel: string;
   shiftDate: ShiftDate;
   shiftSummaries: ShiftSummaryStaffing[];
   handleSaveChanges: (shifts: ShiftSummaryStaffing[], changedAssignments: StaffTableEntry[]) => void;
@@ -193,17 +193,17 @@ export interface ShiftHotTableViewProps {
 
 const showAlert = (shift: ShiftSummaryStaffing, shiftDate: ShiftDate) => {
   const momentStartDate = moment({
-                                   year: shift.shiftSummary.startDate.year,
-                                   month: shift.shiftSummary.startDate.month,
-                                   day: shift.shiftSummary.startDate.day
-                                 })
+    year: shift.shiftSummary.startDate.year,
+    month: shift.shiftSummary.startDate.month,
+    day: shift.shiftSummary.startDate.day
+  })
   const momentShiftDate = moment({year: shiftDate.year, month: shiftDate.month, day: shiftDate.day});
   return momentStartDate.isAfter(momentShiftDate) && momentStartDate.isBefore(momentShiftDate.add(1, 'month'));
 };
 
 export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
                                                                       interval,
-                                                                      dayRange,
+                                                                      viewLevel,
                                                                       shiftDate,
                                                                       shiftSummaries,
                                                                       handleSaveChanges,
@@ -211,7 +211,6 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
                                                                     }) => {
   registerAllModules();
 
-  // const daysInMonth = moment().month(shiftDate.month - 1).daysInMonth();
   const monthIndex = (shiftDate.month ?? (new Date().getMonth() + 1)) - 1;
   const daysInMonth = moment().month(monthIndex).daysInMonth();
   const [expandedRows, setExpandedRows] = useState<{ [key: string]: boolean }>({});
@@ -231,9 +230,14 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
       value: any,
       cellProperties: Handsontable.CellProperties
     ) {
+      console.log(`Rendering cell at row ${row}, col ${col} with value ${value}`);
+
       Handsontable.renderers.TextRenderer.apply(this, [instance, td, row, col, prop, value, cellProperties]);
-      td.style.borderSpacing = '0';
-      td.style.padding = '1';
+
+      if (row === 0 && col === 1) {
+        console.log(`Rendering cell at row ${row}, col ${col} with value ${value}`);
+        td.style.background = '#d7f1e1';
+      }
 
       // Apply readOnly logic based on `isExpanded` and `col === 0`
       cellProperties.readOnly = !isExpanded && row === 0;
@@ -280,7 +284,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
     <ThemeProvider theme={drtTheme}>
       {shiftSummaries.map((shift, index) => {
         const isExpanded = expandedRows[shift.shiftSummary.name] || false;
-        const {rows, rowHeaders} = generateRows(shiftDate, dayRange, index, shift, interval, isExpanded);
+        const {rows, rowHeaders} = generateRows(shiftDate, viewLevel, index, shift, interval, isExpanded);
         let tableHeight = 84;
         if (rows) tableHeight = isExpanded ? Math.min(rows.length * 24 + 60, 500) : 84;
 
@@ -292,10 +296,14 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               </Typography>
             </Box>
             <Box display="flex" gap="20px" alignItems="center" paddingBottom="10px">
-              <Typography sx={{mb: `0 !important`}} data-cy={`shift-time-${index}`}>{`Time covered: ${shift.shiftSummary.startTime} to ${shift.shiftSummary.endTime}`}</Typography>
-              <Typography sx={{mb: `0 !important`}} data-cy={`shift-staff-number-${index}`}>Default staff: {shift.shiftSummary.defaultStaffNumber}</Typography>
-              <Typography sx={{mb: `0 !important`}} data-cy={`shift-start-date-${index}`}>{`Start Date: ${shiftDateToString(shift.shiftSummary.startDate)}`}</Typography>
-              <Typography sx={{mb: `0 !important`}} data-cy={`shift-end-date-${index}`}>{shift.shiftSummary.endDate ? `End Date: ${shiftDateToString(shift.shiftSummary.endDate)}` : ''}</Typography>
+              <Typography sx={{mb: `0 !important`}}
+                          data-cy={`shift-time-${index}`}>{`Time covered: ${shift.shiftSummary.startTime} to ${shift.shiftSummary.endTime}`}</Typography>
+              <Typography sx={{mb: `0 !important`}} data-cy={`shift-staff-number-${index}`}>Default
+                staff: {shift.shiftSummary.defaultStaffNumber}</Typography>
+              <Typography sx={{mb: `0 !important`}}
+                          data-cy={`shift-start-date-${index}`}>{`Start Date: ${shiftDateToString(shift.shiftSummary.startDate)}`}</Typography>
+              <Typography sx={{mb: `0 !important`}}
+                          data-cy={`shift-end-date-${index}`}>{shift.shiftSummary.endDate ? `End Date: ${shiftDateToString(shift.shiftSummary.endDate)}` : ''}</Typography>
               <Button
                 variant='text'
                 onClick={() => handleEditShift(index, shift.shiftSummary)}
@@ -315,8 +323,8 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               id={`hot-table-${index}`}
               className={`shift-hot-table-${index}`}
               data={rows}
-              colHeaders={generateColumnHeaders(shiftDate, dayRange, daysInMonth)}
-              columns={generateColumns(dayRange, index, daysInMonth)}
+              colHeaders={generateColumnHeaders(shiftDate, viewLevel, daysInMonth)}
+              columns={generateColumns(viewLevel, index, daysInMonth)}
               style={{overflow: `hidden`, borderSpacing: '0', height: `${tableHeight}px`}}
               cells={(row, col) => ({
                 renderer: cellRenderer(isExpanded)
@@ -332,7 +340,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               color="secondary"
               disableElevation
               onClick={() => toggleRowExpansion(shift.shiftSummary.name)}
-              >
+            >
               {isExpanded ? "Hide Breakdown" : "Show Breakdown"}
             </Button>
           </Box>
