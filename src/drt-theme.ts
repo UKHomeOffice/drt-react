@@ -4,7 +4,7 @@ import type {} from '@mui/x-date-pickers/themeAugmentation';
 import { themePrimatives } from "./theme/primatives";
 import React from "react";
 import { buttonBaseTheme, buttonTheme, buttonGroupTheme, toggleButtonGroupTheme, toggleButtonTheme } from '../src/theme/buttons';
-import { inputBaseTheme, inputAdornmentTheme, inputLabelTheme, outlinedInputTheme, radioTheme, checkboxTheme } from "./theme/input";
+import { inputBaseTheme, inputAdornmentTheme, inputLabelTheme, outlinedInputTheme, radioTheme, radioGroupTheme, checkboxTheme } from "./theme/input";
 import { formControlLabelTheme, formLabelTheme, formHelperTextTheme, formControlTheme } from "./theme/formControl";
 import { selectTheme, nativeSelectTheme } from "./theme/select";
 import { autocompleteTheme } from "./theme/autocomplete";
@@ -41,6 +41,8 @@ declare module '@mui/material/styles' {
     large: React.CSSProperties;
     medium: React.CSSProperties;
     small: React.CSSProperties;
+    label: React.CSSProperties;
+    labelbold: React.CSSProperties;
   }
 
   // allow configuration using `createTheme`
@@ -53,6 +55,8 @@ declare module '@mui/material/styles' {
     large?: React.CSSProperties;
     medium?: React.CSSProperties;
     small?: React.CSSProperties;
+    label?: React.CSSProperties;
+    labelbold?: React.CSSProperties;
   }
 }
 
@@ -84,6 +88,8 @@ declare module "@mui/material/Typography" {
     large: true;
     medium: true;
     small: true;
+    label: true;
+    labelbold: true;
   }
 }
 
@@ -188,6 +194,9 @@ export const drtThemeValues = {
     },
     MuiRadio: {
       ...radioTheme as any,
+    },
+    MuiRadioGroup: {
+      ...radioGroupTheme as any,
     },
     MuiCheckbox: {
       ...checkboxTheme,
