@@ -8,3 +8,5 @@ export type {ShiftDate ,ShiftDateTime, ShiftSummaryStaffing, ShiftSummary, Staff
 export {ShiftHotTableView} from "./ShiftHotTableView";
 export type {ShiftSummaryProps} from './ShiftSummaryView'
 export {ShiftSummaryView} from "./ShiftSummaryView";
+export type {RemoveShiftFormProps} from './ConfirmRemoveShift'
+export {ConfirmRemoveShift} from "./ConfirmRemoveShift";
