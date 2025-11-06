@@ -39,6 +39,7 @@ export interface StaffTableEntry {
   column: number;
   row: number;
   name: string;
+  staffRecommendation: number;
   staffNumber: number;
   startTime: ShiftDateTime;
   endTime: ShiftDateTime;
@@ -230,8 +231,6 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
       value: any,
       cellProperties: Handsontable.CellProperties
     ) {
-      console.log(`Rendering cell at row ${row}, col ${col} with value ${value}`);
-
       Handsontable.renderers.TextRenderer.apply(this, [instance, td, row, col, prop, value, cellProperties]);
 
       if (row === 0 && col === 1) {
