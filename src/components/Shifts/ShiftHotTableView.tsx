@@ -216,38 +216,17 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
   const monthIndex = (shiftDate.month ?? (new Date().getMonth() + 1)) - 1;
   const daysInMonth = moment().month(monthIndex).daysInMonth();
   const [expandedRows, setExpandedRows] = useState<{ [key: string]: boolean }>({});
+  const indexedShiftSummaries = shiftSummaries.map((shift, index) => ({...shift, index}));
 
-  const toggleRowExpansion = (shiftType: string, label:string) => {
+  const toggleRowExpansion = (shiftType: string, label: string) => {
     sendAnalyticsEvent(
-      { category : 'shifts',
+      {
+        category: 'shifts',
         action: shiftType,
         label: label
       }
     )
     setExpandedRows(prev => ({...prev, [shiftType]: !prev[shiftType]}));
-  };
-
-  const cellRenderer = (isExpanded: boolean) => {
-    return function (
-      this: any,
-      instance: Handsontable,
-      td: HTMLTableCellElement,
-      row: number,
-      col: number,
-      prop: string | number,
-      value: any,
-      cellProperties: Handsontable.CellProperties
-    ) {
-      Handsontable.renderers.TextRenderer.apply(this, [instance, td, row, col, prop, value, cellProperties]);
-
-      if (row === 0 && col === 1) {
-        console.log(`Rendering cell at row ${row}, col ${col} with value ${value}`);
-        td.style.background = '#d7f1e1';
-      }
-
-      // Apply readOnly logic based on `isExpanded` and `col === 0`
-      cellProperties.readOnly = !isExpanded && row === 0;
-    };
   };
 
   const handleAfterChange = (changes: Handsontable.CellChange[] | null, source: string) => {
@@ -293,6 +272,38 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
         const {rows, rowHeaders} = generateRows(shiftDate, viewPeriod, index, shift, intervalMinutes, isExpanded);
         let tableHeight = 84;
         if (rows) tableHeight = isExpanded ? Math.min(rows.length * 24 + 60, 500) : 84;
+
+        const indexed = shift.staffTableEntries.reduce((acc, e) => {
+          acc[`${e.row}-${e.column}`] = e;
+          return acc;
+        }, {} as Record<string, StaffTableEntry>);
+
+        const cellRenderer = (isExpanded: boolean) => {
+          return function (
+            this: any,
+            instance: Handsontable,
+            td: HTMLTableCellElement,
+            row: number,
+            col: number,
+            prop: string | number,
+            value: any,
+            cellProperties: Handsontable.CellProperties
+          ) {
+            Handsontable.renderers.TextRenderer.apply(this, [instance, td, row, col, prop, value, cellProperties]);
+
+            // if (row === 0 && col === 1) {
+            //   console.log(`Rendering cell at row ${row}, col ${col} with value ${value}`);
+            //   td.style.background = '#d7f1e1';
+            // }
+            const entry = indexed[`${row}-${col}`];
+            if (entry.staffNumber < entry.staffRecommendation) {
+              td.style.background = '#d7f1e1';
+            }
+
+              // Apply readOnly logic based on `isExpanded` and `col === 0`
+              cellProperties.readOnly = !isExpanded && row === 0;
+          };
+        };
 
         return (
           <Box key={index} sx={{marginBottom: 4}} data-cy={`shift-details-with-table-${index}`}>
@@ -346,7 +357,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               color="secondary"
               disableElevation
               onClick={() => toggleRowExpansion(shift.shiftSummary.name, isExpanded ? "Hide time breakdown" : "Show time breakdown")}
-              >
+            >
               {isExpanded ? "Hide time breakdown" : "Show time breakdown"}
             </Button>
           </Box>
