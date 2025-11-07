@@ -65,22 +65,22 @@ const getWeekFirstDate = (date: ShiftDate) => {
   };
 };
 
-const numberOfDays = (viewLevel: string, daysInMonth: number) => {
-  if (viewLevel === 'weekly')
+const numberOfDays = (viewPeriod: string, daysInMonth: number) => {
+  if (viewPeriod === 'weekly')
     return 7;
-  else if (viewLevel === 'daily')
+  else if (viewPeriod === 'daily')
     return 1;
   else
     return daysInMonth;
 }
 
 
-const generateColumnHeaders = (shiftDate: ShiftDate, viewLevel: string, daysInMonth: number) => {
+const generateColumnHeaders = (shiftDate: ShiftDate, viewPeriod: string, daysInMonth: number) => {
   const headers: string[] = [];
   const {firstDate} = getWeekFirstDate(shiftDate);
-  const daysCount = numberOfDays(viewLevel, daysInMonth);
-  let nextDate = viewLevel === 'weekly' ?
-    new LocalDate(firstDate.year, firstDate.month, firstDate.day, 0, 0) : viewLevel === 'daily' ?
+  const daysCount = numberOfDays(viewPeriod, daysInMonth);
+  let nextDate = viewPeriod === 'weekly' ?
+    new LocalDate(firstDate.year, firstDate.month, firstDate.day, 0, 0) : viewPeriod === 'daily' ?
       new LocalDate(shiftDate.year, shiftDate.month, shiftDate.day, 0, 0) : new LocalDate(shiftDate.year, shiftDate.month, 1, 0, 0);
   for (let i = 1; i <= daysCount; i++) {
     const date = moment({year: nextDate.year, month: nextDate.month - 1, day: nextDate.day});
@@ -92,10 +92,10 @@ const generateColumnHeaders = (shiftDate: ShiftDate, viewLevel: string, daysInMo
   return headers;
 };
 
-const generateColumns = (viewLevel: string, tableIndex: number, daysInMonth: number) => {
+const generateColumns = (viewPeriod: string, tableIndex: number, daysInMonth: number) => {
   const columns: Handsontable.ColumnSettings[] = [];//[{data: 'time', title: 'Time', width: 100, readOnly: true}];
   const columnWidth = Math.max(55, Math.floor(1200 / daysInMonth));
-  const daysCount = numberOfDays(viewLevel, daysInMonth);
+  const daysCount = numberOfDays(viewPeriod, daysInMonth);
 
   for (let day = 1; day <= daysCount; day++) {
     columns.push({data: `${tableIndex}-${day}`, title: ``, width: columnWidth, readOnly: false});
@@ -103,17 +103,17 @@ const generateColumns = (viewLevel: string, tableIndex: number, daysInMonth: num
   return columns;
 };
 
-const generateRows: (shiftDate: ShiftDate, viewLevel: string, tableIndex: number, shift: ShiftSummaryStaffing, interval: number, isExpanded: boolean) => {
+const generateRows: (shiftDate: ShiftDate, viewPeriod: string, tableIndex: number, shift: ShiftSummaryStaffing, interval: number, isExpanded: boolean) => {
   rows: any[];
   rowHeaders: string[]
-} = (shiftDate: ShiftDate, viewLevel: string, tableIndex: number, shift: ShiftSummaryStaffing, interval: number, isExpanded: boolean) => {
+} = (shiftDate: ShiftDate, viewPeriod: string, tableIndex: number, shift: ShiftSummaryStaffing, interval: number, isExpanded: boolean) => {
   const rows: any[] = [];
   const rowHeaders: string[] = [];
   const daysInMonth = moment().month(shiftDate.month - 1).daysInMonth();
   const {firstDate} = getWeekFirstDate(shiftDate);
-  const daysCount = numberOfDays(viewLevel, daysInMonth);
-  const firstDay = viewLevel === 'weekly' ?
-    new LocalDate(firstDate.year, firstDate.month, firstDate.day, 0, 0) : viewLevel === 'daily' ?
+  const daysCount = numberOfDays(viewPeriod, daysInMonth);
+  const firstDay = viewPeriod === 'weekly' ?
+    new LocalDate(firstDate.year, firstDate.month, firstDate.day, 0, 0) : viewPeriod === 'daily' ?
       new LocalDate(shiftDate.year, shiftDate.month, shiftDate.day, 0, 0) : new LocalDate(shiftDate.year, shiftDate.month, 1, 0, 0);
 
   let displayEndTime = '';
@@ -184,8 +184,8 @@ const generateRows: (shiftDate: ShiftDate, viewLevel: string, tableIndex: number
 }
 
 export interface ShiftHotTableViewProps {
-  interval: number;
-  viewLevel: string;
+  intervalMinutes: number;
+  viewPeriod: string;
   shiftDate: ShiftDate;
   shiftSummaries: ShiftSummaryStaffing[];
   handleSaveChanges: (shifts: ShiftSummaryStaffing[], changedAssignments: StaffTableEntry[]) => void;
@@ -203,8 +203,8 @@ const showAlert = (shift: ShiftSummaryStaffing, shiftDate: ShiftDate) => {
 };
 
 export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
-                                                                      interval,
-                                                                      viewLevel,
+                                                                      intervalMinutes,
+                                                                      viewPeriod,
                                                                       shiftDate,
                                                                       shiftSummaries,
                                                                       handleSaveChanges,
@@ -283,7 +283,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
     <ThemeProvider theme={drtTheme}>
       {shiftSummaries.map((shift, index) => {
         const isExpanded = expandedRows[shift.shiftSummary.name] || false;
-        const {rows, rowHeaders} = generateRows(shiftDate, viewLevel, index, shift, interval, isExpanded);
+        const {rows, rowHeaders} = generateRows(shiftDate, viewPeriod, index, shift, intervalMinutes, isExpanded);
         let tableHeight = 84;
         if (rows) tableHeight = isExpanded ? Math.min(rows.length * 24 + 60, 500) : 84;
 
@@ -322,8 +322,8 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               id={`hot-table-${index}`}
               className={`shift-hot-table-${index}`}
               data={rows}
-              colHeaders={generateColumnHeaders(shiftDate, viewLevel, daysInMonth)}
-              columns={generateColumns(viewLevel, index, daysInMonth)}
+              colHeaders={generateColumnHeaders(shiftDate, viewPeriod, daysInMonth)}
+              columns={generateColumns(viewPeriod, index, daysInMonth)}
               style={{overflow: `hidden`, borderSpacing: '0', height: `${tableHeight}px`}}
               cells={(row, col) => ({
                 renderer: cellRenderer(isExpanded)
