@@ -291,17 +291,13 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
           ) {
             Handsontable.renderers.TextRenderer.apply(this, [instance, td, row, col, prop, value, cellProperties]);
 
-            // if (row === 0 && col === 1) {
-            //   console.log(`Rendering cell at row ${row}, col ${col} with value ${value}`);
-            //   td.style.background = '#d7f1e1';
-            // }
             const entry = indexed[`${row}-${col}`];
-            if (entry.staffNumber < entry.staffRecommendation) {
-              td.style.background = '#d7f1e1';
+            if (entry && entry.staffNumber < entry.staffRecommendation) {
+              td.style.background = '#f6d6d1';
             }
 
-              // Apply readOnly logic based on `isExpanded` and `col === 0`
-              cellProperties.readOnly = !isExpanded && row === 0;
+            // Apply readOnly logic based on `isExpanded` and `col === 0`
+            cellProperties.readOnly = !isExpanded && row === 0;
           };
         };
 
