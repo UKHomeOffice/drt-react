@@ -6,11 +6,10 @@ import moment from 'moment';
 import {registerAllModules} from 'handsontable/registry';
 import 'handsontable/dist/handsontable.full.min.css';
 import {LocalDate} from './LocalDate';
-import {drtTheme} from '../../index';
+import {drtTheme, IAnalyticsEvent} from '../../index';
 import EditIcon from '@mui/icons-material/Edit';
 import {shiftDateToString} from "../Util";
 import Alert from '@mui/material/Alert';
-import { textRenderer, registerRenderer } from 'handsontable/renderers';
 
 export interface ShiftDate {
   year: number;
@@ -190,6 +189,7 @@ export interface ShiftHotTableViewProps {
   shiftSummaries: ShiftSummaryStaffing[];
   handleSaveChanges: (shifts: ShiftSummaryStaffing[], changedAssignments: StaffTableEntry[]) => void;
   handleEditShift: (index: number, shiftSummary: ShiftSummary) => void;
+  sendAnalyticsEvent: (event: IAnalyticsEvent) => void
 }
 
 const showAlert = (shift: ShiftSummaryStaffing, shiftDate: ShiftDate) => {
@@ -208,7 +208,8 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
                                                                       shiftDate,
                                                                       shiftSummaries,
                                                                       handleSaveChanges,
-                                                                      handleEditShift
+                                                                      handleEditShift,
+                                                                      sendAnalyticsEvent
                                                                     }) => {
   registerAllModules();
 
@@ -216,7 +217,13 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
   const daysInMonth = moment().month(monthIndex).daysInMonth();
   const [expandedRows, setExpandedRows] = useState<{ [key: string]: boolean }>({});
 
-  const toggleRowExpansion = (shiftType: string) => {
+  const toggleRowExpansion = (shiftType: string, label:string) => {
+    sendAnalyticsEvent(
+      { category : 'shifts',
+        action: shiftType,
+        label: label
+      }
+    )
     setExpandedRows(prev => ({...prev, [shiftType]: !prev[shiftType]}));
   };
 
@@ -338,9 +345,9 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               variant="contained"
               color="secondary"
               disableElevation
-              onClick={() => toggleRowExpansion(shift.shiftSummary.name)}
-            >
-              {isExpanded ? "Hide Breakdown" : "Show Breakdown"}
+              onClick={() => toggleRowExpansion(shift.shiftSummary.name, isExpanded ? "Hide time breakdown" : "Show time breakdown")}
+              >
+              {isExpanded ? "Hide time breakdown" : "Show time breakdown"}
             </Button>
           </Box>
         );
