@@ -295,11 +295,6 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
             if (entry && entry.staffNumber < entry.staffRecommendation) {
               td.style.background = '#f6d6d1';
             }
-            if (entry) {
-              console.log(`entry for row ${row} col ${col}: ${entry.staffNumber} available vs ${entry.staffRecommendation} recommended`, entry);
-            } else {
-              console.log(`no entry for row ${row} col ${col}`);
-            }
 
             // Apply readOnly logic based on `isExpanded` and `col === 0`
             cellProperties.readOnly = !isExpanded && row === 0;
