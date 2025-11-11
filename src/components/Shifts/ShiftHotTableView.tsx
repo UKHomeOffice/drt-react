@@ -289,12 +289,11 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
             value: any,
             cellProperties: Handsontable.CellProperties
           ) {
-            // Handsontable.renderers.TextRenderer.apply(this, [instance, td, row, col, prop, value, cellProperties]);
+            td.innerHTML = '';
+            td.style.background = '';
 
             const entry = indexed[`${row}-${col}`];
-            // if (entry && entry.staffNumber < entry.staffRecommendation) {
-            //   td.style.background = '#f6d6d1';
-            // }
+
             if (entry && entry.staffNumber < entry.staffRecommendation) {
               console.log(`Highlighting cell at row ${row}, col ${col} with staffNumber ${entry.staffNumber} and recommendation ${entry.staffRecommendation}`);
               // Apply background styling
@@ -322,8 +321,15 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
 
               td.appendChild(wrapper);
             } else {
+
+              // Value span (editable)
+              const valueSpan = document.createElement('span');
+              valueSpan.title = entry ? `Recommended: ${entry.staffRecommendation}` : 'Unknown recommendation';
+              valueSpan.textContent = value || '';
+              // wrapper.appendChild(valueSpan);
+
               // No decoration, just show value
-              td.textContent = value || '';
+              td.appendChild(valueSpan);
             }
 
             // Apply readOnly logic based on `isExpanded` and `col === 0`
