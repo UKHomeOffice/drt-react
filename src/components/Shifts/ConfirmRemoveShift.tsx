@@ -29,7 +29,7 @@ export const ConfirmRemoveShift = ({
               marginTop: '0px',
             }}>
               <Box component="dt" sx={{whiteSpace: 'nowwrap', color: 'black', alignItems: 'center', marginTop: '10px'}}>
-                <Typography variant="h3" sx={{fontSize: '20px', mb:'0 !important'}}>{shift.name}</Typography>
+                <Typography variant="h3" sx={{mb:'0 !important'}}>{shift.name}</Typography>
               </Box>
             </Box>
             <Box component="dl" sx={{display: 'flex', justifyContent: 'flex-start', paddingX: '10px', margin:'0 10px 10px 10px', borderBottom: '1px solid #ddd', fontSize: '19px'}}>
