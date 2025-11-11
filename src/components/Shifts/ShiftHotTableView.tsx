@@ -216,7 +216,6 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
   const monthIndex = (shiftDate.month ?? (new Date().getMonth() + 1)) - 1;
   const daysInMonth = moment().month(monthIndex).daysInMonth();
   const [expandedRows, setExpandedRows] = useState<{ [key: string]: boolean }>({});
-  const indexedShiftSummaries = shiftSummaries.map((shift, index) => ({...shift, index}));
 
   const toggleRowExpansion = (shiftType: string, label: string) => {
     sendAnalyticsEvent(
@@ -273,8 +272,13 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
         let tableHeight = 84;
         if (rows) tableHeight = isExpanded ? Math.min(rows.length * 24 + 60, 500) : 84;
 
+        // get minimum row & column from staffTableEntries
+        const minRow = Math.min(...shift.staffTableEntries.map(e => e.row));
+        const minCol = Math.min(...shift.staffTableEntries.map(e => e.column));
+        console.log(`Shift ${index}: minRow=${minRow}, minCol=${minCol}`);
+
         const indexed = shift.staffTableEntries.reduce((acc, e) => {
-          acc[`${e.row}-${e.column}`] = e;
+          acc[`${e.row}-${e.column - 1}`] = e;
           return acc;
         }, {} as Record<string, StaffTableEntry>);
 
@@ -295,7 +299,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
             const entry = indexed[`${row}-${col}`];
 
             if (entry && entry.staffNumber < entry.staffRecommendation) {
-              console.log(`Highlighting cell at row ${row}, col ${col} with staffNumber ${entry.staffNumber} and recommendation ${entry.staffRecommendation}`);
+              // console.log(`Highlighting cell at row ${row}, col ${col} with staffNumber ${entry.staffNumber} and recommendation ${entry.staffRecommendation}`);
               // Apply background styling
               td.style.background = '#f6d6d1';
 
@@ -309,12 +313,13 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
 
               // Value span (editable)
               const valueSpan = document.createElement('span');
-              valueSpan.textContent = value || '';
+              valueSpan.textContent = value || ''; //value ? `${value} vs ${entry.staffRecommendation || 'n/a'} ${row}/${col}` : '';
               wrapper.appendChild(valueSpan);
 
               // Warning badge
               const badge = document.createElement('span');
-              badge.innerHTML = '⚠️'; // or any icon/HTML
+              // badge.innerHTML = '⚠️'; // or any icon/HTML
+              badge.textContent = `⚠️ ${entry.staffRecommendation}`;
               badge.style.fontSize = '12px';
               badge.title = `Recommended: ${entry.staffRecommendation}`;
               wrapper.appendChild(badge);
@@ -324,8 +329,8 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
 
               // Value span (editable)
               const valueSpan = document.createElement('span');
-              valueSpan.title = entry ? `Recommended: ${entry.staffRecommendation}` : 'Unknown recommendation';
-              valueSpan.textContent = value || '';
+              valueSpan.title = entry ? `Recommended: ${entry ? entry.staffRecommendation : 'n/a'}` : 'Unknown recommendation';
+              valueSpan.textContent = value || ''; //value ? `${value} vs ${entry ? entry.staffRecommendation : 'n/a'} ${row}/${col}` : '';
               // wrapper.appendChild(valueSpan);
 
               // No decoration, just show value
