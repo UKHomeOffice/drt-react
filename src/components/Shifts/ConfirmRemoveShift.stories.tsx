@@ -18,10 +18,10 @@ export const ConfirmRemoveShift: Story = {
         endTime: '16:00',
         defaultStaffNumber: 5,
         startDate: {year: 2024, month: 7, day: 1}},
-    removeShiftConfirmHandler: () => {
+    onConfirm: () => {
       console.log('Shift removed');
     },
-    cancelRemoveShiftHandler: () => {
+    onCancel: () => {
       console.log('Remove shift cancelled');
     }
   }
