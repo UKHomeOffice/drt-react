@@ -293,6 +293,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
 
             const entry = indexed[`${row}-${col}`];
             if (entry && entry.staffNumber < entry.staffRecommendation) {
+              console.log(`Highlighting cell at row ${row}, col ${col} with staffNumber ${entry.staffNumber} and recommendation ${entry.staffRecommendation}`);
               td.style.background = '#f6d6d1';
             }
 
