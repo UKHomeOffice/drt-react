@@ -289,12 +289,41 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
             value: any,
             cellProperties: Handsontable.CellProperties
           ) {
-            Handsontable.renderers.TextRenderer.apply(this, [instance, td, row, col, prop, value, cellProperties]);
+            // Handsontable.renderers.TextRenderer.apply(this, [instance, td, row, col, prop, value, cellProperties]);
 
             const entry = indexed[`${row}-${col}`];
+            // if (entry && entry.staffNumber < entry.staffRecommendation) {
+            //   td.style.background = '#f6d6d1';
+            // }
             if (entry && entry.staffNumber < entry.staffRecommendation) {
               console.log(`Highlighting cell at row ${row}, col ${col} with staffNumber ${entry.staffNumber} and recommendation ${entry.staffRecommendation}`);
+              // Apply background styling
               td.style.background = '#f6d6d1';
+
+              // Create wrapper for value and badge
+              const wrapper = document.createElement('div');
+              wrapper.style.display = 'flex';
+              wrapper.style.flexDirection = 'column';
+              wrapper.style.alignItems = 'center';
+              wrapper.style.justifyContent = 'space-between';
+              wrapper.style.gap = '4px';
+
+              // Value span (editable)
+              const valueSpan = document.createElement('span');
+              valueSpan.textContent = value || '';
+              wrapper.appendChild(valueSpan);
+
+              // Warning badge
+              const badge = document.createElement('span');
+              badge.innerHTML = '⚠️'; // or any icon/HTML
+              badge.style.fontSize = '12px';
+              badge.title = `Recommended: ${entry.staffRecommendation}`;
+              wrapper.appendChild(badge);
+
+              td.appendChild(wrapper);
+            } else {
+              // No decoration, just show value
+              td.textContent = value || '';
             }
 
             // Apply readOnly logic based on `isExpanded` and `col === 0`
