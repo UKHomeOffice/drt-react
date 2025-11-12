@@ -10,6 +10,7 @@ import {drtTheme, IAnalyticsEvent} from '../../index';
 import EditIcon from '@mui/icons-material/Edit';
 import {shiftDateToString} from "../Util";
 import Alert from '@mui/material/Alert';
+import {Alert as MuiAlert} from "../mui/storybookExports/Alerts.component";
 
 export interface ShiftDate {
   year: number;
@@ -284,9 +285,16 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
     }
     setOpen(false);
   };
+  const staffWarningsExist = shiftSummaries.some(shift =>
+    shift.staffTableEntries.some(entry => entry.staffNumber < entry.staffRecommendation)
+  );
 
   return (
     <ThemeProvider theme={drtTheme}>
+      {staffWarningsExist && <MuiAlert severity="error" sx={{mb: 2}}>
+        <Typography variant='h3' sx={{mb: '10px !important'}}>Risk of queue breach</Typography>
+        <Typography>There are shifts that may need more staff</Typography>
+      </MuiAlert>}
       {shiftSummaries.map((shift, index) => {
         const isExpanded = expandedRows[shift.shiftSummary.name] || false;
         const {rows, rowHeaders} = generateRows(shiftDate, viewPeriod, index, shift, intervalMinutes, isExpanded);
