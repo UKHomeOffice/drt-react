@@ -40,6 +40,7 @@ export interface StaffTableEntry {
   name: string;
   staffRecommendation: number;
   staffNumber: number;
+  startTimeMillis: number;
   startTime: ShiftDateTime;
   endTime: ShiftDateTime;
 }
@@ -135,6 +136,12 @@ const generateRows: (shiftDate: ShiftDate, viewPeriod: string, tableIndex: numbe
 
     const endTime: LocalDate = endDate;
 
+    const indexedByStartMillis = shift.staffTableEntries.reduce((acc, e) => {
+      const startMillis = new Date(e.startTime.year, e.startTime.month - 1, e.startTime.day, e.startTime.hour, e.startTime.minute).getTime();
+      acc[startMillis] = e;
+      return acc;
+    }, {} as Record<string, StaffTableEntry>);
+
     let currentTime = startTime;
     while (currentTime.isBefore(endTime)) {
       let nextTime
@@ -151,9 +158,9 @@ const generateRows: (shiftDate: ShiftDate, viewPeriod: string, tableIndex: numbe
       const row: any = {}
       let nextDay = firstDay;
       for (let day = 1; day <= daysCount; day++) {
-        const dayAssignments = shift.staffTableEntries.filter(assignment => assignment.startTime.year === nextDay.year && assignment.startTime.month === nextDay.month
-          && assignment.startTime.day === nextDay.day && assignment.startTime.hour === currentTime.hour && assignment.startTime.minute === currentTime.minute);
-        row[`${tableIndex}-${day}`] = dayAssignments.length > 0 ? dayAssignments[0].staffNumber : '-';
+        const slotStartMillis = new Date(nextDay.year, nextDay.month - 1, nextDay.day, currentTime.hour, currentTime.minute).getTime();
+        const dayAssignments = indexedByStartMillis[slotStartMillis];
+        row[`${tableIndex}-${day}`] = dayAssignments ? dayAssignments.staffNumber : '-';
         nextDay = nextDay.addDays(1);
       }
       rows.push(row);
@@ -271,11 +278,6 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
         const {rows, rowHeaders} = generateRows(shiftDate, viewPeriod, index, shift, intervalMinutes, isExpanded);
         let tableHeight = 84;
         if (rows) tableHeight = isExpanded ? Math.min(rows.length * 24 + 60, 500) : 84;
-
-        // get minimum row & column from staffTableEntries
-        const minRow = Math.min(...shift.staffTableEntries.map(e => e.row));
-        const minCol = Math.min(...shift.staffTableEntries.map(e => e.column));
-        console.log(`Shift ${index}: minRow=${minRow}, minCol=${minCol}`);
 
         const indexed = shift.staffTableEntries.reduce((acc, e) => {
           acc[`${e.row}-${e.column - 1}`] = e;
