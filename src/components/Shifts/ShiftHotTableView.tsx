@@ -290,8 +290,8 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
       {shiftSummaries.map((shift, index) => {
         const isExpanded = expandedRows[shift.shiftSummary.name] || false;
         const {rows, rowHeaders} = generateRows(shiftDate, viewPeriod, index, shift, intervalMinutes, isExpanded);
-        let tableHeight = 105;
-        if (rows) tableHeight = isExpanded ? Math.min(rows.length * 24 + 60, 500) : 105;
+        let tableHeight = 90;
+        if (rows) tableHeight = isExpanded ? Math.min(rows.length * 24 + 60, 500) : 90;
 
         const maxRow = shift.staffTableEntries.reduce((max, entry) => Math.max(max, entry.row), 0);
 
@@ -316,13 +316,17 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
 
             const entry = indexedEntries[`${row}-${col}`];
 
-            const hasLowerStaff = isExpanded ?
-              lowerThanRecInEntry(entry) :
-              lowerThanRecInColumn(maxRow, indexedEntries, col);
+            if (entry) {
+              const hasLowerStaff = isExpanded ?
+                lowerThanRecInEntry(entry) :
+                lowerThanRecInColumn(maxRow, indexedEntries, col);
 
-            hasLowerStaff ?
-              formatWarningCell(entry, value, td) :
-              formatRegularCell(entry, value, td);
+              const maybeRecommendation = isExpanded ? entry.staffRecommendation : null;
+
+              hasLowerStaff ?
+                formatWarningCell(maybeRecommendation, value, td) :
+                formatRegularCell(maybeRecommendation, value, td);
+            }
 
             // Apply readOnly logic based on `isExpanded` and `col === 0`
             cellProperties.readOnly = !isExpanded && row === 0;
@@ -379,6 +383,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
             <Button
               variant="contained"
               color="secondary"
+              sx={{mt: 2}}
               disableElevation
               onClick={() => toggleRowExpansion(shift.shiftSummary.name, isExpanded ? "Hide time breakdown" : "Show time breakdown")}
             >
@@ -392,7 +397,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
 };
 
 
-function formatWarningCell(entry: StaffTableEntry, value: any, td: HTMLTableCellElement) {
+function formatWarningCell(recommended: number | null, value: any, td: HTMLTableCellElement) {
   td.style.background = '#f6d6d1';
 
   const wrapper = document.createElement('div');
@@ -418,15 +423,19 @@ function formatWarningCell(entry: StaffTableEntry, value: any, td: HTMLTableCell
   badge.style.borderRadius = '50%';
   badge.style.backgroundColor = '#000';
   badge.style.marginBottom = '2px';
-  badge.title = `Recommended: ${entry.staffRecommendation}`;
+  if (recommended)
+    badge.title = `Recommended: ${recommended}`;
+
   wrapper.appendChild(badge);
 
   td.appendChild(wrapper);
 }
 
-function formatRegularCell(entry: StaffTableEntry, value: any, td: HTMLTableCellElement) {
+function formatRegularCell(recommended: number | null, value: any, td: HTMLTableCellElement) {
   const valueSpan = document.createElement('span');
-  valueSpan.title = entry ? `Recommended: ${entry ? entry.staffRecommendation : 'n/a'}` : 'Unknown recommendation';
   valueSpan.textContent = value || '';
+  if (recommended)
+    valueSpan.title = `Recommended: ${recommended}`;
+
   td.appendChild(valueSpan);
 }
