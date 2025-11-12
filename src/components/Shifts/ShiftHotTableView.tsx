@@ -209,6 +209,20 @@ const showAlert = (shift: ShiftSummaryStaffing, shiftDate: ShiftDate) => {
   return momentStartDate.isAfter(momentShiftDate) && momentStartDate.isBefore(momentShiftDate.add(1, 'month'));
 };
 
+function lowerThanRecInColumn(maxRow: number, indexed: Record<string, StaffTableEntry>, col: number) {
+  for (let r = 0; r <= maxRow; r++) {
+    const entry = indexed[`${r}-${col}`];
+    if (entry && entry.staffNumber < entry.staffRecommendation) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function lowerThanRecInEntry(entry: StaffTableEntry) {
+  return entry.staffNumber < entry.staffRecommendation;
+}
+
 export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
                                                                       intervalMinutes,
                                                                       viewPeriod,
@@ -276,10 +290,12 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
       {shiftSummaries.map((shift, index) => {
         const isExpanded = expandedRows[shift.shiftSummary.name] || false;
         const {rows, rowHeaders} = generateRows(shiftDate, viewPeriod, index, shift, intervalMinutes, isExpanded);
-        let tableHeight = 84;
-        if (rows) tableHeight = isExpanded ? Math.min(rows.length * 24 + 60, 500) : 84;
+        let tableHeight = 105;
+        if (rows) tableHeight = isExpanded ? Math.min(rows.length * 24 + 60, 500) : 105;
 
-        const indexed = shift.staffTableEntries.reduce((acc, e) => {
+        const maxRow = shift.staffTableEntries.reduce((max, entry) => Math.max(max, entry.row), 0);
+
+        const indexedEntries = shift.staffTableEntries.reduce((acc, e) => {
           acc[`${e.row}-${e.column - 1}`] = e;
           return acc;
         }, {} as Record<string, StaffTableEntry>);
@@ -298,46 +314,15 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
             td.innerHTML = '';
             td.style.background = '';
 
-            const entry = indexed[`${row}-${col}`];
+            const entry = indexedEntries[`${row}-${col}`];
 
-            if (entry && entry.staffNumber < entry.staffRecommendation) {
-              // console.log(`Highlighting cell at row ${row}, col ${col} with staffNumber ${entry.staffNumber} and recommendation ${entry.staffRecommendation}`);
-              // Apply background styling
-              td.style.background = '#f6d6d1';
+            const hasLowerStaff = isExpanded ?
+              lowerThanRecInEntry(entry) :
+              lowerThanRecInColumn(maxRow, indexedEntries, col);
 
-              // Create wrapper for value and badge
-              const wrapper = document.createElement('div');
-              wrapper.style.display = 'flex';
-              wrapper.style.flexDirection = 'column';
-              wrapper.style.alignItems = 'center';
-              wrapper.style.justifyContent = 'space-between';
-              wrapper.style.gap = '4px';
-
-              // Value span (editable)
-              const valueSpan = document.createElement('span');
-              valueSpan.textContent = value || ''; //value ? `${value} vs ${entry.staffRecommendation || 'n/a'} ${row}/${col}` : '';
-              wrapper.appendChild(valueSpan);
-
-              // Warning badge
-              const badge = document.createElement('span');
-              // badge.innerHTML = '⚠️'; // or any icon/HTML
-              badge.textContent = `⚠️ ${entry.staffRecommendation}`;
-              badge.style.fontSize = '12px';
-              badge.title = `Recommended: ${entry.staffRecommendation}`;
-              wrapper.appendChild(badge);
-
-              td.appendChild(wrapper);
-            } else {
-
-              // Value span (editable)
-              const valueSpan = document.createElement('span');
-              valueSpan.title = entry ? `Recommended: ${entry ? entry.staffRecommendation : 'n/a'}` : 'Unknown recommendation';
-              valueSpan.textContent = value || ''; //value ? `${value} vs ${entry ? entry.staffRecommendation : 'n/a'} ${row}/${col}` : '';
-              // wrapper.appendChild(valueSpan);
-
-              // No decoration, just show value
-              td.appendChild(valueSpan);
-            }
+            hasLowerStaff ?
+              formatWarningCell(entry, value, td) :
+              formatRegularCell(entry, value, td);
 
             // Apply readOnly logic based on `isExpanded` and `col === 0`
             cellProperties.readOnly = !isExpanded && row === 0;
@@ -405,3 +390,43 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
     </ThemeProvider>
   );
 };
+
+
+function formatWarningCell(entry: StaffTableEntry, value: any, td: HTMLTableCellElement) {
+  td.style.background = '#f6d6d1';
+
+  const wrapper = document.createElement('div');
+  wrapper.style.display = 'flex';
+  wrapper.style.flexDirection = 'column';
+  wrapper.style.alignItems = 'left';
+  wrapper.style.justifyContent = 'space-between';
+  wrapper.style.gap = '4px';
+
+  const valueSpan = document.createElement('span');
+  valueSpan.textContent = value || '';
+  wrapper.appendChild(valueSpan);
+
+  const badge = document.createElement('span');
+  badge.textContent = '!';
+  badge.style.color = '#fff';
+  badge.style.width = '22px';
+  badge.style.height = '22px';
+  badge.style.textAlign = 'center';
+  badge.style.fontSize = '20px';
+  badge.style.fontWeight = 'bold';
+  badge.style.lineHeight = '22px';
+  badge.style.borderRadius = '50%';
+  badge.style.backgroundColor = '#000';
+  badge.style.marginBottom = '2px';
+  badge.title = `Recommended: ${entry.staffRecommendation}`;
+  wrapper.appendChild(badge);
+
+  td.appendChild(wrapper);
+}
+
+function formatRegularCell(entry: StaffTableEntry, value: any, td: HTMLTableCellElement) {
+  const valueSpan = document.createElement('span');
+  valueSpan.title = entry ? `Recommended: ${entry ? entry.staffRecommendation : 'n/a'}` : 'Unknown recommendation';
+  valueSpan.textContent = value || '';
+  td.appendChild(valueSpan);
+}
