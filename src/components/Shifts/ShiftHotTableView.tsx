@@ -197,7 +197,8 @@ export interface ShiftHotTableViewProps {
   shiftSummaries: ShiftSummaryStaffing[];
   handleSaveChanges: (shifts: ShiftSummaryStaffing[], changedAssignments: StaffTableEntry[]) => void;
   handleEditShift: (index: number, shiftSummary: ShiftSummary) => void;
-  sendAnalyticsEvent: (event: IAnalyticsEvent) => void
+  sendAnalyticsEvent: (event: IAnalyticsEvent) => void;
+  showWarnings: boolean;
 }
 
 const showAlert = (shift: ShiftSummaryStaffing, shiftDate: ShiftDate) => {
@@ -231,7 +232,8 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
                                                                       shiftSummaries,
                                                                       handleSaveChanges,
                                                                       handleEditShift,
-                                                                      sendAnalyticsEvent
+                                                                      sendAnalyticsEvent,
+                                                                      showWarnings,
                                                                     }) => {
   registerAllModules();
 
@@ -285,16 +287,9 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
     }
     setOpen(false);
   };
-  // const staffWarningsExist = shiftSummaries.some(shift =>
-  //   shift.staffTableEntries.some(entry => entry.staffNumber < entry.staffRecommendation)
-  // );
 
   return (
     <ThemeProvider theme={drtTheme}>
-      {/*{staffWarningsExist && <MuiAlert severity="error" sx={{mb: 2}}>*/}
-      {/*  <Typography variant='h3' sx={{mb: '10px !important'}}>Risk of queue breach</Typography>*/}
-      {/*  <Typography>There are shifts that may need more staff</Typography>*/}
-      {/*</MuiAlert>}*/}
       {shiftSummaries.map((shift, index) => {
         const isExpanded = expandedRows[shift.shiftSummary.name] || false;
         const {rows, rowHeaders} = generateRows(shiftDate, viewPeriod, index, shift, intervalMinutes, isExpanded);
@@ -325,15 +320,13 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
             const entry = indexedEntries[`${row}-${col}`];
 
             if (entry) {
-              const hasLowerStaff = isExpanded ?
+              const hasLowerStaff = (showWarnings && isExpanded) ?
                 lowerThanRecInEntry(entry) :
                 lowerThanRecInColumn(maxRow, indexedEntries, col);
 
-              const maybeRecommendation = isExpanded ? entry.staffRecommendation : null;
-
               hasLowerStaff ?
-                formatWarningCell(maybeRecommendation, value, td) :
-                formatRegularCell(maybeRecommendation, value, td);
+                formatWarningCell(value, td) :
+                formatRegularCell(value, td);
             }
 
             // Apply readOnly logic based on `isExpanded` and `col === 0`
@@ -405,7 +398,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
 };
 
 
-function formatWarningCell(recommended: number | null, value: any, td: HTMLTableCellElement) {
+function formatWarningCell(value: any, td: HTMLTableCellElement) {
   td.style.background = '#f6d6d1';
 
   const wrapper = document.createElement('div');
@@ -431,19 +424,15 @@ function formatWarningCell(recommended: number | null, value: any, td: HTMLTable
   badge.style.borderRadius = '50%';
   badge.style.backgroundColor = '#000';
   badge.style.marginBottom = '2px';
-  if (recommended)
-    badge.title = `Recommended: ${recommended}`;
 
   wrapper.appendChild(badge);
 
   td.appendChild(wrapper);
 }
 
-function formatRegularCell(recommended: number | null, value: any, td: HTMLTableCellElement) {
+function formatRegularCell(value: any, td: HTMLTableCellElement) {
   const valueSpan = document.createElement('span');
   valueSpan.textContent = value || '';
-  if (recommended)
-    valueSpan.title = `Recommended: ${recommended}`;
 
   td.appendChild(valueSpan);
 }
