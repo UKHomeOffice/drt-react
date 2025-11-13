@@ -198,7 +198,7 @@ export interface ShiftHotTableViewProps {
   handleSaveChanges: (shifts: ShiftSummaryStaffing[], changedAssignments: StaffTableEntry[]) => void;
   handleEditShift: (index: number, shiftSummary: ShiftSummary) => void;
   sendAnalyticsEvent: (event: IAnalyticsEvent) => void;
-  showWarnings: boolean;
+  warningsEnabled: boolean;
 }
 
 const showAlert = (shift: ShiftSummaryStaffing, shiftDate: ShiftDate) => {
@@ -233,7 +233,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
                                                                       handleSaveChanges,
                                                                       handleEditShift,
                                                                       sendAnalyticsEvent,
-                                                                      showWarnings,
+                                                                      warningsEnabled,
                                                                     }) => {
   registerAllModules();
 
@@ -320,7 +320,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
             const entry = indexedEntries[`${row}-${col}`];
 
             if (entry) {
-              if (showWarnings) {
+              if (warningsEnabled) {
                 const hasLowerStaff = isExpanded ?
                   lowerThanRecInEntry(entry) :
                   lowerThanRecInColumn(maxRow, indexedEntries, col);
