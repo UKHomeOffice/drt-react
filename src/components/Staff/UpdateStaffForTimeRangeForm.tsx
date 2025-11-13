@@ -101,22 +101,20 @@ export const UpdateStaffForTimeRangeForm = ({ ustd, interval, handleSubmit, canc
         </Box>
         <Stack spacing={2} mb={4}>
           <Typography variant="h3" component="h3" mb={2}>Date</Typography>
-          <DatePicker 
-            data-cy="start-date-picker" 
-            label="Start date" 
+          <DatePicker
+            data-cy="start-date-picker"
+            label="Start date"
             value={startDate}
             onChange={handleStartDateChange}
             format="DD MMMM YYYY"
-            slots={{textField: (params) => <TextField {...params} data-cy="start-date-picker-text"/>}}
           />
-          <DatePicker 
-            data-cy="end-date-picker" 
+          <DatePicker
+            data-cy="end-date-picker"
             sx={{backgroundColor: '#FFFFFF', width: '100%'}}
             label="End date"
             value={endDate}
             onChange={handleEndDateChange}
             format="DD MMMM YYYY"
-            slots={{textField: (params) => <TextField {...params} data-cy="end-date-picker-text"/>}}
           />
         </Stack>
         <Stack spacing={2} mb={4}>
@@ -172,21 +170,21 @@ export const UpdateStaffForTimeRangeForm = ({ ustd, interval, handleSubmit, canc
             <List>
               <ListItem>
                 <ListItemIcon><CalendarTodayIcon/></ListItemIcon>
-                <ListItemText 
+                <ListItemText
                   primary={`${startDate.format(startDate.year() === endDate.year() ? 'DD MMM' : 'DD MMM YY')} to ${endDate.format('DD MMM YYYY')}`}
                   secondary={`${endDate.diff(startDate, 'days') + 1} days`}
                   />
               </ListItem>
               <ListItem>
                 <ListItemIcon><AccessTimeIcon/></ListItemIcon>
-                <ListItemText 
+                <ListItemText
                   primary={`${startTime.format('HH:mm')} to ${endTime.format('HH:mm')}`}
                   secondary={`${Math.floor(moment.duration(endTime.diff(startTime)).asHours())} hours ${moment.duration(endTime.diff(startTime)).minutes()} minutes`}
                   />
               </ListItem>
               <ListItem>
                 <ListItemIcon><PeopleIcon/></ListItemIcon>
-                <ListItemText 
+                <ListItemText
                   primary={`${staffNumber} staff`}
                   />
               </ListItem>
