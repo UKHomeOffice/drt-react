@@ -320,13 +320,16 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
             const entry = indexedEntries[`${row}-${col}`];
 
             if (entry) {
-              const hasLowerStaff = (showWarnings && isExpanded) ?
-                lowerThanRecInEntry(entry) :
-                lowerThanRecInColumn(maxRow, indexedEntries, col);
+              if (showWarnings) {
+                const hasLowerStaff = isExpanded ?
+                  lowerThanRecInEntry(entry) :
+                  lowerThanRecInColumn(maxRow, indexedEntries, col);
 
-              hasLowerStaff ?
-                formatWarningCell(value, td) :
-                formatRegularCell(value, td);
+                hasLowerStaff ?
+                  formatWarningCell(value, td) :
+                  formatRegularCell(value, td);
+              }
+              else formatRegularCell(value, td);
             }
 
             // Apply readOnly logic based on `isExpanded` and `col === 0`
