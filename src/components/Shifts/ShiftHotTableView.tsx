@@ -292,8 +292,8 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
       {shiftSummaries.map((shift, index) => {
         const isExpanded = expandedRows[shift.shiftSummary.name] || false;
         const {rows, rowHeaders} = generateRows(shiftDate, viewPeriod, index, shift, intervalMinutes, isExpanded);
-        let tableHeight = 90;
-        if (rows) tableHeight = isExpanded ? Math.min(rows.length * 24 + 60, 500) : 90;
+        // let tableHeight = 90;
+        // if (rows) tableHeight = isExpanded ? Math.min(rows.length * 24 + 60, 500) : 90;
 
         const maxRow = shift.staffTableEntries.reduce((max, entry) => Math.max(max, entry.row), 0);
 
@@ -376,7 +376,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               data={rows}
               colHeaders={generateColumnHeaders(shiftDate, viewPeriod, daysInMonth)}
               columns={generateColumns(viewPeriod, index, daysInMonth)}
-              //style={{overflow: `hidden`, borderSpacing: '0', height: `${tableHeight}px`}}
+              height={"auto"}
               cells={(row, col) => ({
                 renderer: cellRenderer(isExpanded)
               })}
