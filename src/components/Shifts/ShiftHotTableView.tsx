@@ -132,7 +132,6 @@ const generateRows: (shiftDate: ShiftDate, viewPeriod: string, tableIndex: numbe
     let endDate = new LocalDate(firstDay.year, firstDay.month, firstDay.day, endHour, endMinute);
     if (shiftEndsAfterMidnight) {
       endDate = endDate.addDays(1)
-      console.log('new end date', endDate.addDays(1), 'end date', endDate, 'start date', startTime)
     }
 
     const endTime: LocalDate = endDate;
@@ -377,7 +376,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               data={rows}
               colHeaders={generateColumnHeaders(shiftDate, viewPeriod, daysInMonth)}
               columns={generateColumns(viewPeriod, index, daysInMonth)}
-              style={{overflow: `hidden`, borderSpacing: '0', height: `${tableHeight}px`}}
+              //style={{overflow: `hidden`, borderSpacing: '0', height: `${tableHeight}px`}}
               cells={(row, col) => ({
                 renderer: cellRenderer(isExpanded)
               })}

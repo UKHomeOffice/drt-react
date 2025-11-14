@@ -99,6 +99,7 @@ const ShiftHotTableViewStory: React.FC = () => {
         // Add your edit logic here
       }}
       sendAnalyticsEvent={sendEvent}
+      warningsEnabled={true}
     />
   );
 };
