@@ -331,6 +331,9 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               }
               else formatRegularCell(value, td);
             }
+            else {
+              formatRegularCell(isExpanded ? '-' : 'N/A', td);
+            }
 
             // Apply readOnly logic based on `isExpanded` and `col === 0`
             cellProperties.readOnly = !isExpanded && row === 0;
