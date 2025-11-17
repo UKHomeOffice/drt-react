@@ -306,6 +306,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               <Typography sx={{mb: `0 !important`}} data-cy={`shift-start-date-${index}`}>{`Start Date: ${shiftDateToString(shift.shiftSummary.startDate)}`}</Typography>
               <Typography sx={{mb: `0 !important`}} data-cy={`shift-end-date-${index}`}>{shift.shiftSummary.endDate ? `End Date: ${shiftDateToString(shift.shiftSummary.endDate)}` : ''}</Typography>
               <Button
+                data-cy={`shift-edit-${index}`}
                 variant='text'
                 onClick={() => handleEditShift(index, shift.shiftSummary)}
                 startIcon={<EditIcon/>}
@@ -313,6 +314,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
                 Edit shift
               </Button>
               <Button
+                data-cy={`shift-remove-${index}`}
                 variant='text'
                 onClick={() => handleRemoveShift(index, shift.shiftSummary)}
                 startIcon={<DeleteIcon/>}
@@ -344,6 +346,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               licenseKey={'non-commercial-and-evaluation'}
             />
             <Button
+              data-cy={`shift-show/hide-${index}`}
               variant="contained"
               color="secondary"
               disableElevation
