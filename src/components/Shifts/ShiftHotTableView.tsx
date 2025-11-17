@@ -8,6 +8,7 @@ import 'handsontable/dist/handsontable.full.min.css';
 import {LocalDate} from './LocalDate';
 import {drtTheme, IAnalyticsEvent} from '../../index';
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import {shiftDateToString} from "../Util";
 import Alert from '@mui/material/Alert';
 import {Alert as MuiAlert} from "../mui/storybookExports/Alerts.component";
@@ -196,6 +197,7 @@ export interface ShiftHotTableViewProps {
   shiftSummaries: ShiftSummaryStaffing[];
   handleSaveChanges: (shifts: ShiftSummaryStaffing[], changedAssignments: StaffTableEntry[]) => void;
   handleEditShift: (index: number, shiftSummary: ShiftSummary) => void;
+  handleRemoveShift: (index: number, shiftSummary: ShiftSummary) => void;
   sendAnalyticsEvent: (event: IAnalyticsEvent) => void;
   warningsEnabled: boolean;
 }
@@ -231,6 +233,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
                                                                       shiftSummaries,
                                                                       handleSaveChanges,
                                                                       handleEditShift,
+                                                                      handleRemoveShift,
                                                                       sendAnalyticsEvent,
                                                                       warningsEnabled,
                                                                     }) => {
@@ -358,7 +361,14 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
                 onClick={() => handleEditShift(index, shift.shiftSummary)}
                 startIcon={<EditIcon/>}
               >
-                Edit Shift
+                Edit shift
+              </Button>
+              <Button
+                variant='text'
+                onClick={() => handleRemoveShift(index, shift.shiftSummary)}
+                startIcon={<DeleteIcon/>}
+              >
+                Remove shift
               </Button>
             </Box>
             <Box>{open &&

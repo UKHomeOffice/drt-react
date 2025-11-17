@@ -23,15 +23,7 @@ const initialShift: ShiftSummary[] = [
     defaultStaffNumber: 0,
     startTime: '06:30',
     endTime: '16:30',
-    startDate: {year: 2025, month: 1, day: 1},
-    endDate: {year: 2025, month: 1, day: 14}
-  },
-  {
-    name: 'Early shift 1',
-    defaultStaffNumber: 0,
-    startTime: '06:30',
-    endTime: '16:30',
-    startDate: {year: 2025, month: 1, day: 16}
+    startDate: {year: 2025, month: 1, day: 16},
   },
   {
     name: 'Mid shift',
@@ -53,6 +45,14 @@ const initialShift: ShiftSummary[] = [
     startTime: '23:30',
     endTime: '01:00',
     startDate: {year: 2025, month: 1, day: 1}
+  },
+  {
+    name: 'Early shift 1',
+    defaultStaffNumber: 0,
+    startTime: '06:30',
+    endTime: '16:30',
+    startDate: {year: 2025, month: 1, day: 16},
+    endDate: {year: 2025, month: 1, day: 14}
   }
 ];
 
@@ -96,6 +96,11 @@ const ShiftHotTableViewStory: React.FC = () => {
       handleEditShift={(index: number, shiftSummary: ShiftSummary) => {
         // Function to handle editing a shift
         console.log(`Editing shift at index ${index}:`, shiftSummary);
+        // Add your edit logic here
+      }}
+      handleRemoveShift = {(index: number, shiftSummary: ShiftSummary) => {
+        // Function to handle editing a shift
+        console.log(`Removing shift at index ${index}:`, shiftSummary);
         // Add your edit logic here
       }}
       sendAnalyticsEvent={sendEvent}
