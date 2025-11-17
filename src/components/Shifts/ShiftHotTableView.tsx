@@ -94,7 +94,7 @@ const generateColumnHeaders = (shiftDate: ShiftDate, viewPeriod: string, daysInM
 };
 
 const generateColumns = (viewPeriod: string, tableIndex: number, daysInMonth: number) => {
-  const columns: Handsontable.ColumnSettings[] = [];//[{data: 'time', title: 'Time', width: 100, readOnly: true}];
+  const columns: Handsontable.ColumnSettings[] = [];
   const columnWidth = Math.max(55, Math.floor(1200 / daysInMonth));
   const daysCount = numberOfDays(viewPeriod, daysInMonth);
 
@@ -292,8 +292,6 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
       {shiftSummaries.map((shift, index) => {
         const isExpanded = expandedRows[shift.shiftSummary.name] || false;
         const {rows, rowHeaders} = generateRows(shiftDate, viewPeriod, index, shift, intervalMinutes, isExpanded);
-        // let tableHeight = 90;
-        // if (rows) tableHeight = isExpanded ? Math.min(rows.length * 24 + 60, 500) : 90;
 
         const maxRow = shift.staffTableEntries.reduce((max, entry) => Math.max(max, entry.row), 0);
 
@@ -325,13 +323,13 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
                   lowerThanRecInColumn(maxRow, indexedEntries, col);
 
                 hasLowerStaff ?
-                  formatWarningCell(value, td) :
-                  formatRegularCell(value, td);
+                  formatWarningCell(entry.staffRecommendation, value, td) :
+                  formatRegularCell(entry.staffRecommendation, value, td);
               }
-              else formatRegularCell(value, td);
+              else formatRegularCell(entry.staffRecommendation, value, td);
             }
             else {
-              formatRegularCell(isExpanded ? '-' : 'N/A', td);
+              formatRegularCell(null, isExpanded ? '-' : 'N/A', td);
             }
 
             // Apply readOnly logic based on `isExpanded` and `col === 0`
@@ -403,7 +401,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
 };
 
 
-function formatWarningCell(value: any, td: HTMLTableCellElement) {
+function formatWarningCell(recommended: number | null, value: any, td: HTMLTableCellElement) {
   td.style.background = '#f6d6d1';
 
   const wrapper = document.createElement('div');
@@ -430,14 +428,20 @@ function formatWarningCell(value: any, td: HTMLTableCellElement) {
   badge.style.backgroundColor = '#000';
   badge.style.marginBottom = '2px';
 
+  if (recommended)
+    badge.title = `Recommended: ${recommended}`;
+
   wrapper.appendChild(badge);
 
   td.appendChild(wrapper);
 }
 
-function formatRegularCell(value: any, td: HTMLTableCellElement) {
+function formatRegularCell(recommended: number | null, value: any, td: HTMLTableCellElement) {
   const valueSpan = document.createElement('span');
   valueSpan.textContent = value || '';
+
+  if (recommended)
+    valueSpan.title = `Recommended: ${recommended}`;
 
   td.appendChild(valueSpan);
 }
