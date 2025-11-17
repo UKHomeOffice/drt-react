@@ -43,14 +43,17 @@ export const generateShiftAssignments = (shiftSummary: ShiftSummary, interval: n
           next = new LocalDate(next.year + 1, 1, next.day, next.hour, next.minute);
         }
 
+        const staffNumber = shiftSummary.defaultStaffNumber + day;
+        const staffRecommendation = staffNumber + Math.floor(Math.random() * 11) - 5;
         assignments.push({
-                           column: day,
-                           row: rowId++,
-                           name: shiftSummary.name,
-                           staffNumber: shiftSummary.defaultStaffNumber + day,
-                           startTime: current,
-                           endTime: next
-                         });
+          column: day,
+          row: rowId++,
+          name: shiftSummary.name,
+          staffRecommendation: staffRecommendation,
+          staffNumber: staffNumber,
+          startTime: current,
+          endTime: next
+        });
         current = next;
       }
     }

@@ -88,8 +88,8 @@ const ShiftHotTableViewStory: React.FC = () => {
 
   return (
     <ShiftHotTableViewComponent
-      interval={60}
-      dayRange={'monthly'}
+      intervalMinutes={60}
+      viewPeriod={'monthly'}
       shiftDate={{year: 2025, month: 1, day: 1}}
       shiftSummaries={sortedInitialDefaultShifts}
       handleSaveChanges={handleSaveChanges}
@@ -104,6 +104,7 @@ const ShiftHotTableViewStory: React.FC = () => {
         // Add your edit logic here
       }}
       sendAnalyticsEvent={sendEvent}
+      warningsEnabled={true}
     />
   );
 };
