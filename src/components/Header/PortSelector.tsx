@@ -21,7 +21,7 @@ const StyledSelect = styled(Select)<SelectProps>(({ theme }) => ({
     backgroundColor: 'transparent',
     height: '30px',
     '& >*': {
-      display: 'flex',  
+      display: 'flex',
       alignItems: 'center',
       minWidth: 0,
     },
@@ -56,27 +56,28 @@ const PortSelector = ({handleChangePort, options, selectedOption}: IPortSelector
     handleChangePort(event.target.value);
     setSelected(event.target.value);
   }
- 
+
   return (
-    <FormControl sx={{width: '100%'}}>     
+    <FormControl sx={{width: '100%'}}>
       <StyledSelect
         displayEmpty
         data-testid={`port-selector-trigger`}
         value={selected}
         label="Select a port..."
-        variant="standard" 
+        variant="standard"
         onChange={onChange}>
           <MenuItem value={""} disabled>
             <ListItemText>Select a location...</ListItemText>
-          </MenuItem> 
+          </MenuItem>
         {options?.map((option) => {
+          console.log(`testid: 'port-selector-${option.link}'`);
           return (
-            <MenuItem 
-              key={`port-selector-${option.link}`} 
-              data-testid={`port-selector-${option.link}`} 
+            <MenuItem
+              key={`port-selector-${option.link}`}
+              data-testid={`port-selector-${option.link}`}
               value={option.link}>
               <ListItemText><strong>{ option.label }</strong></ListItemText>
-            </MenuItem>  
+            </MenuItem>
           )
         })}
       </StyledSelect>
