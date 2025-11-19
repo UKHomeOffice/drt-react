@@ -15,7 +15,6 @@ steps:
       - /root/entrypoint.sh
       - npm ci
       - npm run test-ci
-
     environment:
       ARTIFACTORY_PASSWORD:
         from_secret: ARTIFACTORY_PASSWORD
@@ -23,5 +22,7 @@ steps:
       ENV_LOG_LEVEL: ERROR
       KEYTOOL_PASSWORD:
         from_secret: KEYTOOL_PASSWORD
-
+    when:
+      event:
+        - push
 ...
