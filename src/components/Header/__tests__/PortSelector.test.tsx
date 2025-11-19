@@ -35,7 +35,7 @@ test("it calls the handleChangePort function correctly", async () => {
   const listbox = within(screen.getByRole('presentation')).getByRole(
     'listbox'
   );
-  const option = within(listbox).getByTestId('port-selector-/cwi')
+  const option = within(listbox).getByText('CWL (Cardiff)');
 
   await fireEvent.click(option);
 
