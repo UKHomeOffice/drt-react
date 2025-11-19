@@ -70,7 +70,6 @@ const PortSelector = ({handleChangePort, options, selectedOption}: IPortSelector
             <ListItemText>Select a location...</ListItemText>
           </MenuItem>
         {options?.map((option) => {
-          console.log(`testid: 'port-selector-${option.link}'`);
           return (
             <MenuItem
               key={`port-selector-${option.link}`}
