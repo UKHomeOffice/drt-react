@@ -196,8 +196,8 @@ export interface ShiftHotTableViewProps {
   shiftDate: ShiftDate;
   shiftSummaries: ShiftSummaryStaffing[];
   handleSaveChanges: (shifts: ShiftSummaryStaffing[], changedAssignments: StaffTableEntry[]) => void;
-  handleEditShift: (index: number, shiftSummary: ShiftSummary) => void;
-  handleRemoveShift: (index: number, shiftSummary: ShiftSummary) => void;
+  handleEditShift: (shiftSummary: ShiftSummary) => void;
+  handleRemoveShift: (shiftSummary: ShiftSummary) => void;
   sendAnalyticsEvent: (event: IAnalyticsEvent) => void;
   warningsEnabled: boolean;
 }
@@ -359,7 +359,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               <Button
                 data-cy={`shift-edit-${index}`}
                 variant='text'
-                onClick={() => handleEditShift(index, shift.shiftSummary)}
+                onClick={() => handleEditShift(shift.shiftSummary)}
                 startIcon={<EditIcon/>}
               >
                 Edit shift
@@ -367,7 +367,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               <Button
                 data-cy={`shift-remove-${index}`}
                 variant='text'
-                onClick={() => handleRemoveShift(index, shift.shiftSummary)}
+                onClick={() => handleRemoveShift(shift.shiftSummary)}
                 startIcon={<DeleteIcon/>}
               >
                 Remove shift
