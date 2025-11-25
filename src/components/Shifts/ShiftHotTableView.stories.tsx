@@ -93,16 +93,8 @@ const ShiftHotTableViewStory: React.FC = () => {
       shiftDate={{year: 2025, month: 1, day: 1}}
       shiftSummaries={sortedInitialDefaultShifts}
       handleSaveChanges={handleSaveChanges}
-      handleEditShift={(index: number, shiftSummary: ShiftSummary) => {
-        // Function to handle editing a shift
-        console.log(`Editing shift at index ${index}:`, shiftSummary);
-        // Add your edit logic here
-      }}
-      handleRemoveShift = {(index: number, shiftSummary: ShiftSummary) => {
-        // Function to handle editing a shift
-        console.log(`Removing shift at index ${index}:`, shiftSummary);
-        // Add your edit logic here
-      }}
+      handleEditShift={(shiftSummary: ShiftSummary) => console.log(`Editing shift:`, shiftSummary.name)}
+      handleRemoveShift = {(shiftSummary: ShiftSummary) => console.log(`Removing shift:`, shiftSummary.name)}
       sendAnalyticsEvent={sendEvent}
       warningsEnabled={true}
     />

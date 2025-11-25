@@ -196,8 +196,8 @@ export interface ShiftHotTableViewProps {
   shiftDate: ShiftDate;
   shiftSummaries: ShiftSummaryStaffing[];
   handleSaveChanges: (shifts: ShiftSummaryStaffing[], changedAssignments: StaffTableEntry[]) => void;
-  handleEditShift: (index: number, shiftSummary: ShiftSummary) => void;
-  handleRemoveShift: (index: number, shiftSummary: ShiftSummary) => void;
+  handleEditShift: (shiftSummary: ShiftSummary) => void;
+  handleRemoveShift: (shiftSummary: ShiftSummary) => void;
   sendAnalyticsEvent: (event: IAnalyticsEvent) => void;
   warningsEnabled: boolean;
 }
@@ -326,13 +326,13 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
                   lowerThanRecInColumn(maxRow, indexedEntries, col);
 
                 hasLowerStaff ?
-                  formatWarningCell(entry.staffRecommendation, value, td) :
-                  formatRegularCell(entry.staffRecommendation, value, td);
+                  formatWarningCell(isExpanded ? entry.staffRecommendation : null, value, td) :
+                  formatRegularCell(value, td);
               }
-              else formatRegularCell(entry.staffRecommendation, value, td);
+              else formatRegularCell(value, td);
             }
             else {
-              formatRegularCell(null, isExpanded ? '-' : 'N/A', td);
+              formatRegularCell(isExpanded ? '-' : 'N/A', td);
             }
 
             // Apply readOnly logic based on `isExpanded` and `col === 0`
@@ -359,7 +359,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               <Button
                 data-cy={`shift-edit-${index}`}
                 variant='text'
-                onClick={() => handleEditShift(index, shift.shiftSummary)}
+                onClick={() => handleEditShift(shift.shiftSummary)}
                 startIcon={<EditIcon/>}
               >
                 Edit shift
@@ -367,7 +367,7 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               <Button
                 data-cy={`shift-remove-${index}`}
                 variant='text'
-                onClick={() => handleRemoveShift(index, shift.shiftSummary)}
+                onClick={() => handleRemoveShift(shift.shiftSummary)}
                 startIcon={<DeleteIcon/>}
               >
                 Remove shift
@@ -414,47 +414,159 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
 };
 
 
+let currentOpenTip: HTMLDivElement | null = null;
+let currentOpenBadge: HTMLButtonElement | null = null;
+
 function formatWarningCell(recommended: number | null, value: any, td: HTMLTableCellElement) {
+  td.style.position = 'relative';
   td.style.background = '#f6d6d1';
+  td.innerHTML = '';
 
   const wrapper = document.createElement('div');
   wrapper.style.display = 'flex';
   wrapper.style.flexDirection = 'column';
-  wrapper.style.alignItems = 'left';
-  wrapper.style.justifyContent = 'space-between';
+  wrapper.style.alignItems = 'flex-start';
   wrapper.style.gap = '4px';
 
   const valueSpan = document.createElement('span');
-  valueSpan.textContent = value || '';
+  valueSpan.textContent = value ?? '';
   wrapper.appendChild(valueSpan);
 
-  const badge = document.createElement('span');
+  // Create badge always (visible even when there's no recommendation)
+  const badge = document.createElement('button');
+  badge.type = 'button';
   badge.textContent = '!';
+  badge.setAttribute('aria-label', recommended != null ? `Recommended: ${recommended}` : 'No recommendation');
+  badge.setAttribute('aria-expanded', 'false');
   badge.style.color = '#fff';
   badge.style.width = '22px';
   badge.style.height = '22px';
-  badge.style.textAlign = 'center';
-  badge.style.fontSize = '20px';
+  badge.style.fontSize = '14px';
   badge.style.fontWeight = 'bold';
   badge.style.lineHeight = '22px';
   badge.style.borderRadius = '50%';
   badge.style.backgroundColor = '#000';
-  badge.style.marginBottom = '2px';
+  badge.style.border = 'none';
+  badge.style.padding = '0';
+  badge.style.display = 'inline-flex';
+  badge.style.alignItems = 'center';
+  badge.style.justifyContent = 'center';
 
-  if (recommended)
-    badge.title = `Recommended: ${recommended}`;
+  // If there's no recommendation, make the badge non-interactive (visual only)
+  if (recommended == null) {
+    badge.style.cursor = 'default';
+    badge.setAttribute('aria-disabled', 'true');
+    // don't attach tooltip or event listeners
+    wrapper.appendChild(badge);
+    td.appendChild(wrapper);
+    return;
+  }
+
+  // Otherwise, create tooltip and attach interactive behavior
+  badge.style.cursor = 'pointer';
+  badge.removeAttribute('aria-disabled');
+
+  const tip = document.createElement('div');
+  tip.textContent = `Recommended: ${recommended}`;
+  tip.style.position = 'absolute';
+  tip.style.background = '#333';
+  tip.style.color = '#fff';
+  tip.style.padding = '6px 8px';
+  tip.style.borderRadius = '4px';
+  tip.style.fontSize = '13px';
+  tip.style.whiteSpace = 'nowrap';
+  tip.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
+  tip.style.display = 'none';
+  tip.style.zIndex = '2147483647';
+
+  const showTip = () => {
+    if (currentOpenTip && currentOpenTip !== tip) {
+      currentOpenTip.style.display = 'none';
+      if (currentOpenBadge) currentOpenBadge.setAttribute('aria-expanded', 'false');
+      currentOpenTip = null;
+      currentOpenBadge = null;
+    }
+
+    if (!document.body.contains(tip)) document.body.appendChild(tip);
+
+    tip.style.display = 'block';
+    tip.style.visibility = 'hidden';
+
+    const rect = badge.getBoundingClientRect();
+    const tipWidth = tip.offsetWidth;
+    const left = Math.max(4, rect.left + window.scrollX + Math.round((rect.width - tipWidth) / 2));
+    const top = rect.bottom + window.scrollY + 6;
+    tip.style.left = `${left}px`;
+    tip.style.top = `${top}px`;
+    tip.style.visibility = 'visible';
+    badge.setAttribute('aria-expanded', 'true');
+
+    currentOpenTip = tip;
+    currentOpenBadge = badge;
+  };
+
+  const hideTip = () => {
+    tip.style.display = 'none';
+    badge.setAttribute('aria-expanded', 'false');
+    if (currentOpenTip === tip) {
+      currentOpenTip = null;
+      currentOpenBadge = null;
+    }
+  };
+
+  const toggleTip = (ev?: Event) => {
+    ev?.stopPropagation();
+    const expanded = badge.getAttribute('aria-expanded') === 'true';
+    expanded ? hideTip() : showTip();
+  };
+
+  badge.addEventListener('click', toggleTip);
+  badge.addEventListener('keydown', (e: KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleTip();
+    } else if (e.key === 'Escape') {
+      hideTip();
+      (badge as HTMLElement).focus();
+    }
+  });
+
+  const onDocClick = (e: MouseEvent) => {
+    const target = e.target as Node | null;
+    if (!badge.contains(target) && !(tip.contains(target))) {
+      hideTip();
+    }
+  };
+  const onDocKey = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') hideTip();
+  };
+
+  document.addEventListener('click', onDocClick);
+  document.addEventListener('keydown', onDocKey);
+
+  // Clean-up when the cell is removed
+  const observer = new MutationObserver(() => {
+    if (!document.body.contains(td)) {
+      document.removeEventListener('click', onDocClick);
+      document.removeEventListener('keydown', onDocKey);
+      if (document.body.contains(tip)) document.body.removeChild(tip);
+      if (currentOpenTip === tip) {
+        currentOpenTip = null;
+        currentOpenBadge = null;
+      }
+      observer.disconnect();
+    }
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
 
   wrapper.appendChild(badge);
-
   td.appendChild(wrapper);
 }
 
-function formatRegularCell(recommended: number | null, value: any, td: HTMLTableCellElement) {
+
+function formatRegularCell(value: any, td: HTMLTableCellElement) {
   const valueSpan = document.createElement('span');
   valueSpan.textContent = value || '';
-
-  if (recommended)
-    valueSpan.title = `Recommended: ${recommended}`;
 
   td.appendChild(valueSpan);
 }
