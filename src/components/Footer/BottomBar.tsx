@@ -14,7 +14,7 @@ export const BottomBar = ({email, onClickAccessibilityStatement, accessibilitySt
       <CardContent>
        
           <Stack direction={'row'} spacing={3}>
-            <Typography variant='body1' flexGrow={1}>A Home Office Digital, Data and Technology service</Typography>
+            <Typography variant='body1' flexGrow={1}>A Home Office Digital service</Typography>
             <Typography variant="body1" mb={0}><Link href={`mailto:${email}`} target="_blank" underline="always">Email us</Link></Typography>
             <Typography variant="body1" mb={0}><Link underline="always" href={accessibilityStatementUrl} onClick={onClickAccessibilityStatement}>
               Accessibility statement
