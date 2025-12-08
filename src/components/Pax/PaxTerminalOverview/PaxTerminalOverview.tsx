@@ -66,7 +66,7 @@ export const PaxTerminalOverview = ({
   const riskColor = ragStatus === 'red'
     ? theme.palette.error.dark
     : ragStatus === 'amber'
-      ? '#6d4c41' // warm brown to distinguish from red on yellow background
+      ? '#6d4c41'
       : theme.palette.success.main;
 
   return (
@@ -74,22 +74,22 @@ export const PaxTerminalOverview = ({
       <Box>
         <Card variant='outlined' sx={{height: '100%'}}>
           <CardContent>
-            <Stack spacing={3} sx={{fontSize: '1.2em'}}>
+            <Stack spacing={3}>
               <Stack spacing={0.5}>
-                <Typography component='div' fontWeight='bold'>Flights</Typography>
-                <Typography component='div'>{flights.length} due at {currentTime}</Typography>
+                <Typography variant='h4'>Flights</Typography>
+                <Typography data-cy={`terminal-flights`}>{flights.length} due at {currentTime}</Typography>
               </Stack>
               <Stack spacing={0.5}>
-                <Typography component='div' fontWeight='bold'>Staffing</Typography>
-                <Typography component='div'>{staff} available</Typography>
-                <Typography component='div'>{desks} recommended</Typography>
+                <Typography variant='h4'>Staffing</Typography>
+                <Typography>{staff} available</Typography>
+                <Typography>{desks} recommended</Typography>
               </Stack>
-            <Stack spacing={0.5} sx={{fontSize: '1.2em'}}>
+            <Stack spacing={0.5}>
               <PaxRAGStatusCard className={ragStatus} variant='outlined' sx={{mt: 1}}>
                 <CardContent sx={{p: 2}}>
                   <Stack spacing={0.5}>
-                    <Typography component='div' fontWeight='bold' sx={{color: riskColor, lineHeight: 1.2}}>Risk of queue breach</Typography>
-                    <Typography component='div' sx={{color: riskColor, lineHeight: 1.2}}>{riskLabel}</Typography>
+                    <Typography variant='h4' sx={{color: riskColor, lineHeight: 1.2}}>Risk of queue breach</Typography>
+                    <Typography sx={{color: riskColor, lineHeight: 1.2}}>{riskLabel}</Typography>
                   </Stack>
                 </CardContent>
               </PaxRAGStatusCard>
