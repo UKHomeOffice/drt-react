@@ -62,7 +62,7 @@ export const PaxTerminalOverview = ({
                                     }: IPaxTerminalOverview) => {
   const theme = useTheme();
   const is_mobile = useMediaQuery(theme.breakpoints.down('md'));
-  const riskLabel = ragStatus === 'red' ? 'high' : ragStatus === 'amber' ? 'medium' : 'low';
+  const riskLabel = ragStatus === 'red' ? 'High' : ragStatus === 'amber' ? 'Medium' : 'Low';
   const riskColor = ragStatus === 'red'
     ? theme.palette.error.dark
     : ragStatus === 'amber'
