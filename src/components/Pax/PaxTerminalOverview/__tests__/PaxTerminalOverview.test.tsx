@@ -37,7 +37,7 @@ describe('PaxTerminalOverview', () => {
     currentTime: '12:00'
   };
 
-  it('should display "1 flight" when there is exactly one flight', () => {
+  it('should display "1 due at 12:00" when there is exactly one flight', () => {
     const props = {
       ...baseProps,
       flights: [{ id: 1, flightCode: 'BA123' }]
@@ -45,11 +45,10 @@ describe('PaxTerminalOverview', () => {
 
     render(<PaxTerminalOverview {...props} />);
 
-    expect(screen.getByTestId('terminal-flights')).toHaveTextContent('1 flight');
-    expect(screen.getByTestId('terminal-flights')).not.toHaveTextContent('1 flights');
+    expect(screen.getByTestId('terminal-flights')).toHaveTextContent('1 due at 12:00');
   });
 
-  it('should display "2 flights" when there are multiple flights', () => {
+  it('should display "2 due at 12:00" when there are multiple flights', () => {
     const props = {
       ...baseProps,
       flights: [
@@ -60,12 +59,12 @@ describe('PaxTerminalOverview', () => {
 
     render(<PaxTerminalOverview {...props} />);
 
-    expect(screen.getByTestId('terminal-flights')).toHaveTextContent('2 flights');
+    expect(screen.getByTestId('terminal-flights')).toHaveTextContent('2 due at 12:00');
   });
 
-  it('should display "0 flights" when there are no flights', () => {
+  it('should display "0 due at 12:00" when there are no flights', () => {
     render(<PaxTerminalOverview {...baseProps} />);
 
-    expect(screen.getByTestId('terminal-flights')).toHaveTextContent('0 flights');
+    expect(screen.getByTestId('terminal-flights')).toHaveTextContent('0 due at 12:00');
   });
 });

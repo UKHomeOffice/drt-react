@@ -116,7 +116,10 @@ export const PaxTerminalOverview: Story = {
       const [args, updateArgs] = useArgs();
       return (
         <Box p={2}>
+          <PaxTerminalOverviewComponnet terminal={args.terminal} periodLengthMinutes={args.timeRange} flights={args.flights} ragStatus={'red'} chartData={args.chartData} pressure={args.pressure} periodQueuePaxCounts={args.estimates} desks={args.desks} staff={args.staff} currentTime={args.currentTime} />
+          <PaxTerminalOverviewComponnet terminal={args.terminal} periodLengthMinutes={args.timeRange} flights={args.flights} ragStatus={'amber'} chartData={args.chartData} pressure={args.pressure} periodQueuePaxCounts={args.estimates} desks={args.desks} staff={args.staff} currentTime={args.currentTime} />
           <PaxTerminalOverviewComponnet terminal={args.terminal} periodLengthMinutes={args.timeRange} flights={args.flights} ragStatus={'green'} chartData={args.chartData} pressure={args.pressure} periodQueuePaxCounts={args.estimates} desks={args.desks} staff={args.staff} currentTime={args.currentTime} />
+
         </Box>
       )
   }

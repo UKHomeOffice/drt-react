@@ -39,9 +39,9 @@ export const themePrimatives = createTheme({
       dark: '#002d18'
     },
     warning: { 
-      main: '#f47738',
-      light: lighten('#f47738', 0.7),
-      dark: darken('#f47738', 0.2),
+      main: '#ffeb3b', // pure yellow baseline for warning
+      light: lighten('#ffeb3b', 0.5),
+      dark: darken('#ffeb3b', 0.2),
     },
     info: { 
       main: '#1d70b8',
