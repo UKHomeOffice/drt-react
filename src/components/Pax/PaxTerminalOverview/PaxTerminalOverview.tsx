@@ -62,32 +62,41 @@ export const PaxTerminalOverview = ({
                                     }: IPaxTerminalOverview) => {
   const theme = useTheme();
   const is_mobile = useMediaQuery(theme.breakpoints.down('md'));
+  const riskLabel = ragStatus === 'red' ? 'high' : ragStatus === 'amber' ? 'medium' : 'low';
+  const riskColor = ragStatus === 'red'
+    ? theme.palette.error.dark
+    : ragStatus === 'amber'
+      ? '#6d4c41' // warm brown to distinguish from red on yellow background
+      : theme.palette.success.main;
 
   return (
-    <Stack direction={is_mobile ? 'column' : 'row'} spacing={2} alignItems={'stretch'}>
+    <Stack direction={is_mobile ? 'column' : 'row'} spacing={1} alignItems={'stretch'}>
       <Box>
-        <PaxRAGStatusCard className={ragStatus} variant='outlined' sx={{height: '100%',}}>
+        <Card variant='outlined' sx={{height: '100%'}}>
           <CardContent>
-            <Typography data-cy={`terminal-flights`} component={'h4'} variant={'h5'} mb={2}
-                        sx={{color: 'white'}}>{flights.length} flight{flights.length !== 1 ? 's' : ''}</Typography>
-            <Table sx={{fontSize: '1.2em'}}>
-              <TableHead>
-                <TableRow>
-                  <TableCell className='rag-card-time' align='center'
-                             colSpan={2}><strong>{currentTime}</strong></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableRow>
-                  <TableCell className='rag-card-staff-desks' align='center'><strong>Staff<br/>{staff}
-                  </strong></TableCell>
-                  <TableCell className='rag-card-staff-desks' align='center'><strong>Desks<br/>{desks}
-                  </strong></TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
+            <Stack spacing={3} sx={{fontSize: '1.2em'}}>
+              <Stack spacing={0.5}>
+                <Typography component='div' fontWeight='bold'>Flights</Typography>
+                <Typography component='div'>{flights.length} due at {currentTime}</Typography>
+              </Stack>
+              <Stack spacing={0.5}>
+                <Typography component='div' fontWeight='bold'>Staffing</Typography>
+                <Typography component='div'>{staff} available</Typography>
+                <Typography component='div'>{desks} recommended</Typography>
+              </Stack>
+            <Stack spacing={0.5} sx={{fontSize: '1.2em'}}>
+              <PaxRAGStatusCard className={ragStatus} variant='outlined' sx={{mt: 1}}>
+                <CardContent sx={{p: 2}}>
+                  <Stack spacing={0.5}>
+                    <Typography component='div' fontWeight='bold' sx={{color: riskColor, lineHeight: 1.2}}>Risk of queue breach</Typography>
+                    <Typography component='div' sx={{color: riskColor, lineHeight: 1.2}}>{riskLabel}</Typography>
+                  </Stack>
+                </CardContent>
+              </PaxRAGStatusCard>
+            </Stack>
+            </Stack>
           </CardContent>
-        </PaxRAGStatusCard>
+        </Card>
       </Box>
       <Box>
         <Card variant='outlined' sx={{height: '100%'}}>
@@ -205,4 +214,3 @@ export const PaxTerminalOverview = ({
     </Stack>
   );
 };
-

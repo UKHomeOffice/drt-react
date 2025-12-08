@@ -13,7 +13,7 @@ export const PaxRAGStatusCard = styled(Card)(({theme}) => ({
     border: 'none'
   },
   '&.green':{
-    backgroundColor: theme.palette.success.main,
+    backgroundColor: theme.palette.success.light,
     '.rag-card-time': {
       backgroundColor: theme.palette.success.dark,
     },
@@ -22,7 +22,7 @@ export const PaxRAGStatusCard = styled(Card)(({theme}) => ({
     }
   },
   '&.red':{
-    backgroundColor: theme.palette.error.main,
+    backgroundColor: theme.palette.error.light,
     '.rag-card-time': {
       backgroundColor: theme.palette.error.dark,
     },
@@ -31,7 +31,7 @@ export const PaxRAGStatusCard = styled(Card)(({theme}) => ({
     }
   },
   '&.amber':{
-    backgroundColor: theme.palette.warning.main,
+    backgroundColor: theme.palette.warning.light,
     '.rag-card-time': {
       backgroundColor: theme.palette.warning.dark,
     },
