@@ -45,8 +45,7 @@ export interface IPaxTerminalOverview {
     egate: number
     eea: number
     noneea: number
-  }[],
-  currentTime: string
+  }[]
 }
 
 export const PaxTerminalOverview = ({
@@ -57,8 +56,7 @@ export const PaxTerminalOverview = ({
                                       ragStatus,
                                       chartData,
                                       pressure,
-                                      periodQueuePaxCounts,
-                                      currentTime
+                                      periodQueuePaxCounts
                                     }: IPaxTerminalOverview) => {
   const theme = useTheme();
   const is_mobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -77,7 +75,7 @@ export const PaxTerminalOverview = ({
             <Stack spacing={3}>
               <Stack spacing={0.5}>
                 <Typography variant='h4'>Flights</Typography>
-                <Typography data-cy={`terminal-flights`}>{flights.length} due at {currentTime}</Typography>
+                <Typography data-cy={`terminal-flights`}>{flights.length} due</Typography>
               </Stack>
               <Stack spacing={0.5}>
                 <Typography variant='h4'>Staffing</Typography>
