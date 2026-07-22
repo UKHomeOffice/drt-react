@@ -106,7 +106,7 @@ export const PaxTerminalOverview = ({
               }
               </Typography>
             </Stack>
-            <Table>
+            <Table aria-label={"Terminal " + terminal + " pax summary"}>
               <TableHead>
                 <TableRow>
                   <TableCell>Time</TableCell>
