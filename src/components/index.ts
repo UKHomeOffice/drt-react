@@ -46,3 +46,6 @@ export type {ILocalDateProvider} from './Util/LocaleDateProvider'
 export {LocalDateProvider} from './Util/LocaleDateProvider'
 
 export type {IAnalyticsEvent} from './Util'
+
+export * from './govuk'
+export type * from './govuk'

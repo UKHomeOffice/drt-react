@@ -1,0 +1,6 @@
+// Import shared GOV.UK base and common form components.
+// govuk-common.scss handles: base, fieldset, hint, label, error-message, form-group.
+@use "../govuk-common";
+
+// Radios-specific GOV.UK component styles.
+@use "govuk-frontend/dist/govuk/components/radios";

@@ -43,7 +43,14 @@ export default [
 			commonjs(),
 			svgr(),
 			typescript({ tsconfig: "./tsconfig.json" }),
-			postcss(),
+			postcss({
+				use: {
+					sass: {
+						includePaths: ['node_modules'],
+						quietDeps: true,
+					}
+				}
+			}),
 			terser()
 		]
 	},
