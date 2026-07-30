@@ -1,0 +1,11 @@
+// Shared GOV.UK Frontend base and common form component Sass.
+// Import this file instead of directly importing govuk-frontend base in each
+// individual component to avoid CSS duplication when multiple GOV.UK
+// components are used together.
+@use "govuk-frontend/dist/govuk/base" as * with (
+  $govuk-font-family: "Roboto"
+);
+@use "govuk-frontend/dist/govuk/components/fieldset";
+@use "govuk-frontend/dist/govuk/components/hint";
+@use "govuk-frontend/dist/govuk/components/label";
+@use "govuk-frontend/dist/govuk/components/error-message";

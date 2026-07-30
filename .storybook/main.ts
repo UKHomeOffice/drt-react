@@ -70,6 +70,24 @@ const config: StorybookConfig = {
     // Modify the file loader rule to ignore *.svg, since we have it handled now.
     fileLoaderRule.exclude = /\.svg$/i
 
+    // Configure sass-loader to resolve govuk-frontend @use imports
+    config.module?.rules?.push({
+      test: /\.scss$/,
+      use: [
+        'style-loader',
+        'css-loader',
+        {
+          loader: 'sass-loader',
+          options: {
+            sassOptions: {
+              includePaths: ['node_modules'],
+              quietDeps: true,
+            }
+          }
+        }
+      ]
+    })
+
     return config
   }
 };
