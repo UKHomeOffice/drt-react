@@ -1,5 +1,5 @@
-import {DatePicker} from '@mui/x-date-pickers';
 import {InfoTooltip} from '../../ui';
+import {DatePicker as GovUkDatePicker, type IsoDate} from '../../govuk';
 import OfflineBoltTwoToneIcon from '@mui/icons-material/OfflineBoltTwoTone';
 
 import moment from 'moment';
@@ -55,6 +55,12 @@ export type IPaxSearchForm = PaxSearchFormPayload & {
   onChange: (values: PaxSearchFormPayload) => void
 }
 
+const momentToIsoDate = (value: moment.Moment): IsoDate => value.format('YYYY-MM-DD');
+
+const isoDateToMoment = (value: IsoDate): moment.Moment => {
+  const [year, month, day] = value.split('-').map(Number);
+  return moment([year, month - 1, day]);
+};
 
 export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMachine, onChange}: IPaxSearchForm) => {
 
@@ -69,7 +75,7 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
 
   const handleOnChangeCallback = (payload: PaxSearchFormState) => {
     const formValues: PaxSearchFormPayload = {
-      day: payload.day ? payload.day : formState.day,
+      day: payload.hasOwnProperty('day') ? payload.day : formState.day,
       time: payload.time ? payload.time : formState.time,
       arrivalDate: (payload.arrivalDate ? payload.arrivalDate : formState.arrivalDate).toDate(),
       fromDate: (payload.fromDate ? payload.fromDate : formState.fromDate).toDate(),
@@ -161,11 +167,11 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
 
     const todayMidnight = lastMidnight(moment());
 
-    if (value.toISOString() === todayMidnight.toISOString()) {
+    if (momentToIsoDate(value) === momentToIsoDate(todayMidnight)) {
       newState.day = PaxSearchFormDay.Today;
-    } else if (value.toISOString() === todayMidnight.clone().add(1, 'day').toISOString()) {
+    } else if (momentToIsoDate(value) === momentToIsoDate(todayMidnight.clone().add(1, 'day'))) {
       newState.day = PaxSearchFormDay.Tomorrow;
-    } else if (value.toISOString() === todayMidnight.clone().subtract(1, 'day').toISOString()) {
+    } else if (momentToIsoDate(value) === momentToIsoDate(todayMidnight.clone().subtract(1, 'day'))) {
       newState.day = PaxSearchFormDay.Yesterday;
     } else {
       newState.day = PaxSearchFormDay.Other;
@@ -214,16 +220,17 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
           </Stack>
         </Grid>
         <Grid item flexGrow={1}>
-          <DatePicker
-            sx={{width: '100%'}}
-            label="Date"
-            format="DD/MM/YYYY"
-            value={formState.arrivalDate}
-            showDaysOutsideCurrentMonth
-            minDate={moment().subtract(5, 'years')}
-            maxDate={moment().add(1, 'years')}
-            onChange={(value) => handleDatepickerChange(value || moment())}
-          />
+          <div data-cy="arrival-date-picker">
+            <GovUkDatePicker
+              id="arrival-date"
+              label="Date"
+              hint=""
+              value={momentToIsoDate(formState.arrivalDate)}
+              minDate={momentToIsoDate(moment().subtract(5, 'years'))}
+              maxDate={momentToIsoDate(moment().add(1, 'years'))}
+              onChange={(value) => handleDatepickerChange(value ? isoDateToMoment(value) : moment())}
+            />
+          </div>
         </Grid>
       </Grid>
       <Divider sx={{mb: 3}}/>

@@ -1,0 +1,216 @@
+@use "../govuk-common";
+@use "govuk-frontend/dist/govuk/base" as *;
+@use "govuk-frontend/dist/govuk/components/input";
+@use "govuk-frontend/dist/govuk/components/button";
+@use "govuk-frontend/dist/govuk/objects/button-group";
+
+.moj-datepicker {
+  position: relative;
+  max-width: 100%;
+
+  &__wrapper {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  &__input {
+    flex: 0 0 auto;
+    width: 11.5em;
+    max-width: 11.5em;
+  }
+
+  &__toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 40px;
+    margin-left: 0;
+    padding: 6px;
+    border: 0;
+    border-bottom: 4px solid transparent;
+    color: govuk-colour("white");
+    background: govuk-colour("black");
+    cursor: pointer;
+
+    &:hover { border-bottom-color: #949494; color: govuk-colour("black"); background: #949494; }
+    &:focus { border-bottom-color: govuk-colour("black"); outline: 3px solid transparent; color: govuk-colour("black"); background: govuk-colour("yellow"); box-shadow: none; }
+    &:disabled { opacity: .5; cursor: not-allowed; }
+  }
+
+  &__dialog {
+    position: absolute;
+    z-index: 10;
+    top: calc(100% + 3px);
+    left: 0;
+    width: auto;
+    min-width: 280px;
+    padding: govuk-spacing(4);
+    outline: 2px solid govuk-colour("black");
+    outline-offset: -2px;
+    background: govuk-colour("white");
+    font-size: 1rem;
+    line-height: 1.25;
+  }
+
+  &__dialog-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: govuk-spacing(2);
+  }
+
+  &__dialog-title {
+    margin: 0;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: normal;
+  }
+
+  &__dialog-navbuttons {
+    display: flex;
+    align-items: center;
+  }
+
+  &__calendar {
+    margin-bottom: govuk-spacing(4);
+    border-collapse: collapse;
+
+    tbody:focus-within {
+      outline: 2px solid govuk-colour("yellow");
+    }
+
+    td {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      outline: 0;
+    }
+
+    th {
+      width: 44px;
+      padding: 0;
+      color: govuk-colour("black");
+      font-size: 1rem;
+      font-weight: normal;
+      text-align: center;
+    }
+  }
+
+  &__button {
+    position: relative;
+    width: 44px;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 2px solid transparent;
+    outline-offset: -2px;
+    color: govuk-colour("black");
+    background: transparent;
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.25;
+    cursor: pointer;
+
+    &::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 4px;
+      background: transparent;
+    }
+
+    &:hover { background: #949494; }
+    &:focus { outline-color: transparent; background: govuk-colour("yellow"); }
+    &:focus::after { background: govuk-colour("black"); }
+    &:focus:hover { outline-color: govuk-colour("yellow"); background: #949494; }
+    &:focus:hover::after { background: transparent; }
+    &:disabled, &[aria-disabled="true"] { color: govuk-colour("black"); background: govuk-colour("black", $variant: "tint-95"); text-decoration: line-through; cursor: not-allowed; }
+    &--selected:not(:focus) { color: govuk-colour("white"); background: govuk-colour("blue"); }
+    &--selected:not(:focus)::after { background: govuk-colour("blue"); }
+    &--selected:not(:focus):hover { outline-color: govuk-colour("blue"); color: govuk-colour("black"); background: #949494; }
+    &--selected:not(:focus):hover::after { background: transparent; }
+    &--current:not(:focus) { outline-color: govuk-colour("blue"); color: govuk-colour("white"); background: govuk-colour("blue"); }
+    &--current[tabindex="-1"] { outline-color: transparent; color: currentcolor; background: transparent; }
+    &--current[tabindex="-1"]::after { background: transparent; }
+    &--today { border: 2px solid govuk-colour("black"); }
+  }
+
+  &__actions {
+    margin-bottom: 0;
+
+    > * { margin-bottom: 0; }
+  }
+}
+
+// GOV.UK Frontend uses rem units and assumes a 16px document root. Keep this
+// component at GOV.UK's intended dimensions when embedded in legacy hosts
+// that use a different root font size.
+.drt-date-picker {
+  .govuk-label,
+  .govuk-hint,
+  .govuk-error-message,
+  .govuk-input {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .govuk-label { margin-bottom: 5px; }
+  .govuk-hint { margin-bottom: 10px; }
+
+  .govuk-input {
+    height: 40px;
+    padding: 5px;
+  }
+
+  .moj-datepicker__dialog {
+    padding: 20px;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .moj-datepicker__dialog-header { margin-bottom: 10px; }
+  .moj-datepicker__dialog-title,
+  .moj-datepicker__calendar th,
+  .moj-datepicker__button {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .moj-datepicker__calendar { margin-bottom: 20px; }
+
+  .govuk-button {
+    font-size: 16px;
+    line-height: 20px;
+    padding: 8px 10px 7px;
+  }
+}
+
+@media (min-width: 641px) {
+  .drt-date-picker {
+    .govuk-label,
+    .govuk-hint,
+    .govuk-error-message,
+    .govuk-input {
+      font-size: 19px;
+      line-height: 25px;
+    }
+
+    .govuk-button {
+      font-size: 19px;
+      line-height: 19px;
+    }
+  }
+}
+
+@media (max-width: 641px) {
+  .moj-datepicker__dialog { width: auto; min-width: min(280px, calc(100vw - 45px)); }
+}
+
+@media (forced-colors: active) {
+  .moj-datepicker__toggle, .moj-datepicker__button--selected { border: 2px solid ButtonText; }
+}
