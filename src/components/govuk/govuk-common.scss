@@ -9,3 +9,35 @@
 @use "govuk-frontend/dist/govuk/components/hint";
 @use "govuk-frontend/dist/govuk/components/label";
 @use "govuk-frontend/dist/govuk/components/error-message";
+@use "govuk-frontend/dist/govuk/utilities/visually-hidden";
+
+// GOV.UK Frontend emits typography in rem, assuming a 16px root. Some DRT
+// hosts use a 10px root, so component wrappers opt into equivalent CSS-pixel
+// values without changing the host or other GOV.UK consumers.
+@mixin root-independent-form-typography($scope) {
+  #{$scope} {
+    .govuk-label,
+    .govuk-fieldset__legend,
+    .govuk-hint,
+    .govuk-error-message {
+      font-size: 19px;
+      line-height: 25px;
+    }
+
+    .govuk-label--m,
+    .govuk-fieldset__legend--m {
+      font-size: 21px;
+      line-height: 25px;
+    }
+  }
+
+  @media (min-width: 40.0625em) {
+    #{$scope} {
+      .govuk-label--m,
+      .govuk-fieldset__legend--m {
+        font-size: 24px;
+        line-height: 30px;
+      }
+    }
+  }
+}
