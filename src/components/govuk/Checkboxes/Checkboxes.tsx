@@ -49,6 +49,7 @@ export const Checkboxes: React.FC<CheckboxesProps> = ({
 }) => {
   const prefix = idPrefix ?? name
   const [internalValue, setInternalValue] = useState<string[]>(defaultValue)
+  const [focusedValue, setFocusedValue] = useState<string>()
   const isControlled = controlledValue !== undefined
   const selectedValues = isControlled ? controlledValue : internalValue
   const selectedValueSet = new Set(selectedValues)
@@ -145,7 +146,14 @@ export const Checkboxes: React.FC<CheckboxesProps> = ({
               <React.Fragment key={option.value}>
                 <div className="govuk-checkboxes__item">
                   <input
-                    className="govuk-checkboxes__input"
+                    className={[
+                      'govuk-checkboxes__input',
+                      focusedValue === option.value
+                        ? 'drt-checkboxes__input--focused'
+                        : null,
+                    ]
+                      .filter(Boolean)
+                      .join(' ')}
                     id={inputId}
                     name={name}
                     type="checkbox"
@@ -158,6 +166,12 @@ export const Checkboxes: React.FC<CheckboxesProps> = ({
                     aria-invalid={error ? true : undefined}
                     aria-controls={option.conditional ? conditionalId : undefined}
                     aria-expanded={option.conditional ? isChecked : undefined}
+                    onFocus={() => setFocusedValue(option.value)}
+                    onBlur={() => {
+                      setFocusedValue(currentValue => (
+                        currentValue === option.value ? undefined : currentValue
+                      ))
+                    }}
                     onChange={(event) => {
                       handleChange(option.value, event.target.checked, isDisabled)
                     }}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { fireEvent, render, screen } from '@testing-library/react'
+import { act, fireEvent, render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { Checkboxes } from './Checkboxes'
 import type { CheckboxOption } from './Checkboxes'
@@ -291,13 +291,17 @@ describe('Checkboxes', () => {
     render(<Checkboxes name="terminals" label="Terminals" options={options} />)
 
     const checkbox = screen.getByRole('checkbox', { name: 'Terminal 2' })
-    checkbox.focus()
+    act(() => checkbox.focus())
 
     expect(checkbox).toHaveFocus()
+    expect(checkbox).toHaveClass('drt-checkboxes__input--focused')
     expect(checkbox.nextElementSibling).toHaveClass(
       'govuk-label',
       'govuk-checkboxes__label',
     )
+
+    act(() => checkbox.blur())
+    expect(checkbox).not.toHaveClass('drt-checkboxes__input--focused')
   })
 
   it('reveals and hides GOV.UK conditional content as its checkbox changes', () => {

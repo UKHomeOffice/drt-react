@@ -5,9 +5,20 @@
 // Checkboxes-specific GOV.UK component styles.
 @use "govuk-frontend/dist/govuk/components/checkboxes";
 
-// Keep the GOV.UK high-contrast outline while matching DRT's visible focus-ring requirement.
-.govuk-checkboxes__input:focus + .govuk-checkboxes__label::before {
-  box-shadow: 0 0 0 2px #ffdd00 !important;
+// Keep the GOV.UK high-contrast outline and checkbox border while making the
+// required yellow ring distinguishable from light page backgrounds.
+.govuk-checkboxes__input:focus + .govuk-checkboxes__label::before,
+.drt-checkboxes__input--focused + .govuk-checkboxes__label::before {
+  border-width: 4px;
+  outline: 3px solid transparent;
+  outline-offset: 1px;
+  box-shadow:
+    0 0 0 2px #ffdd00,
+    0 0 0 4px #0b0c0c !important;
+
+  @media screen and (forced-colors: active), (-ms-high-contrast: active) {
+    outline-color: Highlight;
+  }
 }
 
 // Horizontal checkboxes are a DRT extension, not a GOV.UK modifier.

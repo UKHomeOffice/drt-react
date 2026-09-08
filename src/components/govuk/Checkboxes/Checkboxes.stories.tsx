@@ -72,7 +72,19 @@ export const FocusedSmallInline: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     await userEvent.tab()
-    await expect(canvas.getByRole('checkbox', { name: 'Terminal 2' })).toHaveFocus()
+    const checkbox = canvas.getByRole('checkbox', { name: 'Terminal 2' })
+    await expect(checkbox).toHaveFocus()
+
+    const label = checkbox.nextElementSibling
+    await expect(label).toHaveClass('govuk-checkboxes__label')
+
+    const focusIndicator = window.getComputedStyle(label as Element, '::before')
+    await expect(focusIndicator.boxShadow).toContain(
+      'rgb(255, 221, 0) 0px 0px 0px 2px',
+    )
+    await expect(focusIndicator.boxShadow).toContain(
+      'rgb(11, 12, 12) 0px 0px 0px 4px',
+    )
   },
 }
 
