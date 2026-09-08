@@ -3,3 +3,6 @@ export type { RadiosProps, RadioOption, RadioDivider, RadiosOption, LegendSize }
 
 export { Select } from './Select'
 export type { SelectProps, SelectOption } from './Select'
+
+export { Checkboxes } from './Checkboxes'
+export type { CheckboxesProps, CheckboxOption } from './Checkboxes'
