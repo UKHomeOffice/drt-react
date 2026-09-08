@@ -64,6 +64,7 @@ export const Select: React.FC<SelectProps> = ({
 
   const formGroupClasses = [
     'govuk-form-group',
+    'drt-govuk-select',
     error ? 'govuk-form-group--error' : null,
   ]
     .filter(Boolean)

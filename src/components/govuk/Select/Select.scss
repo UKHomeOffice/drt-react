@@ -4,3 +4,12 @@
 
 // Select-specific GOV.UK component styles.
 @use "govuk-frontend/dist/govuk/components/select";
+
+@include govuk-common.root-independent-form-typography(".drt-govuk-select");
+
+.drt-govuk-select .govuk-select {
+  height: 40px;
+  padding: 5px;
+  font-size: 19px;
+  line-height: 1.25;
+}

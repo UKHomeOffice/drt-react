@@ -15,6 +15,7 @@ describe('Select', () => {
     render(<Select name="sort" label="Sort by" options={options} />)
 
     expect(document.querySelector('.govuk-form-group')).toBeInTheDocument()
+    expect(document.querySelector('.govuk-form-group')).toHaveClass('drt-govuk-select')
     expect(screen.getByLabelText('Sort by')).toHaveClass('govuk-select')
     expect(screen.getAllByRole('option')).toHaveLength(3)
     expect(screen.getByRole('option', { name: 'Recently updated' })).toHaveValue('updated')

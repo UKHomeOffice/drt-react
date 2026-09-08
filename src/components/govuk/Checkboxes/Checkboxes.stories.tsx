@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import { expect, userEvent, within } from '@storybook/test'
 import { Checkboxes } from './Checkboxes'
+import { Select } from '../Select'
 
 const meta: Meta<typeof Checkboxes> = {
   title: 'GOV.UK/Checkboxes',
@@ -85,6 +86,81 @@ export const FocusedSmallInline: Story = {
     await expect(focusIndicator.boxShadow).toContain(
       'rgb(11, 12, 12) 0px 0px 0px 4px',
     )
+  },
+}
+
+export const RootFontSizeRegression: Story = {
+  render: () => (
+    <div>
+      <Select
+        name="root-size-select"
+        label="Arrival window:"
+        labelClassName="govuk-label--m"
+        hint="Choose an arrival window."
+        error="Select an arrival window"
+        options={[
+          { value: 'before', label: 'Previous' },
+          { value: 'after', label: 'Upcoming' },
+        ]}
+      />
+      <Checkboxes
+        name="root-size-checkboxes"
+        label="Terminals:"
+        legendSize="m"
+        hint="Select one or more terminals."
+        small
+        inline
+        options={terminalOptions}
+      />
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const originalRootFontSize = document.documentElement.style.fontSize
+    const canvas = within(canvasElement)
+    const select = canvas.getByRole('combobox', { name: 'Arrival window:' })
+    const selectLabel = canvas.getByText('Arrival window:')
+    const selectHint = canvas.getByText('Choose an arrival window.')
+    const selectError = canvas.getByText('Select an arrival window')
+    const checkbox = canvas.getByRole('checkbox', { name: 'Terminal 2' })
+    const checkboxLabel = checkbox.nextElementSibling as Element
+    const legend = canvas.getByText('Terminals:')
+    const checkboxHint = canvas.getByText('Select one or more terminals.')
+
+    try {
+      for (const rootFontSize of [10, 16]) {
+        document.documentElement.style.fontSize = `${rootFontSize}px`
+
+        await expect(window.getComputedStyle(select).fontSize).toBe('19px')
+        await expect(window.getComputedStyle(select).height).toBe('40px')
+        await expect(window.getComputedStyle(selectLabel).fontSize).toBe('24px')
+        await expect(window.getComputedStyle(selectLabel).lineHeight).toBe('30px')
+        await expect(window.getComputedStyle(selectHint).fontSize).toBe('19px')
+        await expect(window.getComputedStyle(selectHint).lineHeight).toBe('25px')
+        await expect(window.getComputedStyle(selectError).fontSize).toBe('19px')
+        await expect(window.getComputedStyle(selectError).lineHeight).toBe('25px')
+        await expect(window.getComputedStyle(legend).fontSize).toBe('24px')
+        await expect(window.getComputedStyle(legend).lineHeight).toBe('30px')
+        await expect(window.getComputedStyle(checkboxHint).fontSize).toBe('19px')
+        await expect(window.getComputedStyle(checkboxHint).lineHeight).toBe('25px')
+        await expect(window.getComputedStyle(checkboxLabel).fontSize).toBe('19px')
+        await expect(window.getComputedStyle(checkboxLabel).lineHeight).toBe('25px')
+        await expect(window.getComputedStyle(checkbox).width).toBe('44px')
+        await expect(
+          window.getComputedStyle(checkboxLabel, '::before').width,
+        ).toBe('24px')
+
+        checkbox.focus()
+        await new Promise<void>((resolve) => {
+          window.requestAnimationFrame(() => resolve())
+        })
+        const focusIndicator = window.getComputedStyle(checkboxLabel, '::before')
+        await expect(focusIndicator.boxShadow).toContain(
+          'rgb(255, 221, 0) 0px 0px 0px 2px',
+        )
+      }
+    } finally {
+      document.documentElement.style.fontSize = originalRootFontSize
+    }
   },
 }
 

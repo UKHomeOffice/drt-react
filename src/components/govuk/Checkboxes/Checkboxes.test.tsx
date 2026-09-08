@@ -16,6 +16,7 @@ describe('Checkboxes', () => {
     render(<Checkboxes name="terminals" label="Terminals" options={options} />)
 
     expect(screen.getByRole('group', { name: 'Terminals' })).toHaveClass('govuk-fieldset')
+    expect(document.querySelector('.govuk-form-group')).toHaveClass('drt-govuk-checkboxes')
     expect(document.querySelectorAll('.govuk-checkboxes__item')).toHaveLength(4)
     expect(screen.getByRole('checkbox', { name: 'Terminal 2' })).toHaveClass(
       'govuk-checkboxes__input',

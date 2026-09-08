@@ -5,6 +5,8 @@
 // Checkboxes-specific GOV.UK component styles.
 @use "govuk-frontend/dist/govuk/components/checkboxes";
 
+@include govuk-common.root-independent-form-typography(".drt-govuk-checkboxes");
+
 // Keep the GOV.UK high-contrast outline and checkbox border while making the
 // required yellow ring distinguishable from light page backgrounds.
 .govuk-checkboxes__input:focus + .govuk-checkboxes__label::before,

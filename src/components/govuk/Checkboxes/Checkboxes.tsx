@@ -83,6 +83,7 @@ export const Checkboxes: React.FC<CheckboxesProps> = ({
 
   const formGroupClasses = [
     'govuk-form-group',
+    'drt-govuk-checkboxes',
     error ? 'govuk-form-group--error' : null,
   ]
     .filter(Boolean)
