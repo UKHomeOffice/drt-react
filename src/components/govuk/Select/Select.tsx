@@ -6,11 +6,10 @@ export interface SelectOption {
   label: React.ReactNode
 }
 
-export interface SelectProps {
+interface SelectBaseProps {
   name: string
   id?: string
   options: SelectOption[]
-  label: React.ReactNode
   labelClassName?: string
   hint?: string
   error?: string
@@ -22,6 +21,21 @@ export interface SelectProps {
 }
 
 /**
+ * Supply either a visible/visually-hidden label or an aria-label so the select
+ * always has an accessible name.
+ */
+export type SelectProps = SelectBaseProps & (
+  | {
+    label: React.ReactNode
+    ariaLabel?: string
+  }
+  | {
+    label?: undefined
+    ariaLabel: string
+  }
+)
+
+/**
  * GOV.UK Design System Select component.
  */
 export const Select: React.FC<SelectProps> = ({
@@ -29,6 +43,7 @@ export const Select: React.FC<SelectProps> = ({
   id = name,
   options,
   label,
+  ariaLabel,
   labelClassName,
   hint,
   error,
@@ -71,9 +86,11 @@ export const Select: React.FC<SelectProps> = ({
 
   return (
     <div className={formGroupClasses}>
-      <label className={labelClasses} htmlFor={id}>
-        {label}
-      </label>
+      {label !== undefined && (
+        <label className={labelClasses} htmlFor={id}>
+          {label}
+        </label>
+      )}
 
       {hint && (
         <div id={hintId} className="govuk-hint">
@@ -95,6 +112,7 @@ export const Select: React.FC<SelectProps> = ({
         value={value}
         defaultValue={defaultValue}
         disabled={disabled}
+        aria-label={ariaLabel}
         aria-describedby={describedBy || undefined}
         aria-invalid={error ? true : undefined}
         onChange={(event) => onChange?.(event.target.value)}

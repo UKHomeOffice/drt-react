@@ -56,6 +56,35 @@ describe('Select', () => {
     expect(screen.getByLabelText('Sort by')).toBeInTheDocument()
   })
 
+  it('supports the GOV.UK medium label modifier', () => {
+    render(
+      <Select
+        name="sort"
+        label="Sort by"
+        labelClassName="govuk-label--m"
+        options={options}
+      />,
+    )
+
+    expect(document.querySelector('label')).toHaveClass('govuk-label', 'govuk-label--m')
+  })
+
+  it('supports an aria-label without rendering a label element', () => {
+    render(
+      <Select
+        name="upcoming-period"
+        ariaLabel="Choose upcoming arrivals period"
+        options={options}
+      />,
+    )
+
+    const select = screen.getByRole('combobox', {
+      name: 'Choose upcoming arrivals period',
+    })
+    expect(select).toHaveAttribute('aria-label', 'Choose upcoming arrivals period')
+    expect(document.querySelector('label')).not.toBeInTheDocument()
+  })
+
   it('renders and associates hint text using the select ID', () => {
     render(
       <Select

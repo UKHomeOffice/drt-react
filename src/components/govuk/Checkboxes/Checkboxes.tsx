@@ -8,6 +8,7 @@ export interface CheckboxOption {
   hint?: string
   conditional?: React.ReactNode
   disabled?: boolean
+  testId?: string
 }
 
 export interface CheckboxesProps {
@@ -24,6 +25,7 @@ export interface CheckboxesProps {
   onChange?: (values: string[]) => void
   disabled?: boolean
   inline?: boolean
+  small?: boolean
 }
 
 /**
@@ -43,6 +45,7 @@ export const Checkboxes: React.FC<CheckboxesProps> = ({
   onChange,
   disabled = false,
   inline = false,
+  small = false,
 }) => {
   const prefix = idPrefix ?? name
   const [internalValue, setInternalValue] = useState<string[]>(defaultValue)
@@ -86,6 +89,7 @@ export const Checkboxes: React.FC<CheckboxesProps> = ({
 
   const checkboxesClasses = [
     'govuk-checkboxes',
+    small ? 'govuk-checkboxes--small' : null,
     inline ? 'drt-checkboxes--inline' : null,
   ]
     .filter(Boolean)
@@ -148,6 +152,8 @@ export const Checkboxes: React.FC<CheckboxesProps> = ({
                     value={option.value}
                     checked={isChecked}
                     disabled={isDisabled}
+                    data-testid={option.testId}
+                    data-cy={option.testId}
                     aria-describedby={option.hint ? hintId : undefined}
                     aria-invalid={error ? true : undefined}
                     aria-controls={option.conditional ? conditionalId : undefined}

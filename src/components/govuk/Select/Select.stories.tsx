@@ -25,6 +25,7 @@ export const Default: Story = {
   args: {
     name: 'country',
     label: 'Choose your country',
+    labelClassName: 'govuk-label--m',
     options: countries,
   },
 }
@@ -65,6 +66,47 @@ export const VisuallyHiddenLabel: Story = {
     className: 'dynamic-width',
     options: countries,
   },
+}
+
+export const AriaLabelOnly: Story = {
+  args: {
+    name: 'upcoming-period',
+    ariaLabel: 'Choose upcoming arrivals period',
+    className: 'dynamic-width',
+    options: [
+      { value: '15', label: '15 minutes' },
+      { value: '30', label: '30 minutes' },
+      { value: '60', label: '1 hour' },
+    ],
+  },
+}
+
+export const PortDashboardArrivalWindow: Story = {
+  render: () => (
+    <div style={{ display: 'flex', alignItems: 'flex-end', gap: 16, flexWrap: 'wrap' }}>
+      <Select
+        name="arrival-window-direction"
+        label="Arrival window:"
+        labelClassName="govuk-label--m"
+        defaultValue="before"
+        options={[
+          { value: 'before', label: 'Previous' },
+          { value: 'after', label: 'Upcoming' },
+        ]}
+      />
+      <Select
+        name="arrival-window-period"
+        ariaLabel="Choose upcoming arrivals period"
+        className="dynamic-width"
+        defaultValue="60"
+        options={[
+          { value: '15', label: '15 minutes' },
+          { value: '30', label: '30 minutes' },
+          { value: '60', label: '1 hour' },
+        ]}
+      />
+    </div>
+  ),
 }
 
 const ControlledTemplate = () => {

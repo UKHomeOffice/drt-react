@@ -73,6 +73,19 @@ describe('Checkboxes', () => {
     )
   })
 
+  it('applies the GOV.UK medium legend modifier for larger bold group labels', () => {
+    render(
+      <Checkboxes
+        name="terminals"
+        label="Terminals:"
+        legendSize="m"
+        options={options}
+      />,
+    )
+
+    expect(document.querySelector('legend')).toHaveClass('govuk-fieldset__legend--m')
+  })
+
   it('associates the fieldset with group hint and error in document order', () => {
     render(
       <Checkboxes
@@ -233,12 +246,58 @@ describe('Checkboxes', () => {
     expect(onChange).toHaveBeenCalledWith(['T2', 'T3'])
   })
 
+  it('applies an option test ID to its input', () => {
+    render(
+      <Checkboxes
+        name="terminals"
+        label="Terminals"
+        options={[{ value: 'T2', label: 'Terminal 2', testId: 'terminal-2-check' }]}
+      />,
+    )
+
+    expect(screen.getByTestId('terminal-2-check')).toBe(
+      screen.getByRole('checkbox', { name: 'Terminal 2' }),
+    )
+  })
+
   it('renders the custom responsive inline modifier without a GOV.UK inline modifier', () => {
     render(<Checkboxes name="terminals" label="Terminals" inline options={options} />)
 
     const checkboxes = document.querySelector('.govuk-checkboxes')
     expect(checkboxes).toHaveClass('drt-checkboxes--inline')
     expect(checkboxes).not.toHaveClass('govuk-checkboxes--inline')
+  })
+
+  it('applies the official GOV.UK small modifier', () => {
+    render(<Checkboxes name="terminals" label="Terminals" small options={options} />)
+
+    expect(document.querySelector('.govuk-checkboxes')).toHaveClass(
+      'govuk-checkboxes--small',
+    )
+  })
+
+  it('combines the GOV.UK small modifier with the DRT inline modifier', () => {
+    render(
+      <Checkboxes name="terminals" label="Terminals" small inline options={options} />,
+    )
+
+    expect(document.querySelector('.govuk-checkboxes')).toHaveClass(
+      'govuk-checkboxes--small',
+      'drt-checkboxes--inline',
+    )
+  })
+
+  it('uses the GOV.UK focusable input and adjacent label structure', () => {
+    render(<Checkboxes name="terminals" label="Terminals" options={options} />)
+
+    const checkbox = screen.getByRole('checkbox', { name: 'Terminal 2' })
+    checkbox.focus()
+
+    expect(checkbox).toHaveFocus()
+    expect(checkbox.nextElementSibling).toHaveClass(
+      'govuk-label',
+      'govuk-checkboxes__label',
+    )
   })
 
   it('reveals and hides GOV.UK conditional content as its checkbox changes', () => {

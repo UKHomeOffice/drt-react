@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
+import { expect, userEvent, within } from '@storybook/test'
 import { Checkboxes } from './Checkboxes'
 
 const meta: Meta<typeof Checkboxes> = {
@@ -37,6 +38,41 @@ export const Inline: Story = {
     inline: true,
     defaultValue: ['T2', 'T3', 'T4', 'T5'],
     options: terminalOptions,
+  },
+}
+
+export const Small: Story = {
+  args: {
+    name: 'small-terminals',
+    label: 'Terminals:',
+    legendSize: 'm',
+    small: true,
+    options: terminalOptions,
+  },
+}
+
+export const SmallInline: Story = {
+  args: {
+    name: 'small-inline-terminals',
+    label: 'Terminals:',
+    legendSize: 'm',
+    small: true,
+    inline: true,
+    defaultValue: ['T2', 'T3', 'T4', 'T5'],
+    options: terminalOptions,
+  },
+}
+
+export const FocusedSmallInline: Story = {
+  args: {
+    ...SmallInline.args,
+    name: 'focused-small-inline-terminals',
+    defaultValue: [],
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.tab()
+    await expect(canvas.getByRole('checkbox', { name: 'Terminal 2' })).toHaveFocus()
   },
 }
 
