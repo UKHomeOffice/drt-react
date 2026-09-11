@@ -6,12 +6,9 @@ import moment from 'moment';
 import {
   Box,
   Divider,
-  FormControl,
   FormLabel,
   Grid,
   InputLabel,
-  MenuItem,
-  Select,
   Stack,
   Switch,
   ToggleButton,
@@ -19,6 +16,8 @@ import {
   Typography
 } from '@mui/material';
 import * as React from 'react';
+import {Select} from '../../govuk';
+import './PaxSearchForm.scss';
 
 export enum PaxSearchFormDay {
   Yesterday = "yesterday",
@@ -239,67 +238,47 @@ export const PaxSearchForm = ({day, time, arrivalDate, fromDate, toDate, timeMac
         </Grid>
         <Grid item flexGrow={1}>
           <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <FormControl fullWidth>
-                <InputLabel id="from-date-label">From</InputLabel>
-                <Select
-                  disabled={formState.time != PaxSearchFormTime.Range}
-                  labelId="from-date-label"
-                  id="from-date"
-                  value={formState.fromDate.valueOf()}
-                  fullWidth
-                  inputProps={{role: 'start-time-select'}}
-                  onChange={(e) => {
-                    handleTimeChange('fromDate', moment(e.target.value));
-                  }}
-                >
-                  {
-                    Array.from(Array(24).keys()).map(hour => {
-                      const time = lastMidnight(formState.arrivalDate).clone().set('hours', hour);
-                      const yyyyddmmhhmm = time.format('YYYY-MM-DD_HH:mm');
-                      const hh00 = time.format('HH:00');
-                      return <MenuItem
-                        key={time.toISOString()}
-                        value={time.valueOf()}
-                        data-cy={`select-start-time-option-${yyyyddmmhhmm}`}
-                      >
-                        {hh00}
-                      </MenuItem>
-                    })
+            <Grid item xs={6} className="pax-search-form__time-select-container">
+              <Select
+                disabled={formState.time != PaxSearchFormTime.Range}
+                id="from-date"
+                name="from-date"
+                label="From"
+                labelClassName="govuk-label--s"
+                className="pax-search-form__time-select"
+                value={String(formState.fromDate.valueOf())}
+                onChange={(value) => {
+                  handleTimeChange('fromDate', moment(Number(value)));
+                }}
+                options={Array.from(Array(24).keys()).map(hour => {
+                  const optionTime = lastMidnight(formState.arrivalDate).clone().set('hours', hour);
+                  return {
+                    value: String(optionTime.valueOf()),
+                    label: optionTime.format('HH:00'),
                   }
-                </Select>
-              </FormControl>
+                })}
+              />
             </Grid>
-            <Grid item xs={6}>
-              <FormControl fullWidth>
-                <InputLabel id="to-date-label">To</InputLabel>
-                <Select
-                  disabled={formState.time != PaxSearchFormTime.Range}
-                  labelId="to-date-label"
-                  id="to-date"
-                  value={formState.toDate.valueOf()}
-                  fullWidth
-                  inputProps={{role: 'end-time-select'}}
-                  onChange={(e) => {
-                    handleTimeChange('toDate', moment(e.target.value));
-                  }}
-                >
-                  {
-                    Array.from(Array(36 - formState.fromDate.hour()).keys()).map(index => {
-                      const time = formState.fromDate.clone().add(index + 1, 'hours');
-                      const yyyyddmmhhmm = time.format('YYYY-MM-DD_HH:mm');
-                      const hh00 = time.format('HH:00');
-                      return <MenuItem
-                        key={time.toISOString()}
-                        value={time.valueOf()}
-                        data-cy={`select-end-time-option-${yyyyddmmhhmm}`}
-                      >
-                        {`${hh00} (+${index + 1} hours)`}
-                      </MenuItem>
-                    })
+            <Grid item xs={6} className="pax-search-form__time-select-container">
+              <Select
+                disabled={formState.time != PaxSearchFormTime.Range}
+                id="to-date"
+                name="to-date"
+                label="To"
+                labelClassName="govuk-label--s"
+                className="pax-search-form__time-select"
+                value={String(formState.toDate.valueOf())}
+                onChange={(value) => {
+                  handleTimeChange('toDate', moment(Number(value)));
+                }}
+                options={Array.from(Array(36 - formState.fromDate.hour()).keys()).map(index => {
+                  const optionTime = formState.fromDate.clone().add(index + 1, 'hours');
+                  return {
+                    value: String(optionTime.valueOf()),
+                    label: `${optionTime.format('HH:00')} (+${index + 1} hours)`,
                   }
-                </Select>
-              </FormControl>
+                })}
+              />
             </Grid>
           </Grid>
         </Grid>

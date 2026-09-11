@@ -6,14 +6,15 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { PaxSearchForm, PaxSearchFormPayload } from './PaxSearchForm';
 import moment from 'moment';
 import { Box } from '@mui/material';
+import { expect, within } from '@storybook/test';
 
 interface PaxSearchFormStoryControls {
   timeMachine: boolean,
   day: "yesterday" | "today" | "tomorrow",
   time: "now" | "24hour" | "range",
   arrivalDate: Date,
-  fromDate:  string,
-  toDate:  string,
+  fromDate: Date,
+  toDate: Date,
 }
 
 const meta: Meta<PaxSearchFormStoryControls>  = {
@@ -32,7 +33,7 @@ const meta: Meta<PaxSearchFormStoryControls>  = {
       }
     },
     time: {
-      options: ["now", "24hour"],
+      options: ["now", "24hour", "range"],
       control: {
         type: 'radio'
       }
@@ -65,9 +66,9 @@ export const PaxFormLayout: Story = {
     timeMachine: false,
     day: "today",
     time: "24hour",
-    arrivalDate: moment(),
-    fromDate: getLastMidnight(),
-    toDate:  getLastMidnight().add(1, 'day')
+    arrivalDate: moment().toDate(),
+    fromDate: getLastMidnight().toDate(),
+    toDate:  getLastMidnight().add(1, 'day').toDate()
   },
 
   render: () => {
@@ -75,11 +76,7 @@ export const PaxFormLayout: Story = {
 
       const onChange = (searchFormState: PaxSearchFormPayload) => {
         console.log(searchFormState);
-        if(searchFormState.time === '24hour') {
-          updateArgs(searchFormState)
-        } else {
-          updateArgs({ ...searchFormState, fromDate: '12:00', toDate: '16:00' });
-        }
+        updateArgs(searchFormState)
       }
       return (
         <Box sx={{maxWidth: '800px'}}>
@@ -95,4 +92,39 @@ export const PaxFormLayout: Story = {
         </Box>
       )
   }
+};
+
+export const CustomRange: Story = {
+  ...PaxFormLayout,
+  args: {
+    timeMachine: false,
+    day: "today",
+    time: "range",
+    arrivalDate: getLastMidnight().toDate(),
+    fromDate: getLastMidnight().add(8, 'hours').toDate(),
+    toDate: getLastMidnight().add(12, 'hours').toDate(),
+  },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement)
+    const fromSelect = canvas.getByRole('combobox', {name: 'From'})
+    const toSelect = canvas.getByRole('combobox', {name: 'To'})
+    const originalRootFontSize = document.documentElement.style.fontSize
+
+    await expect(fromSelect).toBeEnabled()
+    await expect(toSelect).toBeEnabled()
+    await expect(canvas.getByRole('option', {name: '00:00'})).toBeInTheDocument()
+    await expect(canvas.getByRole('option', {name: '09:00 (+1 hours)'})).toBeInTheDocument()
+
+    try {
+      for (const rootFontSize of [10, 16]) {
+        document.documentElement.style.fontSize = `${rootFontSize}px`
+        await expect(window.getComputedStyle(fromSelect).fontSize).toBe('19px')
+        await expect(window.getComputedStyle(fromSelect).height).toBe('40px')
+        await expect(window.getComputedStyle(toSelect).fontSize).toBe('19px')
+        await expect(window.getComputedStyle(toSelect).height).toBe('40px')
+      }
+    } finally {
+      document.documentElement.style.fontSize = originalRootFontSize
+    }
+  },
 };
