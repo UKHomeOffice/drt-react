@@ -1,0 +1,30 @@
+// Import shared GOV.UK base and common form components.
+// govuk-common.scss handles: base, fieldset, hint, label, error-message, form-group.
+@use "../govuk-common";
+
+// Checkboxes-specific GOV.UK component styles.
+@use "govuk-frontend/dist/govuk/components/checkboxes";
+
+@include govuk-common.root-independent-form-typography(".drt-govuk-checkboxes");
+
+// Horizontal checkboxes are a DRT extension, not a GOV.UK modifier.
+.drt-checkboxes--inline {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 24px;
+  row-gap: 10px;
+
+  .govuk-checkboxes__item {
+    flex: 0 0 auto;
+    max-width: 100%;
+    margin-bottom: 0;
+  }
+
+  .govuk-checkboxes__label {
+    white-space: nowrap;
+  }
+
+  .govuk-checkboxes__conditional {
+    flex-basis: 100%;
+  }
+}

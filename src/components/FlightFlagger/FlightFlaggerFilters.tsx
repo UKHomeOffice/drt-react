@@ -4,12 +4,10 @@ import {
   Box,
   Button,
   Card,
-  Checkbox,
   Chip,
   Collapse,
   FormControl,
   FormControlLabel,
-  FormGroup,
   FormLabel,
   Grid,
   InputAdornment,
@@ -25,6 +23,7 @@ import {
 import SearchIcon from '@mui/icons-material/Search'
 import CustomHighlightIcon from "./icon-highlight-pax.svg"
 import {IAnalyticsEvent} from "../Util";
+import {Checkboxes} from "../govuk";
 
 export type FormState = {
   showTransitPaxNumber: boolean,
@@ -131,11 +130,12 @@ export const FlightFlaggerFilters = ({
       setAppliedSearchFlags(formToSubmit)
     }
 
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrentFormState({
-      ...currentFormState,
-      [event.target.name]: event.target.checked
-    })
+  const handlePaxInfoChange = (values: string[]) => {
+    setCurrentFormState(currentState => ({
+      ...currentState,
+      showNumberOfVisaNationals: values.includes('showNumberOfVisaNationals'),
+      requireAllSelected: values.includes('requireAllSelected'),
+    }))
   }
 
   const handleTextInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -243,9 +243,6 @@ export const FlightFlaggerFilters = ({
         <Collapse in={currentFormState.showFilters} data-testid="flight-flagger-filters">
           <Paper elevation={0} sx={{backgroundColor: '#fff', p: 0, mt: 2}}>
             <Grid container columnSpacing={2}>
-              <Grid item xs={12}>
-                <Typography sx={{mb: 1}}><strong>Select pax info to reveal</strong></Typography>
-              </Grid>
               <Grid item xs={12} sm={6} sx={{mb: 2}}>
                 <Autocomplete
                   data-testid="nationalities-autocomplete"
@@ -291,32 +288,32 @@ export const FlightFlaggerFilters = ({
                 />
               </Grid>
               <Grid item xs={12}>
-                <FormGroup>
-                  <FormControlLabel
-                    control={
-                      <Checkbox color='primary' data-testid="show-visa-nationals-check"
-                                checked={currentFormState.showNumberOfVisaNationals}
-                                onChange={handleCheckboxChange}
-                                inputProps={{'aria-label': 'show visa nationals'}}
-                                name="showNumberOfVisaNationals"/>
-                    }
-                    label="Show number of visa nationals"
-                  />
-                  <Paper elevation={0} sx={{py: 1, px: 2, mt: 1, mb: 2}} variant="outlined">
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          color='primary'
-                          data-testid="require-all-selected-check"
-                          disabled={!someCriteriaSelected(currentFormState)}
-                          checked={currentFormState.requireAllSelected}
-                          onChange={handleCheckboxChange}
-                          name="requireAllSelected"/>
-                      }
-                      label="Only highlight flights with all selected info"
-                    />
-                  </Paper>
-                </FormGroup>
+                <Checkboxes
+                  name="paxInfoToReveal"
+                  label="Select pax info to reveal"
+                  legendSize="m"
+                  small
+                  value={[
+                    currentFormState.showNumberOfVisaNationals
+                      ? 'showNumberOfVisaNationals'
+                      : '',
+                    currentFormState.requireAllSelected ? 'requireAllSelected' : '',
+                  ].filter(Boolean)}
+                  onChange={handlePaxInfoChange}
+                  options={[
+                    {
+                      value: 'showNumberOfVisaNationals',
+                      label: 'Show number of visa nationals',
+                      testId: 'show-visa-nationals-check',
+                    },
+                    {
+                      value: 'requireAllSelected',
+                      label: 'Only highlight flights with all selected info',
+                      disabled: !someCriteriaSelected(currentFormState),
+                      testId: 'require-all-selected-check',
+                    },
+                  ]}
+                />
               </Grid>
               <Grid item xs={12}>
                 <Button data-testid="flight-flagger-filter-cancel"

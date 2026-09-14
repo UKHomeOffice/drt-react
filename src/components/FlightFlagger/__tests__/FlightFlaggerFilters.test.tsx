@@ -75,6 +75,52 @@ test("apply button is only enabled when there are changes to apply", async () =>
   expect(applyButton).toBeDisabled()
 })
 
+test("require-all is unavailable until any highlight criterion is selected", () => {
+  render(<FlightFlaggerFilters
+    terminal={"T1"}
+    nationalities={nationalities}
+    ageGroups={ageGroups}
+    submitCallback={() => {}}
+    showAllCallback={() => {}}
+    onChangeInput={() => {}}
+    clearFiltersCallback={() => {}}
+    sendEvent={sendEvent}
+  />)
+
+  fireEvent.click(screen.getByTestId('show-filters'))
+
+  const showVisaNationals = screen.getByTestId('show-visa-nationals-check')
+  const requireAll = screen.getByTestId('require-all-selected-check')
+  expect(requireAll).toBeDisabled()
+
+  fireEvent.click(showVisaNationals)
+  expect(requireAll).not.toBeDisabled()
+})
+
+test("GOV.UK checkbox callback updates both filter booleans atomically", () => {
+  const callBack = jest.fn()
+  render(<FlightFlaggerFilters
+    terminal={"T1"}
+    nationalities={nationalities}
+    ageGroups={ageGroups}
+    submitCallback={callBack}
+    showAllCallback={() => {}}
+    onChangeInput={() => {}}
+    clearFiltersCallback={() => {}}
+    sendEvent={sendEvent}
+  />)
+
+  fireEvent.click(screen.getByTestId('show-filters'))
+  fireEvent.click(screen.getByTestId('show-visa-nationals-check'))
+  fireEvent.click(screen.getByTestId('require-all-selected-check'))
+  fireEvent.click(screen.getByTestId('flight-flagger-filter-submit'))
+
+  expect(callBack).toHaveBeenCalledWith(expect.objectContaining({
+    showNumberOfVisaNationals: true,
+    requireAllSelected: true,
+  }))
+})
+
 test("cancel button removes any un-applied changes to the form", async () => {
   render(<FlightFlaggerFilters
     terminal={"T1"}
@@ -89,7 +135,7 @@ test("cancel button removes any un-applied changes to the form", async () => {
 
   fireEvent.click(screen.getByTestId('show-filters'))
 
-  const showVisaNationals = screen.getByLabelText('show visa nationals')
+  const showVisaNationals = screen.getByLabelText('Show number of visa nationals')
   fireEvent.click(showVisaNationals)
   expect(showVisaNationals).toBeChecked()
 
@@ -97,7 +143,7 @@ test("cancel button removes any un-applied changes to the form", async () => {
 
   fireEvent.click(screen.getByTestId('show-filters'))
 
-  expect(showVisaNationals).not.toHaveAttribute('checked')
+  expect(screen.getByLabelText('Show number of visa nationals')).not.toBeChecked()
 
   const applyButtonAfterApply = screen.queryByTestId('flight-flagger-filter-submit')
   expect(applyButtonAfterApply).toBeDisabled()
