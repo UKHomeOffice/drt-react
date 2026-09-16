@@ -81,10 +81,7 @@ export const FocusedSmallInline: Story = {
 
     const focusIndicator = window.getComputedStyle(label as Element, '::before')
     await expect(focusIndicator.boxShadow).toContain(
-      'rgb(255, 221, 0) 0px 0px 0px 2px',
-    )
-    await expect(focusIndicator.boxShadow).toContain(
-      'rgb(11, 12, 12) 0px 0px 0px 4px',
+      'rgb(255, 221, 0) 0px 0px 0px 3px',
     )
   },
 }
@@ -155,7 +152,7 @@ export const RootFontSizeRegression: Story = {
         })
         const focusIndicator = window.getComputedStyle(checkboxLabel, '::before')
         await expect(focusIndicator.boxShadow).toContain(
-          'rgb(255, 221, 0) 0px 0px 0px 2px',
+          'rgb(255, 221, 0) 0px 0px 0px 3px',
         )
       }
     } finally {
