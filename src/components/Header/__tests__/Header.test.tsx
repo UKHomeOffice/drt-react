@@ -50,10 +50,11 @@ const headerProps = {
     }
   ],
   initialSelectedPortMenuItem: '/national-pressure',
+  maxWidth: 'none',
   routingFunction: jest.fn(),
   logoutLink: jest.fn(),
 }
-let testHeaderProps = {...headerProps}
+const testHeaderProps = {...headerProps}
 
 describe("When the user has admin roles", () => {
 
@@ -84,13 +85,20 @@ test("it renders the port menu items", async () => {
 
   render(<Header {...testHeaderProps} />);
 
-  const selectCompoEl = screen.getByTestId('port-selector-trigger');
-  const trigger = selectCompoEl.getElementsByClassName('MuiSelect-select')[0]
-  await fireEvent.mouseDown(trigger);
+  expect(await screen.findByRole('option', {name: 'CWL (Cardiff)'})).toHaveValue('/cwi');
+  expect(await screen.findByRole('option', {name: 'National Dashboard'})).toHaveValue('/national-pressure');
+  expect(screen.queryByRole('option', {name: 'LHR'})).toBeNull();
+})
 
-  expect(await screen.getByTestId('port-selector-/cwi')).toBeTruthy();
-  expect(await screen.getByTestId('port-selector-/national-pressure')).toBeTruthy();
-  expect(await screen.queryByTestId('port-selector-/lhr')).toBeNull();
+test("it updates the selected port and routes when a port is selected", async () => {
+
+  render(<Header {...testHeaderProps} />);
+
+  const selector = await screen.findByRole('combobox', {name: 'Select a location'});
+  fireEvent.change(selector, {target: {value: '/cwi'}});
+
+  expect(selector).toHaveValue('/cwi');
+  expect(headerProps.routingFunction).toHaveBeenCalledWith('/cwi');
 })
 
 test("it renders the left menu items", async () => {

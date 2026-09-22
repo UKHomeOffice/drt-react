@@ -208,6 +208,18 @@ describe('Select', () => {
     expect(screen.getByLabelText('Sort by')).toBeDisabled()
   })
 
+  it('disables individual options when requested', () => {
+    render(
+      <Select
+        name="sort"
+        label="Sort by"
+        options={[{ value: '', label: 'Select an option', disabled: true }, ...options]}
+      />,
+    )
+
+    expect(screen.getByRole('option', { name: 'Select an option' })).toBeDisabled()
+  })
+
   it('retains consumer select classes alongside GOV.UK classes', () => {
     render(
       <Select
