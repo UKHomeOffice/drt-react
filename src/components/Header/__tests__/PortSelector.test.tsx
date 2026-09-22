@@ -20,6 +20,7 @@ test("it selects options based on the selectedOption prop", async () => {
   const selector = await screen.findByRole('combobox', {name: 'Select a location'});
 
   expect(selector).toHaveValue('/regional-dashboard');
+  expect(selector.closest('.drt-port-selector-container')).toBeInTheDocument();
 })
 
 test("it calls the handleChangePort function correctly", async () => {

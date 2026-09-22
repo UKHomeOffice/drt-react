@@ -16,14 +16,16 @@ const PortSelector = ({handleChangePort, options, selectedOption}: IPortSelector
   ];
 
   return (
-    <Select
-      name="port-selector"
-      ariaLabel="Select a location"
-      className="drt-port-selector"
-      value={selectedOption}
-      onChange={handleChangePort}
-      options={selectOptions}
-    />
+    <div className="drt-port-selector-container">
+      <Select
+        name="port-selector"
+        ariaLabel="Select a location"
+        className="drt-port-selector"
+        value={selectedOption}
+        onChange={handleChangePort}
+        options={selectOptions}
+      />
+    </div>
   )
 }
 export default PortSelector

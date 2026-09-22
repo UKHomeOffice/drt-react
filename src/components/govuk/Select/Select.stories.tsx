@@ -109,6 +109,41 @@ export const PortDashboardArrivalWindow: Story = {
   ),
 }
 
+export const TimeRangeOverflow: Story = {
+  render: () => (
+    <>
+      <style>{`
+        .time-range-overflow-example {
+          min-width: 0;
+          width: 160px;
+        }
+      `}</style>
+      <div style={{ display: 'flex', alignItems: 'flex-end', gap: 12, flexWrap: 'wrap' }}>
+        <Select
+          name="time-range-from"
+          label="From"
+          defaultValue="10:00"
+          className="time-range-overflow-example"
+          options={[
+            { value: '10:00', label: '10:00' },
+            { value: '11:00', label: '11:00' },
+          ]}
+        />
+        <Select
+          name="time-range-to"
+          label="To"
+          defaultValue="14:00-plus-4-hours"
+          className="time-range-overflow-example"
+          options={[
+            { value: '14:00-plus-4-hours', label: '14:00 (+4 hours)' },
+            { value: '15:00-plus-5-hours', label: '15:00 (+5 hours)' },
+          ]}
+        />
+      </div>
+    </>
+  ),
+}
+
 const ControlledTemplate = () => {
   const [value, setValue] = useState('scotland')
 
