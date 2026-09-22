@@ -6,6 +6,7 @@
   $govuk-font-family: "Roboto"
 );
 @use "govuk-frontend/dist/govuk/utilities/visually-hidden";
+@use "govuk-frontend/dist/govuk/objects/form-group";
 @use "govuk-frontend/dist/govuk/components/fieldset";
 @use "govuk-frontend/dist/govuk/components/hint";
 @use "govuk-frontend/dist/govuk/components/label";
@@ -41,3 +42,4 @@
     }
   }
 }
+
