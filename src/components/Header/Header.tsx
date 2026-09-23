@@ -52,6 +52,10 @@ const Header = ({
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleChangePort = (path: string) => {
+    setSelectedPortOption(path);
+    routingFunction(path);
+  };
 
   const adminMenuRoles = adminMenuItems.map(menuItem => menuItem.roles).flat(1);
   const hasAdminMenuRoles = userRoles.filter(role => adminMenuRoles.includes(role)).length > 0;
@@ -185,7 +189,7 @@ const Header = ({
             <Grid container spacing={3}>
               <Grid item flexGrow={{xs: 1, md: 0}}>
                 <PortSelector options={portMenuItems}
-                              handleChangePort={routingFunction}
+                              handleChangePort={handleChangePort}
                               selectedOption={selectedPortOption}/>
               </Grid>
               {

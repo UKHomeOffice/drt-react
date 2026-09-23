@@ -4,6 +4,7 @@ import './Select.scss'
 export interface SelectOption {
   value: string
   label: React.ReactNode
+  disabled?: boolean
 }
 
 interface SelectBaseProps {
@@ -119,7 +120,7 @@ export const Select: React.FC<SelectProps> = ({
         onChange={(event) => onChange?.(event.target.value)}
       >
         {options.map((option) => (
-          <option key={option.value} value={option.value}>
+          <option key={option.value} value={option.value} disabled={option.disabled}>
             {option.label}
           </option>
         ))}

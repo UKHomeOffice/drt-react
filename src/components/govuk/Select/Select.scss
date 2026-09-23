@@ -9,7 +9,10 @@
 
 .drt-govuk-select .govuk-select {
   height: 40px;
-  padding: 5px;
+  padding: 5px 32px 5px 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 19px;
   line-height: 1.25;
 }
