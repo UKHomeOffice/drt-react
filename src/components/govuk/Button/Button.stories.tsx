@@ -25,6 +25,15 @@ export const Secondary: Story = {
   args: {
     children: 'Secondary Button',
     variant: 'secondary',
+    secondaryStyle: 'govuk',
+  },
+}
+
+export const HomeOfficeSecondary: Story = {
+  args: {
+    children: 'Home Office secondary Button',
+    variant: 'secondary',
+    secondaryStyle: 'home-office',
   },
 }
 
@@ -44,8 +53,18 @@ export const Small: Story = {
 
 export const SmallSecondary: Story = {
   args: {
-    children: 'Small Secondary',
+    children: 'Small GOV.UK secondary',
     variant: 'secondary',
+    secondaryStyle: 'govuk',
+    size: 'small',
+  },
+}
+
+export const HomeOfficeSmallSecondary: Story = {
+  args: {
+    children: 'Small Home Office secondary',
+    variant: 'secondary',
+    secondaryStyle: 'home-office',
     size: 'small',
   },
 }
@@ -59,8 +78,18 @@ export const Disabled: Story = {
 
 export const DisabledSecondary: Story = {
   args: {
-    children: 'Disabled Secondary',
+    children: 'Disabled GOV.UK secondary',
     variant: 'secondary',
+    secondaryStyle: 'govuk',
+    disabled: true,
+  },
+}
+
+export const HomeOfficeDisabledSecondary: Story = {
+  args: {
+    children: 'Disabled Home Office secondary',
+    variant: 'secondary',
+    secondaryStyle: 'home-office',
     disabled: true,
   },
 }
@@ -113,9 +142,19 @@ export const ExternalLink: Story = {
 
 export const SecondaryLink: Story = {
   args: {
-    children: 'Secondary Link',
+    children: 'GOV.UK secondary link',
     href: '#',
     variant: 'secondary',
+    secondaryStyle: 'govuk',
+  },
+}
+
+export const HomeOfficeSecondaryLink: Story = {
+  args: {
+    children: 'Home Office secondary link',
+    href: '#',
+    variant: 'secondary',
+    secondaryStyle: 'home-office',
   },
 }
 
@@ -130,7 +169,20 @@ export const ButtonGroup: Story = {
   render: () => (
     <div className="govuk-button-group">
       <Button>Save and Continue</Button>
-      <Button variant="secondary">Cancel</Button>
+      <Button variant="secondary" secondaryStyle="govuk">
+        Cancel
+      </Button>
+    </div>
+  ),
+}
+
+export const HomeOfficeButtonGroup: Story = {
+  render: () => (
+    <div className="govuk-button-group">
+      <Button>Save and Continue</Button>
+      <Button variant="secondary" secondaryStyle="home-office">
+        Cancel
+      </Button>
     </div>
   ),
 }
@@ -147,13 +199,29 @@ export const MultipleVariants: Story = {
         </div>
       </div>
       <div>
-        <h3>Secondary</h3>
+        <h3>GOV.UK secondary</h3>
         <div style={{ display: 'flex', gap: '8px' }}>
-          <Button variant="secondary">Default</Button>
-          <Button variant="secondary" size="small">
+          <Button variant="secondary" secondaryStyle="govuk">
+            Default
+          </Button>
+          <Button variant="secondary" secondaryStyle="govuk" size="small">
             Small
           </Button>
-          <Button variant="secondary" disabled>
+          <Button variant="secondary" secondaryStyle="govuk" disabled>
+            Disabled
+          </Button>
+        </div>
+      </div>
+      <div>
+        <h3>Home Office secondary</h3>
+        <div style={{ display: 'flex', gap: '8px' }}>
+          <Button variant="secondary" secondaryStyle="home-office">
+            Default
+          </Button>
+          <Button variant="secondary" secondaryStyle="home-office" size="small">
+            Small
+          </Button>
+          <Button variant="secondary" secondaryStyle="home-office" disabled>
             Disabled
           </Button>
         </div>

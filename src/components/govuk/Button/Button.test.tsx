@@ -33,10 +33,38 @@ describe('Button', () => {
       expect(screen.getByRole('button')).not.toHaveClass('govuk-button--warning')
     })
 
-    it('applies govuk-button--secondary class to secondary variant', () => {
+    it('applies the Home Office treatment to secondary buttons by default', () => {
       render(<Button variant="secondary">Secondary</Button>)
-      expect(screen.getByRole('button')).toHaveClass('govuk-button', 'govuk-button--secondary')
+      expect(screen.getByRole('button')).toHaveClass(
+        'govuk-button',
+        'govuk-button--secondary',
+        'drt-govuk-button--secondary-home-office',
+      )
     })
+
+    it('applies the GOV.UK treatment when explicitly requested for a secondary button', () => {
+      render(
+        <Button variant="secondary" secondaryStyle="govuk">
+          GOV.UK secondary
+        </Button>,
+      )
+
+      expect(screen.getByRole('button')).toHaveClass('govuk-button--secondary')
+      expect(screen.getByRole('button')).not.toHaveClass('drt-govuk-button--secondary-home-office')
+    })
+
+    it.each(['primary', 'warning'] as const)(
+      'does not apply the Home Office treatment to the %s variant',
+      (variant) => {
+        render(
+          <Button variant={variant} secondaryStyle="home-office">
+            Non-secondary button
+          </Button>,
+        )
+
+        expect(screen.getByRole('button')).not.toHaveClass('drt-govuk-button--secondary-home-office')
+      },
+    )
 
     it('applies govuk-button--warning class to warning variant', () => {
       render(<Button variant="warning">Warning</Button>)
@@ -300,6 +328,19 @@ describe('Button', () => {
         </Button>,
       )
       expect(screen.getByRole('link')).toHaveClass('govuk-button', 'govuk-button--secondary')
+    })
+
+    it('applies the Home Office treatment to secondary link buttons', () => {
+      render(
+        <Button href="#" variant="secondary" secondaryStyle="home-office">
+          Home Office secondary link
+        </Button>,
+      )
+
+      expect(screen.getByRole('link')).toHaveClass(
+        'govuk-button--secondary',
+        'drt-govuk-button--secondary-home-office',
+      )
     })
 
     it('link button applies size classes', () => {
