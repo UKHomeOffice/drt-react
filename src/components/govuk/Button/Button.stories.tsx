@@ -65,6 +65,36 @@ export const DisabledSecondary: Story = {
   },
 }
 
+export const FullWidth: Story = {
+  render: () => (
+    <div style={{ maxWidth: '480px' }}>
+      <Button fullWidth>Continue</Button>
+    </div>
+  ),
+}
+
+export const WithStartIcon: Story = {
+  args: {
+    startIcon: (
+      <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 16 16">
+        <path fill="currentColor" d="M8 1v8.17l2.59-2.58L12 8l-4 4-4-4 1.41-1.41L7 9.17V1h1ZM2 13h12v2H2z" />
+      </svg>
+    ),
+    children: 'Download report',
+  },
+}
+
+export const WithEndIcon: Story = {
+  args: {
+    endIcon: (
+      <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 16 16">
+        <path fill="currentColor" d="m9.29 3.29 1.42 1.42L7.41 8l3.3 3.29-1.42 1.42L4.59 8z" />
+      </svg>
+    ),
+    children: 'Back',
+  },
+}
+
 export const LinkButton: Story = {
   args: {
     children: 'Link Button',

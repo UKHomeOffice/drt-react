@@ -4,3 +4,31 @@
 
 // Button-specific GOV.UK component styles.
 @use "govuk-frontend/dist/govuk/components/button";
+
+// DRT extensions: GOV.UK Frontend does not provide generic icon slots or a
+// full-width modifier. Exact widths remain the responsibility of consumers.
+.govuk-button.drt-govuk-button--has-icons {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.govuk-button.drt-govuk-button--full-width {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.drt-govuk-button__icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+
+  svg {
+	display: block;
+  }
+}
+
+.drt-govuk-button__content {
+  min-width: 0;
+}

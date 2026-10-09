@@ -3,6 +3,14 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { Button } from './Button'
 
+const getRenderedIcon = (container: HTMLElement, testId: string): SVGElement => {
+  const icon = container.querySelector<SVGElement>(`[data-testid="${testId}"]`)
+  if (!icon) {
+    throw new Error(`Expected decorative icon "${testId}" to be rendered`)
+  }
+  return icon
+}
+
 describe('Button', () => {
   describe('element type', () => {
     it('renders a button element by default', () => {
@@ -57,6 +65,84 @@ describe('Button', () => {
     it('defaults to default size when size is not specified', () => {
       render(<Button>Default</Button>)
       expect(screen.getByRole('button')).not.toHaveClass('govuk-button--small')
+    })
+  })
+
+  describe('full width styling', () => {
+    it('applies the DRT full-width class when requested', () => {
+      render(<Button fullWidth>Continue</Button>)
+
+      expect(screen.getByRole('button', { name: 'Continue' })).toHaveClass(
+        'govuk-button',
+        'drt-govuk-button--full-width',
+      )
+    })
+
+    it('does not apply the full-width class by default', () => {
+      render(<Button>Continue</Button>)
+
+      expect(screen.getByRole('button')).not.toHaveClass('drt-govuk-button--full-width')
+    })
+
+    it('applies the full-width class to link buttons', () => {
+      render(
+        <Button href="/continue" fullWidth>
+          Continue
+        </Button>,
+      )
+
+      expect(screen.getByRole('link', { name: 'Continue' })).toHaveClass(
+        'drt-govuk-button--full-width',
+      )
+    })
+  })
+
+  describe('decorative icons', () => {
+    it('renders a start icon before the button text and hides it from assistive technology', () => {
+      const { container } = render(
+        <Button startIcon={<svg data-testid="download-icon" />}>Download</Button>,
+      )
+
+      const button = screen.getByRole('button', { name: 'Download' })
+      const icon = getRenderedIcon(container, 'download-icon')
+      const iconWrapper = icon.parentElement
+
+      expect(button).toHaveClass('drt-govuk-button--has-icons')
+      expect(iconWrapper).toHaveClass('drt-govuk-button__icon')
+      expect(iconWrapper).toHaveAttribute('aria-hidden', 'true')
+      expect(button.children[0]).toBe(iconWrapper)
+      expect(container.querySelector('.drt-govuk-button__content')).toHaveTextContent('Download')
+    })
+
+    it('renders an end icon after the button text', () => {
+      const { container } = render(
+        <Button endIcon={<svg data-testid="next-icon" />}>Continue</Button>,
+      )
+
+      const button = screen.getByRole('button', { name: 'Continue' })
+      const content = container.querySelector('.drt-govuk-button__content')
+      const icon = getRenderedIcon(container, 'next-icon')
+
+      expect(button.children[0]).toBe(content)
+      expect(button.children[1]).toBe(icon.parentElement)
+    })
+
+    it('supports start and end icons on a link button', () => {
+      const { container } = render(
+        <Button
+          href="/report"
+          startIcon={<svg data-testid="report-icon" />}
+          endIcon={<svg data-testid="arrow-icon" />}
+        >
+          View report
+        </Button>,
+      )
+
+      expect(screen.getByRole('link', { name: 'View report' })).toHaveClass(
+        'drt-govuk-button--has-icons',
+      )
+      expect(getRenderedIcon(container, 'report-icon')).toBeInTheDocument()
+      expect(getRenderedIcon(container, 'arrow-icon')).toBeInTheDocument()
     })
   })
 

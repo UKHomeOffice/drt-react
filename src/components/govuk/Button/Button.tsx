@@ -10,6 +10,14 @@ export interface ButtonProps {
 
   // Sizing
   size?: 'default' | 'small'
+  /** Makes the button fill the width of its containing block. */
+  fullWidth?: boolean
+
+  // Decorative Icons
+  /** Decorative content displayed before the button text. */
+  startIcon?: React.ReactNode
+  /** Decorative content displayed after the button text. */
+  endIcon?: React.ReactNode
 
   // HTML Attributes & Behavior
   type?: 'button' | 'submit' | 'reset'
@@ -45,6 +53,9 @@ export const Button: React.FC<ButtonProps> = ({
   children,
   variant = 'primary',
   size = 'default',
+  fullWidth = false,
+  startIcon,
+  endIcon,
   type = 'button',
   onClick,
   disabled = false,
@@ -64,6 +75,8 @@ export const Button: React.FC<ButtonProps> = ({
     'govuk-button',
     variant !== 'primary' && `govuk-button--${variant}`,
     size === 'small' && 'govuk-button--small',
+    fullWidth && 'drt-govuk-button--full-width',
+    (startIcon || endIcon) && 'drt-govuk-button--has-icons',
     className,
   ]
     .filter(Boolean)
@@ -77,6 +90,22 @@ export const Button: React.FC<ButtonProps> = ({
     ...ariaAttributes,
   }
 
+  const content = (
+    <>
+      {startIcon && (
+        <span className="drt-govuk-button__icon" aria-hidden="true">
+          {startIcon}
+        </span>
+      )}
+      <span className="drt-govuk-button__content">{children}</span>
+      {endIcon && (
+        <span className="drt-govuk-button__icon" aria-hidden="true">
+          {endIcon}
+        </span>
+      )}
+    </>
+  )
+
   if (href) {
     return (
       <a
@@ -85,7 +114,7 @@ export const Button: React.FC<ButtonProps> = ({
         rel={rel}
         {...commonProps}
       >
-        {children}
+        {content}
       </a>
     )
   }
@@ -100,7 +129,7 @@ export const Button: React.FC<ButtonProps> = ({
       form={form}
       {...commonProps}
     >
-      {children}
+      {content}
     </button>
   )
 }
