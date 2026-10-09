@@ -1,15 +1,21 @@
 import React from 'react'
 import './Button.scss'
 
+export type ButtonVariant = 'primary' | 'secondary' | 'warning'
+export type ButtonSize = 'default' | 'small'
+export type SecondaryButtonStyle = 'govuk' | 'home-office'
+
 export interface ButtonProps {
   // Content & Label
   children: React.ReactNode
 
   // Styling Variants
-  variant?: 'primary' | 'secondary' | 'warning'
+  variant?: ButtonVariant
+  /** Selects the visual treatment for secondary buttons. Defaults to Home Office. */
+  secondaryStyle?: SecondaryButtonStyle
 
   // Sizing
-  size?: 'default' | 'small'
+  size?: ButtonSize
   /** Makes the button fill the width of its containing block. */
   fullWidth?: boolean
 
@@ -52,6 +58,7 @@ export interface ButtonProps {
 export const Button: React.FC<ButtonProps> = ({
   children,
   variant = 'primary',
+  secondaryStyle = 'home-office',
   size = 'default',
   fullWidth = false,
   startIcon,
@@ -74,6 +81,7 @@ export const Button: React.FC<ButtonProps> = ({
   const classes = [
     'govuk-button',
     variant !== 'primary' && `govuk-button--${variant}`,
+    variant === 'secondary' && secondaryStyle === 'home-office' && 'drt-govuk-button--secondary-home-office',
     size === 'small' && 'govuk-button--small',
     fullWidth && 'drt-govuk-button--full-width',
     (startIcon || endIcon) && 'drt-govuk-button--has-icons',
