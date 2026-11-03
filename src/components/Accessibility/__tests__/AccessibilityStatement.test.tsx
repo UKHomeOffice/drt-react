@@ -47,6 +47,9 @@ describe('AccessibilityStatement', () => {
     render(<AccessibilityStatement {...mockProps} />);
 
     const emailButton = screen.getByRole('link', {name: /Email us to report a problem/i});
+    expect(emailButton).toHaveClass('govuk-button');
+    expect(emailButton).not.toHaveClass('govuk-button--secondary');
+    expect(emailButton).toHaveAttribute('href', `mailto:${mockProps.teamEmail}`);
     emailButton.click();
 
     expect(mockProps.sendReportProblemGaEvent).toHaveBeenCalled();

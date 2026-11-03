@@ -1,5 +1,6 @@
 import React, { useEffect, useId, useRef, useState } from 'react'
 import './DatePicker.scss'
+import { Button } from '../Button/Button'
 import {
   addDays,
   addMonths,
@@ -313,7 +314,10 @@ export const DatePicker: React.FC<DatePickerProps> = ({
               return <td key={date.isoDate}><button type="button" data-date={date.isoDate} className={joinClasses('moj-datepicker__button', 'moj-datepicker__calendar-day', isFocused && 'moj-datepicker__button--selected', current && 'moj-datepicker__button--current', isToday && 'moj-datepicker__button--today')} aria-label={`${WEEKDAY_NAMES[dateToWeekday(date)]} ${date.day} ${MONTH_NAMES[date.month - 1]} ${date.year}${isToday ? ', today' : ''}`} aria-current={current ? 'date' : undefined} aria-disabled={!available} disabled={!available} hidden={!date.isCurrentMonth} tabIndex={isFocused ? 0 : -1} onKeyDown={(event) => handleDayKeyDown(event, date)} onClick={() => selectDate(date)}>{date.day}</button></td>
             })}</tr>)}</tbody>
           </table>
-          <div className="govuk-button-group moj-datepicker__actions"><button type="button" className="govuk-button" disabled={readOnly || !isDateWithinBounds(focusedDate, minDate ?? undefined, maxDate ?? undefined)} onClick={() => selectDate(focusedDate)}>Select</button><button type="button" className="govuk-button govuk-button--secondary" onClick={() => closeCalendar()}>Close</button></div>
+          <div className="govuk-button-group moj-datepicker__actions">
+            <Button variant="primary" disabled={readOnly || !isDateWithinBounds(focusedDate, minDate ?? undefined, maxDate ?? undefined)} onClick={() => selectDate(focusedDate)}>Select</Button>
+            <Button variant="secondary" onClick={() => closeCalendar()}>Close</Button>
+          </div>
         </div>}
       </div>
       {configError && <span className="govuk-visually-hidden">The date picker bounds are invalid.</span>}

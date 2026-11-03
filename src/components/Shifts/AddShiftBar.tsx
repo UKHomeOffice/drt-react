@@ -1,5 +1,6 @@
 import React from "react";
-import {Box, Button, Stack, Typography} from "@mui/material";
+import {Box, Stack, Typography} from "@mui/material";
+import {Button as GovukButton} from "../govuk/Button/Button";
 
 export interface AddShiftBarProps {
   onClickGetStarted: () => void;
@@ -16,9 +17,9 @@ export const AddShiftBar = ({
       <Typography variant="h5" sx={{"paddingLeft":"10px"}}>
         No shift patterns added.
       </Typography>
-      <Stack direction={'row'} spacing={2} alignItems={'center'}>
-        <Button variant="contained" color="primary" onClick={onClickGetStarted}>Create shift pattern</Button>
-        <Button variant="contained" color="secondary" onClick={onClickViewStaffing}>View staffing</Button>
+      <Stack direction={'row'} spacing={2} alignItems={'center'} sx={{'& .govuk-button': {mb: 0}}}>
+        <GovukButton variant="primary" onClick={onClickGetStarted}>Create shift pattern</GovukButton>
+        <GovukButton variant="secondary" onClick={onClickViewStaffing}>View staffing</GovukButton>
       </Stack>
     </Box>
   );

@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Box, Button, Card, CardContent, CardHeader, FormControl, IconButton, InputLabel, List, ListItem, ListItemIcon, ListItemText, NativeSelect, Stack, TextField, Typography} from "@mui/material";
+import {Box, Card, CardContent, CardHeader, FormControl, IconButton, InputLabel, List, ListItem, ListItemIcon, ListItemText, NativeSelect, Stack, TextField, Typography} from "@mui/material";
 import moment, {Moment} from "moment";
 import CloseIcon from "@mui/icons-material/Close";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
@@ -9,6 +9,7 @@ import {AdapterMoment} from "@mui/x-date-pickers/AdapterMoment";
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import { intervalStartTimeOptions, intervalEndTimeOptions } from '../Util';
+import {Button} from '../govuk/Button/Button';
 
 moment.updateLocale('en-gb', {
   week: {
@@ -191,10 +192,10 @@ export const UpdateStaffForTimeRangeForm = ({ ustd, interval, handleSubmit, canc
             </List>
           </CardContent>
         </Card>
-        <Box sx={{paddingTop: '10px'}}>
+        <Box sx={{paddingTop: '10px', '& .govuk-button': {mb: 0}}}>
           <Button
             fullWidth
-            variant="contained"
+            variant="primary"
             disabled={!!error}
             onClick={handleSubmitForm}
             data-cy="save-staff-button"

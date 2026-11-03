@@ -58,6 +58,19 @@ const testHeaderProps = {...headerProps}
 
 describe("When the user has admin roles", () => {
 
+  test("the mobile GOV.UK menu opens and routes to an authorized item", () => {
+    const routingFunction = jest.fn();
+    render(<Header {...headerProps} userRoles={['health-checks:edit']} routingFunction={routingFunction} />);
+
+    const menuButton = screen.getByTestId('mobile-admin-menu-trigger');
+    expect(menuButton).toHaveClass('govuk-button');
+    expect(menuButton).toHaveAttribute('aria-haspopup', 'true');
+    fireEvent.click(menuButton);
+    expect(menuButton).toHaveAttribute('aria-expanded', 'true');
+    fireEvent.click(screen.getByTestId('menu-/health-checks'));
+    expect(routingFunction).toHaveBeenCalledWith('/health-checks');
+  });
+
   test("it renders the admin menu options if the role is available", async () => {
 
     testHeaderProps.userRoles=['health-checks:edit']

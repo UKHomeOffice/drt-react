@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
-import {Box, Button, Stack, Typography, IconButton} from '@mui/material';
+import {Box, Stack, Typography, IconButton} from '@mui/material';
 import {ConfirmShiftForms} from "./ConfirmShiftForms";
 import {drtTheme} from "../../index";
 import {getAirportNameByCode} from "../../airports";
 import AddIcon from '@mui/icons-material/Add';
 import {EditShiftForm} from "./EditShiftForm";
 import {ShiftDate} from "./ShiftHotTableView";
+import {Button as GovukButton} from "../govuk/Button/Button";
 
 export interface ShiftForm {
   id: number;
@@ -142,17 +143,17 @@ export const ShiftsForm = ({
                                isEditingPersistedShift={formMode === 'edit'}
                 /></Box>
             })}
-            <Box>
+            <Box sx={{'& .govuk-button': {mb: 0}}}>
               {formMode === 'add'  && !disableAdd && (
-                <Button variant="contained" color="secondary" onClick={handleAddShift}>
+                <GovukButton variant="secondary" onClick={handleAddShift}>
                   Add a shift
-                </Button>
+                </GovukButton>
               )}
             </Box>
-            <Box sx={{"paddingTop": "10px"}}>
-              <Button variant="contained" color="primary" onClick={onContinue} data-cy="shift-continue-button">
+            <Box sx={{"paddingTop": "10px", '& .govuk-button': {mb: 0}}}>
+              <GovukButton variant="primary" onClick={onContinue} data-cy="shift-continue-button">
                 Continue
-              </Button>
+              </GovukButton>
               {showErrors && (
                 <Typography color="error" variant="body1">Please fix the errors before continuing</Typography>
               )}

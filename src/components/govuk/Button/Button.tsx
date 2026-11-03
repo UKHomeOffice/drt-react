@@ -32,6 +32,8 @@ export interface ButtonProps {
 
   // Link Button Support
   href?: string
+  /** Called when a link button is activated. */
+  onLinkClick?: React.MouseEventHandler<HTMLAnchorElement>
   target?: '_blank' | '_self' | '_parent' | '_top'
   rel?: string
 
@@ -67,6 +69,7 @@ export const Button: React.FC<ButtonProps> = ({
   onClick,
   disabled = false,
   href,
+  onLinkClick,
   target,
   rel,
   name,
@@ -118,6 +121,7 @@ export const Button: React.FC<ButtonProps> = ({
     return (
       <a
         href={href}
+        onClick={onLinkClick}
         target={target}
         rel={rel}
         {...commonProps}

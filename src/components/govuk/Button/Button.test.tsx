@@ -23,6 +23,16 @@ describe('Button', () => {
       expect(screen.getByRole('link', { name: 'Link Button' })).toBeInTheDocument()
       expect(screen.getByRole('link')).toHaveAttribute('href', '/path')
     })
+
+    it('calls the link click handler with the anchor event', () => {
+      const onLinkClick = jest.fn((event: React.MouseEvent<HTMLAnchorElement>) => event.preventDefault())
+      render(<Button href="/path" onLinkClick={onLinkClick}>Link Button</Button>)
+      const link = screen.getByRole('link', { name: 'Link Button' })
+      fireEvent.click(link)
+      expect(onLinkClick).toHaveBeenCalledTimes(1)
+      expect(link).toContainElement(onLinkClick.mock.calls[0][0].target as HTMLElement)
+      expect(link).toHaveAttribute('href', '/path')
+    })
   })
 
   describe('variant styling', () => {

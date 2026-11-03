@@ -58,6 +58,10 @@ test("apply button is only enabled when there are changes to apply", async () =>
 
   const applyButton = screen.queryByTestId('flight-flagger-filter-submit')
 
+  expect(applyButton).toHaveClass('govuk-button')
+  expect(applyButton).not.toHaveClass('govuk-button--secondary')
+  expect(applyButton).not.toHaveClass('govuk-button--warning')
+  expect(applyButton).toHaveAttribute('type', 'button')
   expect(applyButton).toBeDisabled()
 
   const nationalitiesAutocomplete = screen.getByTestId('nationalities-autocomplete')
@@ -133,13 +137,17 @@ test("cancel button removes any un-applied changes to the form", async () => {
     sendEvent={sendEvent}
   />)
 
-  fireEvent.click(screen.getByTestId('show-filters'))
+  const showFilters = screen.getByTestId('show-filters')
+  expect(showFilters).toHaveClass('govuk-button--secondary', 'drt-govuk-button--secondary-home-office')
+  fireEvent.click(showFilters)
 
   const showVisaNationals = screen.getByLabelText('Show number of visa nationals')
   fireEvent.click(showVisaNationals)
   expect(showVisaNationals).toBeChecked()
 
-  await fireEvent.click(screen.getByTestId('flight-flagger-filter-cancel'))
+  const cancel = screen.getByTestId('flight-flagger-filter-cancel')
+  expect(cancel).toHaveClass('govuk-button--secondary', 'drt-govuk-button--secondary-home-office')
+  await fireEvent.click(cancel)
 
   fireEvent.click(screen.getByTestId('show-filters'))
 

@@ -1,7 +1,8 @@
 import React from 'react';
-import {Box, Typography, Button} from '@mui/material';
+import {Box, Typography} from '@mui/material';
 import {ShiftForm} from "./ShiftsForm";
 import {shiftDateToString} from "../Util";
+import {Button as GovukButton} from "../govuk/Button/Button";
 
 export interface RemoveShiftFormProps {
   shift: ShiftForm;
@@ -51,10 +52,10 @@ export const ConfirmRemoveShift = ({
               <Box component="dd">{shiftDateToString(shift.startDate)}</Box>
             </Box>
           </Box>
-          <Box sx={{display: 'flex', justifyContent: 'flex-start', gap: '10px', marginTop: '20px'}}>
-            <Button variant="contained" color="primary" data-cy="shift-confirm-remove-button"
-                    onClick={() => onConfirm(shift)}>Remove</Button>
-          <Button variant="contained" color="secondary" data-cy="shift-confirm-cancel-button" onClick={() => onCancel()}>Cancel</Button>
+          <Box sx={{display: 'flex', justifyContent: 'flex-start', gap: '10px', marginTop: '20px', '& .govuk-button': {mb: 0}}}>
+            <GovukButton variant="primary" data-cy="shift-confirm-remove-button"
+                         onClick={() => onConfirm(shift)}>Remove</GovukButton>
+            <GovukButton variant="secondary" data-cy="shift-confirm-cancel-button" onClick={() => onCancel()}>Cancel</GovukButton>
           </Box>
     </Box>
   )

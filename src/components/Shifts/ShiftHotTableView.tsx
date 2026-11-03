@@ -12,6 +12,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {shiftDateToString} from "../Util";
 import Alert from '@mui/material/Alert';
 import {Alert as MuiAlert} from "../mui/storybookExports/Alerts.component";
+import {Button as GovukButton} from "../govuk/Button/Button";
 
 export interface ShiftDate {
   year: number;
@@ -396,16 +397,15 @@ export const ShiftHotTableView: React.FC<ShiftHotTableViewProps> = ({
               rowHeaderWidth={100}
               licenseKey={'non-commercial-and-evaluation'}
             />
-            <Button
-              data-cy={`shift-show/hide-${index}`}
-              variant="contained"
-              color="secondary"
-              sx={{mt: 2}}
-              disableElevation
-              onClick={() => toggleRowExpansion(shift.shiftSummary.name, isExpanded ? "Hide time breakdown" : "Show time breakdown")}
-            >
-              {isExpanded ? "Hide time breakdown" : "Show time breakdown"}
-            </Button>
+            <Box sx={{mt: 2, '& .govuk-button': {mb: 0}}}>
+              <GovukButton
+                data-cy={`shift-show/hide-${index}`}
+                variant="secondary"
+                onClick={() => toggleRowExpansion(shift.shiftSummary.name, isExpanded ? "Hide time breakdown" : "Show time breakdown")}
+              >
+                {isExpanded ? "Hide time breakdown" : "Show time breakdown"}
+              </GovukButton>
+            </Box>
           </Box>
         );
       })}
