@@ -1,7 +1,8 @@
 import React from 'react';
-import {Box, Typography, Button} from '@mui/material';
+import {Box, Typography} from '@mui/material';
 import {ShiftForm} from "./ShiftsForm";
 import {shiftDateToString} from "../Util";
+import {Button} from '../govuk/Button/Button';
 
 export interface ShiftsSummaryProps {
   port: string;
@@ -47,13 +48,13 @@ export const ConfirmShiftForms = ({
               <Box component="dt" sx={{whiteSpace: 'nowwrap', color: 'black', alignItems: 'center', marginTop: '10px'}}>
                 <Typography variant="h3" sx={{fontSize: '20px', mb:'0 !important'}}>{shift.name}</Typography>
               </Box>
-              <Box component="dd" sx={{flex: '1', display: 'flex', justifyContent: 'flex-end', gap: '20px', flexGrow: 1, color: 'black'}}>
+              <Box component="dd" sx={{flex: '1', display: 'flex', justifyContent: 'flex-end', gap: '20px', flexGrow: 1, color: 'black', '& .govuk-button': {mb: 0}}}>
                 {!isEditingPersistedShift && (
-                  <Button variant='text' color='secondary' sx={{fontSize: '19px'}}>
+                  <Button variant="secondary">
                     Remove shift
                   </Button>
                 )}
-                <Button variant='text' color="secondary" onClick={() => editShiftsHandler([shift])} sx={{fontSize: '19px'}}>
+                <Button variant="secondary" onClick={() => editShiftsHandler([shift])}>
                   Edit
                 </Button>
               </Box>
@@ -85,7 +86,7 @@ export const ConfirmShiftForms = ({
           </Box>
         ))
       }
-      <Button variant="contained" color="primary" data-cy="shift-confirm-button"
+      <Button variant="primary" data-cy="shift-confirm-button"
               onClick={() => confirmHandler(shifts)}>Confirm</Button>
     </Box>
   )

@@ -140,6 +140,28 @@ describe('DatePicker', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   })
 
+  it('uses GOV.UK primary and Home Office secondary calendar actions', () => {
+    const onChange = jest.fn()
+    render(<DatePicker id="date" label="Date" defaultValue="2026-08-27" onChange={onChange} />)
+    const toggle = screen.getByRole('button', { name: 'Choose date' })
+    fireEvent.click(toggle)
+    const select = screen.getByRole('button', { name: 'Select' })
+    const close = screen.getByRole('button', { name: 'Close' })
+    expect(select).toHaveClass('govuk-button')
+    expect(select).not.toHaveClass('govuk-button--secondary')
+    expect(close).toHaveClass('govuk-button--secondary', 'drt-govuk-button--secondary-home-office')
+    fireEvent.click(close)
+    expect(toggle).toHaveFocus()
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    expect(onChange).not.toHaveBeenCalled()
+
+    fireEvent.click(toggle)
+    fireEvent.keyDown(screen.getByRole('button', { name: /^Thursday 27 August 2026/ }), { key: 'ArrowRight' })
+    fireEvent.click(screen.getByRole('button', { name: 'Select' }))
+    expect(onChange).toHaveBeenCalledWith('2026-08-28')
+    expect(toggle).toHaveFocus()
+  })
+
   it('hides dates outside the displayed month like the MOJ calendar', () => {
     render(<DatePicker id="date" label="Date" defaultValue="2026-08-27" />)
     fireEvent.click(screen.getByRole('button', { name: 'Choose date' }))

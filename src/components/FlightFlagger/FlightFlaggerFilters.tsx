@@ -2,7 +2,6 @@ import React, {useState} from "react"
 import {
   Autocomplete,
   Box,
-  Button,
   Card,
   Chip,
   Collapse,
@@ -24,6 +23,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import CustomHighlightIcon from "./icon-highlight-pax.svg"
 import {IAnalyticsEvent} from "../Util";
 import {Checkboxes} from "../govuk";
+import {Button as GovukButton} from "../govuk/Button/Button";
 
 export type FormState = {
   showTransitPaxNumber: boolean,
@@ -207,17 +207,16 @@ export const FlightFlaggerFilters = ({
       </Grid>
       <Grid item flexGrow={0} sx={{
         ml: {xs: 0, sm: 0, md: 2},
-        px: {xs: 0, md: 4}
+        px: {xs: 0, md: 4},
+        '& .govuk-button': {mb: 0}
       }}>
         <InputLabel sx={{mb: 1}}><strong>Highlight flights</strong></InputLabel>
-        <Button
+        <GovukButton
           data-testid="show-filters"
-          color="secondary"
           onClick={() => toggleFilters()}
-          disableElevation
-          variant="contained">
+          variant="secondary">
           Select pax info to reveal
-        </Button>
+        </GovukButton>
       </Grid>
       {someCriteriaSelected(appliedSearchFlags) && <Grid item flexGrow={1}>
         <FormControl>
@@ -315,20 +314,19 @@ export const FlightFlaggerFilters = ({
                   ]}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <Button data-testid="flight-flagger-filter-cancel"
-                        variant='contained'
-                        color="secondary"
-                        onClick={() => setCurrentFormState({...appliedSearchFlags, showFilters: false})}
-                        sx={{mr: 2}}>
-                  Cancel
-                </Button>
-                <Button color="primary" data-testid="flight-flagger-filter-submit"
-                        variant='contained'
-                        onClick={handleApply(currentFormState)}
-                        disabled={!formIsTouched(appliedSearchFlags, currentFormState)}>
+              <Grid item xs={12} sx={{'& .govuk-button': {mb: 0}}}>
+                <Box component="span" sx={{'& .govuk-button': {mb: 0, mr: 2}}}>
+                  <GovukButton data-testid="flight-flagger-filter-cancel"
+                               variant="secondary"
+                               onClick={() => setCurrentFormState({...appliedSearchFlags, showFilters: false})}>
+                    Cancel
+                  </GovukButton>
+                </Box>
+                <GovukButton variant="primary" data-testid="flight-flagger-filter-submit"
+                             onClick={handleApply(currentFormState)}
+                             disabled={!formIsTouched(appliedSearchFlags, currentFormState)}>
                   Apply Highlights
-                </Button>
+                </GovukButton>
               </Grid>
             </Grid>
           </Paper>

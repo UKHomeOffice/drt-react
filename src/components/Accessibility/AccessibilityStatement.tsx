@@ -1,7 +1,8 @@
 import React, {useEffect} from 'react'
-import {Box, Button, Link, List, ListItem, Typography} from '@mui/material'
+import {Box, Link, List, ListItem, Typography} from '@mui/material'
 import { unstable_styleFunctionSx, SxProps } from '@mui/system';
 import styled, { StyleFunction } from 'styled-components';
+import {Button} from '../govuk/Button/Button';
 
 interface SectionProps {
   sx?: SxProps;
@@ -85,7 +86,7 @@ export const AccessibilityStatement = ({
       <Section id="feedback">
         <Typography variant="h2" mb={2}>Feedback and contact information</Typography>
         <Typography variant='body1' mb={2}>The Dynamic Response Tool (DRT) team, which works within Technology Delivery Centre, is responsible for the accessibility of this service. We're always looking to improve the accessibility of this website. If you find any problems not listed on this page or think we're not meeting other accessibility requirements, contact us:</Typography>
-        <Button color="primary" variant="contained" href={`mailto:${teamEmail}`} onClick={sendReportProblemGaEvent}>Email us to report a problem</Button>
+        <Button variant="primary" href={`mailto:${teamEmail}`} onLinkClick={sendReportProblemGaEvent}>Email us to report a problem</Button>
       </Section>
       <Section id="enforcement">
         <Typography variant="h2" mb={2}>Enforcement procedure</Typography>

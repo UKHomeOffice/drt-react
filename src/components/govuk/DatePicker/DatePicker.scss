@@ -186,6 +186,9 @@
   .govuk-button {
     font-size: 16px;
     line-height: 20px;
+  }
+
+  .govuk-button:not(.drt-govuk-button--secondary-home-office) {
     padding: 8px 10px 7px;
   }
 }

@@ -6,6 +6,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import {Crest} from './Crest';
 import {DynamicIcon, IconNames} from './DynamicIcon';
 import PortSelector from "./PortSelector";
+import {Button as GovukButton} from '../govuk/Button/Button';
 
 export type MenuItem = {
   label: string,
@@ -146,19 +147,18 @@ const Header = ({
             <Grid item xs={4} sx={{padding: {
               xs: 0,
               md: 2,
-            }, textAlign: 'right'}} display={{xs: 'block', md: 'none'}}>
+            }, textAlign: 'right', '& .govuk-button': {display: 'block', ml: 'auto', mb: 0}}} display={{xs: 'block', md: 'none'}}>
 
-              <Button
+              <GovukButton
                 data-testid="mobile-admin-menu-trigger"
-                variant="contained"
+                variant="primary"
                 aria-controls={adminMenuOpen ? 'demo-positioned-menu' : undefined}
                 aria-haspopup="true"
                 aria-expanded={adminMenuOpen ? 'true' : undefined}
                 onClick={handleClick}
-                sx={{marginLeft: 'auto', display: {xs: 'block', md: 'none'}}}
               >
                 Menu
-              </Button>
+              </GovukButton>
               <Menu
                 anchorEl={anchorEl}
                 open={adminMenuOpen}
