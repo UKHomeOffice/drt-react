@@ -121,9 +121,8 @@ export const ShiftsForm = ({
               Step 1 of 2 - {formMode === 'edit' ? "Edit your shift" : "Create your shift pattern"}
             </Typography>
             {shifts.map((form, index) => {
-              return <Box>
+              return <Box key={form.id}>
                 <EditShiftForm index={index}
-                               key={form.id}
                                formState={form}
                                onUpdate={state => {
                                  const updatedShifts = shifts.map(shift => {

@@ -1,0 +1,153 @@
+// Based on the NHS design system card pattern. Styles are scoped so they do
+// not alter NHS or GOV.UK components provided by a consuming application.
+.drt-govuk-card {
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #d8dde0;
+  color: #212b32;
+}
+
+.drt-govuk-card__image {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
+  border-bottom: 1px solid #d8dde0;
+}
+
+.drt-govuk-card__content,
+.drt-govuk-card__heading-container {
+  box-sizing: border-box;
+  padding: 16px;
+}
+
+.drt-govuk-card__heading-container {
+  padding-bottom: 0;
+}
+
+.drt-govuk-card__heading-container + .drt-govuk-card__content {
+  padding-top: 0;
+}
+
+.drt-govuk-card__heading {
+  margin: 0 0 16px;
+  font-size: 24px;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+.drt-govuk-card__content > :last-child:not(.drt-govuk-card__chevron),
+.drt-govuk-card--chevron .drt-govuk-card__content > :nth-last-child(2) {
+  margin-bottom: 0;
+}
+
+.drt-govuk-card__action {
+  margin-bottom: 16px;
+}
+
+.drt-govuk-card__link {
+  color: #005eb8;
+  text-decoration: underline;
+}
+
+.drt-govuk-card__link:visited {
+  color: #330072;
+}
+
+.drt-govuk-card__link:hover {
+  color: #7c2855;
+}
+
+.drt-govuk-card__link:focus {
+  outline: 3px solid transparent;
+  color: #212b32;
+  background: #ffeb3b;
+  box-shadow: 0 -2px #ffeb3b, 0 4px #212b32;
+  text-decoration: none;
+}
+
+.drt-govuk-card--secondary {
+  border: 0;
+  background: transparent;
+  box-shadow: 0 4px 0 #d8dde0;
+}
+
+.drt-govuk-card--secondary .drt-govuk-card__content,
+.drt-govuk-card--secondary .drt-govuk-card__heading-container {
+  padding-top: 0;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.drt-govuk-card--clickable {
+  box-shadow: 0 4px 0 #d8dde0;
+}
+
+.drt-govuk-card--clickable .drt-govuk-card__link::before {
+  position: absolute;
+  inset: -1px -1px -5px;
+  content: '';
+}
+
+.drt-govuk-card--clickable:hover {
+  border-color: #aeb7bd;
+  box-shadow: 0 4px 0 #aeb7bd;
+}
+
+.drt-govuk-card--clickable:active {
+  top: 4px;
+  box-shadow: none;
+}
+
+.drt-govuk-card--chevron .drt-govuk-card__content {
+  padding-right: 64px;
+}
+
+.drt-govuk-card__chevron {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin-top: -16px;
+  border-radius: 50%;
+  background: #005eb8;
+  color: #fff;
+  font-size: 32px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+@media (min-width: 40.0625em) {
+  .drt-govuk-card__content,
+  .drt-govuk-card__heading-container {
+    padding: 24px;
+  }
+
+  .drt-govuk-card__heading-container {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 0;
+  }
+
+  .drt-govuk-card--chevron .drt-govuk-card__content {
+    padding-right: 72px;
+  }
+
+  .drt-govuk-card__chevron {
+    right: 24px;
+  }
+}
+
+@media (forced-colors: active) {
+  .drt-govuk-card__chevron {
+    border: 1px solid currentColor;
+  }
+}

@@ -66,13 +66,19 @@ test('Cancel retains its selector and callback without confirming removal', () =
 });
 
 test('Add a shift adds another form when the existing shift is valid', () => {
-  render(<ShiftsForm port="LHR" terminal="T1" interval={60} shiftForms={[shift]}
-                     confirmHandler={jest.fn()} formMode="add" disableAdd={false} />);
+  const consoleError = jest.spyOn(console, 'error');
+  try {
+    render(<ShiftsForm port="LHR" terminal="T1" interval={60} shiftForms={[shift]}
+                       confirmHandler={jest.fn()} formMode="add" disableAdd={false} />);
 
-  const button = screen.getByRole('button', {name: 'Add a shift'});
-  expectHomeOfficeButton(button);
-  fireEvent.click(button);
-  expect(screen.getByText('Shift #2')).toBeInTheDocument();
+    const button = screen.getByRole('button', {name: 'Add a shift'});
+    expectHomeOfficeButton(button);
+    fireEvent.click(button);
+    expect(screen.getByText('Shift #2')).toBeInTheDocument();
+    expect(consoleError.mock.calls.flat().join(' ')).not.toMatch(/unique.*key|same key/i);
+  } finally {
+    consoleError.mockRestore();
+  }
 });
 
 test('Continue advances a valid shift to the confirmation step', () => {
