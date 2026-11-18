@@ -1,0 +1,59 @@
+// Based on the Home Office Design System loading spinner.
+.drt-govuk-loading-spinner {
+  padding-top: 15px;
+}
+
+.drt-govuk-loading-spinner__spinner {
+  box-sizing: content-box;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+  border: 12px solid #dee0e2;
+  border-top-color: #1d70b8;
+  border-radius: 50%;
+  animation: drt-govuk-loading-spinner-rotate 2s linear infinite;
+}
+
+.drt-govuk-loading-spinner__content {
+  padding-top: 15px;
+  text-align: center;
+}
+
+.drt-govuk-loading-spinner__heading {
+  margin: 0 0 15px;
+  color: #0b0c0c;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 20px;
+}
+
+@media (min-width: 40.0625em) {
+  .drt-govuk-loading-spinner,
+  .drt-govuk-loading-spinner__content {
+    padding-top: 20px;
+  }
+
+  .drt-govuk-loading-spinner__heading {
+    margin-bottom: 20px;
+    font-size: 24px;
+    line-height: 30px;
+  }
+}
+
+@keyframes drt-govuk-loading-spinner-rotate {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drt-govuk-loading-spinner__spinner {
+    animation: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .drt-govuk-loading-spinner__spinner {
+    border-color: GrayText;
+    border-top-color: CanvasText;
+  }
+}
